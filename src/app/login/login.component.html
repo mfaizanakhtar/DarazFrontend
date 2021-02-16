@@ -1,0 +1,23 @@
+
+    <app-navbar></app-navbar>
+    <div class="container full-height">
+        <div class="row flex center v-center full-height">
+            <div class="col-8 col-sm-4">
+                <div class="form-box">
+                    <form #f="ngForm" (ngSubmit)="signin(f.value)">
+                        <fieldset>
+                            <legend>Sign in</legend><img src="../../assets/img/avatar.png" id="avatar" class="avatar round">
+                            <input class="form-control" ngModel type="text" id="username" name="userid" placeholder="username">
+                            <input class="form-control" ngModel type="password" id="password" name="password" placeholder="password">
+                                <button class="btn btn-primary btn-block" type="submit">LOGIN </button>
+                            </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="../../assets/js/jquery.min.js"></script>
+    <script src="../../assets/bootstrap/js/bootstrap.min.js"></script> -->
+
+
+

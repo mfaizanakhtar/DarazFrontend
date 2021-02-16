@@ -1,0 +1,16 @@
+<app-navbar></app-navbar>
+
+<div class="container full-height">
+    <div class="row flex center v-center full-height">
+        <div class="col-8 col-sm-4">
+            <div class="form-box">
+                <form #f="ngForm" (ngSubmit)="insertTracking(f.value)">
+                    <fieldset>
+                        <input class="form-control" ngModel type="text" id="tracking" name="tracking" placeholder="Insert Return Tracking">
+                            <button class="btn btn-primary btn-block" type="submit">Return</button>
+                        </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

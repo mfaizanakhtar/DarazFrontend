@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "./assets/bootstrap/css/bootstrap.min.css";
+@import "./assets/css/login-form.css";
+@import "./assets/css/styles.css";
+@import '~@swimlane/ngx-datatable/themes/material.css';
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container { z-index: 9999!important; } 

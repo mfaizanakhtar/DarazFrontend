@@ -1,0 +1,201 @@
+<!-- <ul class="list-group">
+    <li class="list-group-item" *ngFor="let order of orders">OrderDate: {{order.CreatedAt.substr(0,10)}} Order no: {{order.OrderId}} Status: {{order.Status}} </li>
+</ul> -->
+
+
+
+	<app-navbar></app-navbar>
+	<!-- <mat-form-field appearance="fill">
+		<mat-label>Select an option</mat-label>
+		<mat-select [(value)]="Fulfillment">
+		  <mat-option value="All">All</mat-option>
+		  <mat-option value="FBM">FBM</mat-option>
+		  <mat-option value="FBD">FBD</mat-option>
+		</mat-select>
+	  </mat-form-field> -->
+	  
+	  
+	
+
+	  
+    <div>
+        <nav class="navbar navbar-light navbar-expand-md sticky-top navigation-clean-button" style="height:80px;">
+            <div class="container-fluid"><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div
+					class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav ml-auto">
+						<li>
+							<mat-form-field appearance="fill">
+								<mat-label>Select Store</mat-label>
+								<mat-select (selectionChange)="StoreSelected($event)">
+									<mat-option value="All">All</mat-option>
+									<mat-option *ngFor="let store of StoreArray" [value]="store">{{store}}</mat-option>
+								</mat-select>
+							  </mat-form-field>							
+						</li>
+						<li>
+							<mat-form-field appearance="fill">
+								<mat-label>Select Fulfillment</mat-label>
+								<mat-select (selectionChange)="FulfillmentSelected($event)">
+								  <mat-option value="All">All</mat-option>
+								  <mat-option value="Dropshipping">FBM</mat-option>
+								  <mat-option value="Own Warehouse">FBD</mat-option>
+								</mat-select>
+							  </mat-form-field>							
+						</li>
+						<!-- <li class="nav-item" role="presentation"><mat-slide-toggle style="padding-top: 9px;" [(ngModel)]="isFbd">FBD: {{isFbd}}</mat-slide-toggle></li> -->
+						<li class="nav-item" role="presentation"><button (click)="Filter('all')" class="nav-link active" style="color: #000000;">All Orders</button></li>
+						<li class="nav-item" role="presentation"><button (click)="Filter('pending')" class="nav-link active" style="color: #000000;">Pending</button></li>
+						<li class="nav-item" role="presentation"><button (click)="Filter('ready_to_ship')" class="nav-link active" style="color: #000000;">RTS</button></li>
+                        <li class="nav-item" role="presentation"><button (click)="Filter('shipped')" class="nav-link active" style="color: #000000;">Shipped</button></li>
+						<li class="nav-item" role="presentation"><button (click)="Filter('delivered')" class="nav-link active" style="color: #000000;">Delivered</button></li>
+						<li class="nav-item" role="presentation"><button (click)="Filter('claimable')" class="nav-link active" style="color: #000000;">Claimable</button></li>
+                        <li class="nav-item" role="presentation"><button (click)="Filter('canceled')" class="nav-link active" style="color: #000000;">Cancelled</button></li>
+
+                    </ul>
+            </div>
+    </div>
+    </nav>
+    </div>
+	<!-- <div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100" style="padding-top:50px">
+					<table>
+						<thead>
+							<tr class="table100-head">
+                                <th class="column1">Actions</th>
+								<th class="column2">Order No</th>
+								<th class="column3">ItemId</th>
+								<th class="column4">Date</th>
+								<th class="column5">Price</th>
+								<th class="column6">SKU</th>
+                                <th class="column7">Tracking ID</th>
+                                <th class="column8">Status</th>
+                                <th class="column9">Type</th>
+                                <th class="column10">ShopId</th>
+
+							</tr>
+						</thead>
+						<tbody>
+								<tr *ngFor="let order of orders">
+									<td class="column1"></td>
+									<td class="column2">{{order.OrderId}}</td>
+									<td class="column3">{{order.OrderItemId}}</td>
+									<td class="column4">{{order.CreatedAt.substr(0,10)}}</td>
+									<td class="column5">{{order.ItemPrice}}</td>
+                                    <td class="column6">{{order.Sku}}</td>
+                                    <td class="column7">{{order.TrackingCode}}</td>
+                                    <td class="column8">{{order.Status}}</td>
+                                    <td class="column9">{{order.ShippingType}}</td>
+                                    <td class="column10">{{order.ShopId}}</td>
+
+
+								</tr>
+								
+								
+								
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+ -->
+
+<!-- <data-table 
+	[items]="items"
+	 [itemCount]="itemCount"
+	 (reload)="reloadItems($event)"
+>
+	<data-table-column
+		 [property]="'title'"
+		 [header]="'Title'"
+		 [sortable]="true"
+		 [resizable]="true"
+	>
+	 
+	<data-table-column
+	[property]="'title'"
+	[header]="'Title'"
+	[sortable]="true"
+	[resizable]="true"
+>
+<ng-template #dataTableCell let-item="product">
+	{{product.OrderId}}
+</ng-template>
+</data-table-column>
+
+
+</data-table> -->
+
+<div>
+		<input
+        type="text"
+        style="padding:8px;margin:15px auto;width:30%;"
+        placeholder="Type to filter the name column..."
+        (keyup)="updateFilter($event)"
+      />
+
+	<ngx-datatable
+	#table
+	style="width:auto"
+	class="material"
+	[rows]="orders"
+	[columnMode]="ColumnMode.force"
+	[headerHeight]="50"
+	[footerHeight]="50"
+	rowHeight="auto"
+	[limit]="10"
+	[selected]="selected"
+	[selectionType]="SelectionType.checkbox"
+	[selectAllRowsOnPage]="true"
+	[displayCheck]="displayCheck"
+	(activate)="onActivate($event)"
+	(select)="onSelect($event)"
+	>
+	<ngx-datatable-column
+	[width]="30"
+	[sortable]="false"
+	[canAutoResize]="false"
+	[draggable]="false"
+	[resizeable]="false"
+	[headerCheckboxable]="true"
+	[checkboxable]="true"
+  ></ngx-datatable-column>
+	<ngx-datatable-column name="Order" prop="OrderId" ></ngx-datatable-column>
+	<!-- <ngx-datatable-column name="Item ID" prop="OrderItemId"></ngx-datatable-column> -->
+	<ngx-datatable-column name="Order Date" prop="CreatedAt"></ngx-datatable-column>
+	<ngx-datatable-column name="Item Price" prop="ItemPrice" [width]="70"></ngx-datatable-column>
+	<ngx-datatable-column name="SKU" prop="Sku" [width]="120"></ngx-datatable-column>
+	<ngx-datatable-column name="Tracking ID" prop="TrackingCode"[width]="160"></ngx-datatable-column>
+	<ngx-datatable-column name="Status" prop="Status"[width]="70"></ngx-datatable-column>
+	<ngx-datatable-column name="Shipping Type" prop="ShippingType"></ngx-datatable-column>
+	<ngx-datatable-column name="Shop ID" prop="ShopId" [width]="170"></ngx-datatable-column>
+
+
+	</ngx-datatable>
+
+  <div class="selected-column">
+	<h4>
+	  Selections <small>({{ selected?.length }})</small>
+	</h4>
+	<ul>
+	  <li *ngFor="let sel of selected">
+		{{ sel.OrderId }}
+	  </li>
+	  <li *ngIf="!selected?.length">No Selections</li>
+	</ul>
+  </div>
+</div>
+
+  
+  <p>You selected: {{Fulfillment}}</p>
+
+
+
+	
+
+
+
+

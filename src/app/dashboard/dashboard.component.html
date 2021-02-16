@@ -1,0 +1,140 @@
+<app-navbar></app-navbar>
+<div id="main" style="height: 100%;overflow:auto; background-color: lightgray;">
+  <mat-form-field appearance="fill">
+    <mat-label>Select Date</mat-label>
+    <mat-select (selectionChange)="DateSelected($event)">
+      <mat-option value="0">Today</mat-option>
+      <mat-option value="1">Last 2 Days</mat-option>
+      <mat-option value="6">Last 7 Days</mat-option>
+      <mat-option value="14">Last 15 Days</mat-option>
+      <mat-option value="29">Last 30 Days</mat-option>
+
+      <!-- <mat-option *ngFor="let store of StoreArray" [value]="store">{{store}}</mat-option> -->
+    </mat-select>
+    </mat-form-field>	
+    	
+    <mat-form-field appearance="fill">
+      <mat-label>Select Store</mat-label>
+      <mat-select (selectionChange)="StoreSelected($event)">
+        <!-- <mat-option value="All">All</mat-option> -->
+        <mat-option *ngFor="let store of StoreArray" [value]="store">{{store}}</mat-option>
+      </mat-select>
+      </mat-form-field>		
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100">
+					<table>
+						<thead>
+              <!-- <div style="padding-top:12px;text-align:right; height:50px; font-size: 15pt;">Orders</div> -->
+							<tr class="table100-head">
+                <th class="column1">ID</th>
+                <th class="column1">FBD</th>
+                <th class="column1">FBM</th>
+                <th class="column1">Total</th>
+							</tr>
+						</thead>
+						<tbody>
+								<tr *ngFor="let stat of AllStats">
+                  <td class="column1">{{stat._id}}</td>
+                  <td class="column1">{{stat.FBDcount}}</td>
+									<td class="column1">{{stat.FBMcount}}</td>
+									<td class="column1">{{stat.Total}}</td>
+								</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+  </div>
+  
+  
+  <div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100">
+					<table>
+						<thead>
+							<tr class="table100-head">
+                <th class="column1">SKU</th>
+                <th class="column1">FBD</th>
+                <th class="column1">FBM</th>
+                <th class="column1">Total</th>
+
+							</tr>
+						</thead>
+						<tbody>
+								<tr *ngFor="let sku of SkuStoreStats" >
+                  <td class="column1">{{sku._id}}</td>
+                  <td class="column1">{{sku.FBDcount}}</td>
+									<td class="column1">{{sku.FBMcount}}</td>
+									<td class="column1">{{sku.Total}}</td>
+
+								</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+  </div>
+
+</div>
+
+  <!-- <h2>Tables Side by Side</h2>
+<p>How to create side-by-side tables with CSS:</p>
+
+<div class="row">
+  <div class="column">
+    <table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Points</th>
+      </tr>
+      <tr>
+        <td>Jill</td>
+        <td>Smith</td>
+        <td>50</td>
+      </tr>
+      <tr>
+        <td>Eve</td>
+        <td>Jackson</td>
+        <td>94</td>
+      </tr>
+      <tr>
+        <td>Adam</td>
+        <td>Johnson</td>
+        <td>67</td>
+      </tr>
+    </table>
+  </div>
+  <div class="column">
+    <table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Points</th>
+      </tr>
+      <tr>
+        <td>Jill</td>
+        <td>Smith</td>
+        <td>50</td>
+      </tr>
+      <tr>
+        <td>Eve</td>
+        <td>Jackson</td>
+        <td>94</td>
+      </tr>
+      <tr>
+        <td>Adam</td>
+        <td>Johnson</td>
+        <td>67</td>
+      </tr>
+    </table>
+  </div>
+</div> -->
+
+
+  
+
+
