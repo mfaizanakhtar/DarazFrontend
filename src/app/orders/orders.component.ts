@@ -22,7 +22,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 })
 export class OrdersComponent implements OnInit {
   // isFbd='true';
-  Fulfillment='All';
+  Fulfillment='Dropshipping';
   Store='All';
   StoreArray=[];
   raworders:any;
