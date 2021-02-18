@@ -49,7 +49,7 @@ export class OrdersComponent implements OnInit {
       
          
     // })
-    this.Filter('all');
+    this.Filter('pending');
     
   }
 
