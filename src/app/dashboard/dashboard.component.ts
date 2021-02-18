@@ -59,15 +59,35 @@ export class DashboardComponent implements OnInit {
 
   SkuDetails(id,date){
     this.order.get('Skustats/'+id+'/'+date).subscribe(response=>{
-      console.log(response);
+      // console.log(response);
       this.SkuStoreStats = response;
+      this.SkuStoreStats.sort((a,b)=>{
+        if(a._id<b._id){
+          return -1
+        }
+        if(a._id>b._id){
+          return 1
+        }
+        return 0
+      })
     })
   }
 
   AllStoreStats(date){
     this.order.get('allstats/'+date).subscribe(response=>{
-      // console.log(response);
+      console.log(response);
       this.AllStats = response;
+      this.AllStats.sort((a,b)=>{
+        if(a._id<b._id){
+          return -1
+        }
+        if(a._id>b._id){
+          return 1
+        }
+        return 0
+      })
+
+
 
       if(this.StoreArray.length<=0){
       this.AllStats.forEach(o => {
