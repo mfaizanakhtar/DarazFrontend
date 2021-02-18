@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
     // this.getOrders();
 
 
-    this.AllStoreStats(1);
+    this.AllStoreStats(0);
     
     
 
