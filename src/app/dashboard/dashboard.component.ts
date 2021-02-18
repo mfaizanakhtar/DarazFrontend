@@ -71,7 +71,7 @@ export class DashboardComponent implements OnInit {
 
       if(this.StoreArray.length<=0){
       this.AllStats.forEach(o => {
-        if(o._id!='all'){
+        if(o._id!='ALL STORES'){
         this.StoreArray.push(o._id);
         }
       });
