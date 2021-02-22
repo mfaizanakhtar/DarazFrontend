@@ -23,8 +23,8 @@ export class DispatchComponent implements OnInit {
     this.dispatchorders();
   }
 
-  dispatch(value){
-    this.order.updateData("dispatch",value.txtTracking,{}).subscribe(res=>{
+  dispatch(f){
+    this.order.updateData("dispatch",f.value.txtTracking,{}).subscribe(res=>{
       console.log(res);
       var result:any = res;
       this.dispatchorders();
@@ -38,6 +38,7 @@ export class DispatchComponent implements OnInit {
       } 
       
     })
+    f.reset();
     
     
     

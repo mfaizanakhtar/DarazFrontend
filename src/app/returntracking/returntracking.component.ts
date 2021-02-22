@@ -24,8 +24,8 @@ export class ReturntrackingComponent implements OnInit {
     // this.toastr.success('Dispatched');
   }
 
-  insertTracking(value){
-    this.order.updateData("return",value.tracking,{}).subscribe(response=>{
+  insertTracking(f){
+    this.order.updateData("return",f.value.tracking,{}).subscribe(response=>{
       console.log(response);
       var result:any = response;
       this.returnorders();
@@ -42,7 +42,7 @@ export class ReturntrackingComponent implements OnInit {
         this.WrongAudio();
       } 
     });
-    
+    f.reset();
     // console.log(`inser function working ${value.tracking}`);
   }
 

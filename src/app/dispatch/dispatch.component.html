@@ -5,7 +5,7 @@
     <div class="col-8 col-sm-4">
     <div class="form-box">
     
-    <form #f="ngForm" (ngSubmit)="dispatch(f.value)">
+    <form #f="ngForm" (ngSubmit)="dispatch(f)">
     <input class="form-control" type="text" ngModel name="txtTracking" placeholder="Enter Dispatch Tracking">
     <button class="btn btn-primary btn-block" type="submit">Submit</button>
     </form>
