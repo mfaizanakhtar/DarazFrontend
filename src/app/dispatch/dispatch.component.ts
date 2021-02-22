@@ -32,10 +32,16 @@ export class DispatchComponent implements OnInit {
         this.toastr.success('Dispatched');
         this.CorrectAudio();
       } 
-      else if(result.Status=="Cant Dispatch"){
-        this.toastr.error('Already dispatched or Not RTS');
+      else if(result.Status=="Duplicate"){
+        this.toastr.error('Duplicate Order');
         this.WrongAudio();
-      } 
+      }
+      else if(result.Status=="Order status not eligible to dispatch"){
+        this.toastr.error('Order Status Not Eligbile To Dispatch');
+      }
+      else if(result.Status=="Order not Found"){
+        this.toastr.error('Order not Found');
+      }
       
     })
     f.reset();
