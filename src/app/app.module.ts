@@ -18,6 +18,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ReturntrackingComponent } from './returntracking/returntracking.component';
+import { DispatchComponent } from './dispatch/dispatch.component';
+import { ToastrModule } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -30,6 +33,7 @@ import { ReturntrackingComponent } from './returntracking/returntracking.compone
     OrdersComponent,
     NavbarComponent,
     ReturntrackingComponent,
+    DispatchComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +44,8 @@ import { ReturntrackingComponent } from './returntracking/returntracking.compone
     BrowserAnimationsModule,
     MatSlideToggleModule,
     NgxDatatableModule,
+    CommonModule,
+    ToastrModule.forRoot(),
     
     
 
@@ -67,6 +73,10 @@ import { ReturntrackingComponent } from './returntracking/returntracking.compone
       {
         path:'returns',
         component:ReturntrackingComponent
+      },
+      {
+        path:'dispatch',
+        component:DispatchComponent
       }
     ])
   ],

@@ -133,7 +133,7 @@ table {
   border-collapse: collapse;
   background: white;
   border-radius: 10px;
-  /* overflow: hidden; */
+  overflow: hidden;
   width: 50%;
   float: left;
 

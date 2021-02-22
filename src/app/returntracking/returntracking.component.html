@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
-<div class="container full-height">
-    <div class="row flex center v-center full-height">
+<div class="container">
+    <div class="row flex center" style="margin-top: 10px;">
         <div class="col-8 col-sm-4">
             <div class="form-box">
                 <form #f="ngForm" (ngSubmit)="insertTracking(f.value)">
@@ -10,6 +10,36 @@
                             <button class="btn btn-primary btn-block" type="submit">Return</button>
                         </fieldset>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="limiter" style="width: 100%;">
+    <div class="container-table100" style="float:none; margin-left: auto; margin-right: auto; display: flex; width: 100%;">
+        <div class="wrap-table100" style="align-content: center;" >
+            <div class="table100" style="float:center">
+                <table  style="width:100%">
+                    <thead>
+          <!-- <div style="padding-top:12px;text-align:right; height:50px; font-size: 15pt;">Orders</div> -->
+                        <tr class="table100-head">
+            <th class="column1">Order No.</th>
+            <th class="column1">Return Date</th>
+            <th class="column1">SKU</th>
+            <th class="column1">Tracking ID</th>
+            <th class="column1">Shop ID</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let order of returnorderarray">
+              <td class="column1">{{order.OrderId}}</td>
+              <td class="column1">{{order.ReturnDate}}</td>
+              <td class="column1">{{order.Sku}}</td>
+              <td class="column1">{{order.TrackingCode}}</td>
+              <td class="column1">{{order.ShopId}}</td>
+            </tr>
+            </tbody>
+                </table>
             </div>
         </div>
     </div>

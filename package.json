@@ -8,11 +8,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy":"pscp -P 22 -i D:/USB/Deployment-MEANSTACK/Aws-Key.ppk -r C:/Users/92321/Documents/GitHub/DarazFrontend/dist/* ubuntu@ec2-18-216-100-108.us-east-2.compute.amazonaws.com:/daraz/frontend-angular"
+    "deploy": "pscp -P 22 -i D:/USB/Deployment-MEANSTACK/Aws-Key.ppk -r C:/Users/92321/Documents/GitHub/DarazFrontend/dist/* ubuntu@ec2-18-216-100-108.us-east-2.compute.amazonaws.com:/daraz/frontend-angular"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~9.1.9",
+    "@angular/animations": "^9.1.13",
     "@angular/cdk": "^10.1.1",
     "@angular/common": "~9.1.9",
     "@angular/compiler": "~9.1.9",
@@ -28,6 +28,7 @@
     "crypto": "^1.0.1",
     "crypto-js": "^4.0.0",
     "jssha": "^3.1.0",
+    "ngx-toastr": "^13.2.0",
     "rxjs": "^6.6.0",
     "sha.js": "^2.4.11",
     "tslib": "^1.10.0",
