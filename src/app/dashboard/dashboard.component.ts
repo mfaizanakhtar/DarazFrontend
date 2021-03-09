@@ -19,8 +19,8 @@ import { OrdersService } from '../orders.service';
 export class DashboardComponent implements OnInit {
 
   orders:any
-  startdate:any
-  enddate:any
+  startdate=new Date();
+  enddate=new Date();
   ShippingCount;
   StoreArray=[];
   SkuStoreStats;
@@ -29,6 +29,8 @@ export class DashboardComponent implements OnInit {
   ShopId;
   StoreBreakdown=[];
   SkuArray=[];
+  // sdate=new Date();
+  // edate=new Date();
   constructor(private order:OrdersService) { }
 
   ngOnInit(): void {
@@ -41,7 +43,7 @@ export class DashboardComponent implements OnInit {
 
     
     
-
+    this.AllStoreStats(this.startdate,this.enddate);
   }
   DateInput(mode,event){
     if(mode == 'start'){
