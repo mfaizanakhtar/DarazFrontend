@@ -34,15 +34,8 @@ export class DashboardComponent implements OnInit {
   constructor(private order:OrdersService) { }
 
   ngOnInit(): void {
-    // this.getOrders();
-
-
-    // this.AllStoreStats(0);
-    
-    
-
-    
-    
+    this.startdate.setHours(0,0,0,0);
+    this.enddate.setHours(0,0,0,0);
     this.AllStoreStats(this.startdate,this.enddate);
   }
   DateInput(mode,event){
@@ -92,6 +85,7 @@ export class DashboardComponent implements OnInit {
   }
 
   AllStoreStats(startdate,enddate){
+    console.log(startdate)
     this.order.get('allstats/'+startdate+'/'+enddate).subscribe(response=>{
       console.log(response);
       this.AllStats = response;
