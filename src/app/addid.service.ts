@@ -8,6 +8,6 @@ import { Injectable } from '@angular/core';
 export class AddidService extends DataService {
 
   constructor(http : HttpClient, ) {
-    super("http://localhost:3000/api/darazid/",http)
+    super("api/darazid/",http)
    }
 }

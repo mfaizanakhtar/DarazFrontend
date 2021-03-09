@@ -19,6 +19,8 @@ import { OrdersService } from '../orders.service';
 export class DashboardComponent implements OnInit {
 
   orders:any
+  startdate:any
+  enddate:any
   ShippingCount;
   StoreArray=[];
   SkuStoreStats;
@@ -33,7 +35,7 @@ export class DashboardComponent implements OnInit {
     // this.getOrders();
 
 
-    this.AllStoreStats(0);
+    // this.AllStoreStats(0);
     
     
 
@@ -41,24 +43,38 @@ export class DashboardComponent implements OnInit {
     
 
   }
-
-  DateSelected(event){
-    // console.log(event.value);
-    this.Date = event.value;
-    this.SkuDetails(this.ShopId,this.Date);
-    this.AllStoreStats(this.Date);
+  DateInput(mode,event){
+    if(mode == 'start'){
+      this.startdate = event.value.toISOString();
+    }
+    if(mode == 'end'){
+      if(event.value != null){
+        this.enddate = event.value.toISOString();
+        console.log(this.startdate);
+        console.log(this.enddate);
+        this.AllStoreStats(this.startdate,this.enddate);
+        this.SkuDetails(this.ShopId,this.startdate,this.enddate)
+      }
+    }
   }
+
+  // DateSelected(event){
+  //   // console.log(event.value);
+  //   this.Date = event.value;
+  //   this.SkuDetails(this.ShopId,this.Date);
+  //   this.AllStoreStats(this.Date);
+  // }
 
   StoreSelected(event){
     // console.log(event.value)
     this.ShopId = event.value;
-    this.SkuDetails(this.ShopId,this.Date);
+    this.SkuDetails(this.ShopId,this.startdate,this.enddate);
     // document.getElementById('main').style.height="300%";
     
   }
 
-  SkuDetails(id,date){
-    this.order.get('Skustats/'+id+'/'+date).subscribe(response=>{
+  SkuDetails(id,startdate,enddate){
+    this.order.get('Skustats/'+id+'/'+startdate+'/'+enddate).subscribe(response=>{
       // console.log(response);
       this.SkuStoreStats = response;
       this.SkuStoreStats.sort((a,b)=>{
@@ -73,8 +89,8 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  AllStoreStats(date){
-    this.order.get('allstats/'+date).subscribe(response=>{
+  AllStoreStats(startdate,enddate){
+    this.order.get('allstats/'+startdate+'/'+enddate).subscribe(response=>{
       console.log(response);
       this.AllStats = response;
       this.AllStats.sort((a,b)=>{

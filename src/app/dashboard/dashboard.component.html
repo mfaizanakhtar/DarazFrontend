@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div id="main" style="height: 100%;overflow:auto; background-color: lightgray;">
-  <mat-form-field appearance="fill">
+  <!-- <mat-form-field appearance="fill">
     <mat-label>Select Date</mat-label>
     <mat-select (selectionChange)="DateSelected($event)">
       <mat-option value="0">Today</mat-option>
@@ -9,10 +9,20 @@
       <mat-option value="14">Last 15 Days</mat-option>
       <mat-option value="29">Last 30 Days</mat-option>
 
-      <!-- <mat-option *ngFor="let store of StoreArray" [value]="store">{{store}}</mat-option> -->
+      <mat-option *ngFor="let store of StoreArray" [value]="store">{{store}}</mat-option>
     </mat-select>
     </mat-form-field>	
-    	
+    	 -->
+       <mat-form-field appearance="fill">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker" >
+          <input matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
+          <input matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
     <mat-form-field appearance="fill">
       <mat-label>Select Store</mat-label>
       <mat-select (selectionChange)="StoreSelected($event)">

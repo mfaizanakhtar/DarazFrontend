@@ -13,6 +13,8 @@ import { interval, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { OrdersComponent } from './orders/orders.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -21,6 +23,8 @@ import { ReturntrackingComponent } from './returntracking/returntracking.compone
 import { DispatchComponent } from './dispatch/dispatch.component';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 
@@ -44,11 +48,12 @@ import { CommonModule } from '@angular/common';
     BrowserAnimationsModule,
     MatSlideToggleModule,
     NgxDatatableModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
     CommonModule,
     ToastrModule.forRoot(),
-    
-    
-
     RouterModule.forRoot([
       {
         path:'',
