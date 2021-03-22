@@ -53,18 +53,10 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  // DateSelected(event){
-  //   // console.log(event.value);
-  //   this.Date = event.value;
-  //   this.SkuDetails(this.ShopId,this.Date);
-  //   this.AllStoreStats(this.Date);
-  // }
 
   StoreSelected(event){
-    // console.log(event.value)
     this.ShopId = event.value;
     this.SkuDetails(this.ShopId,this.startdate,this.enddate);
-    // document.getElementById('main').style.height="300%";
     
   }
 
@@ -101,14 +93,14 @@ export class DashboardComponent implements OnInit {
 
 
 
-      if(this.StoreArray.length<=0){
       this.AllStats.forEach(o => {
         if(o._id!='ALL STORES'){
+        if(!this.StoreArray.includes(o._id))
         this.StoreArray.push(o._id);
         }
       });
       
-    }
+    
     
     })
     
