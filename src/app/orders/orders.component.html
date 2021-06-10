@@ -15,6 +15,9 @@
 						  <button (click)="UpdateStatus('Dispatched')" mat-menu-item>Dispatched</button>
 						  <button (click)="UpdateStatus('Received')" mat-menu-item>Received</button>
 						  <button (click)="UpdateStatus('Claim Filed')" mat-menu-item>Claim Filed</button>
+						  <button (click)="UpdateStatus('Claim approved')" mat-menu-item>Claim Approved</button>
+						  <button (click)="UpdateStatus('Claim Filed')" mat-menu-item>Claim Rejected</button>
+						  <button (click)="UpdateStatus('Claim Filed')" mat-menu-item>Claim POD Dispute</button>
 						  <button (click)="UpdateStatus('Claim Received')" mat-menu-item>Claim Received</button>
 						</mat-menu>
 						</li>
@@ -37,25 +40,36 @@
 								</mat-select>
 							  </mat-form-field>							
 						</li>
-						<!-- <li class="nav-item" role="presentation"><mat-slide-toggle style="padding-top: 9px;" [(ngModel)]="isFbd">FBD: {{isFbd}}</mat-slide-toggle></li> -->
-						<li class="nav-item" role="presentation"><button (click)="Filter('all')" class="nav-link active" style="color: #000000;">All Orders |</button></li>
-						<li class="nav-item" role="presentation"><button (click)="Filter('pending')" class="nav-link active" style="color: #000000;">Pending |</button></li>
-						<li class="nav-item" role="presentation"><button (click)="Filter('ready_to_ship')" class="nav-link active" style="color: #000000;">RTS |</button></li>
-						<li class="nav-item" role="presentation"><button (click)="Filter('ready_to_ship-dispatched')" class="nav-link active" style="color: #000000;">RTS-Dispatched |</button></li>
-                        <li class="nav-item" role="presentation"><button (click)="Filter('shipped')" class="nav-link active" style="color: #000000;">Shipped |</button></li>
-						<li class="nav-item" role="presentation"><button (click)="Filter('delivered')" class="nav-link active" style="color: #000000;">Delivered |</button></li>
-						<li class="nav-item" role="presentation"><button (click)="Filter('failed')" class="nav-link active" style="color: #000000;">Delivery Failed |</button></li>
-						<li class="nav-item" role="presentation"><button (click)="Filter('failed-received')" class="nav-link active" style="color: #000000;">Delivery Failed-Received |</button></li>
-						<li class="nav-item" role="presentation"><button (click)="Filter('claimable')" class="nav-link active" style="color: #000000;">Claimable |</button></li>
-						<li class="nav-item" role="presentation"><button (click)="Filter('Claim Filed')" class="nav-link active" style="color: #000000;">Claim Filed |</button></li>
-						<li class="nav-item" role="presentation"><button (click)="Filter('Claim Received')" class="nav-link active" style="color: #000000;">Claim Received |</button></li>
-                        <li class="nav-item" role="presentation"><button (click)="Filter('canceled')" class="nav-link active" style="color: #000000;">Cancelled</button></li>
+
 
                     </ul>
             </div>
     </div>
     </nav>
     </div>
+
+	<nav class="navbar navbar-light navbar-expand-md sticky-top navigation-clean-button" style="height:80px;">
+		<div class="container-fluid"><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+			<div
+				class="collapse navbar-collapse" id="navcol-1">
+				<ul class="nav navbar-nav ml-auto">
+					<!-- <li class="nav-item" role="presentation"><mat-slide-toggle style="padding-top: 9px;" [(ngModel)]="isFbd">FBD: {{isFbd}}</mat-slide-toggle></li> -->
+					<li class="nav-item" role="presentation"><button (click)="Filter('all')" class="nav-link active" style="color: #000000;">All Orders |</button></li>
+					<li class="nav-item" role="presentation"><button (click)="Filter('pending')" class="nav-link active" style="color: #000000;">Pending |</button></li>
+					<li class="nav-item" role="presentation"><button (click)="Filter('ready_to_ship')" class="nav-link active" style="color: #000000;">RTS |</button></li>
+					<li class="nav-item" role="presentation"><button (click)="Filter('ready_to_ship-dispatched')" class="nav-link active" style="color: #000000;">RTS-Dispatched |</button></li>
+					<li class="nav-item" role="presentation"><button (click)="Filter('shipped')" class="nav-link active" style="color: #000000;">Shipped |</button></li>
+					<li class="nav-item" role="presentation"><button (click)="Filter('delivered')" class="nav-link active" style="color: #000000;">Delivered |</button></li>
+					<li class="nav-item" role="presentation"><button (click)="Filter('failed')" class="nav-link active" style="color: #000000;">Delivery Failed |</button></li>
+					<li class="nav-item" role="presentation"><button (click)="Filter('failed-received')" class="nav-link active" style="color: #000000;">Delivery Failed-Received |</button></li>
+					<li class="nav-item" role="presentation"><button (click)="Filter('claimable')" class="nav-link active" style="color: #000000;">Claimable |</button></li>
+					<li class="nav-item" role="presentation"><button (click)="Filter('Claim Filed')" class="nav-link active" style="color: #000000;">Claim Filed |</button></li>
+					<li class="nav-item" role="presentation"><button (click)="Filter('Claim Received')" class="nav-link active" style="color: #000000;">Claim Received |</button></li>
+					<li class="nav-item" role="presentation"><button (click)="Filter('canceled')" class="nav-link active" style="color: #000000;">Cancelled</button></li>
+				</ul>
+            </div>
+    </div>
+    </nav>
 
 <div>
 
