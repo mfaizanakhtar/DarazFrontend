@@ -33,7 +33,8 @@ export class OrdersComponent implements OnInit {
   reorderable = true;
   SelectionType = SelectionType;
   selected=[];
-  temp=[];  
+  temp=[];
+  status:any
   @ViewChild(DatatableComponent) table: DatatableComponent;
   
 
@@ -104,6 +105,8 @@ export class OrdersComponent implements OnInit {
   }
 
   Filter(status){
+    this.status = status;
+    this.selected=[]
     this.order.getById('data',status)
     .subscribe(async response=>{
       this.raworders=response;
@@ -151,7 +154,7 @@ export class OrdersComponent implements OnInit {
   UpdateStatus(Status){
     console.log(Status)
     this.order.updateData("Update",Status,this.selected).subscribe(res=>{
-      console.log(res);
+      this.Filter(this.status);
     })
   }
 
