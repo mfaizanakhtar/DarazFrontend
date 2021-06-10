@@ -25,6 +25,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatMenuModule} from '@angular/material/menu'
+
 
 
 
@@ -53,6 +55,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatInputModule,
     MatNativeDateModule,
     CommonModule,
+    MatMenuModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       {

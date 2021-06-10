@@ -38,9 +38,11 @@ export class DispatchComponent implements OnInit {
       }
       else if(result.Status=="Order status not eligible to dispatch"){
         this.toastr.error('Order Status Not Eligbile To Dispatch');
+        this.WrongAudio();
       }
       else if(result.Status=="Order not Found"){
         this.toastr.error('Order not Found');
+        this.WrongAudio();
       }
       
     })

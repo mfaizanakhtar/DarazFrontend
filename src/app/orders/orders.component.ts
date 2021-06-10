@@ -2,7 +2,7 @@ import { DataService } from './../data.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrdersService } from '../orders.service';
 import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
-import { DatatableComponent } from '@swimlane/ngx-datatable'; 
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 // import { DataTableResource } from 'angular-4-data-table';
 
 @Component({
@@ -147,6 +147,15 @@ export class OrdersComponent implements OnInit {
     }
     console.log(this.StoreArray);
   }
+
+  UpdateStatus(Status){
+    console.log(Status)
+    this.order.updateData("Update",Status,this.selected).subscribe(res=>{
+      console.log(res);
+    })
+  }
+
+
 
 
 

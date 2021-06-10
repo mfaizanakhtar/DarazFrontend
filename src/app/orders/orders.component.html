@@ -1,29 +1,23 @@
-<!-- <ul class="list-group">
-    <li class="list-group-item" *ngFor="let order of orders">OrderDate: {{order.CreatedAt.substr(0,10)}} Order no: {{order.OrderId}} Status: {{order.Status}} </li>
-</ul> -->
 
 
 
 	<app-navbar></app-navbar>
-	<!-- <mat-form-field appearance="fill">
-		<mat-label>Select an option</mat-label>
-		<mat-select [(value)]="Fulfillment">
-		  <mat-option value="All">All</mat-option>
-		  <mat-option value="FBM">FBM</mat-option>
-		  <mat-option value="FBD">FBD</mat-option>
-		</mat-select>
-	  </mat-form-field> -->
-	  
-	  
-	
 
-	  
     <div>
         <nav class="navbar navbar-light navbar-expand-md sticky-top navigation-clean-button" style="height:80px;">
             <div class="container-fluid"><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div
 					class="collapse navbar-collapse" id="navcol-1">
                     <ul class="nav navbar-nav ml-auto">
+						<li>
+						<button class="button" mat-button [matMenuTriggerFor]="menu">Set Status</button>
+						<mat-menu #menu="matMenu">
+						  <button (click)="UpdateStatus('Dispatched')" mat-menu-item>Dispatched</button>
+						  <button (click)="UpdateStatus('Received')" mat-menu-item>Received</button>
+						  <button (click)="UpdateStatus('Claim Filed')" mat-menu-item>Claim Filed</button>
+						  <button (click)="UpdateStatus('Claim Received')" mat-menu-item>Claim Received</button>
+						</mat-menu>
+						</li>
 						<li>
 							<mat-form-field appearance="fill">
 								<mat-label>Select Store</mat-label>
@@ -53,86 +47,18 @@
 						<li class="nav-item" role="presentation"><button (click)="Filter('failed')" class="nav-link active" style="color: #000000;">Delivery Failed |</button></li>
 						<li class="nav-item" role="presentation"><button (click)="Filter('failed-received')" class="nav-link active" style="color: #000000;">Delivery Failed-Received |</button></li>
 						<li class="nav-item" role="presentation"><button (click)="Filter('claimable')" class="nav-link active" style="color: #000000;">Claimable |</button></li>
-                        <li class="nav-item" role="presentation"><button (click)="Filter('canceled')" class="nav-link active" style="color: #000000;">Cancelled |</button></li>
+						<li class="nav-item" role="presentation"><button (click)="Filter('Claim Filed')" class="nav-link active" style="color: #000000;">Claim Filed |</button></li>
+						<li class="nav-item" role="presentation"><button (click)="Filter('Claim Received')" class="nav-link active" style="color: #000000;">Claim Received |</button></li>
+                        <li class="nav-item" role="presentation"><button (click)="Filter('canceled')" class="nav-link active" style="color: #000000;">Cancelled</button></li>
 
                     </ul>
             </div>
     </div>
     </nav>
     </div>
-	<!-- <div class="limiter">
-		<div class="container-table100">
-			<div class="wrap-table100">
-				<div class="table100" style="padding-top:50px">
-					<table>
-						<thead>
-							<tr class="table100-head">
-                                <th class="column1">Actions</th>
-								<th class="column2">Order No</th>
-								<th class="column3">ItemId</th>
-								<th class="column4">Date</th>
-								<th class="column5">Price</th>
-								<th class="column6">SKU</th>
-                                <th class="column7">Tracking ID</th>
-                                <th class="column8">Status</th>
-                                <th class="column9">Type</th>
-                                <th class="column10">ShopId</th>
-
-							</tr>
-						</thead>
-						<tbody>
-								<tr *ngFor="let order of orders">
-									<td class="column1"></td>
-									<td class="column2">{{order.OrderId}}</td>
-									<td class="column3">{{order.OrderItemId}}</td>
-									<td class="column4">{{order.CreatedAt.substr(0,10)}}</td>
-									<td class="column5">{{order.ItemPrice}}</td>
-                                    <td class="column6">{{order.Sku}}</td>
-                                    <td class="column7">{{order.TrackingCode}}</td>
-                                    <td class="column8">{{order.Status}}</td>
-                                    <td class="column9">{{order.ShippingType}}</td>
-                                    <td class="column10">{{order.ShopId}}</td>
-
-
-								</tr>
-								
-								
-								
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
- -->
-
-<!-- <data-table 
-	[items]="items"
-	 [itemCount]="itemCount"
-	 (reload)="reloadItems($event)"
->
-	<data-table-column
-		 [property]="'title'"
-		 [header]="'Title'"
-		 [sortable]="true"
-		 [resizable]="true"
-	>
-	 
-	<data-table-column
-	[property]="'title'"
-	[header]="'Title'"
-	[sortable]="true"
-	[resizable]="true"
->
-<ng-template #dataTableCell let-item="product">
-	{{product.OrderId}}
-</ng-template>
-</data-table-column>
-
-
-</data-table> -->
 
 <div>
+
 		<input
         type="text"
         style="padding:8px;margin:15px auto;width:30%;"
