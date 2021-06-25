@@ -1,6 +1,7 @@
-import { AuthService } from './../auth.service';
+import { AuthService } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-login',
@@ -14,15 +15,12 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  signin(value){
-    this.auth.login(value)
-    .subscribe(response=>{
-      this.result = response;
+  signin(credentials){
+    this.auth.login(credentials).subscribe(res=>{
+      if(res){
+        this.router.navigate([''])
+      }
     })
-    console.log(this.result)
-    if(this.result){
-      this.router.navigate(['/dashboard'])
-    }
     
     
   }

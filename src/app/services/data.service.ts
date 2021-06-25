@@ -11,11 +11,11 @@ export class DataService {
   options:any
   constructor(private url : string, private http: HttpClient) { }
 
-  setHeaders(){
+  async setHeaders(){
     let token = localStorage.getItem('auth-token');
     let header = new HttpHeaders();
-    header.append('auth-token',token);
-    this.options = { header : header};
+    let authHeader = header.set('auth-token',token)
+    this.options = { headers : authHeader};
   }
 
   getAll(){
@@ -34,21 +34,23 @@ export class DataService {
 
   getById(caption,id){
     this.setHeaders()
-    return this.http.get(this.url+'/'+caption+'/'+id).pipe(
+    console.log(this.options)
+    return this.http.get(this.url+'/'+caption+'/'+id,this.options).pipe(
       map(response=>response)
     )
   }
 
   postData(data){
     this.setHeaders()
-    return this.http.post(this.url,data).pipe(
+    return this.http.post(this.url,data,this.options).pipe(
       map(response=>response)
     )
   }
+  
 
   updateData(caption,id,data){
     this.setHeaders()
-    return this.http.put(this.url+'/'+caption+'/'+id,data).pipe(
+    return this.http.put(this.url+'/'+caption+'/'+id,data,this.options).pipe(
       map(response=>response)
     )
   }

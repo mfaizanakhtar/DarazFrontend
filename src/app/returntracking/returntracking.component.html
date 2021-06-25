@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="container">
+<!-- <div class="container">
     <div class="row flex center" style="margin-top: 10px;">
         <div class="col-8 col-sm-4">
             <div class="form-box">
@@ -21,7 +21,6 @@
             <div class="table100" style="float:center">
                 <table  style="width:100%">
                     <thead>
-          <!-- <div style="padding-top:12px;text-align:right; height:50px; font-size: 15pt;">Orders</div> -->
                         <tr class="table100-head">
             <th class="column1">Order No.</th>
             <th class="column1">Return Date</th>
@@ -43,4 +42,41 @@
             </div>
         </div>
     </div>
+</div> -->
+<div style="margin: 20px; border-radius: 10px;">
+        <form #f="ngForm" (ngSubmit)="insertTracking(f)">
+        <mat-form-field style="width: 100%;" appearance="fill">
+          <mat-label>Enter Received Tracking</mat-label>
+          <input ngModel name="tracking" matInput #message placeholder="Paste Tracking here">
+          <mat-hint ><strong>Press Enter After Inserting Tracking</strong></mat-hint>
+        </mat-form-field>
+    </form>
+
+
+</div>
+<mat-divider></mat-divider>
+<div style="margin:20px">
+<ngx-datatable
+        class="material"
+        [rows]="returnorderarray"
+        [loadingIndicator]="loadingIndicator"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        rowHeight="auto"
+      >
+      <ngx-datatable-column [width]="10" name="S.No">
+        <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+            <strong>{{returnorderarray.length-rowIndex}}</strong>
+          </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Date" prop="Date" >
+        <ng-template let-row="row" let-date="value" ngx-datatable-cell-template>
+            {{ formatDate(date) }}
+          </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Order no." prop="OrderId" ></ngx-datatable-column>
+      <ngx-datatable-column name="Tracking no." prop="_id" ></ngx-datatable-column>
+      <ngx-datatable-column name="Shop Id" prop="ShopId" ></ngx-datatable-column>
+      </ngx-datatable>
 </div>

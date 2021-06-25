@@ -8,6 +8,6 @@ import { Injectable } from '@angular/core';
 export class OrdersService extends DataService {
 
   constructor(http:HttpClient) { 
-    super("api/orders/",http)
+    super("http://localhost:3000/api/orderitems/",http)
   }
 }

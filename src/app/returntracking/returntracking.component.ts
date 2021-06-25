@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { OrdersService } from '../orders.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { OrdersService } from '../services/orders.service';
 import { ToastrService } from 'ngx-toastr';
+import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-returntracking',
@@ -15,22 +16,36 @@ import { ToastrService } from 'ngx-toastr';
   "../../assets/table/css/main.css"]
 })
 export class ReturntrackingComponent implements OnInit {
+  @ViewChild(DatatableComponent) table: DatatableComponent;
+
   returnorderarray:any;
+  ColumnMode=ColumnMode;
 
   constructor(private order:OrdersService,private toastr:ToastrService) { }
+  loadingIndicator=false
 
+  
   ngOnInit(): void {
     this.returnorders();
     // this.toastr.success('Dispatched');
   }
 
+  formatDate(date){
+    var d = new Date(date);
+    var formattedDate=d.toLocaleDateString('en-US',{weekday:'long'})+' '+ d.getDate()+'-'+d.getMonth()+'-'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes()
+    return formattedDate
+  }
+
+
   insertTracking(f){
     this.order.updateData("return",f.value.tracking,{}).subscribe(response=>{
       console.log(response);
       var result:any = response;
-      this.returnorders();
-      if(result.Status=="Received"){
+      // this.returnorders();
+      if(result[0].Status=="Received"){
         this.toastr.success("Return Received");
+        console.log(result[1])
+        this.UpdateReturnedArray(result[1])
         this.CorrectAudio();
       } 
       else if(result.Status=="Already Received"){
@@ -43,7 +58,6 @@ export class ReturntrackingComponent implements OnInit {
       } 
     });
     f.reset();
-    // console.log(`inser function working ${value.tracking}`);
   }
 
   returnorders(){
@@ -67,5 +81,11 @@ export class ReturntrackingComponent implements OnInit {
     audio.play();
   }
 
+  UpdateReturnedArray(returnedTracking) {
+    this.returnorderarray = [...this.returnorderarray,{_id:returnedTracking.TrackingCode,Date:returnedTracking.ReturnDate,OrderId:returnedTracking.OrderId,ShopId:returnedTracking.ShopId}]
+  }
+
 }
+
+
 

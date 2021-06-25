@@ -1,4 +1,4 @@
-import { AddidService } from './../addid.service';
+import { AddidService } from '../services/addid.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -16,7 +16,7 @@ export class AddidComponent implements OnInit {
 
   addids(value){
     this.addid.postData({
-      emailid:value.email,
+      shopid:value.email,
       secretkey:value.secretkey
     })
     .subscribe(response=>{

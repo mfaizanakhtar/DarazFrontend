@@ -1,0 +1,21 @@
+<div class="center">
+  <mat-label id="headingLabel" class="matlabel">Create New User</mat-label>
+    <mat-form-field hintLabel="useremail" appearance="fill">
+      <mat-label>Enter Email Address</mat-label>
+      <input [(ngModel)]="userEmail" matInput placeholder="email@example.com">
+      
+    </mat-form-field>
+  <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Select User Type</mat-label>
+      <mat-select [(ngModel)]="userType">
+        <mat-option value="user">User</mat-option>
+        <mat-option value="admin">Admin</mat-option>
+      </mat-select>
+      <mat-hint>Select Usertype here</mat-hint>
+    </mat-form-field>
+    
+ 
+  <mat-divider></mat-divider>
+  <button id="buttonSubmit" (click)="createUser()" mat-raised-button color="primary">Create User</button>
+</div>

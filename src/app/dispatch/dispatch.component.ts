@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrdersService } from '../orders.service';
+import { OrdersService } from '../services/orders.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

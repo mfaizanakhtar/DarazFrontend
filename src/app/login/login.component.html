@@ -1,5 +1,5 @@
 
-    <app-navbar></app-navbar>
+    <!-- <app-navbar></app-navbar>
     <div class="container full-height">
         <div class="row flex center v-center full-height">
             <div class="col-8 col-sm-4">
@@ -15,9 +15,18 @@
                 </div>
             </div>
         </div>
+    </div> -->
+    <div class="body">
+    <div class="login">
+        <h1>Login</h1>
+          <form #f="ngForm" (ngSubmit)="signin(f.value)" method="post">
+            <input type="text" ngModel name="useremail" placeholder="Username" required="required" />
+              <input type="password" ngModel name="password" placeholder="Password" required="required" />
+              <button type="submit" class="btn btn-primary btn-block btn-large">Let me in.</button>
+          </form>
+      </div>
     </div>
-    <!-- <script src="../../assets/js/jquery.min.js"></script>
-    <script src="../../assets/bootstrap/js/bootstrap.min.js"></script> -->
+
 
 
 

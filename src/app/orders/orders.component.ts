@@ -1,6 +1,6 @@
-import { DataService } from './../data.service';
+import { DataService } from '../services/data.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { OrdersService } from '../orders.service';
+import { OrdersService } from '../services/orders.service';
 import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 // import { DataTableResource } from 'angular-4-data-table';
@@ -42,14 +42,7 @@ export class OrdersComponent implements OnInit {
   constructor(private order:OrdersService) { }
 
   ngOnInit(): void {
-    // this.order.getAll()
-    // .subscribe(response=>{
-    //   this.orders = response;
-    //   this.temp = this.orders;
-    //   console.log(this.orders);
-      
-         
-    // })
+
     this.Filter('pending');
     
   }

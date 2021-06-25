@@ -1,0 +1,25 @@
+<app-navbar></app-navbar>
+
+<div style="margin: 20px; margin-left: 20px;">
+  <button (click)="addUserDialog()" mat-raised-button color="primary">Add User</button>
+</div>
+<mat-divider style="margin:10px"></mat-divider>
+
+
+<!-- <app-data-table></app-data-table> -->
+<ngx-datatable
+class="material"
+[rows]="orders"
+[columnMode]="ColumnMode.force"
+[headerHeight]="50"
+[footerHeight]="50"
+rowHeight="auto"
+[limit]="25"
+(activate)="onActivate($event)"
+(select)="onSelect($event)"
+>
+<ngx-datatable-column name="User Email" prop="useremail"></ngx-datatable-column>
+<ngx-datatable-column name="User Type" prop="usertype"></ngx-datatable-column>
+
+
+</ngx-datatable>

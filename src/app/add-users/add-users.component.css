@@ -1,0 +1,17 @@
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    
+  }
+
+button{
+  margin:20px
+}
+
+.matlabel{
+  font-size:12pt;
+  font-weight: bold;
+}
