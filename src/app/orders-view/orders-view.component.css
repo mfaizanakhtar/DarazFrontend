@@ -1,0 +1,41 @@
+.datatable{
+    margin-left:150px;
+    margin-right: 150px;
+    margin-top:100px;
+}
+
+.paginator{
+    margin-left:150px;
+    margin-right: 150px;
+}
+
+.secondnav{
+    margin-left:150px;
+    margin-right: 150px;
+}
+
+.topnav{
+    margin-left:150px;
+    margin-right: 150px;
+}
+
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.topdivider{
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-right: 150px;
+    margin-left:150px
+}
+

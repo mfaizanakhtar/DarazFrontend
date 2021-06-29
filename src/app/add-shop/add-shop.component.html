@@ -1,0 +1,16 @@
+
+<div class="center vertical-center">
+<mat-form-field class="example-form-field" appearance="fill">
+    <mat-label>Shop Email Id</mat-label>
+    <input type="email" [(ngModel)]="shopId" matInput placeholder="Ex. example@gmail.com">
+</mat-form-field>
+<mat-form-field class="example-form-field" appearance="fill">
+    <mat-label>Secret Key</mat-label>
+    <input [(ngModel)]="secretKey" matInput placeholder="Ex. AxPJrQZdWmiMFsqQZdWmiMZdW">
+</mat-form-field>
+<br>
+<button id="btnShop" mat-raised-button color="primary" (click)="shopAdd()">Add Shop</button>
+<br>
+<button *ngIf="isDelete"id="btnDelete" style="margin-top:20px" id="btnDelete" mat-raised-button color="primary" (click)="shopDelete()">Delete Shop</button>
+</div>
+

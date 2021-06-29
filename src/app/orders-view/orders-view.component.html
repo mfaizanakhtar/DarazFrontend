@@ -1,0 +1,165 @@
+<app-navbar></app-navbar>
+
+<mat-divider class="topdivider"></mat-divider>
+<div class="topnav">
+
+  <form #f="ngForm" (ngSubmit)="findOrder(f)">
+  <mat-form-field appearance="fill">
+    <mat-label>Order Id</mat-label>
+    <input type="number" name="OrderId" ngModel matInput placeholder="Ex. 10110254789879">
+  </mat-form-field>
+  </form>
+
+</div>
+<mat-divider class="topdivider"></mat-divider>
+
+<div class="secondnav">
+  <mat-button-toggle-group name="fontStyle" [value]="selectedVal" aria-label="Font Style">
+    <mat-button-toggle value="all" (click)="StatusFilterClicked('all')">All Orders</mat-button-toggle>
+    <mat-button-toggle (click)="StatusFilterClicked('pending')">Pending</mat-button-toggle>
+    <mat-button-toggle (click)="StatusFilterClicked('ready_to_ship')">RTS</mat-button-toggle>
+    <mat-button-toggle (click)="StatusFilterClicked('RTS-Dispatched')">RTS-Dispatched</mat-button-toggle>
+    <mat-button-toggle (click)="StatusFilterClicked('shipped')">Shipped</mat-button-toggle>
+    <mat-button-toggle (click)="StatusFilterClicked('delivered')">Delivered</mat-button-toggle>
+    <mat-button-toggle (click)="StatusFilterClicked('delivery failed')">Delivery Failed</mat-button-toggle>
+    <mat-button-toggle (click)="StatusFilterClicked('returned')">Returned</mat-button-toggle>
+    <mat-button-toggle (click)="StatusFilterClicked('Delivery Failed-Received')">Delivery Failed-Received</mat-button-toggle>
+    <mat-button-toggle (click)="StatusFilterClicked('Claimable')">Claimable</mat-button-toggle>
+    <mat-button-toggle (click)="StatusFilterClicked('Claim Filed')">Claim Filed</mat-button-toggle>
+    <mat-button-toggle (click)="StatusFilterClicked('Claim Received')">Claim Received</mat-button-toggle>
+    <mat-button-toggle (click)="StatusFilterClicked('canceled')">Cancelled</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<div class="datatable">
+<ngx-datatable
+#table
+style="width:auto"
+class="material expandable"
+[loadingIndicator]="loadingIndicator"
+[rows]="orders"
+[columnMode]="ColumnMode.force"
+[headerHeight]="50"
+[footerHeight]="50"
+rowHeight="auto"
+[selected]="selected"
+[selectionType]="SelectionType.checkbox"
+[selectAllRowsOnPage]="true"
+(activate)="onActivate($event)"
+(select)="onSelect($event)"
+>
+<!-- Row Detail Template -->
+<ngx-datatable-row-detail [rowHeight]="450" #myDetailRow (toggle)="onDetailToggle($event)">
+    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+      <!-- <div style="padding-left:35px;">
+        <div><strong>{{row.OrderId}}</strong></div>
+        <div></div>
+      </div> -->
+      <mat-divider style="margin:10px;"></mat-divider>
+      <div style="margin:40px; overflow-y:scroll; height: 350px;">
+      <table>
+        <tr>
+          <th>S.No</th>
+          <th>Consignee</th>
+          <th>Seller SKU</th>
+          <th>Product</th>
+          <th>Tracking</th>
+          <th>Image</th>
+          <th>Shipping Type</th>
+          <th>Status</th>
+          <th>Printed</th>
+        </tr>
+        <tr *ngFor="let item of row.OrderItems; index as i">
+          <td>{{i+1}}</td>
+          <td>{{row.AddressBilling.FirstName}}</td>
+          <td>{{item.BaseSku}}</td>
+          <td>{{item.Name}}</td>
+          <td>{{item.TrackingCode}}</td>
+          <td ><img width="70px" height="70px" src={{item.productMainImage}}></td>
+          <td>{{item.ShippingType}}</td>
+          <td>{{item.Status}}</td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+    <mat-divider style="margin:10px;"></mat-divider>
+
+
+
+    </ng-template>
+  </ngx-datatable-row-detail>
+
+
+
+
+
+
+<ngx-datatable-column
+[width]="30"
+[sortable]="false"
+[canAutoResize]="false"
+[draggable]="false"
+[resizeable]="false"
+[headerCheckboxable]="true"
+[checkboxable]="true"
+>
+
+<ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+    <div
+      href="javascript:void(0)"
+      [class.datatable-icon-right]="!expanded"
+      [class.datatable-icon-down]="expanded"
+      title="Expand/Collapse Row"
+      (click)="toggleExpandRow(row)"
+    >
+    </div>
+  </ng-template>
+
+</ngx-datatable-column>
+<ngx-datatable-column name="S.No" [width]="10">
+  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+    <div >{{pIndex*pSize+rowIndex+1}}</div>
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Order" prop="OrderId" ></ngx-datatable-column>
+<!-- <ngx-datatable-column name="Item ID" prop="OrderItemId"></ngx-datatable-column> -->
+<ngx-datatable-column name="Order Date" prop="CreatedAt">
+  <ng-template let-row="row" let-date="value" ngx-datatable-cell-template>
+    {{ formatDate(date) }}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column [width]="160" name="Payment Method" prop="PaymentMethod"></ngx-datatable-column>
+<ngx-datatable-column [width]="70" name="Price" prop="Price"></ngx-datatable-column>
+<ngx-datatable-column [width]="50" name="#" prop="ItemsCount"></ngx-datatable-column>
+<ngx-datatable-column [width]="65" name="Status" prop="Statuses">
+  <ng-template let-row="row" let-status="value" ngx-datatable-cell-template>
+    {{ status[0] }}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Shop ID" prop="ShopId" [width]="170"></ngx-datatable-column>
+
+
+</ngx-datatable>
+</div>
+
+<div class="paginator">
+  <mat-paginator
+  [length]="length"
+  [pageSizeOptions]="[10, 20, 50, 100]"
+  [pageIndex]="pageIndex"
+  [pageSize]="pageSize"
+  (page)="getServerData($event)">
+  </mat-paginator>
+</div>
+
+<div class="selected-column">
+	<h4>
+	  Selections <small>({{ selected?.length }})</small>
+	</h4>
+	<ul>
+	  <li *ngFor="let sel of selected">
+		{{ sel.OrderId }}
+	  </li>
+	  <li *ngIf="!selected?.length">No Selections</li>
+	</ul>
+  </div>

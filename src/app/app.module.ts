@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
-import { AddidComponent } from './addid/addid.component';
+import { ShopIdComponent } from './shop-ids/shop-id.component';
 import { interval, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { OrdersComponent } from './orders/orders.component';
@@ -32,8 +32,13 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { AddUsersComponent } from './add-users/add-users.component';
 import { LoginGuard } from './LoginGuard';
+import { AddShopComponent } from './add-shop/add-shop.component';
+import { OrdersViewComponent } from './orders-view/orders-view.component';
+
 
 
 
@@ -47,13 +52,15 @@ import { LoginGuard } from './LoginGuard';
     AppComponent,
     DashboardComponent,
     LoginComponent,
-    AddidComponent,
+    ShopIdComponent,
     OrdersComponent,
     NavbarComponent,
     ReturntrackingComponent,
     DispatchComponent,
     UsersComponent,
     AddUsersComponent,
+    AddShopComponent,
+    OrdersViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,7 +80,9 @@ import { LoginGuard } from './LoginGuard';
     MatTableModule,
     MatButtonModule,
     MatDividerModule,
+    MatIconModule,
     MatDialogModule,
+    MatButtonToggleModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       {
@@ -86,8 +95,8 @@ import { LoginGuard } from './LoginGuard';
         component:LoginComponent
       },
       {
-        path:'darazids',
-        component:AddidComponent,
+        path:'shops',
+        component:ShopIdComponent,
         canActivate:[LoginGuard]
       },
       {
@@ -117,6 +126,11 @@ import { LoginGuard } from './LoginGuard';
       {
         path:'adduser',
         component:AddUsersComponent,
+        canActivate:[LoginGuard]
+      },
+      {
+        path:'ordersview',
+        component:OrdersViewComponent,
         canActivate:[LoginGuard]
       }
     ]),

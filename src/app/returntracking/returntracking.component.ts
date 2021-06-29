@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { OrdersService } from '../services/orders.service';
+import { OrderItemsService } from '../services/orderItems.service';
 import { ToastrService } from 'ngx-toastr';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 
@@ -20,14 +20,17 @@ export class ReturntrackingComponent implements OnInit {
 
   returnorderarray:any;
   ColumnMode=ColumnMode;
+  wrongAudio:any
+  correctAudio:any
 
-  constructor(private order:OrdersService,private toastr:ToastrService) { }
-  loadingIndicator=false
+  constructor(private order:OrderItemsService,private toastr:ToastrService) { }
+  loadingIndicator=true
 
   
   ngOnInit(): void {
     this.returnorders();
-    // this.toastr.success('Dispatched');
+    this.correctAudioLoad()
+    this.wrongAudioLoad()
   }
 
   formatDate(date){
@@ -41,20 +44,20 @@ export class ReturntrackingComponent implements OnInit {
     this.order.updateData("return",f.value.tracking,{}).subscribe(response=>{
       console.log(response);
       var result:any = response;
-      // this.returnorders();
+
       if(result[0].Status=="Received"){
         this.toastr.success("Return Received");
         console.log(result[1])
         this.UpdateReturnedArray(result[1])
-        this.CorrectAudio();
+        this.correctAudio.play()
       } 
       else if(result.Status=="Already Received"){
         this.toastr.error("Return Already Received");
-        this.WrongAudio();
+        this.wrongAudio.play()
       } 
       else if(result.Status=="Tracking not Found"){
         this.toastr.error("Tracking not Found");
-        this.WrongAudio();
+        this.wrongAudio.play();
       } 
     });
     f.reset();
@@ -64,21 +67,20 @@ export class ReturntrackingComponent implements OnInit {
     this.order.get("ordermovement/Received").subscribe(res=>{
       console.log(res);
       this.returnorderarray=res;
+      this.loadingIndicator=false;
     })
   }
 
-  CorrectAudio(){
-    let audio = new Audio();
-    audio.src="../../../assets/sounds/Correct.mp3"
-    audio.load();
-    audio.play();
+  correctAudioLoad(){
+    this.correctAudio = new Audio();
+    this.correctAudio.src="../../../assets/sounds/Correct.mp3"
+    this.correctAudio.load();
   }
 
-  WrongAudio(){
-    let audio = new Audio();
-    audio.src="../../../assets/sounds/Wrong.mp3"
-    audio.load();
-    audio.play();
+  wrongAudioLoad(){
+    let wrongAudio = new Audio();
+    wrongAudio.src="../../../assets/sounds/Wrong.mp3"
+    wrongAudio.load();
   }
 
   UpdateReturnedArray(returnedTracking) {

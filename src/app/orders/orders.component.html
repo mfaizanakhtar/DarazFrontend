@@ -24,7 +24,7 @@
 						<li>
 							<mat-form-field appearance="fill">
 								<mat-label>Select Store</mat-label>
-								<mat-select (selectionChange)="StoreSelected($event)">
+								<mat-select [(ngModel)]="Store" (selectionChange)="StoreSelected($event)">
 									<mat-option value="All">All</mat-option>
 									<mat-option *ngFor="let store of StoreArray" [value]="store">{{store}}</mat-option>
 								</mat-select>
@@ -33,7 +33,7 @@
 						<li>
 							<mat-form-field appearance="fill">
 								<mat-label>Select Fulfillment</mat-label>
-								<mat-select (selectionChange)="FulfillmentSelected($event)">
+								<mat-select [(ngModel)]="Fulfillment" (selectionChange)="FulfillmentSelected($event)">
 								  <mat-option value="All">All</mat-option>
 								  <mat-option value="Dropshipping">FBM</mat-option>
 								  <mat-option value="Own Warehouse">FBD</mat-option>

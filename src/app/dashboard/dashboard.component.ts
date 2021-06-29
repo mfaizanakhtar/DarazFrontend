@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import jsSHA from 'jssha'
-import { OrdersService } from '../services/orders.service';
+import { OrderItemsService } from '../services/orderItems.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   SkuArray=[];
   // sdate=new Date();
   // edate=new Date();
-  constructor(private order:OrdersService) { }
+  constructor(private order:OrderItemsService) { }
 
   ngOnInit(): void {
     this.startdate.setHours(0,0,0,0);

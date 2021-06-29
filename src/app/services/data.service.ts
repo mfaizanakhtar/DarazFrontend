@@ -54,4 +54,11 @@ export class DataService {
       map(response=>response)
     )
   }
+
+  deleteData(id){
+    this.setHeaders()
+    return this.http.delete(this.url+id,this.options).pipe(
+      map(response=>response)
+    )
+  }
 }

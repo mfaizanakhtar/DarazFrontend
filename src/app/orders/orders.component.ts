@@ -1,6 +1,6 @@
 import { DataService } from '../services/data.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { OrdersService } from '../services/orders.service';
+import { OrderItemsService } from '../services/orderItems.service';
 import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 // import { DataTableResource } from 'angular-4-data-table';
@@ -39,7 +39,7 @@ export class OrdersComponent implements OnInit {
   
 
 
-  constructor(private order:OrdersService) { }
+  constructor(private order:OrderItemsService) { }
 
   ngOnInit(): void {
 

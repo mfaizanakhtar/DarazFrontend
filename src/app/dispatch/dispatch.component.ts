@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { OrdersService } from '../services/orders.service';
+import { OrderItemsService } from '../services/orderItems.service';
 import { ToastrService } from 'ngx-toastr';
+import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-dispatch',
@@ -16,33 +17,45 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DispatchComponent implements OnInit {
   dispatchorderarray:any
+  ColumnMode=ColumnMode
+  loadingIndicator=true
+  correctAudio:any
+  wrongAudio:any
 
-  constructor(private order:OrdersService,private toastr:ToastrService) {}
+  constructor(private order:OrderItemsService,private toastr:ToastrService) {}
 
   ngOnInit(): void {
     this.dispatchorders();
+    this.correctAudioLoad();
+    this.wrongAudioLoad();
+  }
+
+  formatDate(date){
+    var d = new Date(date);
+    var formattedDate=d.toLocaleDateString('en-US',{weekday:'long'})+' '+ d.getDate()+'-'+d.getMonth()+'-'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes()
+    return formattedDate
   }
 
   dispatch(f){
-    this.order.updateData("dispatch",f.value.txtTracking,{}).subscribe(res=>{
+    this.order.updateData("dispatch",f.value.tracking,{}).subscribe(res=>{
       console.log(res);
       var result:any = res;
-      this.dispatchorders();
-      if(result.Status=="Dispatched"){
+      if(result[0].Status=="Dispatched"){
         this.toastr.success('Dispatched');
-        this.CorrectAudio();
+        this.correctAudio.play();
+        this.UpdateDispatchedArray(result[1])
       } 
       else if(result.Status=="Duplicate"){
         this.toastr.error('Duplicate Order');
-        this.WrongAudio();
+        this.wrongAudio.play();
       }
       else if(result.Status=="Order status not eligible to dispatch"){
         this.toastr.error('Order Status Not Eligbile To Dispatch');
-        this.WrongAudio();
+        this.wrongAudio.play();
       }
       else if(result.Status=="Order not Found"){
         this.toastr.error('Order not Found');
-        this.WrongAudio();
+        this.wrongAudio.play();
       }
       
     })
@@ -58,21 +71,24 @@ export class DispatchComponent implements OnInit {
     this.order.get("ordermovement/Dispatched").subscribe(res=>{
       console.log(res);
       this.dispatchorderarray = res;
+      this.loadingIndicator=false;
     })
   }
 
-  CorrectAudio(){
-    let audio = new Audio();
-    audio.src="../../../assets/sounds/Correct.mp3"
-    audio.load();
-    audio.play();
+  correctAudioLoad(){
+    this.correctAudio = new Audio();
+    this.correctAudio.src="../../../assets/sounds/Correct.mp3"
+    this.correctAudio.load();
   }
 
-  WrongAudio(){
-    let audio = new Audio();
-    audio.src="../../../assets/sounds/Wrong.mp3"
-    audio.load();
-    audio.play();
+  wrongAudioLoad(){
+    this.wrongAudio = new Audio();
+    this.wrongAudio.src="../../../assets/sounds/Wrong.mp3"
+    this.wrongAudio.load();
+  }
+
+  UpdateDispatchedArray(dispatchTracking) {
+    this.dispatchorderarray = [...this.dispatchorderarray,{_id:dispatchTracking.TrackingCode,Date:dispatchTracking.ReturnDate,OrderId:dispatchTracking.OrderId,ShopId:dispatchTracking.ShopId}]
   }
 
 }

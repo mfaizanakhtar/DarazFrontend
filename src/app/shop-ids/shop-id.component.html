@@ -1,0 +1,47 @@
+
+<app-navbar></app-navbar>
+
+<!-- <div class="container full-height">
+    <div class="row flex center v-center full-height">
+        <div class="col-8 col-sm-4">
+            <div class="form-box">
+                <form #f="ngForm" (ngSubmit)="addids(f.value)">
+                    <fieldset>
+                        <input class="form-control" ngModel type="email" id="shopid" name="shopid" placeholder="email">
+                        <input class="form-control" ngModel type="text" id="secretkey" name="secretkey" placeholder="secretkey">
+                            <button class="btn btn-primary btn-block" type="submit">Add Id </button>
+                        </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<mat-divider></mat-divider>
+
+<div style="margin-top: 50px;margin-left: 150px;margin-right: 150px;">
+    <mat-divider style="margin-bottom:20px"></mat-divider>
+    <button (click)="addNewIdDialog()" mat-raised-button color="primary">Add New ID</button>
+    <mat-divider style="margin-top:20px"></mat-divider>
+<div style="margin-top:30px;">
+<ngx-datatable
+        class="material"
+        [rows]="darazIds"
+        [loadingIndicator]="loadingIndicator"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        rowHeight="auto"
+        (activate)="onActivate($event)"
+      >
+      <ngx-datatable-column [width]="10" name="S.No">
+        <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+            <strong>{{rowIndex+1}}</strong>
+          </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Shop Id" prop="shopid" ></ngx-datatable-column>
+      </ngx-datatable>
+</div>
+</div>
+
