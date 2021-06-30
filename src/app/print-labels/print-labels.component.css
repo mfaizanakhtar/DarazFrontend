@@ -1,14 +1,24 @@
 
-
+/* 
   @media print {
-    app-print-labels { display: none; }
+    app-print-labels { width: 0;height: 0; }
   }
+
+  
+@page :left {
+    margin: 10cm;
+    }
+    
+    @page :right {
+    margin: 10cm;
+    } */
+    
 
 .awb-page {
     /* A5 */
     /*height: 210mm; 
 width: 148mm;*/
-    height: 152mm;
+    height: 304mm;
     width: 100mm;
     font-family: Helvetica, Arial, sans-serif;
     /*background: #f00;*/

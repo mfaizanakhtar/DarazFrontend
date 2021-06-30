@@ -1,16 +1,317 @@
-<table>
-    <thead><tr><td>
-      <div class="header-space">&nbsp;</div>
-    </td></tr></thead>
-    <tbody><tr><td>
-      <div class="content">
-        <router-outlet></router-outlet>
-      </div>
-    </td></tr></tbody>
-    <tfoot><tr><td>
-      <div class="footer-space">&nbsp;</div>
-    </td></tr></tfoot>
-  </table>
-  
-  <div class="header">COOL HEADER</div>
-  <div class="footer">AWESOME FOOTER</div>
+
+<style type="text/css">@page {
+  margin: 0;
+}
+
+.awb-page {
+  /* A5 */
+  /*height: 210mm; 
+width: 148mm;*/
+  height: 152mm;
+  width: 100mm;
+  font-family: Helvetica, Arial, sans-serif;
+  /*background: #f00;*/
+}
+
+.awb.lex {
+  /*height: 14.1cm;
+width: 18.5cm;*/
+  overflow: hidden;
+  font-size: 12px;
+  /*margin: 0.5cm 0 0 0.5cm;*/
+  margin: 0;
+  /*height: 140mm;*/
+  width: 100%;
+}
+
+@media print {
+
+  html,
+  body {
+      margin: 0.5cm 0 0 0.5cm;
+      height: 210mm;
+      width: 148mm;
+  }
+}
+
+.box {
+  padding: 1px;
+  border: solid 1px;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-align: center;
+}
+
+.text {
+  padding: 2px;
+}
+
+.left {
+  float: left;
+}
+
+.clear {
+  clear: both;
+}
+
+.barcode {
+  overflow: hidden !important;
+  text-align: center;
+}
+
+.barcode img {
+  max-width: 99%;
+  height: 100%;
+}
+
+.customer-signature {
+  margin-top: 10px;
+}
+
+.shipping-address li {
+  display: inline;
+}
+
+.hidden-non-BKK,
+.hidden-BKK {
+  display: none;
+}
+
+.show-BKK {
+  display: inline !important;
+}
+
+.hidden-non-Cash,
+.hidden-Cash {
+  display: none;
+}
+
+.hidden-Cash.show-COD {
+  display: inline !important;
+}
+
+.hidden-non-Cash.show-COD {
+  display: none !important;
+}
+
+.hidden-non-Cash {
+  display: inline !important;
+}
+</style>
+<style type="text/css">.cut-line {
+  margin-top: 45px;
+  width: 100%;
+  border-top: 1px dashed black;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.qrcode img {
+  width: 96%;
+  margin-top: 3%;
+}
+</style>
+
+<div><div data-reactroot="" class="la-print-container print-panel-section" data-spm-anchor-id="a2o7e.10603479.0.i6.7be22a97iVt8Rz"><div class="next-row next-row-justify-center la-print-header"><div class="next-col"><h1>Print Invoice For Selected Items</h1></div><div class="next-col right-col"></div></div><div class="la-print-page print-page"><style type="text/css">@page {
+  margin: 0;
+}
+
+.awb-page {
+  /* A5 */
+  /*height: 210mm; 
+width: 148mm;*/
+  height: 152mm;
+  width: 100mm;
+  font-family: Helvetica, Arial, sans-serif;
+  /*background: #f00;*/
+}
+
+.awb.lex {
+  /*height: 14.1cm;
+width: 18.5cm;*/
+  overflow: hidden;
+  font-size: 12px;
+  /*margin: 0.5cm 0 0 0.5cm;*/
+  margin: 0;
+  /*height: 140mm;*/
+  width: 100%;
+}
+
+@media print {
+
+  html,
+  body {
+      margin: 0.5cm 0 0 0.5cm;
+      height: 210mm;
+      width: 148mm;
+  }
+}
+
+.box {
+  padding: 1px;
+  border: solid 1px;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-align: center;
+}
+
+.text {
+  padding: 2px;
+}
+
+.left {
+  float: left;
+}
+
+.clear {
+  clear: both;
+}
+
+.barcode {
+  overflow: hidden !important;
+  text-align: center;
+}
+
+.barcode img {
+  max-width: 99%;
+  height: 100%;
+}
+
+.customer-signature {
+  margin-top: 10px;
+}
+
+.shipping-address li {
+  display: inline;
+}
+
+.hidden-non-BKK,
+.hidden-BKK {
+  display: none;
+}
+
+.show-BKK {
+  display: inline !important;
+}
+
+.hidden-non-Cash,
+.hidden-Cash {
+  display: none;
+}
+
+.hidden-Cash.show-COD {
+  display: inline !important;
+}
+
+.hidden-non-Cash.show-COD {
+  display: none !important;
+}
+
+.hidden-non-Cash {
+  display: inline !important;
+}
+</style>
+<style type="text/css">.cut-line {
+  margin-top: 45px;
+  width: 100%;
+  border-top: 1px dashed black;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.qrcode img {
+  width: 96%;
+  margin-top: 3%;
+}
+</style>
+<button printSectionId="pdfLabels" [useExistingCss]="true" ngxPrint>print</button>
+<div id="pdfLabels">
+<div class="awb-page">
+<div class="awb lex">
+<div class="box left" style="width:35%; height:0.8cm; border-right: 0; border-bottom: 0;">&nbsp;</div>
+
+<div class="box left" style="padding: 0;font-size: 11px;width: 35%;line-height: 0.3cm;height: 0.8cm;font-weight: bold;border-right: 0;border-bottom: 0;">
+<div style="line-height: 15px;line-height: .35cm;"><span style="text-align: left;font-size: 5px;font-weight: 800;line-height: .1cm;">Order Number</span> <span style="display:block;font-weight: normal;">129845509503342</span></div>
+</div>
+
+<div class="box left" style="text-align: center;font-size:12px; width:30%; line-height:14px; height:0.8cm; padding-top: 7px; border-bottom: 0;">19 Jun 2021</div>
+
+<div class="box clear" style="width:100%;border-bottom: 0; padding-bottom: 10px;">
+<div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXsAAABzAQAAAABRYZ9/AAAACXBIWXMAACmGAAAphgEi7N+MAAAAEnRFWHRTb2Z0d2FyZQBCYXJjb2RlNEryjnYuAAAAV0lEQVR42u3LsQnAMAwAQYPbQFYRqBV4dYHagFbICAa3AmWOwF9/o7s0t8izponFOTu9wi5z15gZS93ERSq23t3vIBAIBAKBQCAQCAQCgUAgEAgEwk/CB9cBI/SlfL0uAAAAAElFTkSuQmCC"></div>
+
+<div style="font-size:12px; line-height:11px;">Tracking Number: PK-DEX013378089</div>
+</div>
+
+<div class="box left" style="width:75%; border-bottom: 0; padding-bottom: 10px; height: 3.9cm; border-right: 0;">
+<div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATkAAABzAQAAAADLLkjiAAAACXBIWXMAACmGAAAphgEi7N+MAAAAEnRFWHRTb2Z0d2FyZQBCYXJjb2RlNEryjnYuAAAAUElEQVR42u3KwQnAMAhA0QwguIrQq5DVOloGCLiK4LVgOkEm+Ld3eKP7e6I0QtTF023VTzOxzIrwqWvP7ncQiUQikUgkEolEIpFIJBKJ13gAFc54hAFgdI4AAAAASUVORK5CYII="></div>
+
+<div style="font-size:18px; line-height:24px; font-weight: 700;">Port Code:&nbsp;D-015-0009</div>
+</div>
+
+<div class="box left" style="padding: 0; font-size:8px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;">O: Sindh</div>
+
+<div class="box left" style="padding: 0; font-size:10px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;">-</div>
+
+<div class="box left" style="padding: 0; font-size:10px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;">-</div>
+
+<div class="box left" style="padding: 0; font-size:10px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;">-</div>
+
+<div class="box left" style="padding: 0; font-size:10px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;"><span class="hidden-Cash show-COD">COD </span> <span class="hidden-non-Cash show-COD">NON COD </span></div>
+
+<div class="box left" style="padding: 0; font-size:10px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;">848.00</div>
+
+<div class="box clear" style="width:100%; border-bottom: 0; padding-bottom: 10px">
+<div class="barcode" style="height: 1.1cm; margin-bottom: 0.1cm"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWUAAAAoAQAAAAAOT9YQAAAACXBIWXMAACmGAAAphgEi7N+MAAAAEnRFWHRTb2Z0d2FyZQBCYXJjb2RlNEryjnYuAAAARklEQVR42u3KsQlAMQgFwAwguMqHtEJWf2AbyCqCTQrBDPLf1Te6a56MAtzEgInwTF2mEqi9zmeWGiXefQc3Nzc3N/cv9wN6bmhdeLaKcAAAAABJRU5ErkJggg=="></div>
+
+<div style="font-size:12px; line-height:11px;">Package ID: FP017411028527015</div>
+</div>
+
+<div class="box left qrcode" style="width:40%; padding-bottom: 12.5px; height: 5cm; border-right: 0;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABBCAYAAACO98lFAAAD2UlEQVR42t2bSY7kQAwD+f9Pa66DGjsVwfRpGmg0UEva1kJRlDpJ5vD7+zN//Z2f17b3fz83y3tP573d09M5p2v+85xPB789UMRDZjHk6Xrb596cNeDcx/dHeGfEDZ08sl3vZLQ5ePzknON1t5t6en0WD26RcPLg9pABKbLdpzYCzUmbszSsKfZEOunRCClCLC9RQvBhACZQLBoAoismnKrD//R3BI4hVA7MxwH5GpFKW8TQCEAIbyoC4Q3bd0/fNyCbIprrixhyEokTt1Vgi9hH4w7w1hZNFNy2kkWQPmFkjZK71SMDU4pUj5PRaarOwl2oUfDFthw1dd6UxVkMOct3BqbymJwLsPz2GeqpERFpzzymxMRR140UbRWFIvgIh1jmOqbJsSkxsJ+geT1xZTMyJRA/p80VDdeNKA0A4JTnzQkTDO+3OsIUDzDSq0aEeb0v4uGmZU6cYmXKs+EHBPOqkmbba1M5FMkpOs/XFLMaIAFAq0k2BrGK16NRaZgaL1jiZB6KSnFX4EjqsBVQqEJly+MWdUZwVSKnsT7VGk3FsZoiqVA4tChJGnmWAVXqYRox2qMNraU9/Q0Amhb+aFhSc42I2UygzFBlhKNwJLZqMfE0aZyaEVskwB4rWtvVtSkTAV63RIk2bGsUNF1cgyE06qxKTdIJoT6lt1YpuulC6XsTMS5oJPZGOiMcn4wDaFOHlWZbngjSN8p0U94GpiAiXSbUW8JjyyqpWHRJZG2uSB612ymEMlOl+AtQ1fPHCCS2c8mRxiI0fOIo8zQN0Ffc4KYCEbXKjPGUPk/Lk4mECPxptAKCIUPFjXbinLiplm2dbTp+mvu3nKFJLTpiM4OenATXZlJER3nmWu05VFR5BUcTAUZvpDyBaIxNn4LUspEpsdFdI6ha3mEaNNIUqpJlrTsyLC0PscIwar+NBxsD0S1Z1P6W8v7j9a3350OUpyVtYGi3XEbl2i1jbDSESKPcKN2VKNoIF82GWlMpSBojBtZ2g82GCcEE27gRGVDlqBFOEj65NuBmlrro6xXFbSQ0+u8CtNcw5Ro9i9X9KBH5Qrm+7VgN0Os5gwEjy/6MCJuvMIFY03jakpYv0sOSvSNbtLuIDaGxhOlmJ5KCa0U2GinNNDm3ZCzyTKTPm1C0m2zN/02YVtruUuDQbDgC8VKgI4wAizbsjUcMgNISR7XKlBGE0smu69jO0O5IGlbZNExqQcNupN603VabuNmRXJe7G0krcYMSK+3fqE6k49VGIF1dU86U+FGySrSpYpTjSNCMYJhaJIXc4ljubXVo9Eaz83BzD5XC/Qfj6vJwv0BEHwAAAABJRU5ErkJggg=="></div>
+
+<div class="box left text-left" style="width:60%; font-size:9px; border-bottom: 0; padding: 5px; height: 1.6cm;"><span style="font-weight:bold">Recipient:&nbsp;</span>laeeq abbas <br>
+Muhammad arshad  Punjab Gujrat Kunjah, Pakistan<br>
+923130790651</div>
+
+<div class="box left text-left" style="font-size:9px; width:60%; padding: 5px; height: 1.4cm; border-bottom: 0;"><span style="font-weight:bold">Seller:&nbsp;</span>Accesology<br>
+Office no 1225,12th floor,Al Najeebi Electronics Bazaar,Abdullah Haroon Road, Saddar, Karachi - Saddar, Sindh</div>
+
+<div class="box left text-left" style="height: 2.0cm; font-size:10px; width:36%; padding: 2px; border-right: 0;">
+<div class="container datagrid">
+<table class="order_item_table">
+<thead>
+</thead>
+<tbody>
+<tr>
+<td class="item_sku_seller"><strong><span style="font-size:10px;">P11</span></strong></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="box left text-left" style="height: 2.0cm; font-size:40px; padding: 8px 5px; width: 24%; text-align: center; border: solid 1.5px;">1</div>
+</div>
+</div>
+<style type="text/css">.box,
+.awb-page {
+  position: relative;
+}
+
+.tinggi {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-size: 10px;
+  line-height: 100%;
+}
+
+.awb-page>.tinggi {
+  right: -100px;
+}
+</style>
+</div></div></div></div>
