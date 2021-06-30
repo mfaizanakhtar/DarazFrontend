@@ -38,6 +38,9 @@ import { AddUsersComponent } from './add-users/add-users.component';
 import { LoginGuard } from './LoginGuard';
 import { AddShopComponent } from './add-shop/add-shop.component';
 import { OrdersViewComponent } from './orders-view/orders-view.component';
+import { PrintLabelsComponent } from './print-labels/print-labels.component';
+import { LabelstestComponent } from './labelstest/labelstest.component';
+import { NgxPrintModule } from 'ngx-print';
 
 
 
@@ -61,6 +64,8 @@ import { OrdersViewComponent } from './orders-view/orders-view.component';
     AddUsersComponent,
     AddShopComponent,
     OrdersViewComponent,
+    PrintLabelsComponent,
+    LabelstestComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,6 +87,7 @@ import { OrdersViewComponent } from './orders-view/orders-view.component';
     MatDividerModule,
     MatIconModule,
     MatDialogModule,
+    NgxPrintModule,
     MatButtonToggleModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
@@ -131,6 +137,16 @@ import { OrdersViewComponent } from './orders-view/orders-view.component';
       {
         path:'ordersview',
         component:OrdersViewComponent,
+        canActivate:[LoginGuard]
+      },
+      {
+        path:'printLabels',
+        component:PrintLabelsComponent,
+        canActivate:[LoginGuard]
+      },
+      {
+        path:'labelstest',
+        component:LabelstestComponent,
         canActivate:[LoginGuard]
       }
     ]),

@@ -1,0 +1,131 @@
+
+
+  @media print {
+    app-print-labels { display: none; }
+  }
+
+.awb-page {
+    /* A5 */
+    /*height: 210mm; 
+width: 148mm;*/
+    height: 152mm;
+    width: 100mm;
+    font-family: Helvetica, Arial, sans-serif;
+    /*background: #f00;*/
+}
+
+.awb.lex {
+    /*height: 14.1cm;
+width: 18.5cm;*/
+    overflow: hidden;
+    font-size: 12px;
+    /*margin: 0.5cm 0 0 0.5cm;*/
+    margin: 0;
+    /*height: 140mm;*/
+    width: 100%;
+}
+
+@media print {
+    html,
+    body {
+        margin: 0.5cm 0 0 0.5cm;
+        height: 210mm;
+        width: 148mm;
+    }
+}
+
+.box {
+    padding: 1px;
+    border: solid 1px;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-align: center;
+}
+
+.text {
+    padding: 2px;
+}
+
+.left {
+    float: left;
+}
+
+.clear {
+    clear: both;
+}
+
+.barcode {
+    overflow: hidden !important;
+    text-align: center;
+}
+
+.barcode img {
+    max-width: 99%;
+    height: 100%;
+}
+
+.customer-signature {
+    margin-top: 10px;
+}
+
+.shipping-address li {
+    display: inline;
+}
+
+.hidden-non-BKK,
+.hidden-BKK {
+    display: none;
+}
+
+.show-BKK {
+    display: inline !important;
+}
+
+.hidden-non-Cash,
+.hidden-Cash {
+    display: none;
+}
+
+.hidden-Cash.show-COD {
+    display: inline !important;
+}
+
+.hidden-non-Cash.show-COD {
+    display: none !important;
+}
+
+.hidden-non-Cash {
+    display: inline !important;
+}
+
+.cut-line {
+    margin-top: 45px;
+    width: 100%;
+    border-top: 1px dashed black;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.qrcode img {
+    width: 96%;
+    margin-top: 3%;
+}
+
+.box,
+        .awb-page {
+            position: relative;
+        }
+    
+        .tinggi {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            font-size: 10px;
+            line-height: 100%;
+        }
+    
+        .awb-page>.tinggi {
+            right: -100px;
+        }

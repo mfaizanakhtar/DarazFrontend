@@ -1,3 +1,7 @@
+import { LabelService } from './../services/label.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { OrderItemsService } from './../services/orderItems.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
@@ -39,7 +43,7 @@ export class OrdersViewComponent implements OnInit {
   pageEvent: PageEvent;
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
-  constructor(private orderService:OrdersService) { }
+  constructor(private orderService:OrdersService,private orderItemsService:OrderItemsService,private toastr:ToastrService,private router:Router,private lableService:LabelService) { }
 
   ngOnInit(): void {
     this.selectedVal='All'
@@ -49,10 +53,11 @@ export class OrdersViewComponent implements OnInit {
     this.getOrders()
   }
 
-  getOrders(){  
+  getOrders(){ 
     if(this.StatusFilter=='All') this.StatusFilter=null
     if(this.Store=='All') this.Store=null
     if(this.Fulfillment=='All') this.Fulfillment=null
+    this.selected=[]
 
     this.loadingIndicator = true;
     this.orderService.get('/?'+'OrderItems.Status='+this.StatusFilter+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
@@ -63,6 +68,34 @@ export class OrdersViewComponent implements OnInit {
       this.StoreArray=res[2]
       this.loadingIndicator = false;
     })
+  }
+
+  UpdateStatus(Status){
+    // console.log(Status)
+    // console.log(this.selected)
+    var selectedArray=[]
+    this.selected.map(s=>{
+      selectedArray.push(s.OrderId)
+    })
+
+    this.orderItemsService.updateData("Update",Status,selectedArray).subscribe(res=>{
+      var response:any=res
+      if(response.nModified>0){
+        this.selected=[]
+        this.getOrders()
+      } 
+    })
+
+  }
+
+  printLabels(){
+    if(this.Fulfillment!="Dropshipping"){
+      this.toastr.warning("Please Select Fulfillment Type to FBM")
+    }
+    else{
+      this.lableService.setOrders(this.selected)
+      this.router.navigate(["printLabels"])
+    }
   }
 
   StatusFilterClicked(status){
@@ -129,13 +162,11 @@ export class OrdersViewComponent implements OnInit {
   }
 //NGX-DATATABLE
   onSelect({ selected }) {
-    console.log('Select Event', selected, this.selected);
 
     this.selected.splice(0, this.selected.length);
     for(const sel of selected){
       this.selected.push(sel);
     }
-    console.log(this.selected);
   }
 
   onActivate(event) {

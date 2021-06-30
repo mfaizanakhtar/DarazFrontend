@@ -27,7 +27,7 @@ export class UsersComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.getAllUsers()
-
+    
   }
 
   onSelect(event){
@@ -49,6 +49,7 @@ export class UsersComponent implements AfterViewInit {
   getAllUsers(){
     this.user.getAll().subscribe(res=>{
       this.orders=res
+      
       
     })
   }

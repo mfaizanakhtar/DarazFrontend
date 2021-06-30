@@ -20,3 +20,8 @@
 .cdk-overlay-connected-position-bounding-box {
     z-index: 99999 !important;
   }
+
+  @media print {
+    app-root > * { display: none; }
+    app-root app-print-labels { display: block; }
+  }
