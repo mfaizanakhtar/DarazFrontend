@@ -192,9 +192,9 @@ rowHeight="auto"
 <ngx-datatable-column [width]="160" name="Payment Method" prop="PaymentMethod"></ngx-datatable-column>
 <ngx-datatable-column [width]="70" name="Price" prop="Price"></ngx-datatable-column>
 <ngx-datatable-column [width]="50" name="#" prop="ItemsCount"></ngx-datatable-column>
-<ngx-datatable-column [width]="65" name="Status" prop="Statuses">
-  <ng-template let-row="row" let-status="value" ngx-datatable-cell-template>
-    {{ status[0] }}
+<ngx-datatable-column [width]="65" name="Status" prop="OrderItems">
+  <ng-template let-row="row" let-orderitem="value" ngx-datatable-cell-template>
+    {{ orderitem[0].Status }}
   </ng-template>
 </ngx-datatable-column>
 <ngx-datatable-column name="Shop ID" prop="ShopId" [width]="170"></ngx-datatable-column>

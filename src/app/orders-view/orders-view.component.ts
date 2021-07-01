@@ -92,6 +92,9 @@ export class OrdersViewComponent implements OnInit {
     if(this.Fulfillment!="Dropshipping"){
       this.toastr.warning("Please Select Fulfillment Type to FBM")
     }
+    else if(this.StatusFilter!="ready_to_ship"){
+      this.toastr.warning("Please Select Status Filter To Ready To Ship")
+    }
     else{
       this.lableService.setOrders(this.selected)
       this.router.navigate(["printLabels"])
