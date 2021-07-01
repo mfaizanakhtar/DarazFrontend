@@ -1,24 +1,35 @@
 
-/* 
-  @media print {
-    app-print-labels { width: 0;height: 0; }
+.la-print-page {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 700px;
+    min-height: 990px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 0 auto 30px;
+}
+
+.invoice { page-break-after: always;display:flex }
+.invoice:last-child { page-break-after: avoid; }
+
+
+
+@media screen {
+    :host {
+      display: block;
+    }
   }
 
-  
-@page :left {
-    margin: 10cm;
-    }
-    
-    @page :right {
-    margin: 10cm;
-    } */
-    
+html, body {
+    height: 10;
+    margin: 0;
+  }
 
 .awb-page {
     /* A5 */
-    /*height: 210mm; 
-width: 148mm;*/
-    height: 304mm;
+    /* height: 210mm; 
+width: 148mm; */
+    height: 152mm;
     width: 100mm;
     font-family: Helvetica, Arial, sans-serif;
     /*background: #f00;*/
@@ -35,14 +46,14 @@ width: 18.5cm;*/
     width: 100%;
 }
 
-@media print {
+/* @media print {
     html,
     body {
         margin: 0.5cm 0 0 0.5cm;
         height: 210mm;
         width: 148mm;
     }
-}
+} */
 
 .box {
     padding: 1px;

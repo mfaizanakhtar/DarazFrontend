@@ -1,8 +1,9 @@
-<button printSectionId="pdfLabels" [useExistingCss]="true" ngxPrint>print</button>
-<div id="pdfLabels">
-<div class="awb-page">
+<button #printButton printSectionId="pdfLabels" [useExistingCss]="true" ngxPrint>print</button>
+
+<div class="la-print-page" id="pdfLabels">
+<div class="awb-page invoice" *ngFor="let order of orders">
     <div class="awb lex">
-    <div class="box left" style="width:35%; height:0.8cm; border-right: 0; border-bottom: 0;"><img alt="image" src="https://img.alicdn.com/tfs/TB1M9kWcAL0gK0jSZFtXXXQCXXa-398-380.png" style="height:95%" /></div>
+    <div class="box left" style="width:35%; height:0.8cm; border-right: 0; border-bottom: 0;"></div>
     
     <div class="box left" style="padding: 0;font-size: 11px;width: 35%;line-height: 0.3cm;height: 0.8cm;font-weight: bold;border-right: 0;border-bottom: 0;">
     <div style="line-height: 15px;line-height: .35cm;"><span style="text-align: left;font-size: 5px;font-weight: 800;line-height: .1cm;">Order Number</span> <span style="display:block;font-weight: normal;">order_nr</span></div>
@@ -51,6 +52,9 @@
     <div class="box left text-left" style="height: 1.4cm; font-size:10px; width:48%; padding: 5px; border-right: 0;"><strong>Package Weight:</strong> total_package_weight</div>
     
     <div class="box left text-left" style="height: 1.4cm; font-size:18px; padding: 8px 5px; width: 17%; text-align: center;">sum_items_per_package</div>
+    <div class="box clear" style="width:100%; border-bottom: 50; height: 20px;">
+        
+    </div>
     </div>
     </div>
 
