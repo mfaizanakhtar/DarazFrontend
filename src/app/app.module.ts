@@ -33,6 +33,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
+import { NgxBarcodeModule } from 'ngx-barcode';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { AddUsersComponent } from './add-users/add-users.component';
 import { LoginGuard } from './LoginGuard';
@@ -88,6 +89,7 @@ import { NgxPrintModule } from 'ngx-print';
     MatIconModule,
     MatDialogModule,
     NgxPrintModule,
+    NgxBarcodeModule,
     MatButtonToggleModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
