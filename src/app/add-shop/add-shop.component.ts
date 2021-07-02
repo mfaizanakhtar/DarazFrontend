@@ -13,6 +13,12 @@ export class AddShopComponent implements OnInit {
   shopId:any
   secretKey:any
   isDelete=false
+  shopName:any
+  shopAddress:any
+  shopState:any
+  shopArea:any
+  shopLocation:any
+  shopPhone:any
 
   constructor(@Inject(MAT_DIALOG_DATA) private idData:any,private addid:AddidService,private toastr:ToastrService,private dialogRef:MatDialogRef<AddShopComponent>) { }
   isUpdate:boolean
@@ -23,7 +29,10 @@ export class AddShopComponent implements OnInit {
 
   shopAdd(){
     if(this.isUpdate){
-      this.addid.updateData('update','',{_id:this.idData._id,shopid:this.shopId,secretkey:this.secretKey}).subscribe(res=>{
+      this.addid.updateData('update','',
+      {_id:this.idData._id,shopid:this.shopId,secretkey:this.secretKey,shopAddress:this.shopAddress,
+        shopState:this.shopState,shopArea:this.shopArea,shopLocation:this.shopLocation,shopName:this.shopName,shopPhone:this.shopPhone})
+      .subscribe(res=>{
         var updateRes:any = res
         if(updateRes.nModified==1){
           this.toastr.success("Shop Updated")
@@ -38,7 +47,14 @@ export class AddShopComponent implements OnInit {
 
       this.addid.postData({
         shopid:this.shopId,
-        secretkey:this.secretKey
+        secretkey:this.secretKey,
+        shopAddress:this.shopAddress,
+        shopState:this.shopState,
+        shopArea:this.shopArea,
+        shopLocation:this.shopLocation,
+        shopName:this.shopName,
+        shopPhone:this.shopPhone
+
       })
       .subscribe(response=>{
         var res:any = response;
@@ -60,7 +76,15 @@ export class AddShopComponent implements OnInit {
       this.isUpdate = true
       this.shopId=this.idData.shopid
       this.secretKey=this.idData.secretkey
+      this.shopAddress=this.idData.shopAddress
+      this.shopState=this.idData.shopState
+      this.shopArea=this.idData.shopArea
+      this.shopLocation=this.idData.shopLocation
+      this.shopName=this.idData.shopName
+      this.shopPhone=this.idData.shopPhone
+
       document.getElementById('btnShop').innerHTML="Update Shop"
+
       this.isDelete=true
       
     }

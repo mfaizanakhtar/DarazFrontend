@@ -8,6 +8,32 @@
     <mat-label>Secret Key</mat-label>
     <input [(ngModel)]="secretKey" matInput placeholder="Ex. AxPJrQZdWmiMFsqQZdWmiMZdW">
 </mat-form-field>
+<mat-divider style="margin-top:5px;margin-bottom:5px"></mat-divider>
+<h6>Required for Labels Printing(Go to Profile > General > Warehouse Address)</h6>
+<mat-form-field class="example-form-field" appearance="fill">
+    <mat-label>Shop Name</mat-label>
+    <input [(ngModel)]="shopName" matInput placeholder="Ex. Samsung">
+</mat-form-field>
+<mat-form-field class="example-form-field" appearance="fill">
+    <mat-label>Shop Address</mat-label>
+    <input [(ngModel)]="shopAddress" matInput placeholder="Ex. Office no 1234, Street no 1234">
+</mat-form-field>
+<mat-form-field class="example-form-field" appearance="fill">
+    <mat-label>Shop State</mat-label>
+    <input [(ngModel)]="shopState" matInput placeholder="Ex. Sindh">
+</mat-form-field>
+<mat-form-field class="example-form-field" appearance="fill">
+    <mat-label>Shop Area</mat-label>
+    <input [(ngModel)]="shopArea" matInput placeholder="Ex. Karachi-Saddar">
+</mat-form-field>
+<mat-form-field class="example-form-field" appearance="fill">
+    <mat-label>Shop Location</mat-label>
+    <input [(ngModel)]="shopLocation" matInput placeholder="Ex. Saddar">
+</mat-form-field>
+<mat-form-field class="example-form-field" appearance="fill">
+    <mat-label>Shop Phone</mat-label>
+    <input [(ngModel)]="shopPhone" matInput placeholder="Ex. 03001234567">
+</mat-form-field>
 <br>
 <button id="btnShop" mat-raised-button color="primary" (click)="shopAdd()">Add Shop</button>
 <br>

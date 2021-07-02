@@ -47,7 +47,7 @@ export class ShopIdComponent implements OnInit {
 
   clickId(id){
     var dialogRef = this.dialog.open(AddShopComponent,{
-      width:'500px',height:'400px',data:id
+      width:'1300px',height:'700px',data:id
     })
     
     dialogRef.afterClosed().subscribe(res=>{
@@ -58,7 +58,7 @@ export class ShopIdComponent implements OnInit {
 
   addNewIdDialog(){
     var dialogRef=this.dialog.open(AddShopComponent,{
-      width:'500px',height:'400px'
+      width:'1300px',height:'700px'
     })
 
     dialogRef.afterClosed().subscribe(res=>{
