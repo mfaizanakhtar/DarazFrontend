@@ -6,52 +6,52 @@
     <div class="box left" style="width:35%; height:0.8cm; border-right: 0; border-bottom: 0;"></div>
     
     <div class="box left" style="padding: 0;font-size: 11px;width: 35%;line-height: 0.3cm;height: 0.8cm;font-weight: bold;border-right: 0;border-bottom: 0;">
-    <div style="line-height: 15px;line-height: .35cm;"><span style="text-align: left;font-size: 5px;font-weight: 800;line-height: .1cm;">Order Number</span> <span style="display:block;font-weight: normal;">order_nr</span></div>
+    <div style="line-height: 15px;line-height: .35cm;"><span style="text-align: left;font-size: 5px;font-weight: 800;line-height: .1cm;">Order Number</span> <span style="display:block;font-weight: normal;">{{order.OrderId}}</span></div>
     </div>
     
-    <div class="box left" style="text-align: center;font-size:12px; width:30%; line-height:14px; height:0.8cm; padding-top: 7px; border-bottom: 0;">order_date</div>
+    <div class="box left" style="text-align: center;font-size:12px; width:30%; line-height:14px; height:0.8cm; padding-top: 7px; border-bottom: 0;">{{order.CreatedAt | date:'dd MMM yyy'}}</div>
     
     <div class="box clear" style="width:100%;border-bottom: 0; padding-bottom: 10px;">
-    <div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm">#barcodes.C128_2_115 tracking_id /barcodes.C128_2_115</div>
+    <div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm"><img src={{order.OrderItems[0].trackingBarcode}} /></div>
     
-    <div style="font-size:12px; line-height:11px;">Tracking Number:  tracking_id </div>
+    <div style="font-size:12px; line-height:11px;">Tracking Number:  {{order.OrderItems[0].TrackingCode}} </div>
     </div>
     
     <div class="box left" style="width:75%; border-bottom: 0; padding-bottom: 10px; height: 3.9cm; border-right: 0;">
-    <div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm">#barcodes.C128_2_115 portcode /barcodes.C128_2_115</div>
+    <div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm"><img src={{order.OrderItems[0].portcodeBarcode}} /></div>
     
-    <div style="font-size:18px; line-height:24px; font-weight: 700;">Port Code:&nbsp;portcode</div>
+    <div style="font-size:18px; line-height:24px; font-weight: 700;">Port Code:&nbsp;{{order.OrderItems[0].PortCode}}</div>
     </div>
     
     <div class="box left" style="padding: 0; font-size:8px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;">O:</div>
     
-    <div class="box left" style="padding: 0; font-size:8px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;"><span style="font-size:9px;">seller_business_city&nbsp;</span></div>
+    <div class="box left" style="padding: 0; font-size:8px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;"><span style="font-size:9px;">-&nbsp;</span></div>
     
-    <div class="box left" style="padding: 0; font-size:8px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;"><span style="font-size:9px;">delivery_address_type</span></div>
+    <div class="box left" style="padding: 0; font-size:8px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;"><span style="font-size:9px;">-</span></div>
     
     <div class="box left" style="padding: 0; font-size:10px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;">
     <p>&nbsp;</p>
     </div>
     
-    <div class="box left" style="padding: 0; font-size:10px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;"><span >NON COD </span></div>
+    <div class="box left" style="padding: 0; font-size:10px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;"><span >{{order.PaymentMethod}} </span></div>
     
-    <div class="box left" style="padding: 0; font-size:10px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;">cash_on_delivery_collection</div>
+    <div class="box left" style="padding: 0; font-size:10px; line-height:0.5cm; width:25%; height:0.65cm; font-weight: bold; border-bottom: 0;"><div *ngIf="order.PaymentMethod=='COD'">{{ order.Price+order.ShippingFee | currency:'PKR':'symbol'}}</div>><div *ngIf="order.PaymentMethod!='COD'">-</div>></div>
     
     <div class="box clear" style="width:100%; border-bottom: 0; padding-bottom: 10px">
-    <div class="barcode" style="height: 1.1cm; margin-bottom: 0.1cm">barcodes.C128_2_40 order_nr /barcodes.C128_2_40</div>
+    <div class="barcode" style="height: 1.1cm; margin-bottom: 0.1cm"><img src={{order.OrderItems[0].orderIdBarcode}} /></div>
     
-    <div style="font-size:12px; line-height:11px;">Order Number:  order_nr </div>
+    <div style="font-size:12px; line-height:11px;">Order Number:  {{order.OrderId}} </div>
     </div>
     
-    <div class="box left qrcode" style="width:35%; padding-bottom: 10px; height: 4cm; border-right: 0;">#barcodes.QRCODE_1_1 tracking_id, portcode, total /barcodes.QRCODE_1_1</div>
+    <div class="box left qrcode" style="width:35%; padding-bottom: 10px; height: 4.5cm; border-right: 0;"><img src={{order.OrderItems[0].qrCode}} /></div>
     
-    <div class="box left text-left" style="width:65%; font-size:10px; border-bottom: 0; padding: 5px; height: 1.5cm;"><strong>Recipient</strong>: shipping_address_customer_name (Tel: shipping_address_phone_number - shipping_address_street shipping_address_street2 shipping_address_street3 shipping_address_street4 shipping_address_street5, shipping_address_country</div>
+    <div class="box left text-left" style="width:65%; font-size:10px; border-bottom: 0; padding: 5px; height: 2cm;"><strong>Recipient</strong>: {{order.AddressShipping.FirstName}} {{order.AddressShipping.LastName}} <br> {{order.AddressShipping.Address1}} {{order.AddressShipping.Address2}} {{order.AddressShipping.Address3}} {{order.AddressShipping.Address4}} {{order.AddressShipping.Address5}}, {{order.AddressShipping.Country}}<br>Phone {{order.AddressShipping.Phone}}</div>
     
     <div class="box left text-left" style="font-size:9px; width:65%; padding: 5px; height: 1.1cm; border-bottom: 0;"><strong>Seller:&nbsp;</strong>seller_address&nbsp;(<strong> seller_name </strong>)</div>
     
     <div class="box left text-left" style="height: 1.4cm; font-size:10px; width:48%; padding: 5px; border-right: 0;"><strong>Package Weight:</strong> total_package_weight</div>
     
-    <div class="box left text-left" style="height: 1.4cm; font-size:18px; padding: 8px 5px; width: 17%; text-align: center;">sum_items_per_package</div>
+    <div class="box left text-left" style="height: 1.4cm; font-size:18px; padding: 8px 5px; width: 17%; text-align: center;">{{order.ItemsCount}}</div>
     <div class="box clear" style="width:100%; border-bottom: 50; height: 20px;">
         
     </div>
@@ -59,3 +59,4 @@
     </div>
 
 </div>
+<br>
