@@ -18,7 +18,16 @@
     </div>
     
     <div class="box left" style="width:75%; border-bottom: 0; padding-bottom: 10px; height: 3.9cm; border-right: 0;">
-    <div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm"></div>
+    <div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm">
+        <img *ngIf="order.OrderItems[0].ShipmentProvider=='Delivery: PK-DEX'" src="../../assets/img/PK-DEX.jpg" />
+        <img *ngIf="order.OrderItems[0].ShipmentProvider=='Delivery: PK-LCS'" src="../../assets/img/PK-LCS.jpg" />
+        <img *ngIf="order.OrderItems[0].ShipmentProvider=='PK-LMP'" src="../../assets/img/PK-LMP.jpg" />
+        <img *ngIf="order.OrderItems[0].ShipmentProvider=='Delivery: PK-M&P'" src="../../assets/img/PK-MnP.jpg" />
+        <img *ngIf="order.OrderItems[0].ShipmentProvider=='Delivery: PK-CALLCOURIER'" src="../../assets/img/PK-CALLCOURIER.jpg" />
+        <img *ngIf="order.OrderItems[0].ShipmentProvider=='Delivery: PK-TCS'" src="../../assets/img/PK-TCS.jpg" />
+        <img *ngIf="order.OrderItems[0].ShipmentProvider=='Delivery: PK-RIDER-API'" src="../../assets/img/PK-RIDER.jpg" />
+        <h6 *ngIf="order.OrderItems[0].ShipmentProvider=='Delivery: PK-MOVEX'" style="margin-top:50px" ><strong>DARAZ</strong></h6>
+    </div>
     
     <div style="font-size:18px; line-height:24px; font-weight: 700;">Port Code:&nbsp;{{order.OrderItems[0].PortCode}}</div>
     </div>
@@ -54,8 +63,8 @@
     <div class="box left text-left" style="height: 1.4cm; font-size:10px; width:48%; padding: 5px; border-right: 0;"></div>
 
     <div class="box left text-left" style="height: 1.4cm; font-size:18px; padding: 8px 5px; width: 17%; text-align: center;">{{order.ItemsCount}}</div>
-    <div class="box" style="width:100%; border-bottom: 50; height: 20px;">
-        <p *ngFor="let items of order.OrderItems;let i=index">{{i+1}}) {{items.BaseSku}}</p>
+    <div class="box left text-left" style="width:100%; border-bottom: 50; height: 20px;">
+        <b *ngFor="let items of order.OrderItems;let i=index">| {{i+1}}) {{items.BaseSku}} </b>
     </div>
     </div>
     </div>
