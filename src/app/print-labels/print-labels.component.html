@@ -1,7 +1,8 @@
 <button #printButton printSectionId="pdfLabels" [useExistingCss]="true" ngxPrint>print</button>
 
 <div class="la-print-page" id="pdfLabels">
-<div class="awb-page invoice" *ngFor="let order of orders">
+<div class="invoice" *ngFor="let order of orders">
+<div class="awb-page" *ngIf="order.OrderItems.length>0">
     <div class="awb lex">
     <div class="box left" style="width:35%; height:0.8cm; border-right: 0; border-bottom: 0;"></div>
     
@@ -26,7 +27,14 @@
         <img *ngIf="order.OrderItems[0].ShipmentProvider=='Delivery: PK-CALLCOURIER'" src="../../assets/img/PK-CALLCOURIER.jpg" />
         <img *ngIf="order.OrderItems[0].ShipmentProvider=='Delivery: PK-TCS'" src="../../assets/img/PK-TCS.jpg" />
         <img *ngIf="order.OrderItems[0].ShipmentProvider=='Delivery: PK-RIDER-API'" src="../../assets/img/PK-RIDER.jpg" />
-        <h6 *ngIf="order.OrderItems[0].ShipmentProvider=='Delivery: PK-MOVEX'" style="margin-top:50px" ><strong>DARAZ</strong></h6>
+        <h6 
+        *ngIf="order.OrderItems[0].ShipmentProvider=='Delivery: PK-MOVEX' || 
+        order.OrderItems[0].ShipmentProvider=='Delivery: PK-BlueEx' || 
+        order.OrderItems[0].ShipmentProvider=='Delivery: PK-TRAX'" style="margin-top:50px" >
+
+        <strong>DARAZ</strong>
+        
+        </h6>
     </div>
     
     <div style="font-size:18px; line-height:24px; font-weight: 700;">Port Code:&nbsp;{{order.OrderItems[0].PortCode}}</div>
@@ -62,9 +70,10 @@
     <!-- <div class="box left text-left" style="height: 1.6cm; font-size:10px; width:48%; padding: 5px; border-right: 0;"><strong>Package Weight:</strong> total_package_weight</div> -->
     <div class="box left text-left" style="height: 1.4cm; font-size:10px; width:48%; padding: 5px; border-right: 0;"></div>
 
-    <div class="box left text-left" style="height: 1.4cm; font-size:18px; padding: 8px 5px; width: 17%; text-align: center;">{{order.ItemsCount}}</div>
+    <div class="box left text-left" style="height: 1.4cm; font-size:18px; padding: 8px 5px; width: 17%; text-align: center;">{{order.OrderItems.length}}</div>
     <div class="box left text-left" style="width:100%; border-bottom: 50; height: 20px;">
         <b *ngFor="let items of order.OrderItems;let i=index">| {{i+1}}) {{items.BaseSku}} </b>
+    </div>
     </div>
     </div>
     </div>

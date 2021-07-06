@@ -33,12 +33,6 @@ export class ReturntrackingComponent implements OnInit {
     this.wrongAudioLoad()
   }
 
-  formatDate(date){
-    var d = new Date(date);
-    var formattedDate=d.toLocaleDateString('en-US',{weekday:'long'})+' '+ d.getDate()+'-'+d.getMonth()+'-'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes()
-    return formattedDate
-  }
-
 
   insertTracking(f){
     this.order.updateData("return",f.value.tracking,{}).subscribe(response=>{

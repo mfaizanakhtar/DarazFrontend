@@ -30,12 +30,6 @@ export class DispatchComponent implements OnInit {
     this.wrongAudioLoad();
   }
 
-  formatDate(date){
-    var d = new Date(date);
-    var formattedDate=d.toLocaleDateString('en-US',{weekday:'long'})+' '+ d.getDate()+'-'+d.getMonth()+'-'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes()
-    return formattedDate
-  }
-
   dispatch(f){
     this.order.updateData("dispatch",f.value.tracking,{}).subscribe(res=>{
       console.log(res);

@@ -46,6 +46,13 @@ export class DataService {
       map(response=>response)
     )
   }
+
+  postDataByCap(cap,data){
+    this.setHeaders()
+    return this.http.post(this.url+cap,data,this.options).pipe(
+      map(response=>response)
+    )
+  }
   
 
   updateData(caption,id,data){

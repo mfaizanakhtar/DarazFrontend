@@ -91,6 +91,11 @@
     <button (click)="UpdateStatus('Claim Received')" mat-menu-item>Claim Received</button>
   </mat-menu>
 
+  <button style="margin-left: 50px;" mat-stroked-button color="primary" [matMenuTriggerFor]="darazStatusMenu">Set Daraz Status</button>
+  <mat-menu #darazStatusMenu="matMenu">
+    <button (click)="setStatusToRTS()"  mat-menu-item>Set to RTS</button>
+  </mat-menu>
+
 </div>
 <mat-divider class="topdivider"></mat-divider>
 
@@ -130,16 +135,16 @@ rowHeight="auto"
           <th>Printed</th>
         </tr>
         <tr *ngFor="let item of row.OrderItems; index as i">
-          <td>{{i+1}}</td>
-          <td>{{row.AddressBilling.FirstName}}</td>
-          <td>{{item.BaseSku}}</td>
-          <td>{{item.Name}}</td>
-          <td>{{item.TrackingCode}}</td>
-          <td ><img width="70px" height="70px" src={{item.productMainImage}}></td>
-          <td>{{item.ShippingType}}</td>
-          <td>{{item.WarehouseStatus}}</td>
-          <td>{{item.Status}}</td>
-          <td></td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{i+1}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{row.AddressBilling.FirstName}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.BaseSku}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Name}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.TrackingCode}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"><img width="70px" height="70px" src={{item.productMainImage}}></td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ShippingType}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.WarehouseStatus}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Status}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"></td>
         </tr>
       </table>
     </div>
@@ -186,7 +191,7 @@ rowHeight="auto"
 <!-- <ngx-datatable-column name="Item ID" prop="OrderItemId"></ngx-datatable-column> -->
 <ngx-datatable-column name="Order Date" prop="CreatedAt">
   <ng-template let-row="row" let-date="value" ngx-datatable-cell-template>
-    {{ formatDate(date) }}
+    {{ date | date}}
   </ng-template>
 </ngx-datatable-column>
 <ngx-datatable-column [width]="160" name="Payment Method" prop="PaymentMethod"></ngx-datatable-column>

@@ -10,18 +10,22 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./print-labels.component.css']
 })
 export class PrintLabelsComponent implements OnInit {
+  ordersIdArray=[]
   orders:any
   constructor(private labels:LabelService,private sanitizer:DomSanitizer) { }
   
   ngOnInit(): void {
+    console.log(this.labels.getOrders().length)
     this.orders=this.labels.getOrders()
-    console.log(this.orders)
+    // this.labels.postDataByCap('/getLabelsData',{Orders:this.ordersIdArray}).subscribe(res=>{
+    //   this.orders = res
+    // })
   }
 
-  getImage(string){
-   var imagePath = this.sanitizer.bypassSecurityTrustResourceUrl(string);
-    return imagePath
-  }
+  // getImage(string){
+  //  var imagePath = this.sanitizer.bypassSecurityTrustResourceUrl(string);
+  //   return imagePath
+  // }
 }
 
 

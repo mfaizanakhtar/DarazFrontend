@@ -14,6 +14,7 @@ import { OrdersService } from '../services/orders.service';
 })
 export class OrdersViewComponent implements OnInit {
   //data
+  // all=null
   orders:any;
   StoreArray=[]
   todayDate=new Date();
@@ -54,19 +55,23 @@ export class OrdersViewComponent implements OnInit {
   }
 
   getOrders(){ 
-    if(this.StatusFilter=='All') this.StatusFilter=null
-    if(this.Store=='All') this.Store=null
-    if(this.Fulfillment=='All') this.Fulfillment=null
+    var tempstatus,tempstore,tempfulfillment
+    if(this.StatusFilter=='All') {tempstatus=null } else tempstatus=this.StatusFilter
+    if(this.Store=='All') { tempstore=null } else tempstore=this.Store
+    if(this.Fulfillment=='All') { tempfulfillment=null } else tempfulfillment=this.Fulfillment
     this.selected=[]
 
     this.loadingIndicator = true;
-    this.orderService.get('/?'+'OrderItems.Status='+this.StatusFilter+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
-    +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopId="+this.Store+"&OrderItems.ShippingType="+this.Fulfillment+"&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()).subscribe(res=>{
+    this.orderService.get('/orders?'+'OrderItems.Status='+tempstatus+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
+    +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopId="+tempstore+"&OrderItems.ShippingType="+tempfulfillment+"&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()).subscribe(res=>{
       console.log(res)
+
       this.orders=res[0]
       this.length=res[1]
       this.StoreArray=res[2]
       this.loadingIndicator = false;
+
+
     })
   }
 
@@ -96,8 +101,18 @@ export class OrdersViewComponent implements OnInit {
       this.toastr.warning("Please Select Status Filter To Ready To Ship")
     }
     else{
-      this.lableService.setOrders(this.selected)
-      this.router.navigate(["printLabels"])
+      // this.lableService.setOrders(this.selected)
+      // this.router.navigate(["printLabels"])
+      var ordersData=[]
+      for(var order of this.selected){
+        ordersData.push(order.OrderId)
+      }
+
+      this.orderService.postDataByCap('/getLabelsData',{Orders:ordersData}).subscribe(res=>{
+        console.log(res)
+        this.lableService.setOrders(res)
+        this.router.navigate(["printLabels"])
+      })
     }
   }
 
@@ -106,6 +121,22 @@ export class OrdersViewComponent implements OnInit {
     this.pIndex=0
     this.StatusFilter=status
     this.getOrders()
+  }
+
+  setStatusToRTS(){
+    this.loadingIndicator=true
+    this.orderService.postDataByCap('/setStatusToRTS',{Orders:this.selected}).subscribe(res=>{
+      var response:any = res
+      console.log(response.count)
+      if(response.count>0){
+        this.toastr.success("RTS Request Successful")
+        this.getOrders()
+        this.loadingIndicator=false
+      }
+      else{
+        this.toastr.error("Error Submitting RTS request")
+      }
+    })
   }
 
   DateInput(mode,event){
@@ -122,13 +153,6 @@ export class OrdersViewComponent implements OnInit {
     }
     
 
-  }
-
-  formatDate(date){
-    var d = new Date(date);
-    var month = d.getMonth()+1
-    var formattedDate=d.toLocaleDateString('en-US',{weekday:'long'})+' '+ d.getDate()+'-'+month+'-'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes()
-    return formattedDate
   }
 
   changePageData(event?:PageEvent){
