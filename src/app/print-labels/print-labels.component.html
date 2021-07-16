@@ -60,6 +60,7 @@
     
     <div style="font-size:12px; line-height:11px;">Order Number:  {{order.OrderId}} </div>
     </div>
+
     
     <div class="box left qrcode" style="width:35%; padding-bottom: 10px; height: 5cm; border-right: 0;"><img src={{order.OrderItems[0].qrCode}} /></div>
     
@@ -68,12 +69,14 @@
     <div class="box left text-left" style="font-size:9px; width:65%; padding: 5px; height: 1.5cm; border-bottom: 0;"><strong>Sender:&nbsp;</strong>{{order.ShopName}}<br>{{order.ShopAddress}}, {{order.ShopState}}, {{order.ShopArea}}, {{order.ShopLocation}} - Phone: {{order.ShopPhone}}</div>
     
     <!-- <div class="box left text-left" style="height: 1.6cm; font-size:10px; width:48%; padding: 5px; border-right: 0;"><strong>Package Weight:</strong> total_package_weight</div> -->
-    <div class="box left text-left" style="height: 1.4cm; font-size:10px; width:48%; padding: 5px; border-right: 0;"></div>
+    <div class="box left text-left" style="height: 1.4cm; font-size:10px; width:48%; padding: 5px; border-right: 0;">
+        <b *ngFor="let items of order.OrderItems;let i=index">{{items.BaseSku}} - </b>
+    </div>
 
     <div class="box left text-left" style="height: 1.4cm; font-size:18px; padding: 8px 5px; width: 17%; text-align: center;">{{order.OrderItems.length}}</div>
-    <div class="box left text-left" style="width:100%; border-bottom: 50; height: 20px;">
+    <!-- <div class="box left text-left" style="width:100%; border-bottom: 50; height: 20px;">
         <b *ngFor="let items of order.OrderItems;let i=index">| {{i+1}}) {{items.BaseSku}} </b>
-    </div>
+    </div> -->
     </div>
     </div>
     </div>

@@ -54,20 +54,20 @@
 <mat-divider class="topdivider"></mat-divider>
 
 <div class="secondnav">
-  <mat-button-toggle-group name="fontStyle" [value]="selectedVal" aria-label="Font Style">
+  <mat-button-toggle-group name="fontStyle" [value]="StatusFilter" aria-label="Font Style">
     <mat-button-toggle value="All" (click)="StatusFilterClicked('All')">All Orders</mat-button-toggle>
-    <mat-button-toggle (click)="StatusFilterClicked('pending')">Pending</mat-button-toggle>
-    <mat-button-toggle (click)="StatusFilterClicked('ready_to_ship')">RTS</mat-button-toggle>
-    <mat-button-toggle (click)="StatusFilterClicked('RTSDispatched')">RTS-Dispatched</mat-button-toggle>
-    <mat-button-toggle (click)="StatusFilterClicked('shipped')">Shipped</mat-button-toggle>
-    <mat-button-toggle (click)="StatusFilterClicked('delivered')">Delivered</mat-button-toggle>
-    <mat-button-toggle (click)="StatusFilterClicked('delivery failed')">Delivery Failed</mat-button-toggle>
-    <mat-button-toggle (click)="StatusFilterClicked('returned')">Returned</mat-button-toggle>
-    <mat-button-toggle (click)="StatusFilterClicked('DeliveryFailedReceived')">Delivery Failed-Received</mat-button-toggle>
-    <mat-button-toggle (click)="StatusFilterClicked('Claimable')">Claimable</mat-button-toggle>
-    <mat-button-toggle (click)="StatusFilterClicked('ClaimFiled')">Claim Filed</mat-button-toggle>
-    <mat-button-toggle (click)="StatusFilterClicked('ClaimReceived')">Claim Received</mat-button-toggle>
-    <mat-button-toggle (click)="StatusFilterClicked('canceled')">Cancelled</mat-button-toggle>
+    <mat-button-toggle value="pending" (click)="StatusFilterClicked('pending')">Pending</mat-button-toggle>
+    <mat-button-toggle value="ready_to_ship" (click)="StatusFilterClicked('ready_to_ship')">RTS</mat-button-toggle>
+    <mat-button-toggle value="RTSDispatched" (click)="StatusFilterClicked('RTSDispatched')">RTS-Dispatched</mat-button-toggle>
+    <mat-button-toggle value="shipped" (click)="StatusFilterClicked('shipped')">Shipped</mat-button-toggle>
+    <mat-button-toggle value="delivered" (click)="StatusFilterClicked('delivered')">Delivered</mat-button-toggle>
+    <mat-button-toggle value="delivery failed" (click)="StatusFilterClicked('delivery failed')">Delivery Failed</mat-button-toggle>
+    <mat-button-toggle value="returned" (click)="StatusFilterClicked('returned')">Returned</mat-button-toggle>
+    <mat-button-toggle value="DeliveryFailedReceived" (click)="StatusFilterClicked('DeliveryFailedReceived')">Delivery Failed-Received</mat-button-toggle>
+    <mat-button-toggle value="Claimable" (click)="StatusFilterClicked('Claimable')">Claimable</mat-button-toggle>
+    <mat-button-toggle value="ClaimFiled" (click)="StatusFilterClicked('ClaimFiled')">Claim Filed</mat-button-toggle>
+    <mat-button-toggle value="ClaimReceived" (click)="StatusFilterClicked('ClaimReceived')">Claim Received</mat-button-toggle>
+    <mat-button-toggle value="canceled" (click)="StatusFilterClicked('canceled')">Cancelled</mat-button-toggle>
   </mat-button-toggle-group>
 </div>
 
@@ -182,27 +182,31 @@ rowHeight="auto"
   </ng-template>
 
 </ngx-datatable-column>
-<ngx-datatable-column name="S.No" [width]="10">
+<ngx-datatable-column name="S.No" [width]="5">
   <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
     <div >{{pIndex*pSize+rowIndex+1}}</div>
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Order" prop="OrderId" ></ngx-datatable-column>
+<ngx-datatable-column [width]="80" name="Order" prop="OrderId" ></ngx-datatable-column>
 <!-- <ngx-datatable-column name="Item ID" prop="OrderItemId"></ngx-datatable-column> -->
-<ngx-datatable-column name="Order Date" prop="CreatedAt">
+<ngx-datatable-column [width]="70" name="Order Date" prop="CreatedAt">
   <ng-template let-row="row" let-date="value" ngx-datatable-cell-template>
     {{ date | date}}
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column [width]="160" name="Payment Method" prop="PaymentMethod"></ngx-datatable-column>
-<ngx-datatable-column [width]="70" name="Price" prop="Price"></ngx-datatable-column>
-<ngx-datatable-column [width]="50" name="#" prop="ItemsCount"></ngx-datatable-column>
-<ngx-datatable-column [width]="65" name="Status" prop="OrderItems">
-  <ng-template let-row="row" let-orderitem="value" ngx-datatable-cell-template>
-    {{ orderitem[0].Status }}
+<ngx-datatable-column [width]="100" name="Payment Method" prop="PaymentMethod"></ngx-datatable-column>
+<ngx-datatable-column [width]="40" name="Price" prop="OrderItems">
+  <ng-template let-row="row" let-orderitems="value" ngx-datatable-cell-template>
+    {{getPrice(orderitems)}}
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Shop ID" prop="ShopId" [width]="170"></ngx-datatable-column>
+<ngx-datatable-column [width]="30" name="#" prop="ItemsCount"></ngx-datatable-column>
+<ngx-datatable-column [width]="55" name="Status" prop="OrderItems">
+  <ng-template let-row="row" let-orderitems="value" ngx-datatable-cell-template>
+    {{getOrderStatus(orderitems)}}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Shop ID" prop="ShopId" [width]="140"></ngx-datatable-column>
 <ngx-datatable-column name="Printed?" prop="isPrinted" [width]="10">
   <ng-template let-row="row" let-isPrinted="value" ngx-datatable-cell-template>
     <div *ngIf='isPrinted'>Yes</div>

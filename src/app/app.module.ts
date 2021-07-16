@@ -42,6 +42,8 @@ import { OrdersViewComponent } from './orders-view/orders-view.component';
 import { PrintLabelsComponent } from './print-labels/print-labels.component';
 import { LabelstestComponent } from './labelstest/labelstest.component';
 import { NgxPrintModule } from 'ngx-print';
+import {MatTabsModule} from '@angular/material/tabs';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -67,6 +69,7 @@ import { NgxPrintModule } from 'ngx-print';
     OrdersViewComponent,
     PrintLabelsComponent,
     LabelstestComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,6 +93,7 @@ import { NgxPrintModule } from 'ngx-print';
     MatDialogModule,
     NgxPrintModule,
     NgxBarcodeModule,
+    MatTabsModule,
     MatButtonToggleModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
@@ -149,6 +153,11 @@ import { NgxPrintModule } from 'ngx-print';
       {
         path:'labelstest',
         component:LabelstestComponent,
+        canActivate:[LoginGuard]
+      },
+      {
+        path:'profile',
+        component:ProfileComponent,
         canActivate:[LoginGuard]
       }
     ]),

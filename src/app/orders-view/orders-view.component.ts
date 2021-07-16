@@ -22,7 +22,7 @@ export class OrdersViewComponent implements OnInit {
   //filters
   Fulfillment='Dropshipping';
   Store="All";
-  StatusFilter=null;
+  StatusFilter;
   enddate:Date
   startdate:Date
   OrderId=null
@@ -47,7 +47,7 @@ export class OrdersViewComponent implements OnInit {
   constructor(private orderService:OrdersService,private orderItemsService:OrderItemsService,private toastr:ToastrService,private router:Router,private lableService:LabelService) { }
 
   ngOnInit(): void {
-    this.selectedVal='All'
+    this.StatusFilter='pending'
     this.backDate.setDate(this.backDate.getDate()-15)
     this.enddate=this.todayDate
     this.startdate=this.backDate 
@@ -73,6 +73,23 @@ export class OrdersViewComponent implements OnInit {
 
 
     })
+  }
+
+  getOrderStatus(orderitems){
+    var result = orderitems.every( (val, i, arr) => val.Status === arr[0].Status )
+    if(result==true){
+      return orderitems[0].Status
+    }
+    else return "Multiple Statuses"
+  }
+
+  getPrice(orderitems){
+    // console.log(orderitems)
+    var result=0
+    for (let items of orderitems){
+      result = result + items.ItemPrice
+    }
+    return result
   }
 
   UpdateStatus(Status){
@@ -120,6 +137,7 @@ export class OrdersViewComponent implements OnInit {
     this.pSize=10
     this.pIndex=0
     this.StatusFilter=status
+    console.log(this.StatusFilter)
     this.getOrders()
   }
 
