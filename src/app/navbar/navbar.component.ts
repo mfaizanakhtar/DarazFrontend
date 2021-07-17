@@ -12,12 +12,19 @@ export class NavbarComponent implements OnInit {
   constructor(private auth:AuthService,private router:Router) { }
 
   ngOnInit(): void {
+    this.auth.getCurrentUser()
   }
 
   logout(){
     this.auth.logout()
     console.log("button click")
     this.router.navigate(['login'])
+  }
+
+  isAdmin(){
+    if(this.auth.getCurrentUser().usertype=='admin'){
+      return true
+    }
   }
 
 }

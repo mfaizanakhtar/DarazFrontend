@@ -13,7 +13,7 @@ export class AuthService {
   login(credentials)
   {
     
-    return this.http.post('http://localhost:3000/api/auth',credentials).pipe(
+    return this.http.post('api/auth',credentials).pipe(
     map(response=>{
       
       this.result = response;

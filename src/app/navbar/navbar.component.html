@@ -31,9 +31,9 @@
               <ul>
                 <li><a routerLink="/">Home</a></li>
                 <li><a routerLink="/ordersview">Orders</a></li>
-                <li><a routerLink="/orders">Order Items</a></li>
                 <li><a routerLink="/dispatch">Dispatch</a></li>
                 <li><a routerLink="/returns">Returns</a></li>
+                <li *ngIf="isAdmin()"><a routerLink="/users">Users</a></li>
                 <li><a href="javascript:void(0)">Options<span class="arrow-down"></span></a>
                   <ul class="dropdown">
                     <li><a routerLink="/shops">Integrated Accounts</a></li>

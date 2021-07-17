@@ -35,7 +35,10 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.startdate.setHours(0,0,0,0);
     this.enddate.setHours(0,0,0,0);
-    this.AllStoreStats(this.startdate,this.enddate);
+    
+    console.log(this.startdate.toISOString());
+    console.log(this.enddate.toISOString());
+    this.AllStoreStats(this.startdate.toISOString(),this.enddate.toISOString());
   }
   DateInput(mode,event){
     if(mode == 'start'){

@@ -118,6 +118,7 @@ export class OrdersViewComponent implements OnInit {
       this.toastr.warning("Please Select Status Filter To Ready To Ship")
     }
     else{
+      this.loadingIndicator=true
       // this.lableService.setOrders(this.selected)
       // this.router.navigate(["printLabels"])
       var ordersData=[]
@@ -128,6 +129,7 @@ export class OrdersViewComponent implements OnInit {
       this.orderService.postDataByCap('/getLabelsData',{Orders:ordersData}).subscribe(res=>{
         console.log(res)
         this.lableService.setOrders(res)
+        this.loadingIndicator=false
         this.router.navigate(["printLabels"])
       })
     }

@@ -44,6 +44,7 @@ import { LabelstestComponent } from './labelstest/labelstest.component';
 import { NgxPrintModule } from 'ngx-print';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ProfileComponent } from './profile/profile.component';
+import { AdminGuard } from './AdminGuard';
 
 
 
@@ -133,7 +134,7 @@ import { ProfileComponent } from './profile/profile.component';
       {
         path:'users',
         component:UsersComponent,
-        canActivate:[LoginGuard]
+        canActivate:[LoginGuard,AdminGuard]
       },
       {
         path:'adduser',
@@ -164,7 +165,7 @@ import { ProfileComponent } from './profile/profile.component';
     MatPaginatorModule,
     MatSortModule
   ],
-  providers: [LoginGuard],
+  providers: [LoginGuard,AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { 
