@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
 
   StoreSelected(event){
     this.ShopId = event.value;
-    this.SkuDetails(this.ShopId,this.startdate,this.enddate);
+    this.SkuDetails(this.ShopId,this.startdate.toISOString(),this.enddate.toISOString());
     
   }
 
