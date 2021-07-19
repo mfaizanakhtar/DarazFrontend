@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
         console.log(this.startdate);
         console.log(this.enddate);
         this.AllStoreStats(this.startdate,this.enddate);
-        this.SkuDetails(this.ShopId,this.startdate,this.enddate)
+        this.SkuDetails(this.ShopId,this.startdate.toISOString(),this.enddate.toISOString())
       }
     }
   }
