@@ -21,6 +21,7 @@ export class DispatchComponent implements OnInit {
   loadingIndicator=true
   correctAudio:any
   wrongAudio:any
+  startdate=new Date();
 
   constructor(private order:OrderItemsService,private toastr:ToastrService) {}
 
@@ -28,10 +29,11 @@ export class DispatchComponent implements OnInit {
     this.dispatchorders();
     this.correctAudioLoad();
     this.wrongAudioLoad();
+    this.startdate.setHours(0,0,0,0);
   }
 
   dispatch(f){
-    this.order.updateData("dispatch",f.value.tracking,{}).subscribe(res=>{
+    this.order.updateData("dispatch",f.value.tracking,{date:this.startdate}).subscribe(res=>{
       console.log(res);
       var result:any = res;
       if(result[0].Status=="Dispatched"){
