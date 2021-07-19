@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
         console.log(this.startdate);
         console.log(this.enddate);
         this.AllStoreStats(this.startdate,this.enddate);
-        this.SkuDetails(this.ShopId,this.startdate.toISOString(),this.enddate.toISOString())
+        this.SkuDetails(this.ShopId,this.startdate,this.enddate)
       }
     }
   }
@@ -58,12 +58,12 @@ export class DashboardComponent implements OnInit {
 
   StoreSelected(event){
     this.ShopId = event.value;
-    this.SkuDetails(this.ShopId,this.startdate.toISOString(),this.enddate.toISOString());
+    this.SkuDetails(this.ShopId,this.startdate,this.enddate);
     
   }
 
   SkuDetails(id,startdate,enddate){
-    this.order.get('Skustats?'+"ShopId="+id+"&startdate="+startdate+"&enddate="+enddate).subscribe(response=>{
+    this.order.get('Skustats?'+"ShopId="+id+"&startdate="+startdate.toISOString()+"&enddate="+enddate.toISOString()).subscribe(response=>{
       // console.log(response);
       this.SkuStoreStats = response;
       this.SkuStoreStats.sort((a,b)=>{

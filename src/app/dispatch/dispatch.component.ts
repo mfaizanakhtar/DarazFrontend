@@ -33,7 +33,7 @@ export class DispatchComponent implements OnInit {
   }
 
   dispatch(f){
-    this.order.updateData("dispatch",f.value.tracking,{date:this.startdate}).subscribe(res=>{
+    this.order.updateData("dispatch",f.value.tracking,{}).subscribe(res=>{
       console.log(res);
       var result:any = res;
       if(result[0].Status=="Dispatched"){
