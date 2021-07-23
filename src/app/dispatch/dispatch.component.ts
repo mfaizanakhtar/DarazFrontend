@@ -21,6 +21,7 @@ export class DispatchComponent implements OnInit {
   loadingIndicator=true
   correctAudio:any
   wrongAudio:any
+  startdate=new Date();
 
   constructor(private order:OrderItemsService,private toastr:ToastrService) {}
 
@@ -28,6 +29,7 @@ export class DispatchComponent implements OnInit {
     this.dispatchorders();
     this.correctAudioLoad();
     this.wrongAudioLoad();
+    this.startdate.setHours(0,0,0,0);
   }
 
   dispatch(f){

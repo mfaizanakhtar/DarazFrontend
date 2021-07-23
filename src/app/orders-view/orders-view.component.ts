@@ -49,6 +49,8 @@ export class OrdersViewComponent implements OnInit {
   ngOnInit(): void {
     this.StatusFilter='pending'
     this.backDate.setDate(this.backDate.getDate()-15)
+    this.todayDate.setHours(0,0,0,0);
+    this.backDate.setHours(0,0,0,0);
     this.enddate=this.todayDate
     this.startdate=this.backDate 
     this.getOrders()
