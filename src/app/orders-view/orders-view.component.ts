@@ -80,7 +80,15 @@ export class OrdersViewComponent implements OnInit {
     if(result==true){
       return orderitems[0].Status
     }
-    else return "Multiple Statuses"
+    else{
+      if(this.StatusFilter=='pending' || this.StatusFilter=='ready_to_ship'){
+        return this.StatusFilter
+      }
+      else if(this.StatusFilter=='RTSDispatched'){
+        return 'ready_to_ship'
+      } 
+      return "Multiple Statuses"
+    } 
   }
 
   getPrice(orderitems){
