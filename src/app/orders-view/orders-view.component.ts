@@ -39,6 +39,8 @@ export class OrdersViewComponent implements OnInit {
   length:number;
   //forStatusDefaultselection
   selectedVal
+  //forSkuSorting
+  skuSort=false
 
   //paginator
   pageEvent: PageEvent;
@@ -64,7 +66,7 @@ export class OrdersViewComponent implements OnInit {
     this.selected=[]
 
     this.loadingIndicator = true;
-    this.orderService.get('/orders?'+'OrderItems.Status='+tempstatus+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
+    this.orderService.get('/orders?'+'OrderItems.Status='+tempstatus+'&skuSort='+this.skuSort+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
     +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopId="+tempstore+"&OrderItems.ShippingType="+tempfulfillment+"&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()).subscribe(res=>{
       console.log(res)
 
@@ -91,6 +93,12 @@ export class OrdersViewComponent implements OnInit {
       } 
       return "Multiple Statuses"
     } 
+  }
+
+  orderSort(event){
+    this.skuSort=event.checked
+    console.log(this.skuSort)
+    this.getOrders()
   }
 
   getPrice(orderitems){
@@ -136,7 +144,7 @@ export class OrdersViewComponent implements OnInit {
         ordersData.push(order.OrderId)
       }
 
-      this.orderService.postDataByCap('/getLabelsData',{Orders:ordersData}).subscribe(res=>{
+      this.orderService.postDataByCap('/getLabelsData',{Orders:ordersData,skuSort:this.skuSort}).subscribe(res=>{
         console.log(res)
         this.lableService.setOrders(res)
         this.loadingIndicator=false

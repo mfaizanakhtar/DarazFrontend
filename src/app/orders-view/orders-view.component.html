@@ -44,6 +44,16 @@
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
+    
+    <div style="margin-left: 10px; margin-top: 15px;">
+      <mat-slide-toggle
+          class="example-margin"
+          color="primary"
+          [checked]="false"
+          (change)=orderSort($event)>
+        SKU Sorting
+      </mat-slide-toggle>
+    </div>
 
 	
 

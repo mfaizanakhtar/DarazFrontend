@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 export class LabelService extends DataService {
   ordersData=[];
   constructor(http:HttpClient) { 
-    super('api/orders',http)
+    super('http://localhost:3000/api/orders',http)
   }
 
   setOrders(orders){
