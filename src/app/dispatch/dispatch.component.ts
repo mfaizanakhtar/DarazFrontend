@@ -42,15 +42,15 @@ export class DispatchComponent implements OnInit {
         this.correctAudio.play();
         this.UpdateDispatchedArray(result[1])
       } 
-      else if(result.Status=="Duplicate"){
+      else if(result[0].Status=="Duplicate"){
         this.toastr.error('Duplicate Order');
         this.wrongAudio.play();
       }
-      else if(result.Status=="Order status not eligible to dispatch"){
+      else if(result[0].Status=="Order status not eligible to dispatch"){
         this.toastr.error('Order Status Not Eligbile To Dispatch');
         this.wrongAudio.play();
       }
-      else if(result.Status=="Order not Found"){
+      else if(result[0].Status=="Order not Found"){
         this.toastr.error('Order not Found');
         this.wrongAudio.play();
       }
@@ -85,7 +85,7 @@ export class DispatchComponent implements OnInit {
   }
 
   UpdateDispatchedArray(dispatchTracking) {
-    this.dispatchorderarray = [...this.dispatchorderarray,{_id:dispatchTracking.TrackingCode,Date:dispatchTracking.ReturnDate,OrderId:dispatchTracking.OrderId,ShopId:dispatchTracking.ShopId}]
+    this.dispatchorderarray = [{_id:dispatchTracking.TrackingCode,Date:dispatchTracking.DispatchDate,OrderId:dispatchTracking.OrderId,ShopId:dispatchTracking.ShopId},...this.dispatchorderarray]
   }
 
 }

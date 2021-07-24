@@ -48,11 +48,11 @@ export class ReturntrackingComponent implements OnInit {
         this.UpdateReturnedArray(result[1])
         this.correctAudio.play()
       } 
-      else if(result.Status=="Already Received"){
+      else if(result[0].Status=="Already Received"){
         this.toastr.error("Return Already Received");
         this.wrongAudio.play()
       } 
-      else if(result.Status=="Tracking not Found"){
+      else if(result[0].Status=="Tracking not Found"){
         this.toastr.error("Tracking not Found");
         this.wrongAudio.play();
       } 
@@ -81,7 +81,7 @@ export class ReturntrackingComponent implements OnInit {
   }
 
   UpdateReturnedArray(returnedTracking) {
-    this.returnorderarray = [...this.returnorderarray,{_id:returnedTracking.TrackingCode,Date:returnedTracking.ReturnDate,OrderId:returnedTracking.OrderId,ShopId:returnedTracking.ShopId}]
+    this.returnorderarray = [{_id:returnedTracking.TrackingCode,Date:returnedTracking.ReturnDate,OrderId:returnedTracking.OrderId,ShopId:returnedTracking.ShopId},...this.returnorderarray]
   }
 
 }
