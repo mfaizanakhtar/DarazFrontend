@@ -102,7 +102,7 @@ export class OrdersViewComponent implements OnInit {
       selectedArray.push(s.OrderId)
     })
 
-    this.orderItemsService.updateData("Update",Status,selectedArray).subscribe(res=>{
+    this.orderItemsService.updateData("Update",Status,{orders:selectedArray,date:new Date()}).subscribe(res=>{
       var response:any=res
       if(response.nModified>0){
         this.selected=[]

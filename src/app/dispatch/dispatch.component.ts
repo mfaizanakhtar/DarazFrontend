@@ -21,7 +21,8 @@ export class DispatchComponent implements OnInit {
   loadingIndicator=true
   correctAudio:any
   wrongAudio:any
-  startdate=new Date();
+  date=new Date();
+  startdate=new Date()
 
   constructor(private order:OrderItemsService,private toastr:ToastrService) {}
 
@@ -33,7 +34,7 @@ export class DispatchComponent implements OnInit {
   }
 
   dispatch(f){
-    this.order.updateData("dispatch",f.value.tracking,{}).subscribe(res=>{
+    this.order.updateData("dispatch",f.value.tracking,{date:this.date.toISOString()}).subscribe(res=>{
       console.log(res);
       var result:any = res;
       if(result[0].Status=="Dispatched"){
@@ -64,7 +65,7 @@ export class DispatchComponent implements OnInit {
   }
 
   dispatchorders(){
-    this.order.get("ordermovement/Dispatched").subscribe(res=>{
+    this.order.get("ordermovement/Dispatched?date="+this.startdate.toISOString()).subscribe(res=>{
       console.log(res);
       this.dispatchorderarray = res;
       this.loadingIndicator=false;

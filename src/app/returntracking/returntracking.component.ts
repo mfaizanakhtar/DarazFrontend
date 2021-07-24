@@ -22,6 +22,8 @@ export class ReturntrackingComponent implements OnInit {
   ColumnMode=ColumnMode;
   wrongAudio:any
   correctAudio:any
+  date=new Date();
+  startdate=new Date()
 
   constructor(private order:OrderItemsService,private toastr:ToastrService) { }
   loadingIndicator=true
@@ -31,11 +33,12 @@ export class ReturntrackingComponent implements OnInit {
     this.returnorders();
     this.correctAudioLoad()
     this.wrongAudioLoad()
+    this.startdate.setHours(0,0,0,0);
   }
 
 
   insertTracking(f){
-    this.order.updateData("return",f.value.tracking,{}).subscribe(response=>{
+    this.order.updateData("return",f.value.tracking,{date:this.date.toISOString()}).subscribe(response=>{
       console.log(response);
       var result:any = response;
 
@@ -58,7 +61,7 @@ export class ReturntrackingComponent implements OnInit {
   }
 
   returnorders(){
-    this.order.get("ordermovement/Received").subscribe(res=>{
+    this.order.get("ordermovement/Received?date="+this.startdate.toISOString()).subscribe(res=>{
       console.log(res);
       this.returnorderarray=res;
       this.loadingIndicator=false;

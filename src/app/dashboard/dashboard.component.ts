@@ -38,15 +38,15 @@ export class DashboardComponent implements OnInit {
     
     console.log(this.startdate.toISOString());
     console.log(this.enddate.toISOString());
-    this.AllStoreStats(this.startdate.toISOString(),this.enddate.toISOString());
+    this.AllStoreStats(this.startdate,this.enddate);
   }
   DateInput(mode,event){
     if(mode == 'start'){
-      this.startdate = event.value.toISOString();
+      this.startdate = event.value
     }
     if(mode == 'end'){
       if(event.value != null){
-        this.enddate = event.value.toISOString();
+        this.enddate = event.value
         console.log(this.startdate);
         console.log(this.enddate);
         this.AllStoreStats(this.startdate,this.enddate);
@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit {
 
   AllStoreStats(startdate,enddate){
     // console.log(startdate)
-    this.order.get('allstats?'+"startdate="+startdate+"&enddate="+enddate).subscribe(response=>{
+    this.order.get('allstats?'+"startdate="+startdate.toISOString()+"&enddate="+enddate.toISOString()).subscribe(response=>{
       console.log(response);
       this.AllStats = response;
       this.AllStats.sort((a,b)=>{
