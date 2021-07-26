@@ -41,6 +41,8 @@ export class OrdersViewComponent implements OnInit {
   selectedVal
   //forSkuSorting
   skuSort=false
+  //forShopSorting
+  shopSort=false
 
   //paginator
   pageEvent: PageEvent;
@@ -66,7 +68,7 @@ export class OrdersViewComponent implements OnInit {
     this.selected=[]
 
     this.loadingIndicator = true;
-    this.orderService.get('/orders?'+'OrderItems.Status='+tempstatus+'&skuSort='+this.skuSort+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
+    this.orderService.get('/orders?'+'OrderItems.Status='+tempstatus+'&skuSort='+this.skuSort+'&shopSort='+this.shopSort+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
     +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopId="+tempstore+"&OrderItems.ShippingType="+tempfulfillment+"&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()).subscribe(res=>{
       console.log(res)
 
@@ -98,6 +100,12 @@ export class OrdersViewComponent implements OnInit {
   orderSort(event){
     this.skuSort=event.checked
     console.log(this.skuSort)
+    this.getOrders()
+  }
+
+  shopSorting(event){
+    this.shopSort=event.checked
+    console.log(this.shopSort)
     this.getOrders()
   }
 
@@ -144,11 +152,18 @@ export class OrdersViewComponent implements OnInit {
         ordersData.push(order.OrderId)
       }
 
-      this.orderService.postDataByCap('/getLabelsData',{Orders:ordersData,skuSort:this.skuSort}).subscribe(res=>{
+      this.orderService.postDataByCap('/getLabelsData',{Orders:ordersData,skuSort:this.skuSort,shopSort:this.shopSort}).subscribe(res=>{
         console.log(res)
-        this.lableService.setOrders(res)
+        var response:any = res;
+        if(response.length>0){
+        this.lableService.setOrders(response)
         this.loadingIndicator=false
         this.router.navigate(["printLabels"])
+      }
+      else{
+        this.loadingIndicator=false
+        this.toastr.error("Error printing labels. Please Try again")
+      }
       })
     }
   }
