@@ -140,8 +140,8 @@ export class OrdersViewComponent implements OnInit {
     if(this.Fulfillment!="Dropshipping"){
       this.toastr.warning("Please Select Fulfillment Type to FBM")
     }
-    else if(this.StatusFilter!="ready_to_ship"){
-      this.toastr.warning("Please Select Status Filter To Ready To Ship")
+    else if(this.StatusFilter=="pending"){
+      this.toastr.warning("Can not print orders in pending state")
     }
     else{
       this.loadingIndicator=true
