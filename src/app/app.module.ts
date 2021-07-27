@@ -45,6 +45,8 @@ import { NgxPrintModule } from 'ngx-print';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminGuard } from './AdminGuard';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 
 
@@ -95,6 +97,7 @@ import { AdminGuard } from './AdminGuard';
     NgxPrintModule,
     NgxBarcodeModule,
     MatTabsModule,
+    MatCheckboxModule,
     MatButtonToggleModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([

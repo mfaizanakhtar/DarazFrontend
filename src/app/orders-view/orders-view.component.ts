@@ -43,6 +43,9 @@ export class OrdersViewComponent implements OnInit {
   skuSort=false
   //forShopSorting
   shopSort=false
+  //forPrinted/not printed
+  Printed=false
+  UnPrinted=false
 
   //paginator
   pageEvent: PageEvent;
@@ -68,7 +71,7 @@ export class OrdersViewComponent implements OnInit {
     this.selected=[]
 
     this.loadingIndicator = true;
-    this.orderService.get('/orders?'+'OrderItems.Status='+tempstatus+'&skuSort='+this.skuSort+'&shopSort='+this.shopSort+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
+    this.orderService.get('/orders?'+'OrderItems.Status='+tempstatus+'&skuSort='+this.skuSort+'&shopSort='+this.shopSort+'&Printed='+this.Printed+'&unPrinted='+this.UnPrinted+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
     +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopId="+tempstore+"&OrderItems.ShippingType="+tempfulfillment+"&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()).subscribe(res=>{
       console.log(res)
 
@@ -95,6 +98,11 @@ export class OrdersViewComponent implements OnInit {
       } 
       return "Multiple Statuses"
     } 
+  }
+
+  printCheckbox(){
+    // console.log(this.Printed+" "+this.UnPrinted)
+    this.getOrders()
   }
 
   orderSort(event){

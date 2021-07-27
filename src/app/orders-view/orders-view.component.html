@@ -94,7 +94,7 @@
 <mat-divider class="topdivider"></mat-divider>
 
 <div class="paginator">
-
+<div style="flex-wrap: wrap;display: flex;">
   <button  mat-stroked-button color="primary" [matMenuTriggerFor]="printMenu">Print</button>
   <mat-menu #printMenu="matMenu">
     <button (click)="printLabels()"  mat-menu-item>Print Labels</button>
@@ -116,6 +116,15 @@
     <button (click)="setStatusToRTS()"  mat-menu-item>Set to RTS</button>
   </mat-menu>
 
+  <section class="example-section">
+    <mat-checkbox [disabled]="UnPrinted" color="primary" [(ngModel)]="Printed" (ngModelChange)="printCheckbox()" class="example-margin">Printed</mat-checkbox>
+  </section>
+
+  <section class="example-section">
+    <mat-checkbox [disabled]="Printed" color="primary" [(ngModel)]="UnPrinted" (ngModelChange)="printCheckbox()" class="example-margin">Un Printed</mat-checkbox>
+  </section>
+
+</div>
 </div>
 <mat-divider class="topdivider"></mat-divider>
 
