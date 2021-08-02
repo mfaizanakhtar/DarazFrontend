@@ -157,23 +157,25 @@ rowHeight="auto"
           <th>Seller SKU</th>
           <th>Product</th>
           <th>Tracking</th>
-          <th>Image</th>
+          <th>Price</th>
           <th>Shipping Type</th>
           <th>WarehouseStatus</th>
           <th>Status</th>
-          <th>Printed</th>
+          <th>Image</th>
+          <th>RTS</th>
         </tr>
         <tr *ngFor="let item of row.OrderItems; index as i">
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{i+1}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{row.AddressBilling.FirstName}}</td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.BaseSku}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Sku}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Name}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.TrackingCode}}</td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"><img width="70px" height="70px" src={{item.productMainImage}}></td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ItemPrice}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ShippingType}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.WarehouseStatus}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Status}}</td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"></td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"><img width="70px" height="70px" src={{item.productMainImage}}></td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"><button mat-raised-button color="primary" (click)="setItemStatusToRTS(item)">RTS</button></td>
         </tr>
       </table>
     </div>
@@ -218,9 +220,9 @@ rowHeight="auto"
 </ngx-datatable-column>
 <ngx-datatable-column [width]="80" name="Order" prop="OrderId" ></ngx-datatable-column>
 <!-- <ngx-datatable-column name="Item ID" prop="OrderItemId"></ngx-datatable-column> -->
-<ngx-datatable-column [width]="70" name="Order Date" prop="CreatedAt">
+<ngx-datatable-column [width]="10" name="Order Date" prop="CreatedAt">
   <ng-template let-row="row" let-date="value" ngx-datatable-cell-template>
-    {{ date | date}}
+    {{adjustedDate(date) | date:'d MMM y h:mm a'}}
   </ng-template>
 </ngx-datatable-column>
 <ngx-datatable-column [width]="100" name="Payment Method" prop="PaymentMethod"></ngx-datatable-column>
@@ -229,7 +231,11 @@ rowHeight="auto"
     {{getPrice(orderitems)}}
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column [width]="30" name="#" prop="ItemsCount"></ngx-datatable-column>
+<ngx-datatable-column [width]="30" name="#" prop="OrderItems">
+  <ng-template let-row="row" let-orderitems="value" ngx-datatable-cell-template>
+    {{getItemsCount(orderitems)}}
+  </ng-template>
+</ngx-datatable-column>
 <ngx-datatable-column [width]="55" name="Status" prop="OrderItems">
   <ng-template let-row="row" let-orderitems="value" ngx-datatable-cell-template>
     {{getOrderStatus(orderitems)}}

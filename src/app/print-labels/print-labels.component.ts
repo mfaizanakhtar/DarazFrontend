@@ -22,6 +22,48 @@ export class PrintLabelsComponent implements OnInit {
     // })
   }
 
+  adjustedDate(date){
+    var result = new Date(date)
+    result.setHours(result.getHours()-5)
+    return result
+  }
+  getTrackings(order){
+    var trackings=[]
+      for(var item of order.OrderItems){
+        if(trackings.includes(item.TrackingCode)==false){
+          trackings.push(item.TrackingCode)
+        }
+      }
+      return trackings
+  }
+  getLabelTrackingBarcode(tracking,orderitems){
+    for(var item of orderitems){
+      if(item.TrackingCode==tracking){
+        return item.trackingBarcode
+      }
+    }
+    
+  }
+  getLabelProperty(tracking,orderitems,property){
+    for(var item of orderitems){
+      if(item.TrackingCode==tracking){
+        return item[property]
+      }
+    }
+    
+  }
+
+  getLabelItemCount(tracking,orderitems){
+    var count=0
+    for(var item of orderitems){
+      if(item.TrackingCode==tracking){
+        count=count+1
+      }
+    }
+    return count
+    
+  }
+
   // getImage(string){
   //  var imagePath = this.sanitizer.bypassSecurityTrustResourceUrl(string);
   //   return imagePath
