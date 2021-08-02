@@ -107,12 +107,14 @@ export class OrdersViewComponent implements OnInit {
 
   orderSort(event){
     this.skuSort=event.checked
+    if(this.skuSort==true) this.shopSort=false
     console.log(this.skuSort)
     this.getOrders()
   }
 
   shopSorting(event){
     this.shopSort=event.checked
+    if(this.shopSort==true) this.skuSort=false
     console.log(this.shopSort)
     this.getOrders()
   }
