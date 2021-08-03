@@ -60,6 +60,12 @@ export class ReturntrackingComponent implements OnInit {
     f.reset();
   }
 
+  adjustedDate(date){
+    var result = new Date(date)
+    result.setHours(result.getHours()-5)
+    return result
+  }
+
   returnorders(){
     this.order.get("ordermovement/Received?date="+this.startdate.toISOString()).subscribe(res=>{
       console.log(res);

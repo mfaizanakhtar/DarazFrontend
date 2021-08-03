@@ -72,7 +72,7 @@
       </ngx-datatable-column>
       <ngx-datatable-column name="Date" prop="Date" >
         <ng-template let-row="row" let-date="value" ngx-datatable-cell-template>
-            {{ date | date }}
+            {{adjustedDate(date) | date:'d MMM y h:mm a'}}
           </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Order no." prop="OrderId" ></ngx-datatable-column>
