@@ -64,12 +64,6 @@ export class DispatchComponent implements OnInit {
     // console.log(value.txtTracking);
   }
 
-  adjustedDate(date){
-    var result = new Date(date)
-    result.setHours(result.getHours()-5)
-    return result
-  }
-
   dispatchorders(){
     this.order.get("ordermovement/Dispatched?date="+this.startdate.toISOString()).subscribe(res=>{
       console.log(res);
