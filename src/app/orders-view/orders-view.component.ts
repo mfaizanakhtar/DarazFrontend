@@ -6,6 +6,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import { OrdersService } from '../services/orders.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PrintLabelsComponent } from '../print-labels/print-labels.component';
 
 @Component({
   selector: 'app-orders-view',
@@ -51,7 +53,8 @@ export class OrdersViewComponent implements OnInit {
   pageEvent: PageEvent;
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
-  constructor(private orderService:OrdersService,private orderItemsService:OrderItemsService,private toastr:ToastrService,private router:Router,private lableService:LabelService) { }
+  constructor(private orderService:OrdersService,private orderItemsService:OrderItemsService,
+    private toastr:ToastrService,private router:Router,private lableService:LabelService,private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.StatusFilter='pending'
@@ -186,7 +189,8 @@ export class OrdersViewComponent implements OnInit {
         if(response.length>0){
         this.lableService.setOrders(response)
         this.loadingIndicator=false
-        this.router.navigate(["printLabels"])
+        // this.router.navigate(["printLabels"])
+        this.dialog.open(PrintLabelsComponent,{width:'100%',height:'100%'})
       }
       else{
         this.loadingIndicator=false
