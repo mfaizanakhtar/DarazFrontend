@@ -214,9 +214,11 @@ export class OrdersViewComponent implements OnInit {
       var response:any = res
       console.log(response.count)
       if(response.count>0){
-        this.toastr.success("RTS Request Successful")
-        this.getOrders()
-        this.loadingIndicator=false
+        setTimeout(()=>{
+          this.toastr.success("RTS Request Successful")
+          this.getOrders()
+          this.loadingIndicator=false
+        },5000)
       }
       else{
         this.toastr.error("Error Submitting RTS request")
@@ -229,9 +231,13 @@ export class OrdersViewComponent implements OnInit {
       var response:any = res
       console.log(response.count)
       if(response.count>0){
-        this.toastr.success("RTS Request Successful")
-        this.getOrders()
-        this.loadingIndicator=false
+        
+        setTimeout(()=>{
+          this.toastr.success("RTS Request Successful")
+          this.getOrders()
+          this.loadingIndicator=false
+        },3000)
+
       }
       else{
         this.toastr.error("Error Submitting RTS request")
