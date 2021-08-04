@@ -8,6 +8,7 @@ import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-dat
 import { OrdersService } from '../services/orders.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PrintLabelsComponent } from '../print-labels/print-labels.component';
+import { StockChecklistComponent } from '../stock-checklist/stock-checklist.component';
 
 @Component({
   selector: 'app-orders-view',
@@ -198,6 +199,31 @@ export class OrdersViewComponent implements OnInit {
       }
       })
     }
+  }
+
+  printStockChecklist(Status){
+    this.loadingIndicator=true
+    var ordersData=[]
+    for(var order of this.selected){
+      ordersData.push(order.OrderId)
+    }
+    if(Status=="selected"){
+      this.orderService.postDataByCap('/getStockChecklist',{orders:ordersData}).subscribe(res=>{
+        // console.log(res)
+        this.lableService.setStockChecklist(res)
+        this.loadingIndicator=false
+        this.dialog.open(StockChecklistComponent,{width:'100%',height:'100%'})
+      })
+    }
+    else if(Status="ready_to_ship"){
+      this.orderService.postDataByCap('/getStockChecklist',{orders:[]}).subscribe(res=>{
+        // console.log(res)
+        this.lableService.setStockChecklist(res)
+        this.loadingIndicator=false
+        this.dialog.open(StockChecklistComponent,{width:'100%',height:'100%'})
+      })
+    }
+
   }
 
   StatusFilterClicked(status){

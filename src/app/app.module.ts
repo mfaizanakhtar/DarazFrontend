@@ -46,6 +46,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminGuard } from './AdminGuard';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { StockChecklistComponent } from './stock-checklist/stock-checklist.component';
 
 
 
@@ -73,6 +74,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     PrintLabelsComponent,
     LabelstestComponent,
     ProfileComponent,
+    StockChecklistComponent,
   ],
   imports: [
     BrowserModule,
