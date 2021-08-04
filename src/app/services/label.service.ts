@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 })
 export class LabelService extends DataService {
   ordersData=[];
+  stock=[];
   constructor(http:HttpClient) { 
     super('orders',http)
   }
@@ -22,5 +23,12 @@ export class LabelService extends DataService {
 
   getOrders(){
     return this.ordersData
+  }
+
+  setStockChecklist(stock){
+    this.stock=stock
+  }
+  getStockChecklist(){
+    return this.stock
   }
 }

@@ -98,6 +98,8 @@
   <button  mat-stroked-button color="primary" [matMenuTriggerFor]="printMenu">Print</button>
   <mat-menu #printMenu="matMenu">
     <button (click)="printLabels()"  mat-menu-item>Print Labels</button>
+    <button (click)="printStockChecklist('selected')"  mat-menu-item>Print StockChecklist</button>
+    <button (click)="printStockChecklist('ready_to_ship')"  mat-menu-item>Print RTS StockChecklist</button>
   </mat-menu>
 
   <button style="margin-left: 10px;" mat-raised-button color="primary" [matMenuTriggerFor]="statusMenu">Set Warehouse Status</button>
