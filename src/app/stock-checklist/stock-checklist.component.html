@@ -1,0 +1,14 @@
+<div style="margin:40px; overflow-y:scroll;">
+    <table>
+      <tr>
+        <th>S.No</th>
+        <th>Base SKU</th>
+        <th>Count</th>
+      </tr>
+      <tr *ngFor="let sku of StockChecklist; index as i">
+        <td>{{i+1}}</td>
+        <td>{{sku._id}}</td>
+        <td>{{sku.count}}</td>
+      </tr>
+    </table>
+  </div>
