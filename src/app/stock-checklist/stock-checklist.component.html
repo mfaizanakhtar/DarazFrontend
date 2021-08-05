@@ -1,14 +1,18 @@
-<div style="margin:40px; overflow-y:scroll;">
+<button #printButton printSectionId="pdfLabels" [useExistingCss]="true" ngxPrint>print</button>
+
+<div class="stockChecklist" id="pdfLabels" style="margin:40px; overflow-y:scroll;">
     <table>
       <tr>
         <th>S.No</th>
         <th>Base SKU</th>
         <th>Count</th>
+        <th>Image</th>
       </tr>
       <tr *ngFor="let sku of StockChecklist; index as i">
         <td>{{i+1}}</td>
         <td>{{sku._id}}</td>
         <td>{{sku.count}}</td>
+        <td><img width="70px" height="70px" src={{sku.img}}></td>
       </tr>
     </table>
   </div>
