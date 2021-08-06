@@ -12,7 +12,14 @@
 .invoice { page-break-after: always;display:flex }
 .invoice:last-child { page-break-after: avoid; }
 
-
+@media print {
+    .invoice {
+        margin: 0.5cm 0 0 0.5cm;
+        height: 105mm;
+        width: 148mm;
+        zoom: 300%;
+    }
+}
 
 @media screen {
     :host {

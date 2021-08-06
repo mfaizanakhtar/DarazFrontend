@@ -12,6 +12,7 @@ export class StockChecklistComponent implements OnInit {
 
   ngOnInit(): void {
     this.StockChecklist =this.label.getStockChecklist()
+    console.log(this.StockChecklist)
   }
 
 }

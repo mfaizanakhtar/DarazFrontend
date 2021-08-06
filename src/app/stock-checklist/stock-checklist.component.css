@@ -9,3 +9,12 @@ table {
     text-align: left;
     padding: 8px;
   }
+
+  /* @media print {
+    .stockChecklist {
+        margin: 0.5cm 0 0 0.5cm;
+        height: 105mm;
+        width: 148mm;
+        zoom: 200%;
+    }
+} */

@@ -25,12 +25,4 @@
     app-root app-print-labels { display: none; }
   }
 
-  @media print {
-    html,
-    body {
-        margin: 0.5cm 0 0 0.5cm;
-        height: 105mm;
-        width: 148mm;
-        zoom: 160%;
-    }
-}
+ 
