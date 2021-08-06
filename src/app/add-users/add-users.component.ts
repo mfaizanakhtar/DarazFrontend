@@ -28,17 +28,39 @@ export class AddUsersComponent implements AfterViewInit {
   }
 
   createUser(){
-    this.user.postData({useremail:this.userEmail,password:"password.123",usertype:this.userType}).subscribe(res=>{
-      if(res){
-        this.toastr.success("User Created");
+    if(this.isEdit!=true){
+      this.user.postData({useremail:this.userEmail,password:"password.123",usertype:this.userType}).subscribe(res=>{
+        if(res){
+          this.toastr.success("User Created");
+          this.dialogRef.close()
+  
+        }
+      },
+      error=>{
+        if(error.status==400){
+          this.toastr.error("User Already Exists");
+        }
+      })
+    }
+    if(this.isEdit=true){
+      this.user.updateData("updateUser",this.userEmail,{useremail:this.userEmail,usertype:this.userType}).subscribe(res=>{
+        console.log(res)
         this.dialogRef.close()
+      })
+    }
 
+  }
+
+  deleteUser(){
+    this.user.postDataByCap("deleteUser",{useremail:this.userEmail}).subscribe(res=>{
+      if(res){
+        this.toastr.success("User Deleted");
+        this.dialogRef.close()
       }
+      
     },
     error=>{
-      if(error.status==400){
-        this.toastr.error("User Already Exists");
-      }
+      console.log(error)
     })
   }
 
