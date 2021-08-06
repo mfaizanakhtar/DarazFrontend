@@ -47,6 +47,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { AdminGuard } from './AdminGuard';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { StockChecklistComponent } from './stock-checklist/stock-checklist.component';
+import { SkuOverviewComponent } from './sku-overview/sku-overview.component';
 
 
 
@@ -75,6 +76,7 @@ import { StockChecklistComponent } from './stock-checklist/stock-checklist.compo
     LabelstestComponent,
     ProfileComponent,
     StockChecklistComponent,
+    SkuOverviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -164,6 +166,11 @@ import { StockChecklistComponent } from './stock-checklist/stock-checklist.compo
       {
         path:'profile',
         component:ProfileComponent,
+        canActivate:[LoginGuard]
+      },
+      {
+        path:'skuoverview',
+        component:SkuOverviewComponent,
         canActivate:[LoginGuard]
       }
     ]),
