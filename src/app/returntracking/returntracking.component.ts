@@ -75,9 +75,9 @@ export class ReturntrackingComponent implements OnInit {
   }
 
   wrongAudioLoad(){
-    let wrongAudio = new Audio();
-    wrongAudio.src="../../../assets/sounds/Wrong.mp3"
-    wrongAudio.load();
+    this.wrongAudio = new Audio();
+    this.wrongAudio.src="../../../assets/sounds/Wrong.mp3"
+    this.wrongAudio.load();
   }
 
   UpdateReturnedArray(returnedTracking) {
