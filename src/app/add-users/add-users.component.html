@@ -2,7 +2,7 @@
   <mat-label id="headingLabel" class="matlabel">Create New User</mat-label>
     <mat-form-field hintLabel="useremail" appearance="fill">
       <mat-label>Enter Email Address</mat-label>
-      <input [(ngModel)]="userEmail" matInput placeholder="email@example.com">
+      <input [readonly]="isEdit" id="userText" [(ngModel)]="userEmail" matInput placeholder="email@example.com">
       
     </mat-form-field>
   <br>
@@ -18,5 +18,5 @@
  
   <mat-divider></mat-divider>
   <button id="buttonSubmit" (click)="createUser()" mat-raised-button color="primary">Create User</button>
-  <button id="deleteButton" (click)="deleteUser()" mat-raised-button color="primary">Create User</button>
+  <button id="deleteButton" (click)="deleteUser()" mat-raised-button color="primary">Delete User</button>
 </div>

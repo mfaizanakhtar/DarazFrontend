@@ -8,20 +8,21 @@ import { UseremailService } from '../services/useremail.service';
   templateUrl: './add-users.component.html',
   styleUrls: ['./add-users.component.css']
 })
-export class AddUsersComponent implements AfterViewInit {
+export class AddUsersComponent implements OnInit {
   userEmail:any
   userType:any
   isEdit:boolean=false
 
   constructor(@Inject(MAT_DIALOG_DATA) private data:any,private user:UseremailService,private toastr:ToastrService,private dialogRef:MatDialogRef<AddUsersComponent>) { }
 
-  ngAfterViewInit(): void {
-    
+  ngOnInit(): void {
+    document.getElementById("deleteButton").hidden=true
     if(this.data){
       console.log(this.data)
       this.isEdit=true;
       document.getElementById("headingLabel").innerHTML="Edit User Details"
       document.getElementById("buttonSubmit").innerHTML="Edit"
+      document.getElementById("deleteButton").hidden=false
       this.userEmail=this.data.useremail;
       this.userType=this.data.usertype;
     }
@@ -43,7 +44,7 @@ export class AddUsersComponent implements AfterViewInit {
       })
     }
     if(this.isEdit=true){
-      this.user.updateData("updateUser",this.userEmail,{useremail:this.userEmail,usertype:this.userType}).subscribe(res=>{
+      this.user.updateData("/updateUser",this.userEmail,{useremail:this.userEmail,usertype:this.userType}).subscribe(res=>{
         console.log(res)
         this.dialogRef.close()
       })
@@ -52,7 +53,7 @@ export class AddUsersComponent implements AfterViewInit {
   }
 
   deleteUser(){
-    this.user.postDataByCap("deleteUser",{useremail:this.userEmail}).subscribe(res=>{
+    this.user.postDataByCap("/deleteUser",{useremail:this.userEmail}).subscribe(res=>{
       if(res){
         this.toastr.success("User Deleted");
         this.dialogRef.close()
