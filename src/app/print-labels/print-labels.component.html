@@ -1,7 +1,7 @@
 <button #printButton printSectionId="pdfLabels" [useExistingCss]="true" ngxPrint>print</button>
 
 <div class="la-print-page" id="pdfLabels">
-<div *ngFor="let order of orders">
+<div *ngFor="let order of orders;let orderindex=index">
 <div class="invoice" *ngFor="let tracking of getTrackings(order)">
 <div class="awb-page" *ngIf="order.OrderItems.length>0">
     <div class="awb lex">
@@ -70,7 +70,7 @@
     <div class="box left text-left" style="font-size:9px; width:65%; padding: 5px; height: 1.5cm; border-bottom: 0;"><strong>Sender:&nbsp;</strong>{{order.ShopName}}<br>{{order.ShopAddress}}, {{order.ShopState}}, {{order.ShopArea}}, {{order.ShopLocation}} - Phone: {{order.ShopPhone}}</div>
     
     <!-- <div class="box left text-left" style="height: 1.6cm; font-size:10px; width:48%; padding: 5px; border-right: 0;"><strong>Package Weight:</strong> total_package_weight</div> -->
-    <div class="box left text-left" style="height: 1.4cm; font-size:10px; width:48%; padding: 5px; border-right: 0;">
+    <div class="box left text-left" style="display: flex; flex-wrap:wrap; flex-direction: column; height: 1.4cm; font-size:10px; width:48%; padding: 5px; border-right: 0;">
         <div *ngFor="let items of order.OrderItems;let i=index"><b *ngIf="items.TrackingCode==tracking">[ {{items.Sku}} ]</b></div>
     </div>
 
@@ -79,9 +79,11 @@
         <b *ngFor="let items of order.OrderItems;let i=index">| {{i+1}}) {{items.BaseSku}} </b>
     </div> -->
     </div>
-    </div> 
     </div>
-    <br>
+    <div style="font-size: 12px;">Order {{orderindex+1}} Of {{orders.length}}</div>
+    <!-- <p>Page 1 of </p>  -->
+    </div>
+    <!-- <br> -->
     </div>
 
 </div>

@@ -9,8 +9,8 @@
     margin: 0 auto 30px;
 }
 
-.invoice { page-break-after: always;display:flex }
-.invoice:last-child { page-break-after: avoid; }
+.invoice { page-break-after: always; }
+/* .invoice:last-child { page-break-after: avoid; } */
 
 @media print {
     .invoice {
