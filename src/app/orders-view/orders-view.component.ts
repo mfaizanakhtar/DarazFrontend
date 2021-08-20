@@ -67,7 +67,8 @@ export class OrdersViewComponent implements OnInit {
     this.getOrders()
   }
 
-  getOrders(){ 
+  getOrders(){
+    this.orders=[]
     var tempstatus,tempstore,tempfulfillment
     if(this.StatusFilter=='All') {tempstatus=null } else tempstatus=this.StatusFilter
     if(this.Store=='All') { tempstore=null } else tempstore=this.Store
@@ -94,12 +95,12 @@ export class OrdersViewComponent implements OnInit {
       return orderitems[0].Status
     }
     else{
-      if(this.StatusFilter=='pending' || this.StatusFilter=='ready_to_ship'){
-        return this.StatusFilter
-      }
-      else if(this.StatusFilter=='RTSDispatched'){
-        return 'ready_to_ship'
-      } 
+      // if(this.StatusFilter=='pending' || this.StatusFilter=='ready_to_ship'){
+      //   return this.StatusFilter
+      // }
+      // else if(this.StatusFilter=='RTSDispatched'){
+      //   return 'ready_to_ship'
+      // } 
       return "Multiple Statuses"
     } 
   }
@@ -238,13 +239,13 @@ export class OrdersViewComponent implements OnInit {
     this.loadingIndicator=true
     this.orderService.postDataByCap('/setStatusToRTS',{Orders:this.selected}).subscribe(res=>{
       var response:any = res
-      console.log(response.count)
-      if(response.count>0){
-        setTimeout(()=>{
+      console.log(response)
+      if(response.count>0 && response.updateResult==true){
+        // setTimeout(()=>{
           this.toastr.success("RTS Request Successful")
           this.getOrders()
           this.loadingIndicator=false
-        },5000)
+        // },5000)
       }
       else{
         this.toastr.error("Error Submitting RTS request")

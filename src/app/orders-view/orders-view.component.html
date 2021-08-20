@@ -162,6 +162,8 @@ rowHeight="auto"
           <th>Price</th>
           <th>Shipping Type</th>
           <th>WarehouseStatus</th>
+          <th>Dispatch Date</th>
+          <th>Return Date</th>
           <th>Status</th>
           <th>Image</th>
           <th>RTS</th>
@@ -175,6 +177,8 @@ rowHeight="auto"
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ItemPrice}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ShippingType}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.WarehouseStatus}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.DispatchDate}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ReturnDate}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Status}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"><img width="70px" height="70px" src={{item.productMainImage}}></td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"><button mat-raised-button color="primary" (click)="setItemStatusToRTS(item)">RTS</button></td>
