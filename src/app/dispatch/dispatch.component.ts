@@ -21,6 +21,7 @@ export class DispatchComponent implements OnInit {
   loadingIndicator=true
   correctAudio:any
   wrongAudio:any
+  correctAudioNew:any
   date=new Date();
   startdate=new Date()
 
@@ -39,6 +40,8 @@ export class DispatchComponent implements OnInit {
       var result:any = res;
       if(result[0].Status=="Dispatched"){
         this.toastr.success('Dispatched');
+        // this.correctAudio.play();
+        this.correctAudio.load();
         this.correctAudio.play();
         this.UpdateDispatchedArray(result[1])
       } 
@@ -76,6 +79,11 @@ export class DispatchComponent implements OnInit {
     this.correctAudio = new Audio();
     this.correctAudio.src="../../../assets/sounds/Correct.mp3"
     this.correctAudio.load();
+  }
+  correctAudioNewLoad(){
+    this.correctAudioNew = new Audio();
+    this.correctAudioNew.src ="../../../assets/sounds/Correct.mp3"
+
   }
 
   wrongAudioLoad(){

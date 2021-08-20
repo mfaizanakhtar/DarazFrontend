@@ -148,10 +148,10 @@ rowHeight="auto"
 (select)="onSelect($event)"
 >
 <!-- Row Detail Template -->
-<ngx-datatable-row-detail [rowHeight]="450" #myDetailRow (toggle)="onDetailToggle($event)">
+<ngx-datatable-row-detail [rowHeight]="650" #myDetailRow (toggle)="onDetailToggle($event)">
     <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
       <mat-divider style="margin:10px;"></mat-divider>
-      <div style="margin:40px; overflow-y:scroll; height: 350px;">
+      <div style="margin:40px; overflow-y:scroll; height: 500px;">
       <table>
         <tr>
           <th>S.No</th>
@@ -177,8 +177,8 @@ rowHeight="auto"
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ItemPrice}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ShippingType}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.WarehouseStatus}}</td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.DispatchDate}}</td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ReturnDate}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.DispatchDate | date:'d MMM y h:mm a'}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ReturnDate | date:'d MMM y h:mm a'}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Status}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"><img width="70px" height="70px" src={{item.productMainImage}}></td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"><button mat-raised-button color="primary" (click)="setItemStatusToRTS(item)">RTS</button></td>
