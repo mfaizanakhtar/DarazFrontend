@@ -1,1 +1,31 @@
-<p>sku-overview works!</p>
+<app-navbar></app-navbar>
+
+<mat-divider class="divider"></mat-divider>
+
+<div class="divider">
+    <ngx-datatable
+    #table
+    style="width:auto"
+    class="material"
+    [loadingIndicator]="loadingIndicator"
+    [rows]="orders"
+    [columnMode]="ColumnMode.force"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    rowHeight="auto"
+    [selected]="selected"
+    [selectionType]="SelectionType.checkbox"
+    [selectAllRowsOnPage]="true"
+    (activate)="onActivate($event)"
+    (select)="onSelect($event)">
+
+    <ngx-datatable-column name="S.No" [width]="5">
+        <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+          <!-- <div >{{pIndex*pSize+rowIndex+1}}</div> -->
+        </ng-template>
+      </ngx-datatable-column>
+
+    </ngx-datatable>
+</div>
+
+
