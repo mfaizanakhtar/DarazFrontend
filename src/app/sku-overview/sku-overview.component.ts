@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import { SkusService } from '../services/skus.service';
+import { SkuEditSheetComponent } from '../sku-edit-sheet/sku-edit-sheet.component';
 
 @Component({
   selector: 'app-sku-overview',
@@ -9,7 +11,7 @@ import { SkusService } from '../services/skus.service';
 })
 export class SkuOverviewComponent implements OnInit {
     //data
-    orders:any
+    skus:any
     //datatable variables
     ColumnMode = ColumnMode;
     loadingIndicator = false;
@@ -17,16 +19,24 @@ export class SkuOverviewComponent implements OnInit {
     selected=[];
     status:any
 
-  constructor(private skuservice:SkusService) { }
+  constructor(private skuservice:SkusService,private _bottomSheet:MatBottomSheet) { }
 
   ngOnInit(): void {
     this.getSkus()
   }
 
   getSkus(){
+    this.loadingIndicator=true
     this.skuservice.get("getAllSkus").subscribe(res=>{
       console.log(res)
+      this.skus=res
+      this.loadingIndicator=false
     })
+  }
+
+  EditSku(sku){
+    // console.log(sku)
+    this._bottomSheet.open(SkuEditSheetComponent,{data:sku})
   }
 
   onSelect({ selected }) {
@@ -35,10 +45,11 @@ export class SkuOverviewComponent implements OnInit {
     for(const sel of selected){
       this.selected.push(sel);
     }
+    console.log(this.selected)
   }
 
   onActivate(event) {
-    console.log('Activate Event', event);
+    // console.log('Activate Event', event);
   }
 
 }

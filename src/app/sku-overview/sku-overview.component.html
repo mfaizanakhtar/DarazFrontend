@@ -8,7 +8,7 @@
     style="width:auto"
     class="material"
     [loadingIndicator]="loadingIndicator"
-    [rows]="orders"
+    [rows]="skus"
     [columnMode]="ColumnMode.force"
     [headerHeight]="50"
     [footerHeight]="50"
@@ -19,10 +19,42 @@
     (activate)="onActivate($event)"
     (select)="onSelect($event)">
 
-    <ngx-datatable-column name="S.No" [width]="5">
+    <ngx-datatable-column
+[width]="30"
+[sortable]="false"
+[canAutoResize]="false"
+[draggable]="false"
+[resizeable]="false"
+[headerCheckboxable]="true"
+[checkboxable]="true"
+>
+
+<!-- <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+    <div
+      href="javascript:void(0)"
+      [class.datatable-icon-right]="!expanded"
+      [class.datatable-icon-down]="expanded"
+      title="Expand/Collapse Row"
+      (click)="toggleExpandRow(row)"
+    >
+    </div>
+  </ng-template> -->
+
+</ngx-datatable-column>
+
+    <ngx-datatable-column name="S.No" [width]="1">
         <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
           <!-- <div >{{pIndex*pSize+rowIndex+1}}</div> -->
+          <div >{{rowIndex+1}}</div>          
         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="SKU" prop="name"></ngx-datatable-column>
+      <ngx-datatable-column name="Stock" prop="FBMstock"></ngx-datatable-column>
+      <ngx-datatable-column name="Product Cost" prop="cost"></ngx-datatable-column>
+      <ngx-datatable-column name="Edit" prop="cost">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+        <button mat-raised-button color="primary" (click)="EditSku(row)">Edit</button>
+      </ng-template>
       </ngx-datatable-column>
 
     </ngx-datatable>

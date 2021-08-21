@@ -48,6 +48,9 @@ import { AdminGuard } from './AdminGuard';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { StockChecklistComponent } from './stock-checklist/stock-checklist.component';
 import { SkuOverviewComponent } from './sku-overview/sku-overview.component';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import { SkuEditSheetComponent } from './sku-edit-sheet/sku-edit-sheet.component';
+
 
 
 
@@ -77,6 +80,7 @@ import { SkuOverviewComponent } from './sku-overview/sku-overview.component';
     ProfileComponent,
     StockChecklistComponent,
     SkuOverviewComponent,
+    SkuEditSheetComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,6 +107,7 @@ import { SkuOverviewComponent } from './sku-overview/sku-overview.component';
     MatTabsModule,
     MatCheckboxModule,
     MatButtonToggleModule,
+    MatBottomSheetModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       {
