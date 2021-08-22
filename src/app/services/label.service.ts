@@ -27,7 +27,7 @@ export class LabelService extends DataService {
     return this.ordersData
   }
   getLabelCount(){
-    return this.labelsCount
+    return this.labelsCount.length
   }
 
   setStockChecklist(stock){

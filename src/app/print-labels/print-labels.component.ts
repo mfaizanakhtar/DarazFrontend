@@ -18,8 +18,8 @@ export class PrintLabelsComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.labels.getOrders().length)
     this.orders=this.labels.getOrders()
-    this.labelsCount=this.labels.labelsCount()
-    console.log(this.labelsCount.length)
+    this.labelsCount=this.labels.getLabelCount()
+    console.log(this.labelsCount)
     // this.labels.postDataByCap('/getLabelsData',{Orders:this.ordersIdArray}).subscribe(res=>{
     //   this.orders = res
     // })
