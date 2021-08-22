@@ -35,7 +35,7 @@ export class PrintLabelsComponent implements OnInit {
   getTrackings(order){
     var trackings=[]
       for(var item of order.OrderItems){
-        if(trackings.includes(item.labelTracking)==false){
+        if(trackings.includes(item.labelTracking)==false && item.labelTracking!=""){
           trackings.push(item.labelTracking)
         }
       }
@@ -80,7 +80,7 @@ export class PrintLabelsComponent implements OnInit {
           skus.push(item.Sku)
         }
         if(item.labelTracking==""){
-          return []
+          return ["ERROR ! Please ready to ship all items first"]
         }
     }
     return skus
