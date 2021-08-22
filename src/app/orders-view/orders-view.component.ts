@@ -189,7 +189,7 @@ export class OrdersViewComponent implements OnInit {
       this.orderService.postDataByCap('/getLabelsData',{Orders:ordersData,skuSort:this.skuSort,shopSort:this.shopSort}).subscribe(res=>{
         console.log(res)
         var response:any = res;
-        if(response.length>0){
+        if(response.labelsData.length>0){
         this.lableService.setOrders(response)
         this.loadingIndicator=false
         // this.router.navigate(["printLabels"])

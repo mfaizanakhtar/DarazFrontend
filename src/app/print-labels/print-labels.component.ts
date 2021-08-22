@@ -12,11 +12,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class PrintLabelsComponent implements OnInit {
   ordersIdArray=[]
   orders:any
+  labelsCount:any
   constructor(private labels:LabelService,private sanitizer:DomSanitizer) { }
   
   ngOnInit(): void {
     console.log(this.labels.getOrders().length)
     this.orders=this.labels.getOrders()
+    this.labelsCount=this.labels.labelsCount()
+    console.log(this.labelsCount.length)
     // this.labels.postDataByCap('/getLabelsData',{Orders:this.ordersIdArray}).subscribe(res=>{
     //   this.orders = res
     // })
