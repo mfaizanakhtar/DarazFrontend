@@ -85,6 +85,7 @@ export class PrintLabelsComponent implements OnInit {
           return []
         }
     }
+    return skus
     // var togetherRtsSkus=[]
     // for(var item of orderitems){
     //   if(item.SeperateRts==false){togetherRtsSkus.push(item.Sku)}
