@@ -75,18 +75,27 @@ export class PrintLabelsComponent implements OnInit {
 
   getLabelSkus(tracking,orderitems){
     // console.log(orderitems)
+
     var skus=[]
-    var togetherRtsSkus=[]
     for(var item of orderitems){
-      if(item.SeperateRts==false){togetherRtsSkus.push(item.Sku)}
-      if(item.labelTracking==tracking){
-        if(item.SeperateRts==true){
+        if(item.labelTracking==tracking){
           skus.push(item.Sku)
-          return skus
         }
-      }
+        if(item.labelTracking==""){
+          return []
+        }
     }
-    return togetherRtsSkus
+    // var togetherRtsSkus=[]
+    // for(var item of orderitems){
+    //   if(item.SeperateRts==false){togetherRtsSkus.push(item.Sku)}
+    //   if(item.labelTracking==tracking){
+    //     if(item.SeperateRts==true){
+    //       skus.push(item.Sku)
+    //       return skus
+    //     }
+    //   }
+    // }
+    // return togetherRtsSkus
   }
 
   // increaseIndex(){
