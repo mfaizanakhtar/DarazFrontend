@@ -60,17 +60,15 @@ export class PrintLabelsComponent implements OnInit {
 
   getLabelItemCount(tracking,orderitems){
     var skus=[]
-    var togetherRtsSkus=[]
     for(var item of orderitems){
-      if(item.SeperateRts==false){togetherRtsSkus.push(item.Sku)}
-      if(item.labelTracking==tracking){
-        if(item.SeperateRts==true){
+        if(item.labelTracking==tracking){
           skus.push(item.Sku)
-          return skus.length
         }
-      }
+        if(item.labelTracking==""){
+          return 0
+        }
     }
-    return togetherRtsSkus.length
+    return skus.length
   }
 
   getLabelSkus(tracking,orderitems){
