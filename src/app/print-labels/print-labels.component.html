@@ -2,7 +2,7 @@
 
 <div class="la-print-page" id="pdfLabels">
 <div *ngFor="let order of orders;let orderindex=index">
-<div class="invoice" *ngFor="let tracking of getTrackings(order)">
+<div class="invoice" *ngFor="let tracking of getTrackings(order);let trackingindex=index">
 <div class="awb-page" *ngIf="order.OrderItems.length>0">
     <div class="awb lex">
     <div class="box left" style="width:35%; height:0.8cm; border-right: 0; border-bottom: 0;"></div>
@@ -16,7 +16,7 @@
     <div class="box clear" style="width:100%;border-bottom: 0; padding-bottom: 10px;">
     <div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm"><img src={{getLabelTrackingBarcode(tracking,order.OrderItems)}} /></div>
     
-    <div style="font-size:12px; line-height:11px;">Tracking Number:  {{getLabelProperty(tracking,order.OrderItems,"TrackingCode")}} </div>
+    <div style="font-size:12px; line-height:11px;">Tracking Number:  {{getLabelProperty(tracking,order.OrderItems,"labelTracking")}} </div>
     </div>
     
     <div class="box left" style="width:75%; border-bottom: 0; padding-bottom: 10px; height: 3.9cm; border-right: 0;">
@@ -71,7 +71,7 @@
     
     <!-- <div class="box left text-left" style="height: 1.6cm; font-size:10px; width:48%; padding: 5px; border-right: 0;"><strong>Package Weight:</strong> total_package_weight</div> -->
     <div class="box left text-left" style="display: flex; flex-wrap:wrap; flex-direction: column; height: 1.4cm; font-size:10px; width:48%; padding: 5px; border-right: 0;">
-        <div *ngFor="let items of order.OrderItems;let i=index"><b *ngIf="items.TrackingCode==tracking">[ {{items.Sku}} ]</b></div>
+        <div *ngFor="let items of getLabelSkus(tracking,order.OrderItems)"><b>[ {{items}} ]</b></div>
     </div>
 
     <div class="box left text-left" style="height: 1.4cm; font-size:18px; padding: 8px 5px; width: 17%; text-align: center;">{{getLabelItemCount(tracking,order.OrderItems)}}</div>
@@ -80,7 +80,7 @@
     </div> -->
     </div>
     </div>
-    <!-- <div style="font-size: 12px;">Order {{orderindex+1}} Of {{orders.length}}</div> -->
+    <!-- <div style="font-size: 12px;">Order {{pageIndex+1}} Of {{labelsCount}} {{increaseIndex()}}</div> -->
     <!-- <p>Page 1 of </p>  -->
     </div>
     <!-- <br> -->

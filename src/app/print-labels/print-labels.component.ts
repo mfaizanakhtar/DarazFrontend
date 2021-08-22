@@ -13,12 +13,14 @@ export class PrintLabelsComponent implements OnInit {
   ordersIdArray=[]
   orders:any
   labelsCount:any
+  pageIndex=0
   constructor(private labels:LabelService,private sanitizer:DomSanitizer) { }
   
   ngOnInit(): void {
     console.log(this.labels.getOrders().length)
     this.orders=this.labels.getOrders()
-    this.labelsCount=this.labels.getLabelCount()
+    this.labelsCount=this.labels.getLabelCount().length
+    console.log(this.labels.getLabelCount())
     console.log(this.labelsCount)
     // this.labels.postDataByCap('/getLabelsData',{Orders:this.ordersIdArray}).subscribe(res=>{
     //   this.orders = res
@@ -33,15 +35,15 @@ export class PrintLabelsComponent implements OnInit {
   getTrackings(order){
     var trackings=[]
       for(var item of order.OrderItems){
-        if(trackings.includes(item.TrackingCode)==false){
-          trackings.push(item.TrackingCode)
+        if(trackings.includes(item.labelTracking)==false){
+          trackings.push(item.labelTracking)
         }
       }
       return trackings
   }
   getLabelTrackingBarcode(tracking,orderitems){
     for(var item of orderitems){
-      if(item.TrackingCode==tracking){
+      if(item.labelTracking==tracking){
         return item.trackingBarcode
       }
     }
@@ -49,7 +51,7 @@ export class PrintLabelsComponent implements OnInit {
   }
   getLabelProperty(tracking,orderitems,property){
     for(var item of orderitems){
-      if(item.TrackingCode==tracking){
+      if(item.labelTracking==tracking){
         return item[property]
       }
     }
@@ -57,15 +59,39 @@ export class PrintLabelsComponent implements OnInit {
   }
 
   getLabelItemCount(tracking,orderitems){
-    var count=0
+    var skus=[]
+    var togetherRtsSkus=[]
     for(var item of orderitems){
-      if(item.TrackingCode==tracking){
-        count=count+1
+      if(item.SeperateRts==false){togetherRtsSkus.push(item.Sku)}
+      if(item.labelTracking==tracking){
+        if(item.SeperateRts==true){
+          skus.push(item.Sku)
+          return skus.length
+        }
       }
     }
-    return count
-    
+    return togetherRtsSkus.length
   }
+
+  getLabelSkus(tracking,orderitems){
+    // console.log(orderitems)
+    var skus=[]
+    var togetherRtsSkus=[]
+    for(var item of orderitems){
+      if(item.SeperateRts==false){togetherRtsSkus.push(item.Sku)}
+      if(item.labelTracking==tracking){
+        if(item.SeperateRts==true){
+          skus.push(item.Sku)
+          return skus
+        }
+      }
+    }
+    return togetherRtsSkus
+  }
+
+  // increaseIndex(){
+  //   this.pageIndex=this.pageIndex+1
+  // }
 
   // getImage(string){
   //  var imagePath = this.sanitizer.bypassSecurityTrustResourceUrl(string);
