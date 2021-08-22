@@ -183,7 +183,7 @@ rowHeight="auto"
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ReturnDate | date:'d MMM y h:mm a'}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Status}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"><img width="70px" height="70px" src={{item.productMainImage}}></td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"><button mat-raised-button color="primary" (click)="setItemStatusToRTS(item)">RTS</button></td>
+          <td *ngIf="Fulfillment==item.ShippingType"><button mat-raised-button color="primary" (click)="setItemStatusToRTS(item)">RTS</button></td>
         </tr>
       </table>
     </div>
