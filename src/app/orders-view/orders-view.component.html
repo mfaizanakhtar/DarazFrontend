@@ -156,6 +156,7 @@ rowHeight="auto"
         <tr>
           <th>S.No</th>
           <th>Consignee</th>
+          <th>Consignee Contact</th>
           <th>Seller SKU</th>
           <th>Product</th>
           <th>Tracking</th>
@@ -170,7 +171,8 @@ rowHeight="auto"
         </tr>
         <tr *ngFor="let item of row.OrderItems; index as i">
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{i+1}}</td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{row.AddressBilling.FirstName}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{row.AddressShipping.FirstName}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{row.AddressShipping.Phone}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Sku}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Name}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.TrackingCode}}</td>

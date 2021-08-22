@@ -182,9 +182,8 @@ export class OrdersViewComponent implements OnInit {
       // this.router.navigate(["printLabels"])
       var ordersData=[]
       for(var order of this.selected){
-        if(order.isPrinted==false){
         ordersData.push(order.OrderId)
-        }
+ 
       }
 
       this.orderService.postDataByCap('/getLabelsData',{Orders:ordersData,skuSort:this.skuSort,shopSort:this.shopSort}).subscribe(res=>{
