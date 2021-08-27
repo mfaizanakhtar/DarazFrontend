@@ -42,17 +42,17 @@ export class ReturntrackingComponent implements OnInit {
       console.log(response);
       var result:any = response;
 
-      if(result[0].Status=="Received"){
+      if(result.Status=="Received"){
         this.toastr.success("Return Received");
-        console.log(result[1])
-        this.UpdateReturnedArray(result[1])
+        console.log(result.updatedResult)
+        this.UpdateReturnedArray(result.updatedResult)
         this.correctAudio.play()
       } 
-      else if(result[0].Status=="Already Received"){
+      else if(result.Status=="Already Received"){
         this.toastr.error("Return Already Received");
         this.wrongAudio.play()
       } 
-      else if(result[0].Status=="Tracking not Found"){
+      else if(result.Status=="Tracking not Found"){
         this.toastr.error("Tracking not Found");
         this.wrongAudio.play();
       } 

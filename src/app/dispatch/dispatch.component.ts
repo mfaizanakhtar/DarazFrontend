@@ -38,22 +38,22 @@ export class DispatchComponent implements OnInit {
     this.order.updateData("dispatch",f.value.tracking,{date:this.date.toISOString()}).subscribe(res=>{
       console.log(res);
       var result:any = res;
-      if(result[0].Status=="Dispatched"){
+      if(result.Status=="Dispatched"){
         this.toastr.success('Dispatched');
         // this.correctAudio.play();
         this.correctAudio.load();
         this.correctAudio.play();
-        this.UpdateDispatchedArray(result[1])
+        this.UpdateDispatchedArray(result.updatedResult)
       } 
-      else if(result[0].Status=="Duplicate"){
+      else if(result.Status=="Duplicate"){
         this.toastr.error('Duplicate Order');
         this.wrongAudio.play();
       }
-      else if(result[0].Status=="Order status not eligible to dispatch"){
+      else if(result.Status=="Order status not eligible to dispatch"){
         this.toastr.error('Order Status Not Eligbile To Dispatch');
         this.wrongAudio.play();
       }
-      else if(result[0].Status=="Order not Found"){
+      else if(result.Status=="Order not Found"){
         this.toastr.error('Order not Found');
         this.wrongAudio.play();
       }

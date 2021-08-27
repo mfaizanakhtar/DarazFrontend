@@ -1,6 +1,8 @@
 <app-navbar></app-navbar>
 
-<mat-divider class="divider"></mat-divider>
+<mat-divider style="margin-top: 50px;" class="divider"></mat-divider>
+<h1 class="divider">Stock Management</h1>
+<mat-divider style="margin-bottom: 50px;" class="divider"></mat-divider>
 
 <div class="divider">
     <ngx-datatable
@@ -45,7 +47,7 @@
     <ngx-datatable-column name="S.No" [width]="1">
         <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
           <!-- <div >{{pIndex*pSize+rowIndex+1}}</div> -->
-          <div >{{rowIndex+1}}</div>          
+          <div >{{pIndex*pSize+rowIndex+1}}</div>          
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="SKU" prop="name"></ngx-datatable-column>
@@ -58,6 +60,19 @@
       </ngx-datatable-column>
 
     </ngx-datatable>
+
+    <div class="paginator">
+      <mat-paginator
+      [length]="length"
+      [pageSizeOptions]="[10, 20, 50, 100]"
+      [pageIndex]="pIndex"
+      [pageSize]="pSize"
+      (page)="changePageData($event)">
+      </mat-paginator>
+    </div>
+
 </div>
+
+
 
 

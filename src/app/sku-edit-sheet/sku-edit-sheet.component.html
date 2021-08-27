@@ -1,1 +1,48 @@
 
+<div>
+    
+<!-- <div *ngIf="progressSpinner" ><mat-progress-bar mode="indeterminate"></mat-progress-bar></div> -->
+<!-- <div style="display: flex;flex-wrap: wrap;">
+    <h6><b>Stock: </b></h6><h6><div>{{skuData.FBMstock}}</div></h6>
+</div> -->
+<mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>SKU</mat-label>
+    <input matInput disabled [(value)]="skuData.name">
+</mat-form-field>
+
+<br>
+
+<mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Product Cost</mat-label>
+    <input matInput [(ngModel)]="skuData.cost">
+</mat-form-field>
+
+<br>
+
+<mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Stock</mat-label>
+    <input disabled [(value)]="skuData.FBMstock" matInput>
+</mat-form-field>
+
+<br>
+
+<!-- <mat-form-field style="width: 50%;" appearance="fill">
+    <mat-label>Select an option</mat-label>
+    <mat-select [(value)]="updateType">
+      <mat-option value="Increase">Increase</mat-option>
+      <mat-option value="Decrease">Decrease</mat-option>
+    </mat-select>
+  </mat-form-field> -->
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Stock Change</mat-label>
+    <input type="number" [(ngModel)]="stockChange" matInput>
+</mat-form-field>
+<br>
+
+<div style="text-align: center;" >
+    <button (click)="update()" mat-raised-button color="primary">Update</button>
+    
+</div>
+
+</div>

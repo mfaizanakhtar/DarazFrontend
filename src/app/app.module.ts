@@ -50,6 +50,10 @@ import { StockChecklistComponent } from './stock-checklist/stock-checklist.compo
 import { SkuOverviewComponent } from './sku-overview/sku-overview.component';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { SkuEditSheetComponent } from './sku-edit-sheet/sku-edit-sheet.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
+
 
 
 
@@ -106,7 +110,9 @@ import { SkuEditSheetComponent } from './sku-edit-sheet/sku-edit-sheet.component
     NgxBarcodeModule,
     MatTabsModule,
     MatCheckboxModule,
+    MatProgressBarModule,
     MatButtonToggleModule,
+    MatProgressSpinnerModule,
     MatBottomSheetModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([

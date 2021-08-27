@@ -18,6 +18,9 @@ export class SkuOverviewComponent implements OnInit {
     SelectionType = SelectionType;
     selected=[];
     status:any
+    length:any
+    pIndex=0
+    pSize=10
 
   constructor(private skuservice:SkusService,private _bottomSheet:MatBottomSheet) { }
 
@@ -27,16 +30,28 @@ export class SkuOverviewComponent implements OnInit {
 
   getSkus(){
     this.loadingIndicator=true
-    this.skuservice.get("getAllSkus").subscribe(res=>{
+    this.skuservice.get("getAllSkus/?pageIndex="+this.pIndex+"&pageSize="+this.pSize).subscribe(res=>{
       console.log(res)
-      this.skus=res
+      var response:any = res
+      this.skus=response.skus
+      this.length = response.skusLength
       this.loadingIndicator=false
     })
   }
 
   EditSku(sku){
     // console.log(sku)
-    this._bottomSheet.open(SkuEditSheetComponent,{data:sku})
+    var ref = this._bottomSheet.open(SkuEditSheetComponent,{data:sku})
+    ref.afterDismissed().subscribe(res=>{
+      this.getSkus()
+    })
+  }
+
+  changePageData(event){
+    this.pSize=event.pageSize
+    this.pIndex=event.pageIndex
+    console.log(event)
+    this.getSkus()
   }
 
   onSelect({ selected }) {
