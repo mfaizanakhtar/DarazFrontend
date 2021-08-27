@@ -22,7 +22,12 @@ export class SkuEditSheetComponent implements OnInit {
 
   update(){
     this.progressSpinner=true
-    this.sku.postDataByCap('/updateSku',{name:this.skuData.name,stockChange:this.stockChange,cost:this.skuData.cost}).subscribe(res=>{
+
+    this.sku.postDataByCap('/updateSku',{name:this.skuData.name,stockChange:this.stockChange,
+      cost:this.skuData.cost,FBDpackagingCost:this.skuData.FBDpackagingCost,FBMpackagingCost:this.skuData.FBMpackagingCost}
+      )
+      .subscribe(res=>{
+
       console.log(res)
       var response:any=res
       this.skuData=response.result

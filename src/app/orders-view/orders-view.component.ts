@@ -89,6 +89,25 @@ export class OrdersViewComponent implements OnInit {
     })
   }
 
+  getTransactions(transactions){
+    var payout
+    if(transactions.length>0){
+      payout = transactions.reduce((a,b)=>a.Amount+b.Amount)
+      return payout
+    }
+    return "-"
+  }
+
+  getProfit(transactions,cost,packagingCost){
+    var profit
+    if(transactions.length>0){
+      profit = transactions.reduce((a,b)=>a.Amount+b.Amount)
+      profit = profit - cost - packagingCost
+      return profit
+    }
+    return "-"
+  }
+
   getOrderStatus(orderitems){
     var result = orderitems.every( (val, i, arr) => val.Status === arr[0].Status )
     if(result==true){

@@ -53,7 +53,9 @@
       <ngx-datatable-column name="SKU" prop="name"></ngx-datatable-column>
       <ngx-datatable-column name="Stock" prop="FBMstock"></ngx-datatable-column>
       <ngx-datatable-column name="Product Cost" prop="cost"></ngx-datatable-column>
-      <ngx-datatable-column name="Edit" prop="cost">
+      <ngx-datatable-column name="FBD Packaging Cost" prop="FBDpackagingCost"></ngx-datatable-column>
+      <ngx-datatable-column name="FBM Packaging Cost" prop="FBMpackagingCost"></ngx-datatable-column>
+      <ngx-datatable-column name="Edit">
         <ng-template let-row="row" ngx-datatable-cell-template>
         <button mat-raised-button color="primary" (click)="EditSku(row)">Edit</button>
       </ng-template>

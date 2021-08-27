@@ -168,22 +168,37 @@ rowHeight="auto"
           <th>Status</th>
           <th>Image</th>
           <th>RTS</th>
+          <th>Product Cost</th>
+          <th>Payout</th>
+          <th>Profit</th>
         </tr>
         <tr *ngFor="let item of row.OrderItems; index as i">
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{i+1}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{row.AddressShipping.FirstName}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{row.AddressShipping.Phone}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Sku}}</td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Name}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Name.substr(0,30)}}...</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.TrackingCode}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ItemPrice}}</td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ShippingType}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">
+            <div *ngIf="item.ShippingType=='Dropshipping'">FBM</div>
+            <div *ngIf="item.ShippingType=='Own Warehouse'">FBD</div>
+          </td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.WarehouseStatus}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.DispatchDate | date:'d MMM y h:mm a'}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ReturnDate | date:'d MMM y h:mm a'}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Status}}</td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"><img width="70px" height="70px" src={{item.productMainImage}}></td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'"><button *ngIf="item.ShippingType=='Dropshipping' && item.Status=='pending'" mat-raised-button color="primary" (click)="setItemStatusToRTS(item)">RTS</button></td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">
+            <img width="70px" height="70px" src={{item.productMainImage}}>
+          </td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">
+            <button *ngIf="item.ShippingType=='Dropshipping' && item.Status=='pending'" mat-raised-button color="primary" (click)="setItemStatusToRTS(item)">RTS</button>
+          </td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.cost}}</td>
+          <!-- <div data="getTransactions()"> -->
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{getTransactions(item.Transactions)}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{getProfit(item.Transactions,item.cost,item.packagingCost)}}</td>
+          <!-- </div> -->
         </tr>
       </table>
     </div>
