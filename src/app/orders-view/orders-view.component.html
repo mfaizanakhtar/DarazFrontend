@@ -153,6 +153,13 @@ rowHeight="auto"
       <mat-divider style="margin:10px;"></mat-divider>
       <div style="margin:40px; overflow-y:scroll; height: 500px;">
       <table>
+        <!-- <colgroup>
+          <col span="1" style="width: 15%;">
+          <col span="1" style="width: 70%;">
+          <col span="1" style="width: 15%;">
+       </colgroup> -->
+
+        <tbody>
         <tr>
           <th>S.No</th>
           <th>Consignee</th>
@@ -200,6 +207,7 @@ rowHeight="auto"
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{getProfit(item.Transactions,item.cost,item.packagingCost)}}</td>
           <!-- </div> -->
         </tr>
+      </tbody>
       </table>
     </div>
     <mat-divider style="margin:10px;"></mat-divider>

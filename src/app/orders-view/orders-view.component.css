@@ -1,22 +1,22 @@
 .datatable{
-    margin-left:150px;
-    margin-right: 150px;
+    margin-left:75px;
+    margin-right: 75px;
     margin-top:50px;
 }
 
 .paginator{
-    margin-left:150px;
-    margin-right: 150px;
+    margin-left:75px;
+    margin-right: 75px;
 }
 
 .secondnav{
-    margin-left:150px;
-    margin-right: 150px;
+    margin-left:75px;
+    margin-right: 75px;
 }
 
 .topnav{
-    margin-left:150px;
-    margin-right: 150px;
+    margin-left:75px;
+    margin-right: 75px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -37,8 +37,8 @@ td, th {
 .topdivider{
     margin-top: 15px;
     margin-bottom: 15px;
-    margin-right: 150px;
-    margin-left:150px
+    margin-right: 75px;
+    margin-left:75px
 }
 
 .example-h2 {
