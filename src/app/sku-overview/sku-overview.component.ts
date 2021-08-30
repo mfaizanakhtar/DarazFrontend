@@ -47,6 +47,13 @@ export class SkuOverviewComponent implements OnInit {
     })
   }
 
+  DeleteSku(sku){
+    this.skuservice.deleteData(sku._id).subscribe(res=>{
+      console.log(res)
+      this.getSkus()
+    })
+  }
+
   changePageData(event){
     this.pSize=event.pageSize
     this.pIndex=event.pageIndex
