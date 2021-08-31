@@ -92,18 +92,19 @@ export class OrdersViewComponent implements OnInit {
   getTransactions(transactions){
     var payout
     if(transactions.length>0){
-      payout = transactions.reduce((a,b)=>a.Amount+b.Amount)
-      return payout
+      payout = transactions.reduce((acc,it)=>acc+it.Amount,0)
+      return payout.toFixed(1)
     }
     return "-"
   }
 
-  getProfit(transactions,cost,packagingCost){
+  getProfit(transactions,cost,packagingCost,prop){
+
     var profit
     if(transactions.length>0){
-      profit = transactions.reduce((a,b)=>a.Amount+b.Amount)
+      profit = transactions.reduce((acc,it)=>acc+it.Amount,0)
       profit = profit - cost - packagingCost
-      return profit
+      return profit.toFixed(1)
     }
     return "-"
   }
