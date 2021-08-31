@@ -70,7 +70,7 @@ export class ViewTransactionsComponent implements OnInit {
       this.transactionTypeArray=response.TransactionType
       this.FeeNameArray=response.FeeName
       this.pageLength=response.Length
-      this.StoreArray=response.Stores
+      this.StoreArray=response.Store
       this.StatementArray=response.Statements
       this.Balance=response.TotalBalance[0].Sum
 
