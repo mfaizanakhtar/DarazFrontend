@@ -21,3 +21,13 @@ td, th {
     margin-left:150px;
     margin-right: 150px;
 }
+
+.wrapper {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    height: calc(20vh - 20px);
+  }
+  .inner {
+    padding: 12px;
+  }

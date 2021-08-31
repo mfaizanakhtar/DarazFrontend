@@ -70,7 +70,7 @@ export class ViewTransactionsComponent implements OnInit {
       this.transactionTypeArray=response.TransactionType
       this.FeeNameArray=response.FeeName
       this.pageLength=response.Length
-      this.StoreArray=response.Store
+      this.sortAndSetStores(response.Store)
       this.StatementArray=response.Statements
       this.Balance=response.TotalBalance[0].Sum
 
@@ -106,7 +106,7 @@ export class ViewTransactionsComponent implements OnInit {
   }
 
   StoreSelected(event){
-
+    this.getTransactions()
   }
 
   statementSelected(event){
@@ -120,6 +120,19 @@ export class ViewTransactionsComponent implements OnInit {
     if(this.OrderId=="") this.OrderId=null
 
     this.getTransactions()
+  }
+
+  sortAndSetStores(stores){
+    stores.sort((a,b)=>{
+      if(a._id<b._id){
+        return -1
+      }
+      if(a._id>b._id){
+        return 1
+      }
+      return 0
+    })
+  this.StoreArray=stores
   }
 
 }

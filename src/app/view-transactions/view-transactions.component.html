@@ -63,8 +63,12 @@
 <mat-divider style="margin-bottom: 50px" class="divider"></mat-divider>
 
 <div style="margin-left: 150px;margin-right: 150px;">
-  <div *ngIf="LoadingIndicator" style="align-items: center;align-content: center;text-align: center;">
-    <h1>Loading</h1>
+  <!-- <div *ngIf="LoadingIndicator" style="align-items: center;align-content: center;text-align: center;">
+ 
+    <mat-spinner style="align-content: center;"></mat-spinner>
+  </div> -->
+  <div *ngIf="LoadingIndicator" class="wrapper">
+    <div class="inner"><mat-spinner></mat-spinner></div>
   </div>
 
   <div *ngIf="!LoadingIndicator">
