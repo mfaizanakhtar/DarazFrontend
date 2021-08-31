@@ -1,11 +1,73 @@
 <app-navbar></app-navbar>
 
-<mat-divider style="margin-top: 50px" class="divider"></mat-divider>
+<div style="margin-top:50px;display:flexbox;">
 <h1 class="divider">Transactions</h1>
+<h4 class="divider" style="text-align: right;">Total Amount:{{Balance}}</h4>
+</div>
+
+<mat-divider class="divider"></mat-divider>
+
+<div class="divider" style="display: flex;flex-wrap: wrap;">
+
+<mat-form-field appearance="fill">
+  <mat-label>Enter a date range</mat-label>
+  <mat-date-range-input [rangePicker]="picker" >
+    <input [(ngModel)]="startdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
+    <input [(ngModel)]="enddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker></mat-date-range-picker>
+</mat-form-field>
+
+<mat-form-field appearance="fill" style="margin-left: 10px;">
+  <mat-label>Filter Statement</mat-label>
+  <mat-select [(ngModel)]="Statement" (selectionChange)="statementSelected($event)">
+    <mat-option value="All">All</mat-option>
+    <mat-option *ngFor="let statement of StatementArray" [value]="statement._id">{{statement._id}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill" style="margin-left: 10px;">
+  <mat-label>Filter Transaction Type</mat-label>
+  <mat-select [(ngModel)]="transactionType" (selectionChange)="transactionSelected($event)">
+    <mat-option value="All">All</mat-option>
+    <mat-option *ngFor="let transaction of transactionTypeArray" [value]="transaction._id">{{transaction._id}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill" style="margin-left: 10px;">
+  <mat-label>Filter Fee Name</mat-label>
+  <mat-select [(ngModel)]="FeeName" (selectionChange)="FeeSelected($event)">
+    <mat-option value="All">All</mat-option>
+    <mat-option *ngFor="let Fee of FeeNameArray" [value]="Fee._id">{{Fee._id}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill" style="margin-left: 10px;">
+  <mat-label>Select Store</mat-label>
+  <mat-select [(ngModel)]="Store" (selectionChange)="StoreSelected($event)">
+    <mat-option value="All">All</mat-option>
+    <mat-option *ngFor="let store of StoreArray" [value]="store._id">{{store._id}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<form #f="ngForm" (ngSubmit)="findOrder(f)">
+<mat-form-field appearance="fill" style="margin-left: 10px;">
+  <mat-label>Order Id</mat-label>
+  <input type="number" name="OrderId" ngModel matInput placeholder="Ex. 10110254789879">
+</mat-form-field>
+<button type="submit" style="display: none;"></button>
+</form>
+
+</div>
 <mat-divider style="margin-bottom: 50px" class="divider"></mat-divider>
 
 <div style="margin-left: 150px;margin-right: 150px;">
+  <div *ngIf="LoadingIndicator" style="align-items: center;align-content: center;text-align: center;">
+    <h1>Loading</h1>
+  </div>
 
+  <div *ngIf="!LoadingIndicator">
     <table>
         <!-- <colgroup>
           <col span="1" style="width: 15%;">
@@ -25,7 +87,7 @@
           <th>VAT</th>
           <th>Statement</th>
         </tr>
-        <tr *ngFor="let t of Transactions.Transactions;index as i">
+        <tr *ngFor="let t of Transactions;index as i">
           <td>{{pIndex*pSize+i+1}}</td>
           <td>{{t.TransactionDate | date:'d MMM y'}}</td>
           <td>{{t.FeeName}}</td>
@@ -40,13 +102,15 @@
       </tbody>
       </table>
       
-
+    </div>
 
 </div>
 
+
+
 <div class="paginator">
     <mat-paginator
-    [length]="Transactions.Length"
+    [length]="pageLength"
     [pageSizeOptions]="[10, 20, 50, 100]"
     [pageIndex]="pIndex"
     [pageSize]="pSize"
