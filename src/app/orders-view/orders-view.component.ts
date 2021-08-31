@@ -1,7 +1,7 @@
-import { LabelService } from './../services/label.service';
+import { LabelService } from '../services/label.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { OrderItemsService } from './../services/orderItems.service';
+import { OrderItemsService } from '../services/orderItems.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
@@ -98,7 +98,7 @@ export class OrdersViewComponent implements OnInit {
     return "-"
   }
 
-  getProfit(transactions,cost,packagingCost,prop){
+  getProfit(transactions,cost,packagingCost){
 
     var profit
     if(transactions.length>0){

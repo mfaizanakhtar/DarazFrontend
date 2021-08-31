@@ -35,6 +35,13 @@
                 <li><a routerLink="/dispatch">Dispatch</a></li>
                 <li><a routerLink="/returns">Returns</a></li>
                 <li *ngIf="isAdmin()"><a routerLink="/users">Users</a></li>
+
+                <li><a href="javascript:void(0)">Finance<span class="arrow-down"></span></a>
+                  <ul class="dropdown">
+                    <li><a routerLink="/transactions">View Transactions</a></li>
+                  </ul>
+                </li>
+
                 <li><a href="javascript:void(0)">Options<span class="arrow-down"></span></a>
                   <ul class="dropdown">
                     <li><a routerLink="/shops">Integrated Accounts</a></li>
@@ -42,6 +49,7 @@
                     <li><a (click)="logout()" style="cursor:pointer">Logout</a></li>
                   </ul>
                 </li>
+                
               </ul>
             </div>
             <div class="nav-bg-fostrap">

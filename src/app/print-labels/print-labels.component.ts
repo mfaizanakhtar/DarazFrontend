@@ -1,4 +1,4 @@
-import { LabelService } from './../services/label.service';
+import { LabelService } from '../services/label.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {jsPDF} from 'jspdf'
 import html2canvas from 'html2canvas'

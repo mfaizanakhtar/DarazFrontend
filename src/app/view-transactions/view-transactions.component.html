@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+
+<mat-divider style="margin-top: 50px" class="divider"></mat-divider>
+<h1 class="divider">Transactions</h1>
+<mat-divider style="margin-bottom: 50px" class="divider"></mat-divider>
+
+<div style="margin-left: 150px;margin-right: 150px;">
+
+    <table>
+        <!-- <colgroup>
+          <col span="1" style="width: 15%;">
+          <col span="1" style="width: 70%;">
+          <col span="1" style="width: 15%;">
+       </colgroup> -->
+
+        <tbody>
+        <tr>
+          <th>S.No</th>
+          <th>Date</th>
+          <th>Transaction Type</th>
+          <th>Transaction Number</th>
+          <th>Order Number</th>
+          <th>Details</th>
+          <th>Amount</th>
+          <th>VAT</th>
+          <th>Statement</th>
+        </tr>
+        <tr *ngFor="let t of Transactions.Transactions;index as i">
+          <td>{{pIndex*pSize+i+1}}</td>
+          <td>{{t.TransactionDate | date:'d MMM y'}}</td>
+          <td>{{t.FeeName}}</td>
+          <td>{{t.TransactionNumber}}</td>
+          <td>{{t.OrderNo}}</td>
+          <td>{{t.Details.substr(0,50)}}</td>
+          <td>{{t.Amount}}</td>
+          <td>{{t.VATinAmount}}</td>
+          <td>{{t.Statement}}</td>
+          <!-- </div> -->
+        </tr>
+      </tbody>
+      </table>
+      
+
+
+</div>
+
+<div class="paginator">
+    <mat-paginator
+    [length]="Transactions.Length"
+    [pageSizeOptions]="[10, 20, 50, 100]"
+    [pageIndex]="pIndex"
+    [pageSize]="pSize"
+    (page)="changePageData($event)">
+    </mat-paginator>
+  </div>
+
+<mat-divider style="margin-bottom: 75px;margin-top: 75px;" class="divider"></mat-divider>

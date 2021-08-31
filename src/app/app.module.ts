@@ -52,6 +52,7 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { SkuEditSheetComponent } from './sku-edit-sheet/sku-edit-sheet.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { ViewTransactionsComponent } from './view-transactions/view-transactions.component';
 
 
 
@@ -85,6 +86,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     StockChecklistComponent,
     SkuOverviewComponent,
     SkuEditSheetComponent,
+    ViewTransactionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -182,6 +184,11 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
       {
         path:'skuoverview',
         component:SkuOverviewComponent,
+        canActivate:[LoginGuard]
+      },
+      {
+        path:'transactions',
+        component:ViewTransactionsComponent,
         canActivate:[LoginGuard]
       }
     ]),

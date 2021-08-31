@@ -1,0 +1,23 @@
+.divider{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 150px;
+    margin-left:150px
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.paginator{
+    margin-left:150px;
+    margin-right: 150px;
+}
