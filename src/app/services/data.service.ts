@@ -11,8 +11,9 @@ export class DataService {
   options:any
   
   constructor(private url : string, private http: HttpClient) { }
-  private baseUrl="http://localhost:3000/api/"
-  // private baseUrl="api/"
+  // private baseUrl="http://localhost:3000/api/"
+  // private baseUrl="http://dmanage.accesology.com/api/"
+  private baseUrl="api/"
   async setHeaders(){
     let token = localStorage.getItem('auth-token');
     let header = new HttpHeaders();

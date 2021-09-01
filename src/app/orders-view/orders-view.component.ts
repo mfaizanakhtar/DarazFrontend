@@ -90,20 +90,34 @@ export class OrdersViewComponent implements OnInit {
   }
 
   getTransactions(transactions){
-    var payout
+    
+    var Result=0
     if(transactions.length>0){
-      payout = transactions.reduce((acc,it)=>acc+it.Amount,0)
-      return payout.toFixed(1)
+      for(var t of transactions){
+        if(t.FeeName=="Item Price Credit"){
+          console.log("acc "+Result+" it"+t.Amount)
+          Result=Result+t.Amount
+        }
+        else if(t.FeeName=="Commission"){
+          Result=Result+t.Amount
+        }
+        else if(t.FeeName=="Automatic Shipping Fee"){
+          Result=Result-t.VATinAmount
+        }
+      }
+      
+      return Result.toFixed(1)
     }
     return "-"
   }
 
   getProfit(transactions,cost,packagingCost){
 
-    var profit
+    var profit=0
+    var Result=0
     if(transactions.length>0){
-      profit = transactions.reduce((acc,it)=>acc+it.Amount,0)
-      profit = profit - cost - packagingCost
+      Result = parseInt(this.getTransactions(transactions))
+      profit = Result - cost - packagingCost
       return profit.toFixed(1)
     }
     return "-"
