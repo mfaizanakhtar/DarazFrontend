@@ -31,6 +31,7 @@ export class ViewTransactionsComponent implements OnInit {
   pageLength
   //loader
   LoadingIndicator=false
+  pageLoadingIndicator=true
   
 
   constructor(private transaction:TransactionsService) { }
@@ -75,6 +76,7 @@ export class ViewTransactionsComponent implements OnInit {
       this.Balance=response.TotalBalance[0].Sum
 
       this.LoadingIndicator=false
+      this.pageLoadingIndicator=false
 
       console.log(res)
     })

@@ -1,5 +1,10 @@
 <app-navbar></app-navbar>
 
+<div *ngIf="pageLoadingIndicator" class="wrapper" style="height: calc(100vh - 20px);">
+  <div class="inner"><mat-spinner></mat-spinner></div>
+</div>
+
+<div *ngIf="!pageLoadingIndicator">
 <div style="margin-top:50px;display:flexbox;">
 <h1 class="divider">Transactions</h1>
 <h4 class="divider" style="text-align: right;">Total Amount:{{Balance.toFixed(1)}}</h4>
@@ -123,3 +128,4 @@
   </div>
 
 <mat-divider style="margin-bottom: 75px;margin-top: 75px;" class="divider"></mat-divider>
+</div>
