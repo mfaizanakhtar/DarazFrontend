@@ -53,6 +53,8 @@ import { SkuEditSheetComponent } from './sku-edit-sheet/sku-edit-sheet.component
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ViewTransactionsComponent } from './view-transactions/view-transactions.component';
+import { ViewStatementsComponent } from './view-statements/view-statements.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 
@@ -87,6 +89,7 @@ import { ViewTransactionsComponent } from './view-transactions/view-transactions
     SkuOverviewComponent,
     SkuEditSheetComponent,
     ViewTransactionsComponent,
+    ViewStatementsComponent,
   ],
   imports: [
     BrowserModule,
@@ -116,6 +119,7 @@ import { ViewTransactionsComponent } from './view-transactions/view-transactions
     MatButtonToggleModule,
     MatProgressSpinnerModule,
     MatBottomSheetModule,
+    MatExpansionModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       {
@@ -189,6 +193,11 @@ import { ViewTransactionsComponent } from './view-transactions/view-transactions
       {
         path:'transactions',
         component:ViewTransactionsComponent,
+        canActivate:[LoginGuard]
+      },
+      {
+        path:'statement',
+        component:ViewStatementsComponent,
         canActivate:[LoginGuard]
       }
     ]),
