@@ -17,7 +17,8 @@ export class ViewStatementsComponent implements OnInit {
     "ItemPriceCredit":{Amount:0,Vat:0},
     "Comission":{Amount:0,Vat:0},
     "AutomaticShippingFee":{Amount:0,Vat:0},
-    "ShippingFeeCustomer":{Amount:0,Vat:0}
+    "ShippingFeeCustomer":{Amount:0,Vat:0},
+    "PaymentFee":{Amount:0,Vat:0}
   }
   constructor(private transaction:TransactionsService) { }
 
@@ -67,6 +68,10 @@ export class ViewStatementsComponent implements OnInit {
     if(s._id=="Automatic Shipping Fee") {
       this.StatementObj.AutomaticShippingFee.Amount=s.Amount
       this.StatementObj.AutomaticShippingFee.Vat=s.Vat
+    }
+    if(s._id=="Payment Fee") {
+      this.StatementObj.PaymentFee.Amount=s.Amount
+      this.StatementObj.PaymentFee.Vat=s.Vat
     }
   }
   }

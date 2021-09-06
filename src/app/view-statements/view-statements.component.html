@@ -60,25 +60,29 @@
                 <td>{{StatementObj.Comission.Amount+StatementObj.Comission.Vat | number}}</td>
             </tr>
             <tr>
+                <td>Payment Fee</td>
+                <td>{{StatementObj.PaymentFee.Amount+StatementObj.PaymentFee.Vat | number}}</td>
+            </tr>
+            <tr>
                 <td>Automatic Shipping Fee</td>
                 <td>{{StatementObj.AutomaticShippingFee.Amount+StatementObj.AutomaticShippingFee.Vat | number}}</td>
             </tr>
             <tr>
                 <td>Auto. Shipping fee subsidy (by Daraz)</td>
-                <td>{{StatementObj.AutomaticShippingFee.Amount+StatementObj.AutomaticShippingFee.Vat-StatementObj.ShippingFeeCustomer.Amount | number}}</td>
+                <td>{{StatementObj.AutomaticShippingFee.Amount+StatementObj.AutomaticShippingFee.Vat+StatementObj.ShippingFeeCustomer.Amount | number}}</td>
             </tr>
         
           </mat-expansion-panel>
-        <td>{{StatementObj.Comission.Amount+StatementObj.Comission.Vat-StatementObj.ShippingFeeCustomer.Amount+StatementObj.ShippingFeeCustomer.Vat | number}}</td>
+        <td>{{StatementObj.Comission.Amount+StatementObj.Comission.Vat-StatementObj.ShippingFeeCustomer.Amount+StatementObj.ShippingFeeCustomer.Vat-StatementObj.PaymentFee.Amount+StatementObj.PaymentFee.Vat | number}}</td>
     </tr>
     <tr>
         <td>VAT</td>
-        <td>{{-StatementObj.ItemPriceCredit.Vat-StatementObj.Comission.Vat-StatementObj.ShippingFeeCustomer.Vat-StatementObj.AutomaticShippingFee.Vat | number}}</td>
+        <td>{{-StatementObj.Comission.Vat-StatementObj.AutomaticShippingFee.Vat-StatementObj.PaymentFee.Vat | number}}</td>
     </tr>
     <tr><mat-divider></mat-divider></tr>
     <tr>
         <td>Subtotal</td>
-        <td>{{StatementObj.ItemPriceCredit.Amount+StatementObj.Comission.Amount-StatementObj.AutomaticShippingFee.Vat | number}}</td>
+        <td>{{StatementObj.ItemPriceCredit.Amount+StatementObj.Comission.Amount+StatementObj.PaymentFee.Amount-StatementObj.AutomaticShippingFee.Vat | number}}</td>
     </tr>
     <tr><mat-divider></mat-divider></tr>
     <th>Refunds</th>

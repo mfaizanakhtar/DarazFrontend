@@ -9,9 +9,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
   result:any
   constructor(private http:HttpClient) { }
-  private baseURL="http://localhost:3000/api/"
+  // private baseURL="http://localhost:3000/api/"
   // private baseURL="http://dmanage.accesology.com/api/"
-  // private baseURL="api/"
+  private baseURL="api/"
 
   login(credentials)
   {
