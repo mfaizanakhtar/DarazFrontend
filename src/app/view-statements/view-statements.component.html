@@ -61,11 +61,11 @@
             </tr>
             <tr>
                 <td>Automatic Shipping Fee</td>
-                <td>{{StatementObj.AutomaticShippingFee.Amount-StatementObj.AutomaticShippingFee.Vat | number}}</td>
+                <td>{{StatementObj.AutomaticShippingFee.Amount+StatementObj.AutomaticShippingFee.Vat | number}}</td>
             </tr>
             <tr>
                 <td>Auto. Shipping fee subsidy (by Daraz)</td>
-                <td>{{-StatementObj.AutomaticShippingFee.Amount+StatementObj.AutomaticShippingFee.Vat-StatementObj.ShippingFeeCustomer.Amount+StatementObj.ShippingFeeCustomer.Vat | number}}</td>
+                <td>{{StatementObj.AutomaticShippingFee.Amount+StatementObj.AutomaticShippingFee.Vat-StatementObj.ShippingFeeCustomer.Amount | number}}</td>
             </tr>
         
           </mat-expansion-panel>
