@@ -90,14 +90,14 @@
 
 </ngx-datatable-column>
 
-    <ngx-datatable-column name="S.No" [width]="1">
+    <ngx-datatable-column name="S.No" [width]="5">
         <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
           <!-- <div >{{pIndex*pSize+rowIndex+1}}</div> -->
           <div >{{pIndex*pSize+rowIndex+1}}</div>          
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Product" [width]="100">
+      <ngx-datatable-column name="Product" [canAutoResize]="false" [resizeable]="false" [width]="100">
 
         <ng-template let-row="row" ngx-datatable-cell-template>
             <!-- <div >{{row.Images[0]}}</div> -->
@@ -106,17 +106,17 @@
 
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="" prop="SellerSku">
+      <ngx-datatable-column name="Seller Sku" [canAutoResize]="false" [resizeable]="false" prop="SellerSku">
           <ng-template let-row="row" let-sku="value" ngx-datatable-cell-template>
             <a href="{{row.Url}}" target="_blank" rel="noopener noreferrer">{{sku}}</a>
           </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Shop SKU" prop="ShopSku"></ngx-datatable-column>
-      <ngx-datatable-column name="DSC Total Stock" prop="quantity"></ngx-datatable-column>
-      <ngx-datatable-column name="DSC FBM Stock" prop="multiWarehouseInventories.totalQuantity"></ngx-datatable-column>
-      <ngx-datatable-column name="DSC FBD Stock" prop="fblWarehouseInventories.totalQuantity"></ngx-datatable-column>
-      <ngx-datatable-column name="Expected FBD Stock" prop="FBDstock.totalQuantity"></ngx-datatable-column>
-      <ngx-datatable-column name="Shop" prop="ShopId" [width]="180"></ngx-datatable-column>
+      <ngx-datatable-column name="Shop SKU" [canAutoResize]="false" [resizeable]="false" prop="ShopSku"></ngx-datatable-column>
+      <ngx-datatable-column name="DSC Total Stock" [canAutoResize]="false" [resizeable]="false" prop="quantity"></ngx-datatable-column>
+      <ngx-datatable-column name="DSC FBM Stock" [canAutoResize]="false" [resizeable]="false" prop="multiWarehouseInventories.totalQuantity"></ngx-datatable-column>
+      <ngx-datatable-column name="DSC FBD Stock" [canAutoResize]="false" [resizeable]="false" prop="fblWarehouseInventories.totalQuantity"></ngx-datatable-column>
+      <ngx-datatable-column name="Expected FBD Stock" [canAutoResize]="false" [resizeable]="false" prop="FBDstock.totalQuantity"></ngx-datatable-column>
+      <ngx-datatable-column name="Shop" [canAutoResize]="false" [resizeable]="false" prop="ShopId" [width]="180"></ngx-datatable-column>
       <ngx-datatable-column name="Status">
 
           <ng-template let-row=row ngx-datatable-cell-template>
@@ -129,7 +129,7 @@
           </ng-template>
 
       </ngx-datatable-column>
-      <ngx-datatable-column name="Edit">
+      <ngx-datatable-column name="Edit" [canAutoResize]="false" [resizeable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <!-- <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">Action</button>
           <mat-menu #menu="matMenu">
