@@ -69,11 +69,13 @@
             </tr>
             <tr>
                 <td>Auto. Shipping fee subsidy (by Daraz)</td>
-                <td>{{StatementObj.AutomaticShippingFee.Amount+StatementObj.AutomaticShippingFee.Vat+StatementObj.ShippingFeeCustomer.Amount | number}}</td>
+                <td>{{-StatementObj.AutomaticShippingFee.Amount-StatementObj.AutomaticShippingFee.Vat-StatementObj.ShippingFeeCustomer.Amount | number}}</td>
             </tr>
         
           </mat-expansion-panel>
-        <td>{{StatementObj.Comission.Amount+StatementObj.Comission.Vat-StatementObj.ShippingFeeCustomer.Amount+StatementObj.ShippingFeeCustomer.Vat-StatementObj.PaymentFee.Amount+StatementObj.PaymentFee.Vat | number}}</td>
+        <!-- <td>{{StatementObj.Comission.Amount+StatementObj.Comission.Vat-StatementObj.ShippingFeeCustomer.Amount+StatementObj.ShippingFeeCustomer.Vat-StatementObj.PaymentFee.Amount+StatementObj.PaymentFee.Vat | number}}</td> -->
+        <td>{{StatementObj.Comission.Amount+StatementObj.Comission.Vat-StatementObj.ShippingFeeCustomer.Amount+StatementObj.PaymentFee.Amount+StatementObj.PaymentFee.Vat | number}}</td>
+
     </tr>
     <tr>
         <td>VAT</td>
@@ -88,7 +90,7 @@
     <th>Refunds</th>
     <tr>
         <td>Item Charges</td>
-        <td>0</td>
+        <td>{{StatementObj.ReversalItemPrice.Amount}}</td>
     </tr>
     <tr>
         <mat-expansion-panel>
@@ -112,11 +114,15 @@
         
             <tr>
                 <td>Reversal Commission</td>
-                <td>0</td>
+                <td>{{StatementObj.ReversalComission.Amount-StatementObj.ReversalComission.Vat | number}}</td>
+            </tr>
+            <tr>
+                <td>Payment Fee Credit</td>
+                <td>{{-StatementObj.ReversalItemPrice.Amount*0.0125 | number:'1.1-2'}}</td>
             </tr>
         
           </mat-expansion-panel>
-        <td>0</td>
+        <td>{{StatementObj.ReversalComission.Amount-StatementObj.ReversalComission.Vat+(-StatementObj.ReversalItemPrice.Amount*0.0125) | number:'1.1-2'}}</td>
     </tr>
     <tr>
         <td>Penalties</td>
@@ -124,16 +130,18 @@
     </tr>
     <tr>
         <td>Others</td>
-        <td>0</td>
+        <td>{{StatementObj.OtherDebits.Amount+StatementObj.AdjustmentsOthers.Amount-StatementObj.AdjustmentsOthers.Vat | number}}</td>
     </tr>
     <tr>
         <td>VAT</td>
-        <td>0</td>
+        <td>{{StatementObj.AdjustmentsOthers.Vat+StatementObj.ReversalComission.Vat+(-StatementObj.ReversalItemPrice.Amount*0.0125*0.115) | number:'1.1-2'}}</td>
     </tr>
     <tr><mat-divider></mat-divider></tr>
     <tr>
         <td>Subtotal</td>
-        <td>0</td>
+        <td>{{StatementObj.ReversalItemPrice.Amount+
+            StatementObj.ReversalComission.Amount+(-StatementObj.ReversalItemPrice.Amount*0.0125)+
+            StatementObj.OtherDebits.Amount+StatementObj.AdjustmentsOthers.Amount | number:'1.1-2'}}</td>
     </tr>
     <tr><mat-divider></mat-divider></tr>
     <th>Other Services</th>
@@ -157,7 +165,9 @@
     <th>Closing Balance</th>
     <tr>
         <td>Total Balance</td>
-        <td>0</td>
+        <td>{{StatementObj.ItemPriceCredit.Amount+StatementObj.Comission.Amount+StatementObj.PaymentFee.Amount-StatementObj.AutomaticShippingFee.Vat+
+            StatementObj.ReversalItemPrice.Amount+StatementObj.ReversalComission.Amount+(-StatementObj.ReversalItemPrice.Amount*0.0125)+StatementObj.OtherDebits.Amount+StatementObj.AdjustmentsOthers.Amount+
+            0 | number:'1.1-2'}}</td>
     </tr>
     <tr><mat-divider style="margin-top:10px;margin-bottom:10px"></mat-divider></tr>
 </table>

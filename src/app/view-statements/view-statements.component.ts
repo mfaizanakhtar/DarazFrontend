@@ -18,7 +18,11 @@ export class ViewStatementsComponent implements OnInit {
     "Comission":{Amount:0,Vat:0},
     "AutomaticShippingFee":{Amount:0,Vat:0},
     "ShippingFeeCustomer":{Amount:0,Vat:0},
-    "PaymentFee":{Amount:0,Vat:0}
+    "PaymentFee":{Amount:0,Vat:0},
+    "ReversalItemPrice":{Amount:0,Vat:0},
+    "ReversalComission":{Amount:0,Vat:0},
+    "OtherDebits":{Amount:0,Vat:0},
+    "AdjustmentsOthers":{Amount:0,Vat:0},
   }
   constructor(private transaction:TransactionsService) { }
 
@@ -27,6 +31,18 @@ export class ViewStatementsComponent implements OnInit {
   }
 
   getStatements(){
+    this.StatementObj={
+      "ItemPriceCredit":{Amount:0,Vat:0},
+      "Comission":{Amount:0,Vat:0},
+      "AutomaticShippingFee":{Amount:0,Vat:0},
+      "ShippingFeeCustomer":{Amount:0,Vat:0},
+      "PaymentFee":{Amount:0,Vat:0},
+      "ReversalItemPrice":{Amount:0,Vat:0},
+      "ReversalComission":{Amount:0,Vat:0},
+      "OtherDebits":{Amount:0,Vat:0},
+      "AdjustmentsOthers":{Amount:0,Vat:0},
+    }
+
     var tempStatement
     var tempShop
     if(this.Statement=="All"){tempStatement=null}else{tempStatement=this.Statement}
@@ -72,6 +88,22 @@ export class ViewStatementsComponent implements OnInit {
     if(s._id=="Payment Fee") {
       this.StatementObj.PaymentFee.Amount=s.Amount
       this.StatementObj.PaymentFee.Vat=s.Vat
+    }
+    if(s._id=="Reversal Item Price"){
+      this.StatementObj.ReversalItemPrice.Amount=s.Amount
+      this.StatementObj.ReversalItemPrice.Vat=s.Vat
+    }
+    if(s._id=="Reversal Commission"){
+      this.StatementObj.ReversalComission.Amount=s.Amount
+      this.StatementObj.ReversalComission.Vat=s.Vat
+    }
+    if(s._id=="Other Debits (Returns)"){
+      this.StatementObj.OtherDebits.Amount=s.Amount
+      this.StatementObj.OtherDebits.Vat=s.Vat
+    }
+    if(s._id=="Adjustments Others"){
+      this.StatementObj.AdjustmentsOthers.Amount=s.Amount
+      this.StatementObj.AdjustmentsOthers.Vat=s.Vat
     }
   }
   }
