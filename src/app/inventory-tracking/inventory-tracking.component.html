@@ -1,0 +1,154 @@
+<app-navbar></app-navbar>
+
+
+<mat-divider style="margin-top: 50px;" class="divider"></mat-divider>
+<div class="divider" style="display: flex;flex-wrap: wrap;">
+<h3 >DSC Inventory Tracking</h3>
+
+<mat-button-toggle-group [(value)]="StatusFilter" style="margin-left: 20px;" name="fontStyle" aria-label="Font Style">
+    <mat-button-toggle value="All" (click)="StatusFilterClicked()">All</mat-button-toggle>
+    <mat-button-toggle value="active" (click)="StatusFilterClicked()">Active</mat-button-toggle>
+    <mat-button-toggle value="inactive" (click)="StatusFilterClicked()">Inactive</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <mat-button-toggle-group [(value)]="Stock" style="margin-left: 20px;" name="fontStyle" aria-label="Font Style">
+    <mat-button-toggle value="All" (click)="StockFilterClicked()">All</mat-button-toggle>
+    <mat-button-toggle value="InStock" (click)="StockFilterClicked()">IN STOCK</mat-button-toggle>
+    <mat-button-toggle value="OutOfStock" (click)="StockFilterClicked()">OUT OF STOCK</mat-button-toggle>
+  </mat-button-toggle-group>
+
+</div>
+  
+<mat-divider class="divider"></mat-divider>
+
+
+<div class="divider" style="margin-bottom: 0px;display: flex;flex-wrap: wrap;">
+
+
+
+    <form #f="ngForm" (ngSubmit)="findSku(f.value)">
+    
+        <mat-form-field appearance="fill">
+          <mat-label>Seller Sku</mat-label>
+          <input type="text" name="SellerSku" ngModel matInput placeholder="Ex. ABCD">
+        </mat-form-field>
+        
+        <mat-form-field style="margin-left: 10px;" appearance="fill">
+          <mat-label>Shop Sku</mat-label>
+          <input name="ShopSku" ngModel matInput placeholder="Ex. 1078646_PK_8789123">
+        </mat-form-field>
+        <button type="submit" style="display: none;"></button>
+        
+        </form>
+      
+        <mat-form-field appearance="fill" style="margin-left: 10px;">
+          <mat-label>Select Store</mat-label>
+          <mat-select [(ngModel)]="Store" (selectionChange)="StoreSelected($event)">
+            <mat-option value="All">All</mat-option>
+            <mat-option *ngFor="let store of StoreArray" [value]="store._id">{{store._id}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      
+        <!-- <mat-form-field appearance="fill" style="margin-left: 10px;">
+        <mat-label>Select Fulfillment</mat-label>
+        <mat-select [(ngModel)]="Fulfillment" (selectionChange)="FulfillmentSelected($event)">
+            <mat-option value="All">All</mat-option>
+            <mat-option value="Dropshipping">FBM</mat-option>
+            <mat-option value="Own Warehouse">FBD</mat-option>
+        </mat-select>
+        </mat-form-field> -->
+</div>
+
+
+<mat-divider class="divider"></mat-divider>
+
+<div class="divider">
+    <ngx-datatable
+    #table
+    style="width:auto"
+    class="material"
+    [loadingIndicator]="loadingIndicator"
+    [rows]="DSCskus"
+    [columnMode]="ColumnMode.force"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    rowHeight="auto"
+    [selected]="selected"
+    [selectionType]="SelectionType.checkbox"
+    [selectAllRowsOnPage]="true"
+    (activate)="onActivate($event)"
+    (select)="onSelect($event)">
+
+    <ngx-datatable-column
+[width]="30"
+[sortable]="false"
+[canAutoResize]="false"
+[draggable]="false"
+[resizeable]="false"
+
+>
+
+</ngx-datatable-column>
+
+    <ngx-datatable-column name="S.No" [width]="1">
+        <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+          <!-- <div >{{pIndex*pSize+rowIndex+1}}</div> -->
+          <div >{{pIndex*pSize+rowIndex+1}}</div>          
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Product" [width]="100">
+
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <!-- <div >{{row.Images[0]}}</div> -->
+            <img src="{{row.Images[0]}}" height="70px" width="70px">          
+        </ng-template>
+
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="" prop="SellerSku">
+          <ng-template let-row="row" let-sku="value" ngx-datatable-cell-template>
+            <a href="{{row.Url}}" target="_blank" rel="noopener noreferrer">{{sku}}</a>
+          </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Shop SKU" prop="ShopSku"></ngx-datatable-column>
+      <ngx-datatable-column name="DSC Total Stock" prop="quantity"></ngx-datatable-column>
+      <ngx-datatable-column name="DSC FBM Stock" prop="multiWarehouseInventories.totalQuantity"></ngx-datatable-column>
+      <ngx-datatable-column name="DSC FBD Stock" prop="fblWarehouseInventories.totalQuantity"></ngx-datatable-column>
+      <ngx-datatable-column name="Expected FBD Stock" prop="FBDstock.totalQuantity"></ngx-datatable-column>
+      <ngx-datatable-column name="Shop" prop="ShopId" [width]="180"></ngx-datatable-column>
+      <ngx-datatable-column name="Status">
+
+          <ng-template let-row=row ngx-datatable-cell-template>
+            <div *ngIf="row.Status=='active'">
+                <div style="color:green;">Active</div>
+            </div>
+            <div *ngIf="row.Status=='inactive'">
+                <div style="color: red;">Inactive</div>
+            </div>
+          </ng-template>
+
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Edit">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <!-- <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">Action</button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="EditSku(row)">Edit</button>
+            <button mat-menu-item (click)="DeleteSku(row)">Delete</button>
+          </mat-menu> -->
+      </ng-template>
+      </ngx-datatable-column>
+
+    </ngx-datatable>
+
+    <div class="paginator">
+      <mat-paginator
+      [length]="length"
+      [pageSizeOptions]="[10, 20, 50]"
+      [pageIndex]="pIndex"
+      [pageSize]="pSize"
+      (page)="changePageData($event)">
+      </mat-paginator>
+    </div>
+
+</div>

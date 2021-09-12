@@ -31,10 +31,16 @@
               <ul>
                 <li><a routerLink="/">Home</a></li>
                 <li><a routerLink="/ordersview">Orders</a></li>
-                <li><a routerLink="/skuoverview">Inventory</a></li>
                 <li><a routerLink="/dispatch">Dispatch</a></li>
                 <li><a routerLink="/returns">Returns</a></li>
                 <li *ngIf="isAdmin()"><a routerLink="/users">Users</a></li>
+
+                <li><a href="javascript:void(0)">Inventory<span class="arrow-down"></span></a>
+                  <ul class="dropdown">
+                    <li><a routerLink="/inventorytracking">DSC Inventory Tracking</a></li>
+                    <li><a routerLink="/skuoverview">Grouped Stock Tracking</a></li>
+                  </ul>
+                </li>
 
                 <li><a href="javascript:void(0)">Finance<span class="arrow-down"></span></a>
                   <ul class="dropdown">

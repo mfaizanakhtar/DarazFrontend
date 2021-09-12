@@ -55,6 +55,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ViewTransactionsComponent } from './view-transactions/view-transactions.component';
 import { ViewStatementsComponent } from './view-statements/view-statements.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { InventoryTrackingComponent } from './inventory-tracking/inventory-tracking.component';
 
 
 
@@ -90,6 +91,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     SkuEditSheetComponent,
     ViewTransactionsComponent,
     ViewStatementsComponent,
+    InventoryTrackingComponent,
   ],
   imports: [
     BrowserModule,
@@ -198,6 +200,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
       {
         path:'statement',
         component:ViewStatementsComponent,
+        canActivate:[LoginGuard]
+      },
+      {
+        path:'inventorytracking',
+        component:InventoryTrackingComponent,
         canActivate:[LoginGuard]
       }
     ]),
