@@ -1,0 +1,76 @@
+
+<div>
+    
+    <!-- <div *ngIf="progressSpinner" ><mat-progress-bar mode="indeterminate"></mat-progress-bar></div> -->
+    <!-- <div style="display: flex;flex-wrap: wrap;">
+        <h6><b>Stock: </b></h6><h6><div>{{skuData.FBMstock}}</div></h6>
+    </div> -->
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Seller SKU</mat-label>
+        <input matInput disabled [(value)]="DscSku.SellerSku">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Shop SKU</mat-label>
+        <input matInput disabled [(value)]="DscSku.ShopSku">
+    </mat-form-field>
+    
+    <br>
+    
+    <mat-form-field style="width: 50%;" appearance="fill">
+        <mat-label>Expected FBM Stock</mat-label>
+        <input disabled [(value)]="DscSku.FBMstock.quantity" matInput>
+    </mat-form-field>
+
+    <mat-form-field style="width: 50%;" appearance="fill">
+        <mat-label>Expected FBD Stock</mat-label>
+        <input disabled [(value)]="DscSku.FBDstock.quantity" matInput>
+    </mat-form-field>
+    
+    <br>
+
+    <mat-form-field style="width: 50%;" appearance="fill">
+        <mat-label>FBM Stock Change</mat-label>
+        <input type="number" [(ngModel)]="FBMchange" matInput>
+    </mat-form-field>
+    
+    <mat-form-field style="width: 50%;" appearance="fill">
+        <mat-label>FBD Stock Change</mat-label>
+        <input type="number" [(ngModel)]="FBDchange" matInput>
+    </mat-form-field>
+    <br>
+    <mat-checkbox color="primary" [(ngModel)]="GroupSkuChange" (change)="setGroupStock($event.checked)" style="width: 30%;">Group Sku Change</mat-checkbox>
+
+
+    <mat-form-field  style="width: 70%;" appearance="fill">
+        <mat-label>Group Sku Stock Change</mat-label>
+        <input type="number" [disabled]="!GroupSkuChange" [(ngModel)]="GroupSkuChangeStock" matInput>
+    </mat-form-field>
+    <br>
+
+
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Product Cost</mat-label>
+        <input matInput [(ngModel)]="DscSku.cost">
+    </mat-form-field>
+    
+    <br>
+    
+    <mat-form-field style="width: 50%;" appearance="fill">
+        <mat-label>FBM Packaging Cost</mat-label>
+        <input matInput [(ngModel)]="DscSku.FBMpackagingCost">
+    </mat-form-field>
+    
+    <mat-form-field style="width: 50%;" appearance="fill">
+        <mat-label>FBD Packaging Cost</mat-label>
+        <input matInput [(ngModel)]="DscSku.FBDpackagingCost">
+    </mat-form-field>
+    
+    <div style="text-align: center;" >
+        <button (click)="update()" mat-raised-button color="primary">Update</button>
+        
+    </div>
+    
+    </div>

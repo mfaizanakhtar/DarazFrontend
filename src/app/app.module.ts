@@ -56,6 +56,7 @@ import { ViewTransactionsComponent } from './view-transactions/view-transactions
 import { ViewStatementsComponent } from './view-statements/view-statements.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { InventoryTrackingComponent } from './inventory-tracking/inventory-tracking.component';
+import { DscSkuEditComponent } from './dsc-sku-edit/dsc-sku-edit.component';
 
 
 
@@ -92,6 +93,7 @@ import { InventoryTrackingComponent } from './inventory-tracking/inventory-track
     ViewTransactionsComponent,
     ViewStatementsComponent,
     InventoryTrackingComponent,
+    DscSkuEditComponent,
   ],
   imports: [
     BrowserModule,

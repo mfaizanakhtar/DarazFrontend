@@ -1,6 +1,8 @@
 import { DarazskuService } from './../darazsku.service';
 import { Component, OnInit } from '@angular/core';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { DscSkuEditComponent } from '../dsc-sku-edit/dsc-sku-edit.component';
 
 @Component({
   selector: 'app-inventory-tracking',
@@ -29,7 +31,7 @@ export class InventoryTrackingComponent implements OnInit {
     
     
 
-  constructor(private darazskus:DarazskuService) { }
+  constructor(private darazskus:DarazskuService,private _bottomSheet:MatBottomSheet) { }
 
   ngOnInit(): void {
     this.getDarazSkus()
@@ -94,6 +96,33 @@ export class InventoryTrackingComponent implements OnInit {
     this.getDarazSkus()
   }
 
+  EditSku(row){
+    var ref = this._bottomSheet.open(DscSkuEditComponent,{data:{sku:row,FBDchange:0,FBMchange:0}})
+    ref.afterDismissed().subscribe(res=>{
+      this.getDarazSkus()
+    })
+    // console.log(row)
+  }
+
+  AcceptChange(row){
+    var ref = this._bottomSheet.open(DscSkuEditComponent,{data:{sku:row,
+      FBDchange:row.fblWarehouseInventories.quantity-row.FBDstock.quantity,
+      FBMchange:row.multiWarehouseInventories.quantity-row.FBMstock.quantity}})
+
+    ref.afterDismissed().subscribe(res=>{
+      this.getDarazSkus()
+    })
+  }
+
+  DeleteSku(row){
+
+    this.darazskus.deleteData('/'+row._id).subscribe(res=>{
+      console.log(row)
+      this.getDarazSkus()
+    })
+
+  }
+  //ngx-datatable
   onSelect({ selected }) {
 
     this.selected.splice(0, this.selected.length);

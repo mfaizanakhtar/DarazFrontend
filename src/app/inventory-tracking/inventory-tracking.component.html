@@ -80,7 +80,7 @@
     (select)="onSelect($event)">
 
     <ngx-datatable-column
-[width]="30"
+[width]="10"
 [sortable]="false"
 [canAutoResize]="false"
 [draggable]="false"
@@ -106,18 +106,29 @@
 
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Seller Sku" [canAutoResize]="false" prop="SellerSku">
+      <ngx-datatable-column name="Seller Sku" [canAutoResize]="false" [width]="100" prop="SellerSku">
           <ng-template let-row="row" let-sku="value" ngx-datatable-cell-template>
             <a href="{{row.Url}}" target="_blank" rel="noopener noreferrer">{{sku}}</a>
           </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Shop SKU" [canAutoResize]="false" prop="ShopSku"></ngx-datatable-column>
       <ngx-datatable-column name="DSC Total Stock" [canAutoResize]="false" prop="quantity"></ngx-datatable-column>
-      <ngx-datatable-column name="DSC FBM Stock" [canAutoResize]="false" prop="multiWarehouseInventories.quantity"></ngx-datatable-column>
-      <ngx-datatable-column name="DSC FBD Stock" [canAutoResize]="false" prop="fblWarehouseInventories.quantity"></ngx-datatable-column>
-      <ngx-datatable-column name="Expected FBD Stock" [canAutoResize]="false" prop="FBDstock.quantity"></ngx-datatable-column>
+      <ngx-datatable-column name="DSC FBM Stock" [canAutoResize]="false" [width]="120" prop="multiWarehouseInventories.quantity"></ngx-datatable-column>
+      <ngx-datatable-column name="Expected FBM" [canAutoResize]="false" prop="FBMstock.quantity"></ngx-datatable-column>
+      <ngx-datatable-column name="DSC FBD Stock" [canAutoResize]="false" [width]="120" prop="fblWarehouseInventories.quantity">
+        <ng-template let-row="row" let-stock="value" ngx-datatable-cell-template>
+          <div style="color:blue">{{stock}}</div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Expected FBD" [canAutoResize]="false" [width]="110" prop="FBDstock.quantity">
+        <ng-template let-row="row" let-stock="value" ngx-datatable-cell-template>
+          <div *ngIf="row.FBDstock.quantity==row.fblWarehouseInventories.quantity" style="color:blue">{{stock}}</div>
+          <div *ngIf="row.FBDstock.quantity!=row.fblWarehouseInventories.quantity" style="color:red">{{stock}}</div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Cost" [canAutoResize]="false" [width]="55" prop="cost"></ngx-datatable-column>
       <ngx-datatable-column name="Shop" [canAutoResize]="false" prop="ShopId" [width]="180"></ngx-datatable-column>
-      <ngx-datatable-column name="Status" [canAutoResize]="false">
+      <ngx-datatable-column name="Status" [canAutoResize]="false" [width]="70">
 
           <ng-template let-row=row ngx-datatable-cell-template>
             <div *ngIf="row.Status=='active'">
@@ -131,11 +142,12 @@
       </ngx-datatable-column>
       <ngx-datatable-column name="Edit" [canAutoResize]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <!-- <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">Action</button>
+          <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">Action</button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="EditSku(row)">Edit</button>
             <button mat-menu-item (click)="DeleteSku(row)">Delete</button>
-          </mat-menu> -->
+            <button *ngIf="row.FBDstock.quantity!=row.fblWarehouseInventories.quantity || row.FBMstock.quantity!=row.multiWarehouseInventories.quantity"mat-menu-item (click)="AcceptChange(row)">Accept Stock Change</button>
+          </mat-menu>
       </ng-template>
       </ngx-datatable-column>
 
