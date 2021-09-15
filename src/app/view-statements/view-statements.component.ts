@@ -27,7 +27,17 @@ export class ViewStatementsComponent implements OnInit {
   constructor(private transaction:TransactionsService) { }
 
   ngOnInit(): void {
-    this.getStatements()
+    this.getFilters()
+  }
+
+  getFilters(){
+    this.transaction.get('/ViewStatementFilters').subscribe((res:any)=>{
+      console.log(res)
+      this.StatementArray=res.Statements
+      this.StoreArray=res.Stores
+      this.Statement=this.StatementArray[0]._id
+      this.getStatements()
+    })
   }
 
   getStatements(){
@@ -51,8 +61,7 @@ export class ViewStatementsComponent implements OnInit {
     this.transaction.get('/Statement?Statement='+tempStatement+"&ShopId="+tempShop).subscribe(res=>{
       var response:any = res
 
-      this.sortAndSetStores(response.DropDown.Store)
-      this.sortAndSetStatements(response.DropDown.Statements)
+      // this.sortAndSetStores(response.DropDown.Store)
       this.sortAndSetStatementObj(response.Statement)
 
       console.log(res)
