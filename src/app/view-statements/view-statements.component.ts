@@ -61,7 +61,6 @@ export class ViewStatementsComponent implements OnInit {
     this.transaction.get('/Statement?Statement='+tempStatement+"&ShopId="+tempShop).subscribe(res=>{
       var response:any = res
 
-      // this.sortAndSetStores(response.DropDown.Store)
       this.sortAndSetStatementObj(response.Statement)
 
       console.log(res)
