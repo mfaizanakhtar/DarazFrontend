@@ -38,6 +38,7 @@ export class InventoryTrackingComponent implements OnInit {
   }
 
   changePageData(event){
+    this.DSCskus=[]
     this.pSize=event.pageSize
     this.pIndex=event.pageIndex
     console.log(event)
@@ -50,7 +51,6 @@ export class InventoryTrackingComponent implements OnInit {
     if(this.StatusFilter=='All') {tempStatus=null} else{tempStatus=this.StatusFilter}
     if(this.Stock=='All') {tempStock=null} else{tempStock=this.Stock}
     this.loadingIndicator=true
-    this.DSCskus=[]
 
     this.darazskus.get('/getSkus?pSize='+this.pSize+'&pIndex='+this.pIndex+'&SellerSku='+this.SellerSku+'&ShopSku='+this.ShopSku+'&ShopId='+tempStore+'&Status='+tempStatus
     +'&Stock='+tempStock).subscribe(res=>{
@@ -69,6 +69,7 @@ export class InventoryTrackingComponent implements OnInit {
   }
 
   StoreSelected(event){
+    this.DSCskus=[]
     this.pIndex=0
     console.log(this.Store)
     this.getDarazSkus()
@@ -87,11 +88,13 @@ export class InventoryTrackingComponent implements OnInit {
   }
 
   StatusFilterClicked(){
+    this.DSCskus=[]
     this.pIndex=0
     this.getDarazSkus()
   }
 
   StockFilterClicked(){
+    this.DSCskus=[]
     this.pIndex=0
     this.getDarazSkus()
   }
