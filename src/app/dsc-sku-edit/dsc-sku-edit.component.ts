@@ -33,7 +33,8 @@ export class DscSkuEditComponent implements OnInit {
 
   update(){
     this.darazsku.updateData('',this.DscSku._id,{FBMchange:this.FBMchange,FBDchange:this.FBDchange,
-      cost:this.DscSku.cost,FBDpackagingCost:this.DscSku.FBDpackagingCost,FBMpackagingCost:this.DscSku.FBMpackagingCost})
+      cost:this.DscSku.cost,FBDpackagingCost:this.DscSku.FBDpackagingCost,FBMpackagingCost:this.DscSku.FBMpackagingCost,
+      GroupSkuChangeStock:this.GroupSkuChangeStock})
     .subscribe(res=>{
       this.sheet.dismiss()
     })
