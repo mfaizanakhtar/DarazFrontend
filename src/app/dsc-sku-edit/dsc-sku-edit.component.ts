@@ -24,7 +24,7 @@ export class DscSkuEditComponent implements OnInit {
   setGroupStock(change){
     this.GroupSkuChange=change
     if(change){
-      this.GroupSkuChangeStock=this.FBDchange
+      this.GroupSkuChangeStock=this.FBDchange*-1
     }
     if(!change){
       this.GroupSkuChangeStock=0
