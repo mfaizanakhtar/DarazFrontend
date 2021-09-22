@@ -47,8 +47,6 @@ export class ReturntrackingComponent implements OnInit {
     this.filterenddate.setHours(0,0,0,0)
     this.filterstartdate.setHours(0,0,0,0)
 
-    console.log(this.filterenddate.toISOString())
-    console.log(this.filterstartdate.toISOString())
   }
 
 
@@ -88,7 +86,7 @@ export class ReturntrackingComponent implements OnInit {
   }
 
   returnorders(){
-    this.order.get("ordermovement/Received?startdate="+this.filterstartdate.toISOString()+"&enddate="+this.filterenddate).subscribe(res=>{
+    this.order.get("ordermovement/Received?startdate="+this.filterstartdate.toISOString()+"&enddate="+this.filterenddate.toISOString()).subscribe(res=>{
       console.log(res);
       this.returnorderarray=res;
       this.loadingIndicator=false;

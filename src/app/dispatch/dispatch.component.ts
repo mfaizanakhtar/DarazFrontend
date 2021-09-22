@@ -90,7 +90,7 @@ export class DispatchComponent implements OnInit {
   }
 
   dispatchorders(){
-    this.order.get("ordermovement/Dispatched?startdate="+this.filterstartdate.toISOString()+"&enddate="+this.filterenddate).subscribe(res=>{
+    this.order.get("ordermovement/Dispatched?startdate="+this.filterstartdate.toISOString()+"&enddate="+this.filterenddate.toISOString).subscribe(res=>{
       console.log(res);
       this.dispatchorderarray = res;
       this.loadingIndicator=false;
