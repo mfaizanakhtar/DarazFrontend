@@ -40,12 +40,13 @@ export class ReturntrackingComponent implements OnInit {
 
   
   ngOnInit(): void {
-    this.returnorders();
     this.correctAudioLoad()
     this.wrongAudioLoad()
 
     this.filterenddate.setHours(0,0,0,0)
     this.filterstartdate.setHours(0,0,0,0)
+
+    this.returnorders();
 
   }
 
@@ -86,6 +87,7 @@ export class ReturntrackingComponent implements OnInit {
   }
 
   returnorders(){
+    this.loadingIndicator=true
     this.order.get("ordermovement/Received?startdate="+this.filterstartdate.toISOString()+"&enddate="+this.filterenddate.toISOString()).subscribe(res=>{
       console.log(res);
       this.returnorderarray=res;
