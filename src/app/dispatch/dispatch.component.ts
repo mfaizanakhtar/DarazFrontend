@@ -33,15 +33,14 @@ export class DispatchComponent implements OnInit {
   constructor(private order:OrderItemsService,private toastr:ToastrService) {}
 
   ngOnInit(): void {
-    this.dispatchorders();
     this.correctAudioLoad();
     this.wrongAudioLoad();
 
     this.filterenddate.setHours(0,0,0,0)
     this.filterstartdate.setHours(0,0,0,0)
 
-    console.log(this.filterenddate.toISOString())
-    console.log(this.filterstartdate.toISOString())
+    this.dispatchorders();
+
   }
 
   dispatch(f){
