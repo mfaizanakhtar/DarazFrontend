@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrderItemsService } from '../services/orderItems.service';
 import { ToastrService } from 'ngx-toastr';
-import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
+import { ColumnMode, DatatableComponent,SelectionType } from '@swimlane/ngx-datatable';
+import { MatDialog } from '@angular/material/dialog';
+import { AddReturnedStockComponent } from '../add-returned-stock/add-returned-stock.component';
 
 @Component({
   selector: 'app-returntracking',
@@ -19,13 +21,21 @@ export class ReturntrackingComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
   returnorderarray:any;
+  //ngx-table
   ColumnMode=ColumnMode;
+  SelectionType = SelectionType;
+  selected=[];
+  selLength=false
+  //Audio
   wrongAudio:any
   correctAudio:any
+  //returndate
   date=new Date();
-  startdate=new Date()
+  //filterdate
+  filterenddate=new Date()
+  filterstartdate=new Date()
 
-  constructor(private order:OrderItemsService,private toastr:ToastrService) { }
+  constructor(private order:OrderItemsService,private toastr:ToastrService,private dialog:MatDialog) { }
   loadingIndicator=true
 
   
@@ -33,7 +43,12 @@ export class ReturntrackingComponent implements OnInit {
     this.returnorders();
     this.correctAudioLoad()
     this.wrongAudioLoad()
-    this.startdate.setHours(0,0,0,0);
+
+    this.filterenddate.setHours(0,0,0,0)
+    this.filterstartdate.setHours(0,0,0,0)
+
+    console.log(this.filterenddate.toISOString())
+    console.log(this.filterstartdate.toISOString())
   }
 
 
@@ -60,11 +75,30 @@ export class ReturntrackingComponent implements OnInit {
     f.reset();
   }
 
+  DateInput(mode,event){
+    if(mode == 'start'){
+      this.filterstartdate = event.value
+    }
+    if(mode == 'end'){
+      if(event.value != null){
+        this.filterstartdate = event.value
+        this.returnorders()
+      }
+    }
+  }
+
   returnorders(){
-    this.order.get("ordermovement/Received?date="+this.startdate.toISOString()).subscribe(res=>{
+    this.order.get("ordermovement/Received?startdate="+this.filterstartdate.toISOString()+"&enddate="+this.filterenddate).subscribe(res=>{
       console.log(res);
       this.returnorderarray=res;
       this.loadingIndicator=false;
+    })
+  }
+
+  AddReturnStock(){
+    var dialogRef=this.dialog.open(AddReturnedStockComponent,{data:this.selected,width:'50%'})
+    dialogRef.afterClosed().subscribe(res=>{
+      this.toastr.success("Successfully added back to stock")
     })
   }
 
@@ -82,6 +116,20 @@ export class ReturntrackingComponent implements OnInit {
 
   UpdateReturnedArray(returnedTracking) {
     this.returnorderarray = [{_id:returnedTracking.TrackingCode,Date:returnedTracking.ReturnDate,OrderId:returnedTracking.OrderId,ShopId:returnedTracking.ShopId},...this.returnorderarray]
+  }
+
+  onSelect({ selected }) {
+
+    this.selected.splice(0, this.selected.length);
+    for(const sel of selected){
+      this.selected.push(sel);
+    }
+    if(this.selected.length>0){
+      this.selLength=true
+    }
+    else if(this.selected.length==0){
+      this.selLength=false
+    }
   }
 
 }

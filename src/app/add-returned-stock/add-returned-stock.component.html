@@ -1,0 +1,22 @@
+<div class="stockChecklist" id="pdfLabels" style="margin:40px; overflow-y:scroll;">
+    <table>
+      <tr>
+        <th>S.No</th>
+        <th>Base SKU</th>
+        <th>Count</th>
+        <th>Image</th>
+      </tr>
+      <tr *ngFor="let sku of ReturnedStockCheckList; index as i">
+        <td>{{i+1}}</td>
+        <td>{{sku._id}}</td>
+        <td>
+            <mat-form-field appearance="fill">
+                <mat-label>Count</mat-label>
+                <input type="number" [(ngModel)]="sku.count" matInput placeholder="Enter Stock Count here">
+              </mat-form-field>
+        </td>
+        <td><img width="70px" height="70px" src={{sku.img}}></td>
+      </tr>
+    </table>
+    <button (click)="AddReturnedStock()" style="margin-top:10px" mat-raised-button color="primary">Add Back to Stock</button>
+  </div>

@@ -57,6 +57,7 @@ import { ViewStatementsComponent } from './view-statements/view-statements.compo
 import {MatExpansionModule} from '@angular/material/expansion';
 import { InventoryTrackingComponent } from './inventory-tracking/inventory-tracking.component';
 import { DscSkuEditComponent } from './dsc-sku-edit/dsc-sku-edit.component';
+import { AddReturnedStockComponent } from './add-returned-stock/add-returned-stock.component';
 
 
 
@@ -94,6 +95,7 @@ import { DscSkuEditComponent } from './dsc-sku-edit/dsc-sku-edit.component';
     ViewStatementsComponent,
     InventoryTrackingComponent,
     DscSkuEditComponent,
+    AddReturnedStockComponent,
   ],
   imports: [
     BrowserModule,

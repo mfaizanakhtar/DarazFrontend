@@ -17,13 +17,18 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 })
 export class DispatchComponent implements OnInit {
   dispatchorderarray:any
+  //ngx-table
   ColumnMode=ColumnMode
   loadingIndicator=true
+  //audio
   correctAudio:any
   wrongAudio:any
   correctAudioNew:any
+  //dispatchdate
   date=new Date();
-  startdate=new Date()
+  //filterdate
+  filterenddate=new Date()
+  filterstartdate=new Date()
 
   constructor(private order:OrderItemsService,private toastr:ToastrService) {}
 
@@ -31,7 +36,12 @@ export class DispatchComponent implements OnInit {
     this.dispatchorders();
     this.correctAudioLoad();
     this.wrongAudioLoad();
-    this.startdate.setHours(0,0,0,0);
+
+    this.filterenddate.setHours(0,0,0,0)
+    this.filterstartdate.setHours(0,0,0,0)
+
+    console.log(this.filterenddate.toISOString())
+    console.log(this.filterstartdate.toISOString())
   }
 
   dispatch(f){
@@ -67,8 +77,20 @@ export class DispatchComponent implements OnInit {
     // console.log(value.txtTracking);
   }
 
+  DateInput(mode,event){
+    if(mode == 'start'){
+      this.filterstartdate = event.value
+    }
+    if(mode == 'end'){
+      if(event.value != null){
+        this.filterstartdate = event.value
+        this.dispatchorders()
+      }
+    }
+  }
+
   dispatchorders(){
-    this.order.get("ordermovement/Dispatched?date="+this.startdate.toISOString()).subscribe(res=>{
+    this.order.get("ordermovement/Dispatched?startdate="+this.filterstartdate.toISOString()+"&enddate="+this.filterenddate).subscribe(res=>{
       console.log(res);
       this.dispatchorderarray = res;
       this.loadingIndicator=false;

@@ -1,56 +1,24 @@
 <app-navbar></app-navbar>
 
-<!-- <div class="container">
-    <div class="row flex center" style="margin-top: 10px;">
-    <div class="col-8 col-sm-4">
-    <div class="form-box">
-    
-    <form #f="ngForm" (ngSubmit)="dispatch(f)">
-    <input class="form-control" type="text" ngModel name="txtTracking" placeholder="Enter Dispatch Tracking">
-    <button class="btn btn-primary btn-block" type="submit">Submit</button>
-    </form>
-</div>
-</div>
-</div>
-</div>
-
-<div class="limiter" style="width: 100%;">
-    <div class="container-table100" style="float:none; margin-left: auto; margin-right: auto; display: flex; width: 100%;">
-        <div class="wrap-table100" style="align-content: center;" >
-            <div class="table100" style="float:center">
-                <table  style="width:100%">
-                    <thead>
-                        <tr class="table100-head">
-            <th class="column1">Order No.</th>
-            <th class="column1">Dispatch Date</th>
-            <th class="column1">SKU</th>
-            <th class="column1">Tracking ID</th>
-            <th class="column1">Shop ID</th>
-                        </tr>
-                    </thead>
-        <tbody>
-        <tr *ngFor="let order of dispatchorderarray">
-            <td class="column1">{{order.OrderId}}</td>
-            <td class="column1">{{order.DispatchDate}}</td>
-            <td class="column1">{{order.Sku}}</td>
-            <td class="column1">{{order.TrackingCode}}</td>
-            <td class="column1">{{order.ShopId}}</td>
-        </tr>
-        </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<div style="margin: 20px; border-radius: 10px;">
-        <form #f="ngForm" (ngSubmit)="dispatch(f)">
+<div style="margin: 20px; border-radius: 10px;display:inline-flex;flex-wrap: wrap;width: 100%;">
+        <form style="width: 75%;" #f="ngForm" (ngSubmit)="dispatch(f)">
         <mat-form-field style="width: 100%;" appearance="fill">
           <mat-label>Enter Shipping Tracking</mat-label>
           <input ngModel name="tracking" matInput #message placeholder="Paste Tracking here">
           <mat-hint ><strong>Press Enter After Inserting Tracking</strong></mat-hint>
         </mat-form-field>
+
     </form>
+
+    <mat-form-field style="width: 18%;margin-left: 15px;"appearance="fill">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker" >
+          <input [(ngModel)]="filterstartdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
+          <input [(ngModel)]="filterenddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
 
 
 </div>

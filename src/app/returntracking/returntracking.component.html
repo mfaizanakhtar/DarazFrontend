@@ -1,50 +1,6 @@
 <app-navbar></app-navbar>
-
-<!-- <div class="container">
-    <div class="row flex center" style="margin-top: 10px;">
-        <div class="col-8 col-sm-4">
-            <div class="form-box">
-                <form #f="ngForm" (ngSubmit)="insertTracking(f)">
-                    <fieldset>
-                        <input class="form-control" ngModel type="text" id="tracking" name="tracking" placeholder="Insert Return Tracking">
-                            <button class="btn btn-primary btn-block" type="submit">Return</button>
-                        </fieldset>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="limiter" style="width: 100%;">
-    <div class="container-table100" style="float:none; margin-left: auto; margin-right: auto; display: flex; width: 100%;">
-        <div class="wrap-table100" style="align-content: center;" >
-            <div class="table100" style="float:center">
-                <table  style="width:100%">
-                    <thead>
-                        <tr class="table100-head">
-            <th class="column1">Order No.</th>
-            <th class="column1">Return Date</th>
-            <th class="column1">SKU</th>
-            <th class="column1">Tracking ID</th>
-            <th class="column1">Shop ID</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let order of returnorderarray">
-              <td class="column1">{{order.OrderId}}</td>
-              <td class="column1">{{order.ReturnDate}}</td>
-              <td class="column1">{{order.Sku}}</td>
-              <td class="column1">{{order.TrackingCode}}</td>
-              <td class="column1">{{order.ShopId}}</td>
-            </tr>
-            </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div> -->
-<div style="margin: 20px; border-radius: 10px;">
-        <form #f="ngForm" (ngSubmit)="insertTracking(f)">
+<div style="margin: 20px; border-radius: 10px;display:inline-flex;flex-wrap: wrap;width: 100%;">
+        <form style="width: 75%;" #f="ngForm" (ngSubmit)="insertTracking(f)">
         <mat-form-field style="width: 100%;" appearance="fill">
           <mat-label>Enter Received Tracking</mat-label>
           <input ngModel name="tracking" matInput #message placeholder="Paste Tracking here">
@@ -52,8 +8,21 @@
         </mat-form-field>
     </form>
 
+    <mat-form-field style="width: 18%;margin-left: 15px;"appearance="fill">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker" >
+          <input [(ngModel)]="filterstartdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
+          <input [(ngModel)]="filterenddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
 
 </div>
+
+<button (click)="AddReturnStock()" style="margin:20px" mat-raised-button color="primary" [disabled]="!selLength">Add Selected to Grouped Stock</button>
+
 <mat-divider></mat-divider>
 <div style="margin:20px">
 <ngx-datatable
@@ -64,7 +33,21 @@
         [headerHeight]="50"
         [footerHeight]="50"
         rowHeight="auto"
+        [selected]="selected"
+        [selectionType]="SelectionType.checkbox"
+        [selectAllRowsOnPage]="true"
+        (select)="onSelect($event)"
       >
+      <ngx-datatable-column
+        [width]="30"
+        [sortable]="false"
+        [canAutoResize]="false"
+        [draggable]="false"
+        [resizeable]="false"
+        [headerCheckboxable]="true"
+        [checkboxable]="true"
+        ></ngx-datatable-column>
+
       <ngx-datatable-column [width]="10" name="S.No">
         <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
             <strong>{{returnorderarray.length-rowIndex}}</strong>
