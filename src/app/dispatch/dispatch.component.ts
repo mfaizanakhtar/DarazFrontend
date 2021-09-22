@@ -82,7 +82,7 @@ export class DispatchComponent implements OnInit {
     }
     if(mode == 'end'){
       if(event.value != null){
-        this.filterstartdate = event.value
+        this.filterenddate = event.value
         this.dispatchorders()
       }
     }
