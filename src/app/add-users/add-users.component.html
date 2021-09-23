@@ -1,12 +1,14 @@
 <div class="center">
   <mat-label id="headingLabel" class="matlabel">Create New User</mat-label>
-    <mat-form-field hintLabel="useremail" appearance="fill">
+
+  <div style="display: flex;flex-wrap: wrap;">
+
+    <mat-form-field style="width: 50%;" hintLabel="useremail" appearance="fill">
       <mat-label>Enter Email Address</mat-label>
       <input [readonly]="isEdit" id="userText" [(ngModel)]="userEmail" matInput placeholder="email@example.com">
-      
     </mat-form-field>
-  <br>
-    <mat-form-field appearance="fill">
+
+    <mat-form-field style="width: 50%;" appearance="fill">
       <mat-label>Select User Type</mat-label>
       <mat-select [(ngModel)]="userType">
         <mat-option value="user">User</mat-option>
@@ -14,9 +16,37 @@
       </mat-select>
       <mat-hint>Select Usertype here</mat-hint>
     </mat-form-field>
+
+  </div>
     
  
-  <mat-divider></mat-divider>
-  <button id="buttonSubmit" (click)="createUser()" mat-raised-button color="primary">Create User</button>
-  <button id="deleteButton" (click)="deleteUser()" mat-raised-button color="primary">Delete User</button>
+  <mat-divider style="margin:10px"></mat-divider>
+
+    <div style="display: flex;flex-wrap: wrap;">
+
+      <button id="resetPassword" [hidden]="!isEdit" (click)="resetPassword()" mat-raised-button color="primary">Reset Password</button>
+      <button id="buttonSubmit" (click)="createUser()" mat-raised-button color="primary">Create User</button>
+      <button id="deleteButton" [hidden]="!isEdit" (click)="deleteUser()" mat-raised-button color="primary">Delete User</button>
+    
+    </div>
+
+    <mat-divider style="margin-top:20px"></mat-divider>
+
+    <div *ngIf="isEdit" style="display: flex;flex-wrap: wrap;">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Subscription End Date</mat-label>
+        <input [ngModel]="subscriptionEndDate | date" matInput />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Adjust Subscription Months</mat-label>
+        <input [(ngModel)]="subscriptionMonths" type="number" matInput placeHolder="1-12" />
+      </mat-form-field>
+
+      
+      
+    </div>
+
+    <button *ngIf="isEdit" (click)="AddSubscription()" mat-raised-button color="primary">Add Subscription</button>
 </div>

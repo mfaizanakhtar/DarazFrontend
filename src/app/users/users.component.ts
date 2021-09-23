@@ -42,11 +42,13 @@ export class UsersComponent implements AfterViewInit {
 
   clickUser(user){
     var dialogRef = this.dialog.open(AddUsersComponent,{
-      data:user
+      data:user,width:"600px"
     })
 
-    dialogRef.afterClosed().subscribe(()=>{
+    dialogRef.afterClosed().subscribe((res)=>{
       this.getAllUsers()
+      // console.log(res)
+      if(res!=undefined){this.toastr.success(res.dialogResult)}
     })
   }
 

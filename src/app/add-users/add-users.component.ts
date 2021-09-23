@@ -10,21 +10,26 @@ import { UseremailService } from '../services/useremail.service';
 })
 export class AddUsersComponent implements OnInit {
   userEmail:any
-  userType:any
+  userType:any="user"
   isEdit:boolean=false
+  subscriptionMonths=0
+  subscriptionEndDate:Date
+
 
   constructor(@Inject(MAT_DIALOG_DATA) private data:any,private user:UseremailService,private toastr:ToastrService,private dialogRef:MatDialogRef<AddUsersComponent>) { }
 
   ngOnInit(): void {
-    document.getElementById("deleteButton").hidden=true
+
     if(this.data){
       console.log(this.data)
       this.isEdit=true;
+
       document.getElementById("headingLabel").innerHTML="Edit User Details"
       document.getElementById("buttonSubmit").innerHTML="Edit"
-      document.getElementById("deleteButton").hidden=false
+
       this.userEmail=this.data.useremail;
       this.userType=this.data.usertype;
+      this.subscriptionEndDate=new Date(this.data.subscriptionEndDate)
     }
   }
 
@@ -50,6 +55,31 @@ export class AddUsersComponent implements OnInit {
       })
     }
 
+  }
+
+  AddSubscription(){
+    this.subscriptionEndDate.setMonth(this.subscriptionEndDate.getMonth()+this.subscriptionMonths)
+    console.log(this.subscriptionEndDate.toISOString())
+    this.user.updateData("addSubscription",this.data.useremail,{subscriptionEndDate:this.subscriptionEndDate}).subscribe((res:any)=>{
+      if(res.n>0){
+        this.dialogRef.close({dialogResult:"Subscription Added"})
+      }
+      else{
+        this.toastr.error("Error occured")
+      }
+    })
+  }
+
+  resetPassword(){
+    this.user.updateData('resetPassword',this.data.loginemail,{}).subscribe((res:any)=>{
+      console.log(res)
+      if(res.n>0){
+        this.dialogRef.close({dialogResult:"Password Reset Successful"})
+      }
+      else{
+        this.toastr.error("Error occured")
+      }
+    })
   }
 
   deleteUser(){

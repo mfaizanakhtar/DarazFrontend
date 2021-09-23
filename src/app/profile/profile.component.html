@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 <div style="margin-left:80px;margin-right:80px;margin-top:30px">
-<mat-tab-group animationDuration="0ms">
+<mat-tab-group (selectedTabChange)="matTabChanged($event)" animationDuration="0ms">
     <mat-tab label="Password">
         <div>
             <h4 style="margin-top:20px">Change Password</h4>
@@ -27,6 +27,34 @@
             </form>
 
         </div>
+    </mat-tab>
+    <mat-tab label="Sub Accounts">
+      
+      <div style="margin: 2%;">
+        <button (click)="CreateSubAccount()" style="margin-bottom:15px" mat-raised-button color="primary">Create Sub Account</button>
+
+        <ngx-datatable
+        class="material"
+        [rows]="subaccounts"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        rowHeight="auto"
+        [limit]="25"
+        [loadingIndicator]="loadingIndicator"
+        >
+        <ngx-datatable-column name="User Login Email" prop="loginemail"></ngx-datatable-column>
+        <ngx-datatable-column name="Username" prop="username"></ngx-datatable-column>
+        <ngx-datatable-column name="Manage Permissions" >
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <button mat-raised-button color="primary" (click)="editSubAccount(row)">Manage</button>
+          </ng-template>
+        </ngx-datatable-column>
+        
+        
+        </ngx-datatable>
+      </div>
+
     </mat-tab>
     <!-- <mat-tab label="Second">Content 2</mat-tab>
     <mat-tab label="Third">Content 3</mat-tab> -->
