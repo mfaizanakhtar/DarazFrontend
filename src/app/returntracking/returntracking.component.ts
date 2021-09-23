@@ -96,9 +96,11 @@ export class ReturntrackingComponent implements OnInit {
   }
 
   AddReturnStock(){
-    var dialogRef=this.dialog.open(AddReturnedStockComponent,{data:this.selected,width:'50%'})
-    dialogRef.afterClosed().subscribe(res=>{
+    var dialogRef=this.dialog.open(AddReturnedStockComponent,{data:this.selected,width:'100%',height:'100%'})
+    dialogRef.afterClosed().subscribe((res:any)=>{
+      if(res!=undefined && res.dialogResult=="StockAdded"){
       this.toastr.success("Successfully added back to stock")
+    }
     })
   }
 

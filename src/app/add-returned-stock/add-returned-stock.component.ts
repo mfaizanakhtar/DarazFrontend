@@ -10,8 +10,12 @@ import { SkusService } from '../services/skus.service';
   styleUrls: ['./add-returned-stock.component.css']
 })
 export class AddReturnedStockComponent implements OnInit {
+
   Trackings=[]
+  StockLength=false
   ReturnedStockCheckList:any=[]
+  loadingIndicator=true
+
   constructor(@Inject(MAT_DIALOG_DATA) private data:any,
   private order:OrdersService,private sku:SkusService,private dialog:MatDialogRef<AddReturnedStockComponent>,
   private orderitems:OrderItemsService) { }
@@ -26,6 +30,8 @@ export class AddReturnedStockComponent implements OnInit {
     }
     this.order.postDataByCap('/getStockChecklist',{trackings:this.Trackings}).subscribe(res=>{
       this.ReturnedStockCheckList=res
+      this.loadingIndicator=false
+      if(this.ReturnedStockCheckList.length>0)this.StockLength=true
     })
   }
 
@@ -33,7 +39,7 @@ export class AddReturnedStockComponent implements OnInit {
     this.sku.postDataByCap('AddReturnedStock',{stock:this.ReturnedStockCheckList}).subscribe(res=>{
 
       this.orderitems.updateData('ReturnedStockAdded',"",{orderitems:this.data}).subscribe(res=>{
-        this.dialog.close()
+        this.dialog.close({dialogResult:"StockAdded"})
       })
 
     })
