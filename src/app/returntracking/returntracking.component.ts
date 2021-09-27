@@ -117,7 +117,7 @@ export class ReturntrackingComponent implements OnInit {
   }
 
   UpdateReturnedArray(returnedTracking) {
-    this.returnorderarray = [{_id:returnedTracking.TrackingCode,Date:returnedTracking.ReturnDate,OrderId:returnedTracking.OrderId,ShopId:returnedTracking.ShopId},...this.returnorderarray]
+    this.returnorderarray = [{_id:returnedTracking.TrackingCode,Date:returnedTracking.ReturnDate,OrderId:returnedTracking.OrderId,ShopId:returnedTracking.ShopId,ReceiveBy:returnedTracking.ReceiveBy},...this.returnorderarray]
   }
 
   onSelect({ selected }) {

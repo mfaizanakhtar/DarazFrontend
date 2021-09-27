@@ -1,28 +1,18 @@
 
 <app-navbar></app-navbar>
 
-<!-- <div class="container full-height">
-    <div class="row flex center v-center full-height">
-        <div class="col-8 col-sm-4">
-            <div class="form-box">
-                <form #f="ngForm" (ngSubmit)="addids(f.value)">
-                    <fieldset>
-                        <input class="form-control" ngModel type="email" id="shopid" name="shopid" placeholder="email">
-                        <input class="form-control" ngModel type="text" id="secretkey" name="secretkey" placeholder="secretkey">
-                            <button class="btn btn-primary btn-block" type="submit">Add Id </button>
-                        </fieldset>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> -->
 
 
 <mat-divider></mat-divider>
 
 <div style="margin-top: 50px;margin-left: 150px;margin-right: 150px;">
     <mat-divider style="margin-bottom:20px"></mat-divider>
+
+    <div style="display: flex;flex-direction: row;">
     <button (click)="addNewIdDialog()" mat-raised-button color="primary">Add New ID</button>
+    <h6 style="margin-left: 10px;">Click on any shop to edit details</h6>
+    </div>
+
     <mat-divider style="margin-top:20px"></mat-divider>
 <div style="margin-top:30px;">
 <ngx-datatable

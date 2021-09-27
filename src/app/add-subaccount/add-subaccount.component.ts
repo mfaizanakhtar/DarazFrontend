@@ -37,11 +37,11 @@ export class AddSubaccountComponent implements OnInit {
 
       this.user.postDataByCap('/addSubAccount',this.User).subscribe((res:any)=>{
         if(res.message=="User Registered"){
-          this.dialog.close({dialogResult:res.message})
+          this.dialog.close({dialogResult:{success:true,message:res.message}})
         }
         console.log(res)
       },(ex)=>{
-        this.dialog.close({dialogResult:ex.error.message})
+        this.dialog.close({dialogResult:{success:false,message:ex.error.message}})
       })
 
   }
@@ -49,10 +49,10 @@ export class AddSubaccountComponent implements OnInit {
 
       this.user.updateData('/updateSubAccount',"",this.User).subscribe((res:any)=>{
         if(res.n>0){
-          this.dialog.close({dialogResult:"Permissions Modified"})
+          this.dialog.close({dialogResult:{success:true,message:"Permissions Modified"}})
         }
         else{
-          this.dialog.close({dialogResult:"Error updating permissions"})
+          this.dialog.close({dialogResult:{success:false,message:"Error updating permissions"}})
         }
       })
   }
@@ -60,10 +60,21 @@ export class AddSubaccountComponent implements OnInit {
   deleteAccount(){
     this.user.postDataByCap('/deleteSubAccount',this.User).subscribe((res:any)=>{
       if(res.n>0){
-        this.dialog.close({dialogResult:"User deleted"})
+        this.dialog.close({dialogResult:{success:true,message:"User deleted"}})
       }
       else{
-        this.dialog.close({dialogResult:"Error Deleting user"})
+        this.dialog.close({dialogResult:{success:false,message:"Error Deleting user"}})
+      }
+    })
+  }
+
+  resetPassword(){
+    this.user.updateData('/resetSubPassword',this.User.loginemail,{}).subscribe((res:any)=>{
+      if(res.n>0){
+        this.dialog.close({dialogResult:{success:true,message:"Password Reset to 'password.123'"}})
+      }
+      else{
+        this.dialog.close({dialogResult:{success:false,message:"Error Resetting Password"}})
       }
     })
   }

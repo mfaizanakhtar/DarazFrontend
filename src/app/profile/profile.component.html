@@ -31,7 +31,10 @@
     <mat-tab *ngIf="LoggedUser.accountType=='root'" label="Sub Accounts">
       
       <div style="margin: 2%;">
+        <div style="display: flex;flex-direction: row;">
         <button (click)="CreateSubAccount()" style="margin-bottom:15px" mat-raised-button color="primary">Create Sub Account</button>
+        <h6 style="margin-left: 20px;">Note: Default Password for subaccount is "password.123"</h6>
+        </div>
 
         <ngx-datatable
         class="material"

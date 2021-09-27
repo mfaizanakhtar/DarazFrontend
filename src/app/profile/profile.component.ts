@@ -52,14 +52,14 @@ export class ProfileComponent implements OnInit {
   }
 
   editSubAccount(account){
-    var dialogRef = this.dialog.open(AddSubaccountComponent,{height:"60%",width:"50%",data:account})
+    var dialogRef = this.dialog.open(AddSubaccountComponent,{height:"70%",width:"50%",data:account})
     dialogRef.afterClosed().subscribe(res=>{
       if(res!=undefined){
-        if(res.dialogResult=="Permissions Updated" || res.dialogResult=="Permissions Modified" || res.dialogResult=="User deleted") 
-        this.toastr.success(res.dialogResult)
+        if(res.dialogResult.success) 
+        this.toastr.success(res.dialogResult.message)
 
         else{
-          this.toastr.error("Error Occured")
+          this.toastr.error(res.dialogResult.message)
         }
       }
       this.getSubAccounts()
