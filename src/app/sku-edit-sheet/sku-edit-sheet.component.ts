@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { timeoutWith } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service';
 import { SkusService } from '../services/skus.service';
 
 @Component({
@@ -9,13 +10,16 @@ import { SkusService } from '../services/skus.service';
   styleUrls: ['./sku-edit-sheet.component.css']
 })
 export class SkuEditSheetComponent implements OnInit {
+  LoggedUser
   skuData:any
   stockChange=0
   progressSpinner=false
 
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) private data:any,private sku:SkusService,private sheet:MatBottomSheetRef<SkuEditSheetComponent>) { }
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) private data:any,private sku:SkusService,private sheet:MatBottomSheetRef<SkuEditSheetComponent>,
+    private auth:AuthService) { }
 
   ngOnInit(): void {
+    this.LoggedUser=this.auth.getCurrentUser()
     this.skuData=this.data
     console.log(this.data)
   }

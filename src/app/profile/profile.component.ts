@@ -4,6 +4,7 @@ import { UseremailService } from '../services/useremail.service';
 import { DatatableComponent,ColumnMode,SelectionType } from'@swimlane/ngx-datatable'
 import { MatDialog } from '@angular/material/dialog';
 import { AddSubaccountComponent } from '../add-subaccount/add-subaccount.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,12 +12,14 @@ import { AddSubaccountComponent } from '../add-subaccount/add-subaccount.compone
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  LoggedUser
   subaccounts:any=[]
   ColumnMode=ColumnMode
   loadingIndicator=true
-  constructor(private toastr:ToastrService,private user:UseremailService,private dialog:MatDialog) { }
+  constructor(private toastr:ToastrService,private user:UseremailService,private dialog:MatDialog,private auth:AuthService) { }
 
   ngOnInit(): void {
+    this.LoggedUser=this.auth.getCurrentUser()
   }
 
   submit(f){

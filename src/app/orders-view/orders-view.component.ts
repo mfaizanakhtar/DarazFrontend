@@ -9,6 +9,7 @@ import { OrdersService } from '../services/orders.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PrintLabelsComponent } from '../print-labels/print-labels.component';
 import { StockChecklistComponent } from '../stock-checklist/stock-checklist.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-orders-view',
@@ -16,6 +17,7 @@ import { StockChecklistComponent } from '../stock-checklist/stock-checklist.comp
   styleUrls: ['./orders-view.component.css']
 })
 export class OrdersViewComponent implements OnInit {
+  LoggedUser
   //data
   // all=null
   orders:any;
@@ -55,9 +57,11 @@ export class OrdersViewComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
   constructor(private orderService:OrdersService,private orderItemsService:OrderItemsService,
-    private toastr:ToastrService,private router:Router,private lableService:LabelService,private dialog:MatDialog) { }
+    private toastr:ToastrService,private router:Router,private lableService:LabelService,private dialog:MatDialog,
+    private auth:AuthService) { }
 
   ngOnInit(): void {
+    this.LoggedUser=this.auth.getCurrentUser()
     this.StatusFilter='pending'
     this.backDate.setDate(this.backDate.getDate()-15)
     this.todayDate.setHours(0,0,0,0);

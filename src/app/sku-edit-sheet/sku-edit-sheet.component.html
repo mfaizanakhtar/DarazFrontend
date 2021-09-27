@@ -12,19 +12,19 @@
 
 <br>
 
-<mat-form-field class="example-full-width" appearance="fill">
+<mat-form-field *ngIf="LoggedUser.Profitibility" class="example-full-width" appearance="fill">
     <mat-label>Product Cost</mat-label>
     <input matInput [(ngModel)]="skuData.cost">
 </mat-form-field>
 
 <br>
 
-<mat-form-field style="width: 50%;" appearance="fill">
+<mat-form-field *ngIf="LoggedUser.Profitibility" style="width: 50%;" appearance="fill">
     <mat-label>FBM Packaging Cost</mat-label>
     <input matInput [(ngModel)]="skuData.FBMpackagingCost">
 </mat-form-field>
 
-<mat-form-field style="width: 50%;" appearance="fill">
+<mat-form-field *ngIf="LoggedUser.Profitibility" style="width: 50%;" appearance="fill">
     <mat-label>FBD Packaging Cost</mat-label>
     <input matInput [(ngModel)]="skuData.FBDpackagingCost">
 </mat-form-field>

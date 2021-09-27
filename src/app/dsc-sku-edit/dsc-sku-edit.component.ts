@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { DarazskuService } from '../darazsku.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-dsc-sku-edit',
@@ -8,14 +9,17 @@ import { DarazskuService } from '../darazsku.service';
   styleUrls: ['./dsc-sku-edit.component.css']
 })
 export class DscSkuEditComponent implements OnInit {
+  LoggedUser
   DscSku:any
   FBDchange=0
   FBMchange=0
   GroupSkuChange=false
   GroupSkuChangeStock=0
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) private data:any,private darazsku:DarazskuService,private sheet:MatBottomSheetRef<DscSkuEditComponent>) { }
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) private data:any,private darazsku:DarazskuService,private sheet:MatBottomSheetRef<DscSkuEditComponent>,
+  private auth:AuthService) { }
 
   ngOnInit(): void {
+    this.LoggedUser=this.auth.getCurrentUser()
     this.DscSku=this.data.sku
     this.FBDchange=this.data.FBDchange
     this.FBMchange=this.data.FBMchange

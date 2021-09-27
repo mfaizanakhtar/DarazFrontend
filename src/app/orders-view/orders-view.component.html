@@ -176,9 +176,9 @@ rowHeight="auto"
           <th>Status</th>
           <th>Image</th>
           <th>RTS</th>
-          <th>Product Cost</th>
-          <th>Payout</th>
-          <th>Profit</th>
+          <th *ngIf="LoggedUser.Profitibility">Product Cost</th>
+          <th *ngIf="LoggedUser.Profitibility">Payout</th>
+          <th *ngIf="LoggedUser.Profitibility">Profit</th>
         </tr>
         <tr *ngFor="let item of row.OrderItems; index as i">
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{i+1}}</td>
@@ -202,10 +202,10 @@ rowHeight="auto"
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">
             <button *ngIf="item.ShippingType=='Dropshipping' && item.Status=='pending'" mat-raised-button color="primary" (click)="setItemStatusToRTS(item)">RTS</button>
           </td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.cost}}</td>
+          <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && LoggedUser.Profitibility==true">{{item.cost}}</td>
           <!-- <div data="getTransactions()"> -->
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{getTransactions(item.Transactions)}}</td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{getProfit(item.Transactions,item.cost,item.packagingCost)}}</td>
+          <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && LoggedUser.Profitibility==true">{{getTransactions(item.Transactions)}}</td>
+          <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && LoggedUser.Profitibility==true">{{getProfit(item.Transactions,item.cost,item.packagingCost)}}</td>
           <!-- </div> -->
         </tr>
       </tbody>

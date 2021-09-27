@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DscSkuEditComponent } from '../dsc-sku-edit/dsc-sku-edit.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-inventory-tracking',
@@ -10,6 +11,7 @@ import { DscSkuEditComponent } from '../dsc-sku-edit/dsc-sku-edit.component';
   styleUrls: ['./inventory-tracking.component.css']
 })
 export class InventoryTrackingComponent implements OnInit {
+    LoggedUser
     //data
     DSCskus:any
     StoreArray=[]
@@ -31,9 +33,10 @@ export class InventoryTrackingComponent implements OnInit {
     
     
 
-  constructor(private darazskus:DarazskuService,private _bottomSheet:MatBottomSheet) { }
+  constructor(private darazskus:DarazskuService,private _bottomSheet:MatBottomSheet,private auth:AuthService) { }
 
   ngOnInit(): void {
+    this.LoggedUser=this.auth.getCurrentUser()
     this.getDarazSkus()
   }
 

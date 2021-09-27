@@ -30,19 +30,19 @@
             <div class="nav-fostrap">
               <ul>
                 <li><a routerLink="/">Home</a></li>
-                <li><a routerLink="/ordersview">Orders</a></li>
-                <li><a routerLink="/dispatch">Dispatch</a></li>
-                <li><a routerLink="/returns">Returns</a></li>
-                <li *ngIf="isAdmin()"><a routerLink="/users">Users</a></li>
+                <li *ngIf="User.Orders"><a routerLink="/ordersview">Orders</a></li>
+                <li *ngIf="User.ReturnsDispatch"><a routerLink="/dispatch">Dispatch</a></li>
+                <li *ngIf="User.ReturnsDispatch"><a routerLink="/returns">Returns</a></li>
+                <li *ngIf="User.usertype=='admin'"><a routerLink="/users">Users</a></li>
 
-                <li><a href="javascript:void(0)">Inventory<span class="arrow-down"></span></a>
+                <li *ngIf="User.DSCInventory || User.GroupedInventory"><a href="javascript:void(0)">Inventory<span class="arrow-down"></span></a>
                   <ul class="dropdown">
-                    <li><a routerLink="/inventorytracking">DSC Inventory Tracking</a></li>
-                    <li><a routerLink="/skuoverview">Grouped Stock Tracking</a></li>
+                    <li *ngIf="User.DSCInventory"><a routerLink="/inventorytracking">DSC Inventory Tracking</a></li>
+                    <li *ngIf="User.GroupedInventory"><a routerLink="/skuoverview">Grouped Stock Tracking</a></li>
                   </ul>
                 </li>
 
-                <li><a href="javascript:void(0)">Finance<span class="arrow-down"></span></a>
+                <li *ngIf="User.Finance"><a href="javascript:void(0)">Finance<span class="arrow-down"></span></a>
                   <ul class="dropdown">
                     <li><a routerLink="/transactions">View Transactions</a></li>
                     <li><a routerLink="/statement">View Statements</a></li>
@@ -51,7 +51,7 @@
 
                 <li><a href="javascript:void(0)">Options<span class="arrow-down"></span></a>
                   <ul class="dropdown">
-                    <li><a routerLink="/shops">Integrated Accounts</a></li>
+                    <li *ngIf="User.accountType=='root'"><a routerLink="/shops">Integrated Accounts</a></li>
                     <li><a routerLink="/profile">Profile</a></li>
                     <li><a (click)="logout()" style="cursor:pointer">Logout</a></li>
                   </ul>
@@ -59,10 +59,10 @@
                 
               </ul>
             </div>
-            <div class="nav-bg-fostrap">
+            <!-- <div class="nav-bg-fostrap">
               <div class="navbar-fostrap"> <span></span> <span></span> <span></span> </div>
               <a href="" class="title-mobile">Fostrap</a>
-            </div>
+            </div> -->
           </nav>
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>

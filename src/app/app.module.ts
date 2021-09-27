@@ -59,6 +59,7 @@ import { InventoryTrackingComponent } from './inventory-tracking/inventory-track
 import { DscSkuEditComponent } from './dsc-sku-edit/dsc-sku-edit.component';
 import { AddReturnedStockComponent } from './add-returned-stock/add-returned-stock.component';
 import { AddSubaccountComponent } from './add-subaccount/add-subaccount.component';
+import { PermissionGuard } from './PermissionGuard';
 
 
 
@@ -156,12 +157,14 @@ import { AddSubaccountComponent } from './add-subaccount/add-subaccount.componen
       {
         path:'returns',
         component:ReturntrackingComponent,
-        canActivate:[LoginGuard]
+        canActivate:[LoginGuard,PermissionGuard],
+        data:{page:"ReturnsDispatch"}
       },
       {
         path:'dispatch',
         component:DispatchComponent,
-        canActivate:[LoginGuard]
+        canActivate:[LoginGuard,PermissionGuard],
+        data:{page:"ReturnsDispatch"}
       },
       {
         path:'users',
@@ -176,7 +179,8 @@ import { AddSubaccountComponent } from './add-subaccount/add-subaccount.componen
       {
         path:'ordersview',
         component:OrdersViewComponent,
-        canActivate:[LoginGuard]
+        canActivate:[LoginGuard,PermissionGuard],
+        data:{page:"Orders"}
       },
       {
         path:'printLabels',
@@ -196,28 +200,32 @@ import { AddSubaccountComponent } from './add-subaccount/add-subaccount.componen
       {
         path:'skuoverview',
         component:SkuOverviewComponent,
-        canActivate:[LoginGuard]
+        canActivate:[LoginGuard,PermissionGuard],
+        data:{page:"GroupedInventory"}
       },
       {
         path:'transactions',
         component:ViewTransactionsComponent,
-        canActivate:[LoginGuard]
+        canActivate:[LoginGuard,PermissionGuard],
+        data:{page:"Finance"}
       },
       {
         path:'statement',
         component:ViewStatementsComponent,
-        canActivate:[LoginGuard]
+        canActivate:[LoginGuard,PermissionGuard],
+        data:{page:"Finance"}
       },
       {
         path:'inventorytracking',
         component:InventoryTrackingComponent,
-        canActivate:[LoginGuard]
+        canActivate:[LoginGuard,PermissionGuard],
+        data:{page:"DSCInventory"}
       }
     ]),
     MatPaginatorModule,
     MatSortModule
   ],
-  providers: [LoginGuard,AdminGuard],
+  providers: [LoginGuard,AdminGuard,PermissionGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

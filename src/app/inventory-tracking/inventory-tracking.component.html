@@ -126,7 +126,7 @@
           <div *ngIf="row.FBDstock.quantity!=row.fblWarehouseInventories.quantity" style="color:red">{{stock}}</div>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Cost" [canAutoResize]="true" [width]="55" prop="cost"></ngx-datatable-column>
+      <ngx-datatable-column *ngIf="LoggedUser.Profitibility" name="Cost" [canAutoResize]="true" [width]="55" prop="cost"></ngx-datatable-column>
       <ngx-datatable-column name="Shop" [canAutoResize]="true" prop="ShopId" [width]="180"></ngx-datatable-column>
       <ngx-datatable-column name="Status" [canAutoResize]="true" [width]="70">
 

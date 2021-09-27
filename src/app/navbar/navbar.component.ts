@@ -8,23 +8,18 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  constructor(private auth:AuthService,private router:Router) { }
+  User
+  constructor(public auth:AuthService,private router:Router) { }
 
   ngOnInit(): void {
-    this.auth.getCurrentUser()
+    this.User = this.auth.getCurrentUser()
+    console.log(this.User)
   }
 
   logout(){
     this.auth.logout()
     console.log("button click")
     this.router.navigate(['login'])
-  }
-
-  isAdmin(){
-    if(this.auth.getCurrentUser().usertype=='admin'){
-      return true
-    }
   }
 
 }

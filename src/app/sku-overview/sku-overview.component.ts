@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
+import { AuthService } from '../services/auth.service';
 import { SkusService } from '../services/skus.service';
 import { SkuEditSheetComponent } from '../sku-edit-sheet/sku-edit-sheet.component';
 
@@ -10,6 +11,7 @@ import { SkuEditSheetComponent } from '../sku-edit-sheet/sku-edit-sheet.componen
   styleUrls: ['./sku-overview.component.css']
 })
 export class SkuOverviewComponent implements OnInit {
+    LoggedUser
     //data
     skus:any
     //datatable variables
@@ -22,9 +24,10 @@ export class SkuOverviewComponent implements OnInit {
     pIndex=0
     pSize=10
 
-  constructor(private skuservice:SkusService,private _bottomSheet:MatBottomSheet) { }
+  constructor(private skuservice:SkusService,private _bottomSheet:MatBottomSheet,private auth:AuthService) { }
 
   ngOnInit(): void {
+    this.LoggedUser=this.auth.getCurrentUser()
     this.getSkus()
   }
 

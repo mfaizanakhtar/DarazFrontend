@@ -28,7 +28,7 @@
 
         </div>
     </mat-tab>
-    <mat-tab label="Sub Accounts">
+    <mat-tab *ngIf="LoggedUser.accountType=='root'" label="Sub Accounts">
       
       <div style="margin: 2%;">
         <button (click)="CreateSubAccount()" style="margin-bottom:15px" mat-raised-button color="primary">Create Sub Account</button>
