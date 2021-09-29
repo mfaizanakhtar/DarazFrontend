@@ -7,7 +7,7 @@ import { AddShopComponent } from '../add-shop/add-shop.component';
 @Component({
   selector: 'app-shop-id',
   templateUrl: './shop-id.component.html',
-  styleUrls: ['./shop-id.component.css']
+  styleUrls: ['./shop-id.component.scss']
 })
 export class ShopIdComponent implements OnInit {
 

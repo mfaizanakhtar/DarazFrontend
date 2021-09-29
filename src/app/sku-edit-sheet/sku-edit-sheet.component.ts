@@ -7,7 +7,7 @@ import { SkusService } from '../services/skus.service';
 @Component({
   selector: 'app-sku-edit-sheet',
   templateUrl: './sku-edit-sheet.component.html',
-  styleUrls: ['./sku-edit-sheet.component.css']
+  styleUrls: ['./sku-edit-sheet.component.scss']
 })
 export class SkuEditSheetComponent implements OnInit {
   LoggedUser

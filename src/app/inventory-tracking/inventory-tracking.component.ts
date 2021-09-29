@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-inventory-tracking',
   templateUrl: './inventory-tracking.component.html',
-  styleUrls: ['./inventory-tracking.component.css']
+  styleUrls: ['./inventory-tracking.component.scss']
 })
 export class InventoryTrackingComponent implements OnInit {
     LoggedUser

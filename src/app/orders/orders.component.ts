@@ -8,7 +8,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.css',
+  styleUrls: ['./orders.component.scss',
               "../../assets/table/vendor/bootstrap/css/bootstrap.min.css",
               "../../assets/table/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
               "../../assets/table/vendor/animate/animate.css",

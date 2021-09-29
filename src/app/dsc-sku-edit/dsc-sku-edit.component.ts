@@ -6,7 +6,7 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-dsc-sku-edit',
   templateUrl: './dsc-sku-edit.component.html',
-  styleUrls: ['./dsc-sku-edit.component.css']
+  styleUrls: ['./dsc-sku-edit.component.scss']
 })
 export class DscSkuEditComponent implements OnInit {
   LoggedUser

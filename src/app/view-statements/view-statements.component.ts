@@ -4,7 +4,7 @@ import { TransactionsService } from '../services/transactions.service';
 @Component({
   selector: 'app-view-statements',
   templateUrl: './view-statements.component.html',
-  styleUrls: ['./view-statements.component.css']
+  styleUrls: ['./view-statements.component.scss']
 })
 export class ViewStatementsComponent implements OnInit {
   Statement="All"

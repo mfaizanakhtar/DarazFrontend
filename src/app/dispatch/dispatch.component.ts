@@ -6,7 +6,7 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 @Component({
   selector: 'app-dispatch',
   templateUrl: './dispatch.component.html',
-  styleUrls: ['./dispatch.component.css',
+  styleUrls: ['./dispatch.component.scss',
   "../../assets/table/vendor/bootstrap/css/bootstrap.min.css",
   "../../assets/table/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
   "../../assets/table/vendor/animate/animate.css",

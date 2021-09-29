@@ -6,7 +6,7 @@ import { AddidService } from '../services/addid.service';
 @Component({
   selector: 'app-add-shop',
   templateUrl: './add-shop.component.html',
-  styleUrls: ['./add-shop.component.css']
+  styleUrls: ['./add-shop.component.scss']
 })
 export class AddShopComponent implements OnInit {
   value:any

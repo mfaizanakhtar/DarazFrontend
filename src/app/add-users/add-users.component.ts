@@ -6,7 +6,7 @@ import { UseremailService } from '../services/useremail.service';
 @Component({
   selector: 'app-add-users',
   templateUrl: './add-users.component.html',
-  styleUrls: ['./add-users.component.css']
+  styleUrls: ['./add-users.component.scss']
 })
 export class AddUsersComponent implements OnInit {
   userEmail:any

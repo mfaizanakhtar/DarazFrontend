@@ -7,7 +7,7 @@ import { SkusService } from '../services/skus.service';
 @Component({
   selector: 'app-add-returned-stock',
   templateUrl: './add-returned-stock.component.html',
-  styleUrls: ['./add-returned-stock.component.css']
+  styleUrls: ['./add-returned-stock.component.scss']
 })
 export class AddReturnedStockComponent implements OnInit {
 

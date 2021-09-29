@@ -5,7 +5,7 @@ import { UseremailService } from '../services/useremail.service';
 @Component({
   selector: 'app-add-subaccount',
   templateUrl: './add-subaccount.component.html',
-  styleUrls: ['./add-subaccount.component.css']
+  styleUrls: ['./add-subaccount.component.scss']
 })
 export class AddSubaccountComponent implements OnInit {
   isEdit=false

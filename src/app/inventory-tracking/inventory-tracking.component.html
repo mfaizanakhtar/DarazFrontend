@@ -79,7 +79,7 @@
     (activate)="onActivate($event)"
     (select)="onSelect($event)">
 
-    <ngx-datatable-column
+    <!-- <ngx-datatable-column
 [width]="10"
 [sortable]="false"
 [canAutoResize]="false"
@@ -88,9 +88,9 @@
 
 >
 
-</ngx-datatable-column>
+</ngx-datatable-column> -->
 
-    <ngx-datatable-column name="S.No" [canAutoResize]="true" [width]="5">
+    <ngx-datatable-column name="S.No" [canAutoResize]="false" [width]="5">
         <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
           <!-- <div >{{pIndex*pSize+rowIndex+1}}</div> -->
           <div >{{pIndex*pSize+rowIndex+1}}</div>          

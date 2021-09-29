@@ -8,7 +8,7 @@ import { AddReturnedStockComponent } from '../add-returned-stock/add-returned-st
 @Component({
   selector: 'app-returntracking',
   templateUrl: './returntracking.component.html',
-  styleUrls: ['./returntracking.component.css',
+  styleUrls: ['./returntracking.component.scss',
   "../../assets/table/vendor/bootstrap/css/bootstrap.min.css",
   "../../assets/table/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
   "../../assets/table/vendor/animate/animate.css",

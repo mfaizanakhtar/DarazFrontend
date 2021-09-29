@@ -4,7 +4,7 @@ import { LabelService } from '../services/label.service';
 @Component({
   selector: 'app-stock-checklist',
   templateUrl: './stock-checklist.component.html',
-  styleUrls: ['./stock-checklist.component.css']
+  styleUrls: ['./stock-checklist.component.scss']
 })
 export class StockChecklistComponent implements OnInit {
   StockChecklist

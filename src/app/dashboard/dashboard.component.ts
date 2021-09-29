@@ -6,7 +6,7 @@ import { OrderItemsService } from '../services/orderItems.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css',
+  styleUrls: ['./dashboard.component.scss',
   "../../assets/table/vendor/bootstrap/css/bootstrap.min.css",
   "../../assets/table/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
   "../../assets/table/vendor/animate/animate.css",

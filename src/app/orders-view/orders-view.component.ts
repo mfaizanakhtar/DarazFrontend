@@ -14,7 +14,7 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-orders-view',
   templateUrl: './orders-view.component.html',
-  styleUrls: ['./orders-view.component.css']
+  styleUrls: ['./orders-view.component.scss']
 })
 export class OrdersViewComponent implements OnInit {
   LoggedUser

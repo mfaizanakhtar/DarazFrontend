@@ -8,7 +8,7 @@ import { SkuEditSheetComponent } from '../sku-edit-sheet/sku-edit-sheet.componen
 @Component({
   selector: 'app-sku-overview',
   templateUrl: './sku-overview.component.html',
-  styleUrls: ['./sku-overview.component.css']
+  styleUrls: ['./sku-overview.component.scss']
 })
 export class SkuOverviewComponent implements OnInit {
     LoggedUser
