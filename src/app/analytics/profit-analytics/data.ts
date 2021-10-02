@@ -217,20 +217,28 @@ const transactions = [
 const statData = [
     {
         icon: 'ri-stack-line',
-        title: 'Pending',
+        title: 'Orders',
         value: '100'
     }, {
         icon: 'ri-store-2-line',
-        title: 'RTS',
+        title: 'Items',
         value: '150'
     }, {
         icon: 'ri-briefcase-4-line',
-        title: 'Shipped',
-        value: '300'
+        title: 'Sales',
+        value: 'PKR 30,000'
     }, {
         icon: 'ri-briefcase-4-line',
-        title: 'Delivered',
-        value: '500'
+        title: 'Estimated Costs',
+        value: 'PKR 15,000'
+    }, {
+        icon: 'ri-briefcase-4-line',
+        title: 'Estimated Payout',
+        value: 'PKR 25,000'
+    }, {
+        icon: 'ri-briefcase-4-line',
+        title: 'Estimated Profit',
+        value: 'PKR 10,000'
     }
 ];
 

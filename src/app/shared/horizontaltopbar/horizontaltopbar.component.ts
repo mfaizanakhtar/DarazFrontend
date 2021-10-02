@@ -98,10 +98,10 @@ export class HorizontaltopbarComponent implements OnInit {
   /**
    * Togglemenu bar
    */
-  // toggleMenubar() {
-  //   const element = document.getElementById('topnav-menu-content');
-  //   element.classList.toggle('show');
-  // }
+  toggleMenubar() {
+    const element = document.getElementById('topnav-menu-content');
+    element.classList.toggle('show');
+  }
 
   /**
    * on settings button clicked from topbar

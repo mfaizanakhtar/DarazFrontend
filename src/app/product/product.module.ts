@@ -13,6 +13,7 @@ import { PermissionGuard } from '../PermissionGuard';
 import { AddShopComponent } from '../users/add-shop/add-shop.component';
 import { ProfileComponent } from '../users/profile/profile.component';
 import { ShopIdComponent } from '../users/shop-ids/shop-id.component';
+import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
 
 
 
@@ -33,25 +34,17 @@ import { ShopIdComponent } from '../users/shop-ids/shop-id.component';
     RouterModule.forChild([
       {
         path:'skuoverview',
-        component:SkuOverviewComponent,
+        component:HorizontalComponent,
+        children:[{path:'',component:SkuOverviewComponent}],
         canActivate:[LoginGuard,PermissionGuard],
         data:{page:"GroupedInventory"}
       },
       {
         path:'inventorytracking',
-        component:DscSkuTracking,
+        component:HorizontalComponent,
+        children:[{path:'',component:DscSkuTracking}],
         canActivate:[LoginGuard,PermissionGuard],
         data:{page:"DSCInventory"}
-      },
-      {
-        path:'shops',
-        component:ShopIdComponent,
-        canActivate:[LoginGuard]
-      },
-      {
-        path:'profile',
-        component:ProfileComponent,
-        canActivate:[LoginGuard]
       },
     ])
   ],

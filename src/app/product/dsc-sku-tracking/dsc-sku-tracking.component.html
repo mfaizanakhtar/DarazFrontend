@@ -1,8 +1,8 @@
-<app-navbar></app-navbar>
+<!-- <app-navbar></app-navbar> -->
 
-
-<mat-divider style="margin-top: 50px;" class="divider"></mat-divider>
-<div class="divider" style="display: flex;flex-wrap: wrap;">
+<div class="sidemargin">
+<mat-divider class="verticalspace"></mat-divider>
+<div style="display: flex;flex-wrap: wrap;">
 <h3 >DSC Inventory Tracking</h3>
 
 <mat-button-toggle-group [(value)]="StatusFilter" style="margin-left: 20px;" name="fontStyle" aria-label="Font Style">
@@ -19,10 +19,10 @@
 
 </div>
   
-<mat-divider class="divider"></mat-divider>
+<mat-divider class="verticalspace"></mat-divider>
 
 
-<div class="divider" style="margin-bottom: 0px;display: flex;flex-wrap: wrap;">
+<div class="verticalspace" style="display: flex;flex-wrap: wrap;">
 
 
 
@@ -60,9 +60,9 @@
 </div>
 
 
-<mat-divider class="divider"></mat-divider>
+<mat-divider></mat-divider>
 
-<div class="divider">
+<div>
     <ngx-datatable
     #table
     style="width:auto"
@@ -163,4 +163,5 @@
       </mat-paginator>
     </div>
 
+</div>
 </div>

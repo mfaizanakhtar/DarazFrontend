@@ -1,7 +1,7 @@
-<app-navbar></app-navbar>
+<!-- <app-navbar></app-navbar> -->
 
-<div style="margin: 20px; border-radius: 10px;display:inline-flex;flex-wrap: wrap;width: 100%;">
-        <form style="width: 75%;" #f="ngForm" (ngSubmit)="dispatch(f)">
+<div style="border-radius: 10px;display:inline-flex;flex-wrap: wrap;width: 100%;">
+        <form style="width: 75%;" #f="ngForm" (ngSubmit)="dispatch(f)" class="rightspace">
         <mat-form-field style="width: 100%;" appearance="fill">
           <mat-label>Enter Shipping Tracking</mat-label>
           <input ngModel name="tracking" matInput #message placeholder="Paste Tracking here">
@@ -10,7 +10,7 @@
 
     </form>
 
-    <mat-form-field style="width: 18%;margin-left: 15px;"appearance="fill">
+    <mat-form-field style="width: 18%" appearance="fill" class="rightspace"> 
         <mat-label>Enter a date range</mat-label>
         <mat-date-range-input [rangePicker]="picker" >
           <input [(ngModel)]="filterstartdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
@@ -23,7 +23,7 @@
 
 </div>
 <mat-divider></mat-divider>
-<div style="margin:20px">
+<div class="verticalspace">
 <ngx-datatable
         class="material"
         [rows]="dispatchorderarray"

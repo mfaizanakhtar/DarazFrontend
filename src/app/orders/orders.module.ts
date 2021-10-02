@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { DispatchComponent } from './dispatch/dispatch.component';
 import { OrdersViewComponent } from './orders-view/orders-view.component';
 import { ReturntrackingComponent } from './returntracking/returntracking.component';
+import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
 
 
 
@@ -23,19 +24,22 @@ import { ReturntrackingComponent } from './returntracking/returntracking.compone
     RouterModule.forChild([
       {
         path:'returns',
-        component:ReturntrackingComponent,
+        component:HorizontalComponent,
+        children:[{path:'',component:ReturntrackingComponent}],
         canActivate:[LoginGuard,PermissionGuard],
         data:{page:"ReturnsDispatch"}
       },
       {
         path:'dispatch',
-        component:DispatchComponent,
+        component:HorizontalComponent,
+        children:[{path:'',component:DispatchComponent}],
         canActivate:[LoginGuard,PermissionGuard],
         data:{page:"ReturnsDispatch"}
       },
       {
         path:'ordersview',
-        component:OrdersViewComponent,
+        component:HorizontalComponent,
+        children:[{path:'',component:OrdersViewComponent}],
         canActivate:[LoginGuard,PermissionGuard],
         data:{page:"Orders"}
       },

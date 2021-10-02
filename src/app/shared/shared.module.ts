@@ -46,6 +46,7 @@ import { HorizontaltopbarComponent } from './horizontaltopbar/horizontaltopbar.c
 import { FooterComponent } from './footer/footer.component';
 import { RightsidebarComponent } from './rightsidebar/rightsidebar.component';
 import { PagetitleComponent } from './pagetitle/pagetitle.component';
+import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -60,6 +61,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FooterComponent,
     RightsidebarComponent,
     PagetitleComponent,
+    HorizontalComponent
   ],
   imports: [
     CommonModule,
@@ -145,12 +147,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DndModule,
     FullCalendarModule,
     LeafletModule,
+
     HorizontaltopbarComponent,
     NavbarComponent,
     HorizontalnavbarComponent,
     FooterComponent,
     RightsidebarComponent,
     PagetitleComponent,
+    HorizontalComponent
   ],
   providers:[
     {

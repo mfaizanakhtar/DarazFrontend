@@ -1,6 +1,6 @@
-<app-navbar></app-navbar>
-<div style="margin: 20px; border-radius: 10px;display:inline-flex;flex-wrap: wrap;width: 100%;">
-        <form style="width: 75%;" #f="ngForm" (ngSubmit)="insertTracking(f)">
+<!-- <app-navbar></app-navbar> -->
+<div style="border-radius: 10px;display:inline-flex;flex-wrap: wrap;width: 100%;">
+        <form style="width: 75%;" #f="ngForm" (ngSubmit)="insertTracking(f)" class="rightspace">
         <mat-form-field style="width: 100%;" appearance="fill">
           <mat-label>Enter Received Tracking</mat-label>
           <input ngModel name="tracking" matInput #message placeholder="Paste Tracking here">
@@ -8,7 +8,7 @@
         </mat-form-field>
     </form>
 
-    <mat-form-field style="width: 18%;margin-left: 15px;"appearance="fill">
+    <mat-form-field style="width: 18%;margin-left: 15px;"appearance="fill" class="rightspace">
         <mat-label>Enter a date range</mat-label>
         <mat-date-range-input [rangePicker]="picker" >
           <input [(ngModel)]="filterstartdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
@@ -24,7 +24,7 @@
 <button (click)="AddReturnStock()" style="margin:20px" mat-raised-button color="primary" [disabled]="!selLength">Add Selected to Grouped Stock</button>
 
 <mat-divider></mat-divider>
-<div style="margin:20px">
+<div class="verticalspace">
 <ngx-datatable
         class="material"
         [rows]="returnorderarray"

@@ -6,6 +6,7 @@ import { ViewTransactionsComponent } from './view-transactions/view-transactions
 import { RouterModule } from '@angular/router';
 import { LoginGuard } from '../LoginGuard';
 import { PermissionGuard } from '../PermissionGuard';
+import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
 
 
 
@@ -19,13 +20,15 @@ import { PermissionGuard } from '../PermissionGuard';
     RouterModule.forRoot([
       {
         path:'transactions',
-        component:ViewTransactionsComponent,
+        component:HorizontalComponent,
+        children:[{path:'',component:ViewTransactionsComponent}],
         canActivate:[LoginGuard,PermissionGuard],
         data:{page:"Finance"}
       },
       {
         path:'statement',
-        component:ViewStatementsComponent,
+        component:HorizontalComponent,
+        children:[{path:'',component:ViewStatementsComponent}],
         canActivate:[LoginGuard,PermissionGuard],
         data:{page:"Finance"}
       },

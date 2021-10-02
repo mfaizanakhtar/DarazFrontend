@@ -8,6 +8,7 @@ import { AnalyticsDashboardComponent } from './analytics-dashboard/analytics-das
 import { AnalyticsContentComponent } from './analytics-content/analytics-content.component';
 import { StatComponent } from './stat/stat.component';
 import { HorizontalComponent } from './horizontal/horizontal.component';
+import { ProfitAnalyticsComponent } from './profit-analytics/profit-analytics.component';
 
 
 
@@ -18,21 +19,33 @@ import { HorizontalComponent } from './horizontal/horizontal.component';
     AnalyticsDashboardComponent,
     AnalyticsContentComponent,
     StatComponent,
-    HorizontalComponent
+    ProfitAnalyticsComponent
   ],
   imports: [
     SharedModule,
     RouterModule.forChild([
       {
-        path:'',
+        path:'dashboard',
         component:DashboardComponent,
         canActivate:[LoginGuard]
       },
       {
-        path:'analytics',
+        path:'',
         component:HorizontalComponent,
+        children:[
+          {path:'',component:AnalyticsContentComponent}
+        ]
+      },
+      {
+        path:'profitibility',
+        component:HorizontalComponent,
+        children:[
+          {path:'',component:ProfitAnalyticsComponent}
+        ]
       }
     ])
+  ],
+  exports:[
   ],
   providers:[LoginGuard]
 })

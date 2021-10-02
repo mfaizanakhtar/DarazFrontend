@@ -20,9 +20,9 @@
   </div>
 
   <div class="row">
-    <div class="col-xl-8">
+    <div class="col-xl-12">
       <div class="row">
-        <div *ngFor="let stat of statData" class="col-md-3">
+        <div *ngFor="let stat of statData" class="col-md-2">
           <app-stat [title]="stat.title" [value]="stat.value" [icon]="stat.icon"></app-stat>
         </div>
       </div>
@@ -83,30 +83,8 @@
         </div>
       </div>
     </div>
-
-    <div class="col-xl-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="float-right">
-            <select class="custom-select custom-select-sm">
-              <option selected>Apr</option>
-              <option value="1">Mar</option>
-              <option value="2">Feb</option>
-              <option value="3">Jan</option>
-            </select>
-          </div>
-          <h4 class="card-title mb-4">Sales Analytics</h4>
-          <app-stat title="Orders" [value]="10"></app-stat>
-          <app-stat title="Items" [value]="10"></app-stat>
-          <app-stat title="Revenue" [value]="50000"></app-stat>
-        </div>
-      </div>
-
-
-    </div>
   </div>
   <!-- end row -->
-
   <div class="row">
     <div class="col-lg-12">
 
@@ -126,7 +104,7 @@
   </div>
 
   <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-6">
       <div class="card">
         <div class="card-body">
 
@@ -134,8 +112,8 @@
           <perfect-scrollbar style="height: 330px;">
           <div>
             <div class="text-center">
-              <p class="mb-2">Total Orders</p>
-              <h4>100</h4>
+              <p class="mb-2">Total Profit</p>
+              <h4>PKR 100,000</h4>
               <div class="text-success">
                 <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
               </div>
@@ -146,22 +124,38 @@
               <table class="table table-hover mb-0 table-centered table-nowrap">
                 <tbody>
                   <tr>
-                    <td style="width: 60px;">
-                      <div class="avatar-xs">
-                        <div class="avatar-title rounded-circle bg-light">
-                          <img src="assets/images/companies/img-1.png" alt="" height="20">
-                        </div>
-                      </div>
+                    <td>
+                      <h5 class="font-size-14 mb-0">Store</h5>
+                    </td>
+                    <td>
+                      <h5 class="font-size-14 mb-0">Orders/Items</h5>
+                    </td>
+                    <td>
+                      <h5 class="font-size-14 mb-0">Sales</h5>
+                    </td>
+                    <td>
+                      <h5 class="font-size-14 mb-0">Costs</h5>
+                    </td>
+                    <td>
+                      <h5 class="font-size-14 mb-0">Profit</h5>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h5 class="font-size-12 mb-0">Accesology</h5>
                     </td>
 
                     <td>
-                      <h5 class="font-size-14 mb-0">Store 1</h5>
+                      <h5 class="font-size-14 mb-0">150/100</h5>
                     </td>
                     <td>
-                      <div id="spak-chart1"></div>
+                      <div class="font-size-14 mb-0">PKR 50,000</div>
                     </td>
                     <td>
-                      <p class="text-muted mb-0">100</p>
+                      <p class="font-size-14 mb-0">PKR 25,000</p>
+                    </td>
+                    <td>
+                      <p class="font-size-14 mb-0">PKR 25,000</p>
                     </td>
                   </tr>
                 </tbody>
@@ -174,7 +168,7 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-8">
+    <div class="col-lg-6">
       <div class="card">
         <div class="card-body">
           <div class="float-right d-none d-md-inline-block">
@@ -192,11 +186,11 @@
             </apx-chart>
           </div>
         </div>
+
       </div>
     </div>
   </div>
   <!-- end row -->
-
   <div class="row">
     <div class="col-lg-12">
 
@@ -216,7 +210,7 @@
   </div>
 
   <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-6">
       <div class="card">
         <div class="card-body">
 
@@ -226,13 +220,21 @@
             <div>
               <div style="margin-left: auto;margin-right: auto;">
                 <div class="row">
-                 <div class="col-lg-6"> 
-                  <p class="mb-2">FBD</p>
+                 <div class="col-lg-3"> 
+                  <p class="mb-2">Units</p>
                   <h4>100</h4>
                   </div>
-                  <div class="col-lg-6">
-                  <p class="mb-2">FBM</p>
-                  <h4>100</h4>
+                  <div class="col-lg-3">
+                  <p class="mb-2">Costs</p>
+                  <h4>PKR 100</h4>
+                  </div>
+                  <div class="col-lg-3">
+                    <p class="mb-2">Profit</p>
+                    <h4>PKR 100</h4>
+                  </div>
+                  <div class="col-lg-3">
+                    <p class="mb-2">ROI</p>
+                    <h4>10%</h4>
                   </div>
                 </div>
                 <div class="text-success">
@@ -245,24 +247,47 @@
                 <table class="table table-hover mb-0 table-centered table-nowrap">
                   <tbody>
                     <tr>
-                      <td style="width: 60px;">
-                        <div class="avatar-xs">
-                          <div class="avatar-title rounded-circle bg-light">
-                            <img src="assets/images/companies/img-1.png" alt="" height="20">
-                          </div>
-                        </div>
+                      <td>
+                        <h5 class="font-size-14 mb-0">SKU</h5>
+                      </td>
+                      <td>
+                        <h5 class="font-size-14 mb-0">Units</h5>
+                      </td>
+                      <td>
+                        <h5 class="font-size-14 mb-0">Sales</h5>
+                      </td>
+                      <td>
+                        <h5 class="font-size-14 mb-0">Cost</h5>
+                      </td>
+                      <td>
+                        <h5 class="font-size-14 mb-0">Profit</h5>
+                      </td>
+                      <td>
+                        <h5 class="font-size-14 mb-0">ROI</h5>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h5 class="font-size-12 mb-0">Tripod</h5>
                       </td>
   
                       <td>
-                        <h5 class="font-size-14 mb-0">Sku1</h5>
+                        <h5 class="font-size-14 mb-0">100</h5>
                       </td>
                       <td>
-                        <div id="spak-chart1"></div>
+                        <h5 class="font-size-14 mb-0">PKR 10,000</h5>
                       </td>
                       <td>
-                        <p class="text-muted mb-0">100</p>
+                        <h5 class="font-size-14 mb-0">PKR 5,000</h5>
+                      </td>
+                      <td>
+                        <h5 class="font-size-14 mb-0">PKR 5,000</h5>
+                      </td>
+                      <td>
+                        <h5 class="font-size-14 mb-0">25%</h5>
                       </td>
                     </tr>
+                   
                   </tbody>
                 </table>
               
@@ -273,7 +298,7 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-8">
+    <div class="col-lg-6">
       <div class="card">
         <div class="card-body">
           <div class="float-right d-none d-md-inline-block">
@@ -291,6 +316,7 @@
             </apx-chart>
           </div>
         </div>
+
       </div>
     </div>
   </div>

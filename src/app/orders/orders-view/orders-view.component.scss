@@ -1,22 +1,8 @@
 .datatable{
-    margin-left:75px;
-    margin-right: 75px;
     margin-top:50px;
 }
 
-.paginator{
-    margin-left:75px;
-    margin-right: 75px;
-}
-
-.secondnav{
-    margin-left:75px;
-    margin-right: 75px;
-}
-
 .topnavbar{
-    margin-left:75px;
-    margin-right: 75px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -37,8 +23,6 @@ td, th {
 .topdivider{
     margin-top: 15px;
     margin-bottom: 15px;
-    margin-right: 75px;
-    margin-left:75px
 }
 
 .example-h2 {
@@ -49,9 +33,16 @@ td, th {
     display: flex;
     align-content: center;
     align-items: center;
-    /* height: 60px; */
   }
   
   .example-margin {
     margin: 0 10px;
+  }
+
+  .sidemargin{
+    margin-left:75px;
+    margin-right: 75px;
+  }
+  .rightspace{
+    margin-right: 10px;
   }

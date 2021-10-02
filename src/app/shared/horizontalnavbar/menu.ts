@@ -5,13 +5,27 @@ export const MENU: MenuItem[] = [
         id: 1,
         label: 'Dashboard',
         icon: 'ri-dashboard-line',
-        link: '/'
+        subItems:[
+            {
+                id:131,
+                label:"Sales Analytics",
+                link:"/",
+                parentId:1
+            },
+            {
+                id:132,
+                label:"Profit Analytics",
+                link:"/profitibility",
+                parentId:1
+            }
+        ]
     },
     {
         id: 2,
         label: 'Orders',
         icon: 'ri-pencil-ruler-2-line',
         isUiElement: true,
+        link: '/ordersview'
     },
     {
         id: 21,
