@@ -1,26 +1,27 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
+// import { EventService } from '../../../core/services/event.service';
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 
 @Component({
-  selector: 'app-horizontalnavbar',
+  selector: 'app-horizontalnewnavbar',
   templateUrl: './horizontalnavbar.component.html',
   styleUrls: ['./horizontalnavbar.component.scss']
 })
-export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
+export class HorizontalnewnavbarComponent implements OnInit, AfterViewInit {
 
   configData;
   menuItems = [];
 
   // tslint:disable-next-line: max-line-length
   constructor(private router: Router) {
-    // router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     this.activateMenu();
-    //   }
-    // });
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.activateMenu();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -49,7 +50,7 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.activateMenu();
+    this.activateMenu();
   }
 
   /**
@@ -76,7 +77,6 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
   private activateMenu() {
 
     const resetParent = (el: any) => {
-      // console.log(el)
       const parent = el.parentElement;
       if (parent) {
         parent.classList.remove('active');

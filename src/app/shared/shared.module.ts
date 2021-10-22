@@ -1,3 +1,4 @@
+import { HorizontalnewnavbarComponent } from './horizontalnewnav/horizontalnavbar.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -47,6 +48,8 @@ import { FooterComponent } from './footer/footer.component';
 import { RightsidebarComponent } from './rightsidebar/rightsidebar.component';
 import { PagetitleComponent } from './pagetitle/pagetitle.component';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -61,7 +64,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FooterComponent,
     RightsidebarComponent,
     PagetitleComponent,
-    HorizontalComponent
+    HorizontalComponent,
+    HorizontalnewnavbarComponent
   ],
   imports: [
     CommonModule,
@@ -154,13 +158,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FooterComponent,
     RightsidebarComponent,
     PagetitleComponent,
-    HorizontalComponent
+    HorizontalComponent,
+    HorizontalnewnavbarComponent
   ],
   providers:[
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
+    },
   ]
 })
 export class SharedModule { }

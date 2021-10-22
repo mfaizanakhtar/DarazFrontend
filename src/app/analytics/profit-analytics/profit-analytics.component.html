@@ -1,19 +1,17 @@
 <div class="container-fluid">
-  <app-pagetitle title="Dashboard" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+  <app-pagetitle title="Profitiblity of Delivered Orders" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
 
   <div class="row">
     <div class="col-lg-12">
 
       <mat-form-field> 
         <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [rangePicker]="picker" >
-          <input matStartDate placeholder="Start date">
-          <input matEndDate placeholder="End date">
-          <!-- <input [(ngModel)]="filterstartdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
-          <input [(ngModel)]="filterenddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)"> -->
+        <mat-date-range-input [rangePicker]="picker1" >
+          <input [ngModel]="startdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
+          <input [ngModel]="enddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)">
         </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker1></mat-date-range-picker>
       </mat-form-field>
 
     </div>
@@ -22,9 +20,14 @@
   <div class="row">
     <div class="col-xl-12">
       <div class="row">
-        <div *ngFor="let stat of statData" class="col-md-2">
-          <app-stat [title]="stat.title" [value]="stat.value" [icon]="stat.icon"></app-stat>
-        </div>
+          <ngx-spinner class="col-md-12" [name]="overview" [fullScreen]="false" type="ball-clip-rotate-multiple" size="medium"></ngx-spinner>
+          <app-stat class="col-md-2" [title]="'Orders'" [value]="ProfitStats.orders | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Orders: '+OrderAnalytics.orders"></app-stat>
+          <app-stat class="col-md-2" [title]="'Items'" [value]="ProfitStats.items | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Items: '+OrderAnalytics.items"></app-stat>
+          <app-stat class="col-md-2" [title]="'Sales'" [value]="ProfitStats.sales | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Sales: '+OrderAnalytics.revenue"></app-stat>
+          <app-stat class="col-md-2" [title]="'Estimated Costs'" [value]="ProfitStats.costs | number" [icon]="'ri-stack-line'"></app-stat>
+          <app-stat class="col-md-2" [title]="'Estimated Payout'" [value]="ProfitStats.payout | number" [icon]="'ri-stack-line'" [bottomContentExtra]="(ProfitStats.payout/ProfitStats.sales)*100 | number:'1.0-2'" [bottomContent]="'Payout of Sales %:'"></app-stat>
+          <app-stat class="col-md-2" [title]="'Estimated Profit'" [value]="ProfitStats.profit | number" [icon]="'ri-stack-line'" [bottomContentExtra]="(ProfitStats.profit/ProfitStats.sales)*100 | number:'1.0-2'" [bottomContent]="'Profit %:'"></app-stat>
+          
       </div>
       <!-- end row -->
 
@@ -39,18 +42,18 @@
           </div>
           <h4 class="card-title mb-4">Revenue Analytics</h4>
           <div>
-            <apx-chart dir="ltr" class="apex-charts" [series]="revenueChart.series" [chart]="revenueChart.chart"
-              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="revenueChart.labels"
-              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions">
+            <apx-chart dir="ltr" class="apex-charts" [series]="ProfitAnalyticsGraph.Data" [chart]="revenueChart.chart"
+              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="ProfitAnalyticsGraph.Labels"
+              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions" [yaxis]="revenueChart.yaxis">
             </apx-chart>
           </div>
         </div>
 
         <div class="card-body border-top text-center">
           <div class="row">
-            <div class="col-sm-4">
+            <!-- <div class="col-sm-4">
               <div class="d-inline-flex">
-                <h5 class="mr-2">$12,253</h5>
+                <h5 class="mr-2">0</h5>
                 <div class="text-success">
                   <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
                 </div>
@@ -63,7 +66,7 @@
                 <p class="mb-2 text-muted text-truncate"><i class="mdi mdi-circle text-primary font-size-10 mr-1"></i>
                   This Year :</p>
                 <div class="d-inline-flex">
-                  <h5 class="mb-0 mr-2">$ 34,254</h5>
+                  <h5 class="mb-0 mr-2">0</h5>
                   <div class="text-success">
                     <i class="mdi mdi-menu-up font-size-14"> </i>2.1 %
                   </div>
@@ -75,10 +78,10 @@
                 <p class="mb-2 text-muted text-truncate"><i class="mdi mdi-circle text-success font-size-10 mr-1"></i>
                   Previous Year :</p>
                 <div class="d-inline-flex">
-                  <h5 class="mb-0">$ 32,695</h5>
+                  <h5 class="mb-0">0</h5>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -90,14 +93,12 @@
 
       <mat-form-field> 
         <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [rangePicker]="picker" >
-          <input matStartDate placeholder="Start date">
-          <input matEndDate placeholder="End date">
-          <!-- <input [(ngModel)]="filterstartdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
-          <input [(ngModel)]="filterenddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)"> -->
+        <mat-date-range-input [rangePicker]="picker2" >
+          <input [ngModel]="startdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
+          <input [ngModel]="enddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)">
         </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker2></mat-date-range-picker>
       </mat-form-field>
 
     </div>
@@ -113,7 +114,7 @@
           <div>
             <div class="text-center">
               <p class="mb-2">Total Profit</p>
-              <h4>PKR 100,000</h4>
+              <h4>PKR {{ProfitStats.profit | number}}</h4>
               <div class="text-success">
                 <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
               </div>
@@ -134,28 +135,34 @@
                       <h5 class="font-size-14 mb-0">Sales</h5>
                     </td>
                     <td>
+                      <h5 class="font-size-14 mb-0">Payout</h5>
+                    </td>
+                    <td>
                       <h5 class="font-size-14 mb-0">Costs</h5>
                     </td>
                     <td>
                       <h5 class="font-size-14 mb-0">Profit</h5>
                     </td>
                   </tr>
-                  <tr>
+                  <tr *ngFor="let storeProfit of StoreProfitStats" (click)="StoreClick(storeProfit)" [ngClass]="{'selected':storeProfit._id===TotalStoreSkuProfitStats._id}" style="cursor: grabbing;">
                     <td>
-                      <h5 class="font-size-12 mb-0">Accesology</h5>
+                      <h5 class="font-size-12 mb-0">{{storeProfit._id}}</h5>
                     </td>
 
                     <td>
-                      <h5 class="font-size-14 mb-0">150/100</h5>
+                      <h5 class="font-size-14 mb-0">{{storeProfit.orders}}/{{storeProfit.items}}</h5>
                     </td>
                     <td>
-                      <div class="font-size-14 mb-0">PKR 50,000</div>
+                      <div class="font-size-14 mb-0">PKR {{storeProfit.sales | number}}</div>
                     </td>
                     <td>
-                      <p class="font-size-14 mb-0">PKR 25,000</p>
+                      <div class="font-size-14 mb-0">PKR {{storeProfit.payout | number}}</div>
                     </td>
                     <td>
-                      <p class="font-size-14 mb-0">PKR 25,000</p>
+                      <p class="font-size-14 mb-0">PKR {{storeProfit.costs | number}}</p>
+                    </td>
+                    <td>
+                      <p class="font-size-14 mb-0">PKR {{storeProfit.profit | number}}</p>
                     </td>
                   </tr>
                 </tbody>
@@ -180,9 +187,9 @@
           </div>
           <h4 class="card-title mb-4">Revenue Analytics</h4>
           <div>
-            <apx-chart dir="ltr" class="apex-charts" [series]="revenueChart.series" [chart]="revenueChart.chart"
-              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="revenueChart.labels"
-              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions">
+            <apx-chart dir="ltr" class="apex-charts" [series]="StoreProfitAnalyticsGraph.Data" [chart]="revenueChart.chart"
+              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="StoreProfitAnalyticsGraph.Labels"
+              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions" [yaxis]="revenueChart.yaxis">
             </apx-chart>
           </div>
         </div>
@@ -196,14 +203,12 @@
 
       <mat-form-field> 
         <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [rangePicker]="picker" >
-          <input matStartDate placeholder="Start date">
-          <input matEndDate placeholder="End date">
-          <!-- <input [(ngModel)]="filterstartdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
-          <input [(ngModel)]="filterenddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)"> -->
+        <mat-date-range-input [rangePicker]="picker3" >
+          <input [ngModel]="startdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
+          <input [ngModel]="enddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)">
         </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker3></mat-date-range-picker>
       </mat-form-field>
 
     </div>
@@ -222,19 +227,20 @@
                 <div class="row">
                  <div class="col-lg-3"> 
                   <p class="mb-2">Units</p>
-                  <h4>100</h4>
+                  <h4>{{TotalStoreSkuProfitStats.items}}</h4>
                   </div>
                   <div class="col-lg-3">
                   <p class="mb-2">Costs</p>
-                  <h4>PKR 100</h4>
+                  <h4>PKR {{TotalStoreSkuProfitStats.costs | number}}</h4>
                   </div>
                   <div class="col-lg-3">
                     <p class="mb-2">Profit</p>
-                    <h4>PKR 100</h4>
+                    <h4>PKR {{TotalStoreSkuProfitStats.profit | number}}</h4>
                   </div>
                   <div class="col-lg-3">
                     <p class="mb-2">ROI</p>
-                    <h4>10%</h4>
+                    <h4 *ngIf="TotalStoreSkuProfitStats.costs!=0">{{getRoi(TotalStoreSkuProfitStats.profit,TotalStoreSkuProfitStats.costs) | number}} %</h4>
+                    <h4 *ngIf="TotalStoreSkuProfitStats.costs==0">∞</h4>
                   </div>
                 </div>
                 <div class="text-success">
@@ -257,6 +263,9 @@
                         <h5 class="font-size-14 mb-0">Sales</h5>
                       </td>
                       <td>
+                        <h5 class="font-size-14 mb-0">Payout</h5>
+                      </td>
+                      <td>
                         <h5 class="font-size-14 mb-0">Cost</h5>
                       </td>
                       <td>
@@ -266,25 +275,29 @@
                         <h5 class="font-size-14 mb-0">ROI</h5>
                       </td>
                     </tr>
-                    <tr>
+                    <tr *ngFor="let sku of StoreSkuProfitStats" (click)="SkuClick(sku._id)" [ngClass]="{'selected':sku._id===SelectedSku}" style="cursor: grabbing;">
                       <td>
-                        <h5 class="font-size-12 mb-0">Tripod</h5>
+                        <h5 class="font-size-12 mb-0">{{sku._id}}</h5>
                       </td>
   
                       <td>
-                        <h5 class="font-size-14 mb-0">100</h5>
+                        <h5 class="font-size-14 mb-0">{{sku.items}}</h5>
                       </td>
                       <td>
-                        <h5 class="font-size-14 mb-0">PKR 10,000</h5>
+                        <h5 class="font-size-14 mb-0">PKR {{sku.sales | number}}</h5>
                       </td>
                       <td>
-                        <h5 class="font-size-14 mb-0">PKR 5,000</h5>
+                        <h5 class="font-size-14 mb-0">PKR {{sku.payout | number}}</h5>
                       </td>
                       <td>
-                        <h5 class="font-size-14 mb-0">PKR 5,000</h5>
+                        <h5 class="font-size-14 mb-0">PKR {{sku.costs | number}}</h5>
                       </td>
                       <td>
-                        <h5 class="font-size-14 mb-0">25%</h5>
+                        <h5 class="font-size-14 mb-0">PKR {{sku.profit | number}}</h5>
+                      </td>
+                      <td>
+                        <h5 class="font-size-14 mb-0" *ngIf="sku.costs!=0 && sku.profit!=0">{{getRoi(sku.profit,sku.costs)}} %</h5>
+                        <h5 class="font-size-14 mb-0" *ngIf="sku.costs==0 || sku.profit==0">∞</h5>
                       </td>
                     </tr>
                    
@@ -310,9 +323,9 @@
           </div>
           <h4 class="card-title mb-4">Revenue Analytics</h4>
           <div>
-            <apx-chart dir="ltr" class="apex-charts" [series]="revenueChart.series" [chart]="revenueChart.chart"
-              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="revenueChart.labels"
-              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions">
+            <apx-chart dir="ltr" class="apex-charts" [series]="SkuProfitAnalyticsGraph.Data" [chart]="revenueChart.chart"
+              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="SkuProfitAnalyticsGraph.Labels"
+              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions" [yaxis]="revenueChart.yaxis">
             </apx-chart>
           </div>
         </div>

@@ -1,10 +1,12 @@
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { DashboardstatsService } from './../../services/dashboardstats.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { latLng, tileLayer } from 'leaflet';
 
-import { ChartType, Stat, Chat, Transaction } from './dashboard.model';
+import { ChartType } from './dashboard.model';
 
-import { statData, revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, chatData, transactions } from './data';
+import { revenueChart } from './data';
 
 @Component({
   selector: 'app-profit-analytics-content',
@@ -14,26 +16,34 @@ import { statData, revenueChart, salesAnalytics, sparklineEarning, sparklineMont
 export class ProfitAnalyticsComponent implements OnInit {
 
 
-  term: any;
-  chatData: Chat[];
-  transactions: Transaction[];
-  statData: Stat[];
+  //date
+  startdate=new Date()
+  enddate=new Date()
+  //data
+  ProfitStats={items:0,sales:0,costs:0,payout:0,profit:0,orders:0}
+  StoreProfitStats=[]
+  StoreSkuProfitStats=[]
+  TotalStoreSkuProfitStats={_id:null,items:0,costs:0,profit:0}
+  SelectedSku:any
+  SelectedStore:any
+  loadingIndicator=true
+  OrderAnalytics:any
+  //graph
+  ProfitAnalyticsGraph:any={Data:[],Labels:[]}
+  StoreProfitAnalyticsGraph:any={Data:[],Labels:[]}
+  SkuProfitAnalyticsGraph:any={Data:[],Labels:[]}
 
-  constructor(public formBuilder: FormBuilder) {
+  constructor(public formBuilder: FormBuilder,private stats:DashboardstatsService,private spinner:NgxSpinnerService) {
   }
 
   // bread crumb items
   breadCrumbItems: Array<{}>;
 
   revenueChart: ChartType;
-  salesAnalytics: ChartType;
-  sparklineEarning: ChartType;
-  sparklineMonthly: ChartType;
 
-  // Form submit
-  chatSubmit: boolean;
 
-  formData: FormGroup;
+
+
 
 
   options = {
@@ -45,51 +55,97 @@ export class ProfitAnalyticsComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Nazox' }, { label: 'Dashboard', active: true }];
-    this.formData = this.formBuilder.group({
-      message: ['', [Validators.required]],
-    });
+    this.startdate.setHours(0,0,0,0);
+    this.enddate.setHours(0,0,0,0);
+
+    this.breadCrumbItems = [{ label: 'Home' }, { label: 'Profitiblity', active: true }];
     this._fetchData();
+
+    this.getProfitStats()
+    this.getStoresProfitStats()
+    this.showSpinners()
+   
+  }
+
+  private showSpinners(){
+    this.spinner.show("spinner")
   }
 
   private _fetchData() {
     this.revenueChart = revenueChart;
-    this.salesAnalytics = salesAnalytics;
-    this.sparklineEarning = sparklineEarning;
-    this.sparklineMonthly = sparklineMonthly;
-    this.chatData = chatData;
-    this.transactions = transactions;
-    this.statData = statData;
   }
 
-  /**
-   * Returns form
-   */
-  get form() {
-    return this.formData.controls;
+  DateInput(mode,event){
+    if(mode == 'start'){
+      this.startdate = event.value
+    }
+    if(mode == 'end'){
+      if(event.value != null){
+        this.enddate = event.value
+        // console.log(this.startdate);
+        // console.log(this.enddate);
+        this.getProfitStats()
+        this.getStoresProfitStats()
+        if(this.SelectedStore!=null) this.StoreClick(this.SelectedStore)
+        if(this.SelectedSku!=null) this.SkuClick(this.SelectedSku)
+    }
   }
+}
 
-  /**
-   * Save the message in chat
-   */
-  messageSave() {
-    const message = this.formData.get('message').value;
-    const currentDate = new Date();
-    if (this.formData.valid && message) {
-      // Message Push in Chat
-      this.chatData.push({
-        align: 'right',
-        name: 'Ricky Clark',
-        message,
-        time: currentDate.getHours() + ':' + currentDate.getMinutes()
-      });
-
-      // Set Form Data Reset
-      this.formData = this.formBuilder.group({
-        message: null
-      });
+getProfitStats(){
+  this.stats.get('/getProfitAnalytics?startdate='+this.startdate.toISOString()+"&enddate="+this.enddate.toISOString()).subscribe((res:any)=>{
+    if(Object.keys(res.ProfitStats).length!=0) this.ProfitStats=res.ProfitStats
+    else{
+      this.ProfitStats = {items:0,sales:0,costs:0,payout:0,profit:0,orders:0}
     }
 
-    this.chatSubmit = true;
+    // this.spinner.hide("overview")
+  })
+
+  this.stats.get('/OrderAnalytics/?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe(res=>{
+    this.OrderAnalytics=res
+    this.loadingIndicator=false
+  })
+
+  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
+    if(Object.keys(res).length>0) this.ProfitAnalyticsGraph=res
+  })
+
+}
+
+
+getStoresProfitStats(){
+  this.stats.get('/getStoresProfitStats?startdate='+this.startdate.toISOString()+"&enddate="+this.enddate.toISOString()).subscribe((res:any)=>{
+    this.StoreProfitStats=res
+    this.StoreClick(this.StoreProfitStats[0])
+  })
+}
+
+StoreClick(store){
+  this.TotalStoreSkuProfitStats=store
+  this.stats.get('/getStoreSkuProfitStats?startdate='+this.startdate.toISOString()+"&enddate="+this.enddate.toISOString()+"&store="+this.TotalStoreSkuProfitStats._id).subscribe((res:any)=>{
+    this.StoreSkuProfitStats=res
+    this.SkuClick(this.StoreSkuProfitStats[0]._id)
+  })
+
+  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.TotalStoreSkuProfitStats._id).subscribe((res:any)=>{
+    if(Object.keys(res).length>0) this.StoreProfitAnalyticsGraph=res
+  })
+}
+
+SkuClick(sku){
+  this.SelectedSku=sku
+  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.TotalStoreSkuProfitStats._id+"&sku="+sku).subscribe((res:any)=>{
+    if(Object.keys(res).length>0) this.SkuProfitAnalyticsGraph=res
+  })
+}
+
+
+  getRoi(profit,cost){
+    console.log("profit",profit)
+    console.log("cost",cost)
+    return (profit/cost)*100
   }
+
+
 }

@@ -7,6 +7,7 @@ export interface ChartType {
     legend?: any;
     colors?: any;
     labels?: any;
+    yaxis?: any;
 }
 
 export interface Stat {

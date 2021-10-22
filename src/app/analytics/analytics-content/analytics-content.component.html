@@ -6,14 +6,12 @@
 
       <mat-form-field> 
         <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [rangePicker]="picker" >
-          <input matStartDate placeholder="Start date">
-          <input matEndDate placeholder="End date">
-          <!-- <input [(ngModel)]="filterstartdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
-          <input [(ngModel)]="filterenddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)"> -->
+        <mat-date-range-input [rangePicker]="picker1" >
+          <input [ngModel]="startdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
+          <input [ngModel]="enddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)">
         </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker1></mat-date-range-picker>
       </mat-form-field>
 
     </div>
@@ -21,36 +19,40 @@
 
   <div class="row">
     <div class="col-xl-8">
-      <div class="row">
-        <div *ngFor="let stat of statData" class="col-md-3">
-          <app-stat [title]="stat.title" [value]="stat.value" [icon]="stat.icon"></app-stat>
-        </div>
+      <div *ngIf="!loadingIndicator" class="row">
+        <!-- <div *ngFor="let stat of statData;let i=index" class="col-md-3">
+          <app-stat  [title]="stat.title" [value]="StatusCount[i].count.OrderCount | number" [extraValue]="StatusCount[i].count.ItemCount | number" [icon]="stat.icon"></app-stat>
+        </div> -->
+          <app-stat class="col-md-3" [title]="'Pending'" [value]="StatusCount[0].count.OrderCount | number" [extraValue]="StatusCount[0].count.ItemCount | number" [icon]="'ri-stack-line'" [bottomContent]="'Orders/Items'"></app-stat>
+          <app-stat class="col-md-3" [title]="'RTS'" [value]="StatusCount[1].count.OrderCount | number" [extraValue]="StatusCount[1].count.ItemCount | number" [icon]="'ri-stack-line'" [bottomContent]="'Orders/Items'"></app-stat>
+          <app-stat class="col-md-3" [title]="'Shipped'" [value]="StatusCount[2].count.OrderCount | number" [extraValue]="StatusCount[2].count.ItemCount | number" [icon]="'ri-stack-line'" [bottomContent]="'Orders/Items'"></app-stat>
+          <app-stat class="col-md-3" [title]="'Delivered'" [value]="StatusCount[3].count.OrderCount | number" [extraValue]="StatusCount[3].count.ItemCount | number" [icon]="'ri-stack-line'" [bottomContent]="'Orders/Items'"></app-stat>
       </div>
       <!-- end row -->
 
       <div class="card">
         <div class="card-body">
           <div class="float-right d-none d-md-inline-block">
-            <div class="btn-group mb-2">
+            <!-- <div class="btn-group mb-2">
               <button type="button" class="btn btn-sm btn-light">Today</button>
               <button type="button" class="btn btn-sm btn-light active">Weekly</button>
               <button type="button" class="btn btn-sm btn-light">Monthly</button>
-            </div>
+            </div> -->
           </div>
-          <h4 class="card-title mb-4">Revenue Analytics</h4>
+          <h4 class="card-title mb-4">Total Revenue Analytics</h4>
           <div>
-            <apx-chart dir="ltr" class="apex-charts" [series]="revenueChart.series" [chart]="revenueChart.chart"
-              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="revenueChart.labels"
-              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions">
+            <apx-chart dir="ltr" class="apex-charts" [series]="OrderAnalyticsGraph.Data" [chart]="revenueChart.chart"
+              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="OrderAnalyticsGraph.Labels"
+              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions" [yaxis]="revenueChart.yaxis">
             </apx-chart>
           </div>
         </div>
 
         <div class="card-body border-top text-center">
           <div class="row">
-            <div class="col-sm-4">
+            <!-- <div class="col-sm-4">
               <div class="d-inline-flex">
-                <h5 class="mr-2">$12,253</h5>
+                <h5 class="mr-2">0</h5>
                 <div class="text-success">
                   <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
                 </div>
@@ -63,7 +65,7 @@
                 <p class="mb-2 text-muted text-truncate"><i class="mdi mdi-circle text-primary font-size-10 mr-1"></i>
                   This Year :</p>
                 <div class="d-inline-flex">
-                  <h5 class="mb-0 mr-2">$ 34,254</h5>
+                  <h5 class="mb-0 mr-2">0</h5>
                   <div class="text-success">
                     <i class="mdi mdi-menu-up font-size-14"> </i>2.1 %
                   </div>
@@ -75,10 +77,10 @@
                 <p class="mb-2 text-muted text-truncate"><i class="mdi mdi-circle text-success font-size-10 mr-1"></i>
                   Previous Year :</p>
                 <div class="d-inline-flex">
-                  <h5 class="mb-0">$ 32,695</h5>
+                  <h5 class="mb-0">0</h5>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -96,9 +98,9 @@
             </select>
           </div>
           <h4 class="card-title mb-4">Sales Analytics</h4>
-          <app-stat title="Orders" [value]="10"></app-stat>
-          <app-stat title="Items" [value]="10"></app-stat>
-          <app-stat title="Revenue" [value]="50000"></app-stat>
+          <app-stat title="Orders" [value]="OrderAnalytics.orders | number"></app-stat>
+          <app-stat title="Items" [value]="OrderAnalytics.items | number"></app-stat>
+          <app-stat title="Revenue" [value]="OrderAnalytics.revenue | number"></app-stat>
         </div>
       </div>
 
@@ -112,21 +114,19 @@
 
       <mat-form-field> 
         <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [rangePicker]="picker" >
-          <input matStartDate placeholder="Start date">
-          <input matEndDate placeholder="End date">
-          <!-- <input [(ngModel)]="filterstartdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
-          <input [(ngModel)]="filterenddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)"> -->
+        <mat-date-range-input [rangePicker]="picker2" >
+          <input [ngModel]="startdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
+          <input [ngModel]="enddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)">
         </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker2></mat-date-range-picker>
       </mat-form-field>
 
     </div>
   </div>
 
   <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-6">
       <div class="card">
         <div class="card-body">
 
@@ -135,9 +135,9 @@
           <div>
             <div class="text-center">
               <p class="mb-2">Total Orders</p>
-              <h4>100</h4>
+              <h4>{{OrderAnalytics.orders | number}}</h4>
               <div class="text-success">
-                <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
+                <!-- <i class="mdi mdi-menu-up font-size-14"> </i>2.2 % -->
               </div>
             </div>
 
@@ -146,24 +146,30 @@
               <table class="table table-hover mb-0 table-centered table-nowrap">
                 <tbody>
                   <tr>
-                    <td style="width: 60px;">
-                      <div class="avatar-xs">
-                        <div class="avatar-title rounded-circle bg-light">
-                          <img src="assets/images/companies/img-1.png" alt="" height="20">
-                        </div>
-                      </div>
+                    <td>
+                      <h5 class="font-size-14 mb-0">Stores</h5>
+                    </td>
+                    <td>
+                      <h5 class="font-size-14 mb-0">Orders/Items</h5>
+                    </td>
+                    <td>
+                      <h5 class="font-size-14 mb-0">Sales</h5>
+                    </td>
+                  </tr>
+
+                  <tr *ngFor="let detail of StoreDetails" (click)="StoreClick(detail.store)" [ngClass]="{'selected':detail.store===SelectedStore}" style="cursor: grabbing;">
+                    <td>
+                      <h5 class="font-size-14 mb-0">{{detail.store}}</h5>
                     </td>
 
                     <td>
-                      <h5 class="font-size-14 mb-0">Store 1</h5>
+                      <h5 class="font-size-14 mb-0">{{detail.orders}}/{{detail.items}}</h5>
                     </td>
                     <td>
-                      <div id="spak-chart1"></div>
-                    </td>
-                    <td>
-                      <p class="text-muted mb-0">100</p>
+                      <h5 class="font-size-14 mb-0">{{detail.revenue | number}} Rs</h5>
                     </td>
                   </tr>
+                  
                 </tbody>
               </table>
             
@@ -174,21 +180,21 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-8">
+    <div class="col-lg-6">
       <div class="card">
         <div class="card-body">
           <div class="float-right d-none d-md-inline-block">
-            <div class="btn-group mb-2">
+            <!-- <div class="btn-group mb-2">
               <button type="button" class="btn btn-sm btn-light">Today</button>
               <button type="button" class="btn btn-sm btn-light active">Weekly</button>
               <button type="button" class="btn btn-sm btn-light">Monthly</button>
-            </div>
+            </div> -->
           </div>
-          <h4 class="card-title mb-4">Revenue Analytics</h4>
+          <h4 class="card-title mb-4">Store Revenue Analytics</h4>
           <div>
-            <apx-chart dir="ltr" class="apex-charts" [series]="revenueChart.series" [chart]="revenueChart.chart"
-              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="revenueChart.labels"
-              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions">
+            <apx-chart dir="ltr" class="apex-charts" [series]="StoreAnalyticsGraph.Data" [chart]="revenueChart.chart"
+              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="StoreAnalyticsGraph.Labels"
+              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions" [yaxis]="revenueChart.yaxis">
             </apx-chart>
           </div>
         </div>
@@ -202,21 +208,19 @@
 
       <mat-form-field> 
         <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [rangePicker]="picker" >
-          <input matStartDate placeholder="Start date">
-          <input matEndDate placeholder="End date">
-          <!-- <input [(ngModel)]="filterstartdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
-          <input [(ngModel)]="filterenddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)"> -->
+        <mat-date-range-input [rangePicker]="picker3" >
+          <input [ngModel]="startdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
+          <input [ngModel]="enddate" matEndDate placeholder="End date" (dateInput)="DateInput('end',$event)">
         </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker3></mat-date-range-picker>
       </mat-form-field>
 
     </div>
   </div>
 
   <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-6">
       <div class="card">
         <div class="card-body">
 
@@ -228,15 +232,15 @@
                 <div class="row">
                  <div class="col-lg-6"> 
                   <p class="mb-2">FBD</p>
-                  <h4>100</h4>
+                  <h4>{{SkuTotal.OwnWarehouse}} Units</h4>
                   </div>
                   <div class="col-lg-6">
                   <p class="mb-2">FBM</p>
-                  <h4>100</h4>
+                  <h4>{{SkuTotal.Dropshipping}} Units</h4>
                   </div>
                 </div>
                 <div class="text-success">
-                  <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
+                  <!-- <i class="mdi mdi-menu-up font-size-14"> </i>2.2 % -->
                 </div>
               </div>
   
@@ -245,22 +249,34 @@
                 <table class="table table-hover mb-0 table-centered table-nowrap">
                   <tbody>
                     <tr>
-                      <td style="width: 60px;">
-                        <div class="avatar-xs">
-                          <div class="avatar-title rounded-circle bg-light">
-                            <img src="assets/images/companies/img-1.png" alt="" height="20">
-                          </div>
-                        </div>
-                      </td>
-  
                       <td>
-                        <h5 class="font-size-14 mb-0">Sku1</h5>
+                        <h5 class="font-size-14 mb-0">SKU</h5>
                       </td>
                       <td>
-                        <div id="spak-chart1"></div>
+                        <h5 class="font-size-14 mb-0">Orders/Items</h5>
                       </td>
                       <td>
-                        <p class="text-muted mb-0">100</p>
+                        <h5 class="font-size-14 mb-0">Fbd/Fbm</h5>
+                      </td>
+                      <td>
+                        <h5 class="font-size-14 mb-0">Sales</h5>
+                      </td>
+                    </tr>
+
+                    <tr *ngFor="let sku of StoreSkuDetails " (click)="SkuClick(sku.sku)" [ngClass]="{'selected':sku.sku===SelectedSku}" style="cursor: grabbing;">
+                      <td>
+                        <h5 class="font-size-14 mb-0">{{sku.sku}}</h5>
+                      </td>
+                      <td>
+                        <h5 class="font-size-14 mb-0">{{sku.orders}}/{{sku.items}}</h5>
+                      </td>
+                      <td>
+                        <h5 class="font-size-14 mb-0">
+                          {{sku.OwnWarehouse}}<span class="font-size-14 mb-0" *ngIf="sku.OwnWarehouse==undefined">0</span>
+                          /{{sku.Dropshipping}}<span class="font-size-14 mb-0" *ngIf="sku.Dropshipping==undefined">0</span></h5>
+                      </td>
+                      <td>
+                        <h5 class="font-size-14 mb-0">{{sku.revenue | number}} Rs</h5>
                       </td>
                     </tr>
                   </tbody>
@@ -273,21 +289,21 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-8">
+    <div class="col-lg-6">
       <div class="card">
         <div class="card-body">
           <div class="float-right d-none d-md-inline-block">
-            <div class="btn-group mb-2">
+            <!-- <div class="btn-group mb-2">
               <button type="button" class="btn btn-sm btn-light">Today</button>
               <button type="button" class="btn btn-sm btn-light active">Weekly</button>
               <button type="button" class="btn btn-sm btn-light">Monthly</button>
-            </div>
+            </div> -->
           </div>
-          <h4 class="card-title mb-4">Revenue Analytics</h4>
+          <h4 class="card-title mb-4">SKU Revenue Analytics</h4>
           <div>
-            <apx-chart dir="ltr" class="apex-charts" [series]="revenueChart.series" [chart]="revenueChart.chart"
-              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="revenueChart.labels"
-              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions">
+            <apx-chart dir="ltr" class="apex-charts" [series]="SkuAnalyticsGraph.Data" [chart]="revenueChart.chart"
+              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="SkuAnalyticsGraph.Labels"
+              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions" [yaxis]="revenueChart.yaxis">
             </apx-chart>
           </div>
         </div>

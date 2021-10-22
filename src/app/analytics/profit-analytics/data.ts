@@ -1,15 +1,6 @@
 import { ChartType } from './dashboard.model';
 
 const revenueChart: ChartType = {
-    series: [{
-        name: '2020',
-        type: 'column',
-        data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
-    }, {
-        name: '2019',
-        type: 'line',
-        data: [23, 32, 27, 38, 27, 32, 27, 38, 22, 31, 21, 16]
-    }],
     chart: {
         height: 280,
         type: 'line',
@@ -18,7 +9,7 @@ const revenueChart: ChartType = {
         }
     },
     stroke: {
-        width: [0, 3],
+        width: [3,3,3,3],
         curve: 'smooth'
     },
     plotOptions: {
@@ -33,8 +24,25 @@ const revenueChart: ChartType = {
     legend: {
         show: false,
     },
-    colors: ['#5664d2', '#1cbb8c'],
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    yaxis: [
+        {
+            seriesName:'Items'
+        },
+        {
+            seriesName:'Items',
+            show:false
+        },
+        {
+            seriesName:'Revenue',
+            opposite:true
+        },
+        {
+            seriesName:'Revenue',
+            show:false
+        },
+
+      ],
+    colors: ['#5664d2', '#1cbb8c','#0000FF','#FFA500'],
 };
 
 const salesAnalytics: ChartType = {
