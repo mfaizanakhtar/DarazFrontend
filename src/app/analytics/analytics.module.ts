@@ -11,6 +11,7 @@ import { AnalyticsContentComponent } from './analytics-content/analytics-content
 import { StatComponent } from './stat/stat.component';
 import { HorizontalComponent } from './horizontal/horizontal.component';
 import { ProfitAnalyticsComponent } from './profit-analytics/profit-analytics.component';
+import { PermissionGuard } from '../PermissionGuard';
 
 
 
@@ -34,14 +35,14 @@ import { ProfitAnalyticsComponent } from './profit-analytics/profit-analytics.co
         path:'',
         component:HorizontalComponent,
         children:[
-          {path:'',component:AnalyticsContentComponent}
+          {path:'',component:AnalyticsContentComponent,canActivate:[LoginGuard]}
         ]
       },
       {
         path:'profitibility',
         component:HorizontalComponent,
         children:[
-          {path:'',component:ProfitAnalyticsComponent}
+          {path:'',component:ProfitAnalyticsComponent,canActivate:[LoginGuard,PermissionGuard],data:{page:"Profitibility"}}
         ]
       }
     ])
