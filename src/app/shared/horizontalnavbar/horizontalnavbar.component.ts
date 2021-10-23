@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
@@ -13,9 +14,10 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
 
   configData;
   menuItems = [];
+  currentUser:any
 
   // tslint:disable-next-line: max-line-length
-  constructor(private router: Router) {
+  constructor(private router: Router,private auth:AuthService) {
     // router.events.subscribe(event => {
     //   if (event instanceof NavigationEnd) {
     //     this.activateMenu();
@@ -26,6 +28,7 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
     this.initialize();
+    this.currentUser=this.auth.getCurrentUser()
 
     this.configData = {
       suppressScrollX: true,
@@ -46,6 +49,29 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
       nextEl.classList.toggle('show');
     }
     return false;
+  }
+
+  checkPermission(item){
+    // console.log(item)
+    var retBool=true;
+    if(item.permLabel!=undefined) return this.currentUser[item.permLabel]
+
+    else if(item.permLabel==undefined){
+
+      if(item.subItems!=undefined && item.subItems.length>0){
+
+        for(var subitem of item.subItems){
+
+          if(subitem.permLabel!=undefined){
+            if(this.currentUser[subitem.permLabel]) return true
+            retBool=false
+          }
+        }
+        
+      }
+      return retBool
+    }
+
   }
 
   ngAfterViewInit() {

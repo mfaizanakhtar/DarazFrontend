@@ -11,7 +11,6 @@ import { AnalyticsContentComponent } from './analytics-content/analytics-content
 import { StatComponent } from './stat/stat.component';
 import { HorizontalComponent } from './horizontal/horizontal.component';
 import { ProfitAnalyticsComponent } from './profit-analytics/profit-analytics.component';
-import { NgxSpinnerModule } from "ngx-spinner";
 
 
 
@@ -25,7 +24,6 @@ import { NgxSpinnerModule } from "ngx-spinner";
   ],
   imports: [
     SharedModule,
-    NgxSpinnerModule,
     RouterModule.forChild([
       {
         path:'dashboard',
@@ -51,6 +49,5 @@ import { NgxSpinnerModule } from "ngx-spinner";
   exports:[
   ],
   providers:[LoginGuard],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AnalyticsModule { }

@@ -356,14 +356,14 @@
         <button type="button" ngbDropdownToggle class="btn header-item waves-effect" id="page-header-user-dropdown"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-2.jpg" alt="Header Avatar">
-          <span class="d-none d-xl-inline-block ml-1">User</span>
+          <span class="d-none d-xl-inline-block ml-1">{{currentUser.username}}</span>
           <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
           <!-- item-->
-          <a class="dropdown-item" routerLink="/profile"><i class="ri-user-line align-middle mr-1"></i>
+          <a class="dropdown-item" routerLink="/users/profile"><i class="ri-user-line align-middle mr-1"></i>
             Profile</a>
-          <a class="dropdown-item" routerLink="/shops"><i
+          <a *ngIf="currentUser.accountType=='root'" class="dropdown-item" routerLink="/users/shops"><i
               class="ri-wallet-2-line align-middle mr-1"></i>Integrated Accounts</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item text-danger" href="javascript: void(0);" (click)="logout()"><i

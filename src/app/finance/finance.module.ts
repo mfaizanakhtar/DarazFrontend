@@ -17,7 +17,8 @@ import { HorizontalComponent } from '../analytics/horizontal/horizontal.componen
   ],
   imports: [
     SharedModule,
-    RouterModule.forRoot([
+    CommonModule,
+    RouterModule.forChild([
       {
         path:'transactions',
         component:HorizontalComponent,
@@ -36,4 +37,6 @@ import { HorizontalComponent } from '../analytics/horizontal/horizontal.componen
   ],
   providers:[LoginGuard,PermissionGuard]
 })
-export class FinanceModule { }
+export class FinanceModule {
+  constructor(){console.log("Finance module")}
+ }

@@ -19,29 +19,38 @@
 
   <div class="row">
     <div class="col-xl-12">
+      
       <div class="row">
-          <ngx-spinner class="col-md-12" [name]="overview" [fullScreen]="false" type="ball-clip-rotate-multiple" size="medium"></ngx-spinner>
-          <app-stat class="col-md-2" [title]="'Orders'" [value]="ProfitStats.orders | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Orders: '+OrderAnalytics.orders"></app-stat>
-          <app-stat class="col-md-2" [title]="'Items'" [value]="ProfitStats.items | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Items: '+OrderAnalytics.items"></app-stat>
-          <app-stat class="col-md-2" [title]="'Sales'" [value]="ProfitStats.sales | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Sales: '+OrderAnalytics.revenue"></app-stat>
-          <app-stat class="col-md-2" [title]="'Estimated Costs'" [value]="ProfitStats.costs | number" [icon]="'ri-stack-line'"></app-stat>
-          <app-stat class="col-md-2" [title]="'Estimated Payout'" [value]="ProfitStats.payout | number" [icon]="'ri-stack-line'" [bottomContentExtra]="(ProfitStats.payout/ProfitStats.sales)*100 | number:'1.0-2'" [bottomContent]="'Payout of Sales %:'"></app-stat>
-          <app-stat class="col-md-2" [title]="'Estimated Profit'" [value]="ProfitStats.profit | number" [icon]="'ri-stack-line'" [bottomContentExtra]="(ProfitStats.profit/ProfitStats.sales)*100 | number:'1.0-2'" [bottomContent]="'Profit %:'"></app-stat>
-          
+          <div *ngIf="overviewLoading" class="col-md-12 d-flex justify-content-center"><mat-spinner [diameter]="50" ></mat-spinner></div>
       </div>
+
+      <div class="row" *ngIf="!overviewLoading">
+          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Orders'" [value]="ProfitStats.orders | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Orders: '+OrderAnalytics.orders"></app-stat>
+          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Items'" [value]="ProfitStats.items | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Items: '+OrderAnalytics.items"></app-stat>
+          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Sales'" [value]="ProfitStats.sales | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Sales: '+OrderAnalytics.revenue"></app-stat>
+          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Estimated Costs'" [value]="ProfitStats.costs | number" [icon]="'ri-stack-line'"></app-stat>
+          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Estimated Payout'" [value]="ProfitStats.payout | number" [icon]="'ri-stack-line'" [bottomContentExtra]="(ProfitStats.payout/ProfitStats.sales)*100 | number:'1.0-2'" [bottomContent]="'Payout of Sales %:'"></app-stat>
+          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Estimated Profit'" [value]="ProfitStats.profit | number" [icon]="'ri-stack-line'" [bottomContentExtra]="(ProfitStats.profit/ProfitStats.sales)*100 | number:'1.0-2'" [bottomContent]="'Profit %:'"></app-stat>
+      </div>
+      
       <!-- end row -->
 
       <div class="card">
         <div class="card-body">
           <div class="float-right d-none d-md-inline-block">
             <div class="btn-group mb-2">
-              <button type="button" class="btn btn-sm btn-light">Today</button>
-              <button type="button" class="btn btn-sm btn-light active">Weekly</button>
-              <button type="button" class="btn btn-sm btn-light">Monthly</button>
+              <button type="button" [ngClass]="{'active': GraphOptions.Total.Orders === true}" (click)="GraphOptions.Total.Orders=!GraphOptions.Total.Orders; fetchGraph('total')" class="btn btn-sm btn-light">Orders</button>
+              <button type="button" [ngClass]="{'active': GraphOptions.Total.Items === true}" (click)="GraphOptions.Total.Items=!GraphOptions.Total.Items; fetchGraph('total')" class="btn btn-sm btn-light active">Items</button>
+              <button type="button" [ngClass]="{'active': GraphOptions.Total.Revenue === true}" (click)="GraphOptions.Total.Revenue=!GraphOptions.Total.Revenue; fetchGraph('total')" class="btn btn-sm btn-light">Revenue</button>
+              <button type="button" [ngClass]="{'active': GraphOptions.Total.Profit === true}" (click)="GraphOptions.Total.Profit=!GraphOptions.Total.Profit; fetchGraph('total')" class="btn btn-sm btn-light">Profit</button>
             </div>
           </div>
           <h4 class="card-title mb-4">Revenue Analytics</h4>
-          <div>
+
+            <div *ngIf="overviewGraphLoading" class="col-md-12 d-flex justify-content-center"><mat-spinner [diameter]="50" ></mat-spinner></div>
+
+
+          <div *ngIf="!overviewGraphLoading">
             <apx-chart dir="ltr" class="apex-charts" [series]="ProfitAnalyticsGraph.Data" [chart]="revenueChart.chart"
               [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="ProfitAnalyticsGraph.Labels"
               [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions" [yaxis]="revenueChart.yaxis">
@@ -107,7 +116,8 @@
   <div class="row">
     <div class="col-lg-6">
       <div class="card">
-        <div class="card-body">
+        <div *ngIf="storesLoading" class="col-md-12 d-flex justify-content-center"><mat-spinner [diameter]="50" ></mat-spinner></div>
+        <div class="card-body" *ngIf="!storesLoading">
 
           <h4 class="card-title mb-3">Stores</h4>
           <perfect-scrollbar style="height: 330px;">
@@ -115,9 +125,9 @@
             <div class="text-center">
               <p class="mb-2">Total Profit</p>
               <h4>PKR {{ProfitStats.profit | number}}</h4>
-              <div class="text-success">
+              <!-- <div class="text-success">
                 <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
-              </div>
+              </div> -->
             </div>
 
             <div class="table-responsive mt-4">
@@ -180,13 +190,16 @@
         <div class="card-body">
           <div class="float-right d-none d-md-inline-block">
             <div class="btn-group mb-2">
-              <button type="button" class="btn btn-sm btn-light">Today</button>
-              <button type="button" class="btn btn-sm btn-light active">Weekly</button>
-              <button type="button" class="btn btn-sm btn-light">Monthly</button>
+              <button type="button" [ngClass]="{'active': GraphOptions.Store.Orders === true}" (click)="GraphOptions.Store.Orders=!GraphOptions.Store.Orders; fetchGraph('store')" class="btn btn-sm btn-light">Orders</button>
+              <button type="button" [ngClass]="{'active': GraphOptions.Store.Items === true}" (click)="GraphOptions.Store.Items=!GraphOptions.Store.Items; fetchGraph('store')" class="btn btn-sm btn-light active">Items</button>
+              <button type="button" [ngClass]="{'active': GraphOptions.Store.Revenue === true}" (click)="GraphOptions.Store.Revenue=!GraphOptions.Store.Revenue; fetchGraph('store')" class="btn btn-sm btn-light">Revenue</button>
+              <button type="button" [ngClass]="{'active': GraphOptions.Store.Profit === true}" (click)="GraphOptions.Store.Profit=!GraphOptions.Store.Profit; fetchGraph('store')" class="btn btn-sm btn-light">Profit</button>
             </div>
           </div>
           <h4 class="card-title mb-4">Revenue Analytics</h4>
-          <div>
+          <div *ngIf="storesGraphLoading" class="col-md-12 d-flex justify-content-center"><mat-spinner [diameter]="50" ></mat-spinner></div>
+
+          <div *ngIf="!storesGraphLoading">
             <apx-chart dir="ltr" class="apex-charts" [series]="StoreProfitAnalyticsGraph.Data" [chart]="revenueChart.chart"
               [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="StoreProfitAnalyticsGraph.Labels"
               [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions" [yaxis]="revenueChart.yaxis">
@@ -217,7 +230,8 @@
   <div class="row">
     <div class="col-lg-6">
       <div class="card">
-        <div class="card-body">
+        <div *ngIf="skuLoading" class="col-md-12 d-flex justify-content-center"><mat-spinner [diameter]="50" ></mat-spinner></div>
+        <div *ngIf="!skuLoading" class="card-body">
 
           <h4 class="card-title mb-4">SKU Overview</h4>
 
@@ -243,9 +257,9 @@
                     <h4 *ngIf="TotalStoreSkuProfitStats.costs==0">∞</h4>
                   </div>
                 </div>
-                <div class="text-success">
+                <!-- <div class="text-success">
                   <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
-                </div>
+                </div> -->
               </div>
   
               <div class="table-responsive mt-4">
@@ -316,13 +330,17 @@
         <div class="card-body">
           <div class="float-right d-none d-md-inline-block">
             <div class="btn-group mb-2">
-              <button type="button" class="btn btn-sm btn-light">Today</button>
-              <button type="button" class="btn btn-sm btn-light active">Weekly</button>
-              <button type="button" class="btn btn-sm btn-light">Monthly</button>
+              <button type="button" [ngClass]="{'active': GraphOptions.Sku.Orders === true}" (click)="GraphOptions.Sku.Orders=!GraphOptions.Sku.Orders; fetchGraph('sku')" class="btn btn-sm btn-light">Orders</button>
+              <button type="button" [ngClass]="{'active': GraphOptions.Sku.Items === true}" (click)="GraphOptions.Sku.Items=!GraphOptions.Sku.Items; fetchGraph('sku')" class="btn btn-sm btn-light">Items</button>
+              <button type="button" [ngClass]="{'active': GraphOptions.Sku.Revenue === true}" (click)="GraphOptions.Sku.Revenue=!GraphOptions.Sku.Revenue; fetchGraph('sku')" class="btn btn-sm btn-light">Revenue</button>
+              <button type="button" [ngClass]="{'active': GraphOptions.Sku.Profit === true}" (click)="GraphOptions.Sku.Profit=!GraphOptions.Sku.Profit; fetchGraph('sku')" class="btn btn-sm btn-light">Profit</button>
             </div>
           </div>
           <h4 class="card-title mb-4">Revenue Analytics</h4>
-          <div>
+
+          <div *ngIf="skuGraphLoading" class="col-md-12 d-flex justify-content-center"><mat-spinner [diameter]="50" ></mat-spinner></div>
+
+          <div *ngIf="!skuGraphLoading">
             <apx-chart dir="ltr" class="apex-charts" [series]="SkuProfitAnalyticsGraph.Data" [chart]="revenueChart.chart"
               [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="SkuProfitAnalyticsGraph.Labels"
               [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions" [yaxis]="revenueChart.yaxis">

@@ -87,12 +87,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatProgressSpinnerModule,
     MatBottomSheetModule,
     MatExpansionModule,
-    BrowserModule,
+
     AppRoutingModule,
-    HttpClientModule,
+
     FormsModule,
     MatSelectModule,
-    BrowserAnimationsModule,
+
     MatSlideToggleModule,
     NgxDatatableModule,
     MatDatepickerModule,
@@ -108,7 +108,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DndModule,
     FullCalendarModule,
     LeafletModule,
-    RouterModule.forRoot([])
+    NgxSpinnerModule,
+
   ],
   exports:[
     CommonModule,
@@ -130,12 +131,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatProgressSpinnerModule,
     MatBottomSheetModule,
     MatExpansionModule,
-    BrowserModule,
+
     AppRoutingModule,
-    HttpClientModule,
+
     FormsModule,
     MatSelectModule,
-    BrowserAnimationsModule,
+
     MatSlideToggleModule,
     NgxDatatableModule,
     MatDatepickerModule,
@@ -151,6 +152,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DndModule,
     FullCalendarModule,
     LeafletModule,
+    NgxSpinnerModule,
 
     HorizontaltopbarComponent,
     NavbarComponent,
@@ -166,6 +168,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
     },
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }

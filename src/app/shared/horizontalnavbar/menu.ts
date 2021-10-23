@@ -9,12 +9,14 @@ export const MENU: MenuItem[] = [
             {
                 id:131,
                 label:"Sales Analytics",
+                permLabel:'Orders',
                 link:"/",
                 parentId:1
             },
             {
                 id:132,
                 label:"Profit Analytics",
+                permLabel:'Profitibility',
                 link:"/profitibility",
                 parentId:1
             }
@@ -23,9 +25,10 @@ export const MENU: MenuItem[] = [
     {
         id: 2,
         label: 'Orders',
+        permLabel:'Orders',
         icon: 'ri-pencil-ruler-2-line',
         isUiElement: true,
-        link: '/ordersview'
+        link: '/orders/ordersview'
     },
     {
         id: 21,
@@ -35,13 +38,15 @@ export const MENU: MenuItem[] = [
             {
                 id: 22,
                 label: 'Dispatch',
-                link: '/dispatch',
+                permLabel:'ReturnsDispatch',
+                link: '/orders/dispatch',
                 parentId: 21
             },
             {
                 id: 23,
                 label: 'Returns',
-                link: '/returns',
+                permLabel:'ReturnsDispatch',
+                link: '/orders/returns',
                 parentId: 21
             }
         ]
@@ -54,13 +59,15 @@ export const MENU: MenuItem[] = [
             {
                 id: 24,
                 label: 'DSC Inventory Tracking',
-                link: '/inventorytracking',
+                permLabel:'DSCInventory',
+                link: '/products/inventorytracking',
                 parentId: 37
             },
             {
                 id: 25,
                 label: 'Grouped Stock Tracking',
-                link: '/skuoverview',
+                permLabel:'GroupedInventory',
+                link: '/products/skuoverview',
                 parentId: 37
             }
         ]
@@ -73,13 +80,15 @@ export const MENU: MenuItem[] = [
             {
                 id: 59,
                 label: 'Transactions',
-                link: '/transactions',
+                permLabel:'Finance',
+                link: '/finance/transactions',
                 parentId: 58
             },
             {
                 id: 60,
                 label: 'Statements',
-                link: '/statement',
+                permLabel:'Finance',
+                link: '/finance/statement',
                 parentId: 58
             }
         ]

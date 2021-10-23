@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { DashboardstatsService } from './../../services/dashboardstats.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -14,7 +15,7 @@ import { statData, revenueChart, salesAnalytics, sparklineEarning, sparklineMont
 })
 export class AnalyticsContentComponent implements OnInit {
 
-
+  currentUser:any
   term: any;
   transactions: Transaction[];
   statData: Stat[];
@@ -36,8 +37,21 @@ export class AnalyticsContentComponent implements OnInit {
   SkuAnalyticsGraph={Data:[],Labels:[]}
   //indicator
   loadingIndicator=true;
+  overviewStatusLoading=true
+  overviewAnalyticsLoading=true
+  overviewGraphLoading=true
+  storesLoading=true
+  storesGraphLoading=false
+  skuLoading=false
+  skuGraphLoading=false
 
-  constructor(public formBuilder: FormBuilder,private stats:DashboardstatsService) {
+  GraphOptions={
+    Total:{Orders:true,Items:true,Revenue:true},
+    Store:{Orders:true,Items:true,Revenue:true},
+    Sku:{Orders:true,Items:true,Revenue:true}
+  }
+
+  constructor(public formBuilder: FormBuilder,private stats:DashboardstatsService,private auth:AuthService) {
   }
 
   // bread crumb items
@@ -49,6 +63,8 @@ export class AnalyticsContentComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.adjustUserSettings()
     this.startdate.setHours(0,0,0,0);
     this.enddate.setHours(0,0,0,0);
     
@@ -58,6 +74,31 @@ export class AnalyticsContentComponent implements OnInit {
     this.getStatusCount()
     this.getOrdersAnalytics();
     this.getStoreOrdersDetails()
+  }
+
+  adjustUserSettings() {
+    this.currentUser=this.auth.getCurrentUser()
+    if(!this.currentUser.Profitibility){
+      this.GraphOptions.Total.Revenue=false
+      this.GraphOptions.Store.Revenue=false
+      this.GraphOptions.Sku.Revenue=false
+
+    }
+  }
+  
+
+  fetchGraph(graph){
+    if(graph=='total') this.getOverviewGraph()
+    else if(graph=='store') this.getStoreOrderAnalyticsGraph()
+    else if(graph=='sku') this.getSkuOrderAnalyticsGraph()
+  }
+
+  activateLoading(){
+    this.loadingIndicator=true;
+    this.overviewStatusLoading=true
+    this.overviewAnalyticsLoading=true
+    this.overviewGraphLoading=true
+    this.storesLoading=true
   }
 
   DateInput(mode,event){
@@ -72,6 +113,7 @@ export class AnalyticsContentComponent implements OnInit {
         this.getStatusCount()
         this.getOrdersAnalytics()
         this.getStoreOrdersDetails()
+        this.activateLoading()
         if(this.SelectedStore!=null) this.StoreClick(this.SelectedStore)
         if(this.SelectedStore!=null) this.getStoreOrderAnalyticsGraph()
         if(this.SelectedSku!=null) this.getSkuOrderAnalyticsGraph()
@@ -82,18 +124,26 @@ export class AnalyticsContentComponent implements OnInit {
 getStatusCount(){
   this.stats.get('/OrderStatuses/?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
     if(res.length>0) this.StatusCount=res
-    this.loadingIndicator=false
+    this.overviewStatusLoading=false
   })
 }
 
 getOrdersAnalytics(){
   this.stats.get('/OrderAnalytics/?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe(res=>{
     this.OrderAnalytics=res
-    this.loadingIndicator=false
+    this.overviewAnalyticsLoading=false
   })
 
-  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
+  this.getOverviewGraph()
+
+}
+
+getOverviewGraph(){
+  this.overviewGraphLoading=true
+  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()
+  +"&o="+this.GraphOptions.Total.Orders+"&i="+this.GraphOptions.Total.Items+"&r="+this.GraphOptions.Total.Revenue).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.OrderAnalyticsGraph=res
+    this.overviewGraphLoading=false
   })
 }
 
@@ -105,6 +155,7 @@ getStoreOrdersDetails(){
       this.SelectedStore=this.StoreDetails[0].store
       this.StoreClick(this.SelectedStore)
     } 
+    this.storesLoading=false
   })
 
 }
@@ -120,6 +171,7 @@ StoreClick(store){
     if(this.StoreSkuDetails.length>0){
       this.SkuClick(this.StoreSkuDetails[0].sku)
     }
+    this.skuLoading=false
   })
 
   this.getStoreOrderAnalyticsGraph()
@@ -132,14 +184,20 @@ SkuClick(sku){
 }
 
 getStoreOrderAnalyticsGraph(){
-  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.SelectedStore).subscribe((res:any)=>{
+  this.storesGraphLoading=true
+  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.SelectedStore
+  +"&o="+this.GraphOptions.Store.Orders+"&i="+this.GraphOptions.Store.Items+"&r="+this.GraphOptions.Store.Revenue).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.StoreAnalyticsGraph=res
+    this.storesGraphLoading=false
   })
 }
 
 getSkuOrderAnalyticsGraph(){
-  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.SelectedStore+"&sku="+this.SelectedSku).subscribe((res:any)=>{
+  this.skuGraphLoading=true
+  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.SelectedStore+"&sku="+this.SelectedSku
+  +"&o="+this.GraphOptions.Sku.Orders+"&i="+this.GraphOptions.Sku.Items+"&r="+this.GraphOptions.Sku.Revenue).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.SkuAnalyticsGraph=res
+    this.skuGraphLoading=false
   })
 }
 

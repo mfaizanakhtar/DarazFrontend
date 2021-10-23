@@ -1,24 +1,27 @@
 <!-- <app-navbar></app-navbar> -->
-<div class="sidemargin">
+<div class="container-fluid" style="max-width: 1700px;padding-left: 50px;padding-right: 50px;">
 <mat-divider class="topdivider"></mat-divider>
-<div class="topnavbar">
+<div class="row">
   
   <form #f="ngForm" (ngSubmit)="findOrder(f)">
-    
-  <mat-form-field class="rightspace" appearance="fill">
+  <div class="col-md-12">
+  <div class="row">
+  <mat-form-field class="col-md-6" appearance="fill">
     <mat-label>Order Id</mat-label>
     <input type="number" name="OrderId" ngModel matInput placeholder="Ex. 10110254789879">
   </mat-form-field>
+
   
-  <mat-form-field class="rightspace" appearance="fill">
+  <mat-form-field class="col-md-6" appearance="fill">
     <mat-label>Tracking No</mat-label>
     <input name="Tracking" ngModel matInput placeholder="Ex. PK-DEX02132141">
   </mat-form-field>
   <button type="submit" style="display: none;"></button>
-  
+  </div>
+  </div>
   </form>
 
-  <mat-form-field appearance="fill" class="rightspace">
+  <mat-form-field appearance="fill" class="col-lg-2">
     <mat-label>Select Store</mat-label>
     <mat-select [(ngModel)]="Store" (selectionChange)="StoreSelected($event)">
       <mat-option value="All">All</mat-option>
@@ -26,7 +29,7 @@
     </mat-select>
   </mat-form-field>
 
-    <mat-form-field appearance="fill" class="rightspace">
+    <mat-form-field appearance="fill" class="col-lg-2">
       <mat-label>Select Fulfillment</mat-label>
       <mat-select [(ngModel)]="Fulfillment" (selectionChange)="FulfillmentSelected($event)">
         <mat-option value="All">All</mat-option>
@@ -35,7 +38,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="rightspace">
+    <mat-form-field appearance="fill" class="col-lg-2">
       <mat-label>Enter a date range</mat-label>
       <mat-date-range-input [rangePicker]="picker" >
         <input [(ngModel)]="startdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
@@ -73,7 +76,8 @@
 </div>
 <mat-divider class="topdivider"></mat-divider>
 
-<div style="overflow-x: scroll">
+  <perfect-scrollbar [scrollIndicators]="true" style="width: 1500px" [config]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:true}">
+
   <mat-button-toggle-group name="fontStyle" [value]="StatusFilter" aria-label="Font Style">
     <mat-button-toggle value="All" (click)="StatusFilterClicked('All')">All Orders</mat-button-toggle>
     <mat-button-toggle value="pending" (click)="StatusFilterClicked('pending')">Pending</mat-button-toggle>
@@ -89,24 +93,32 @@
     <mat-button-toggle value="ClaimReceived" (click)="StatusFilterClicked('ClaimReceived')">Claim Received</mat-button-toggle>
     <mat-button-toggle value="canceled" (click)="StatusFilterClicked('canceled')">Cancelled</mat-button-toggle>
   </mat-button-toggle-group>
-</div>
+
+</perfect-scrollbar>
 
 <mat-divider class="topdivider"></mat-divider>
 
 <div>
-<div style="flex-wrap: wrap;display: flex;">
-  <button class="rightspace" mat-stroked-button color="primary" [matMenuTriggerFor]="printMenu">Print</button>
+<div class="row">
+  <div class="col-lg-12">
+  <div class="row">
+  <button class="col-lg-2" style="margin-left: 20px;margin-right: 20px;" mat-stroked-button color="primary" [matMenuTriggerFor]="printMenu">Print</button>
   <mat-menu #printMenu="matMenu">
-    <button (click)="printLabels()"  mat-menu-item>Print Labels</button>
-    <button (click)="printStockChecklist('selected')"  mat-menu-item>Print StockChecklist</button>
-    <button (click)="printStockChecklist('ready_to_ship')"  mat-menu-item>Print RTS StockChecklist</button>
+    <button *ngIf="selected.length>0" (click)="printLabels()"  mat-menu-item>Print Labels</button>
+    <button *ngIf="selected.length>0" (click)="printStockChecklist('selected')"  mat-menu-item>Print StockChecklist</button>
+    <button *ngIf="!(selected.length>0)" (click)="printStockChecklist('ready_to_ship')"  mat-menu-item>Print RTS StockChecklist</button>
   </mat-menu>
 
-  <button class="rightspace" mat-raised-button color="primary" [matMenuTriggerFor]="statusMenu">Set Warehouse Status</button>
+  <button [disabled]="!(selected.length>0)" class="col-lg-2" style="margin-left: 20px;margin-right: 20px;" mat-raised-button color="primary" [matMenuTriggerFor]="statusMenu">Set Warehouse Status</button>
+  
   <mat-menu #statusMenu="matMenu">
     <button (click)="UpdateStatus('Dispatched')" mat-menu-item>Dispatched</button>
     <button (click)="UpdateStatus('Received')" mat-menu-item>Received</button>
     <button (click)="UpdateStatus('Reverse Dispatch')" mat-menu-item>Reverse Dispatch</button>
+    <button [matMenuTriggerFor]="claimMenu" mat-menu-item>Claim</button>
+  </mat-menu>
+
+  <mat-menu #claimMenu="matMenu">
     <button (click)="UpdateStatus('Claim Filed')" mat-menu-item>Claim Filed</button>
     <button (click)="UpdateStatus('Claim Approved')" mat-menu-item>Claim Approved</button>
     <button (click)="UpdateStatus('Claim Rejected')" mat-menu-item>Claim Rejected</button>
@@ -114,19 +126,20 @@
     <button (click)="UpdateStatus('Claim Received')" mat-menu-item>Claim Received</button>
   </mat-menu>
 
-  <button class="rightspace" mat-stroked-button color="primary" [matMenuTriggerFor]="darazStatusMenu">Set Daraz Status</button>
+  <button [disabled]="!(selected.length>0)" class="col-lg-2" style="margin-left: 20px;margin-right: 20px;" mat-stroked-button color="primary" [matMenuTriggerFor]="darazStatusMenu">Set Daraz Status</button>
   <mat-menu #darazStatusMenu="matMenu">
     <button (click)="setStatusToRTS()"  mat-menu-item>Set to RTS</button>
   </mat-menu>
 
-  <section class="example-section rightspace">
+  <section class="col-lg-1">
     <mat-checkbox [disabled]="UnPrinted" color="primary" [(ngModel)]="Printed" (ngModelChange)="printCheckbox()" class="example-margin">Printed</mat-checkbox>
   </section>
 
-  <section class="example-section rightspace">
+  <section class="col-lg-1">
     <mat-checkbox [disabled]="Printed" color="primary" [(ngModel)]="UnPrinted" (ngModelChange)="printCheckbox()" class="example-margin">Un Printed</mat-checkbox>
   </section>
-
+</div>
+</div>
 </div>
 </div>
 <mat-divider class="topdivider"></mat-divider>
@@ -134,7 +147,8 @@
 <div class="datatable">
 <ngx-datatable
 #table
-style="width:100%"
+style="width:100%;"
+[perfectScrollbar]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:true}"
 class="material expandable"
 [loadingIndicator]="loadingIndicator"
 [rows]="orders"
@@ -148,11 +162,13 @@ rowHeight="auto"
 (activate)="onActivate($event)"
 (select)="onSelect($event)"
 >
+
 <!-- Row Detail Template -->
 <ngx-datatable-row-detail [rowHeight]="650" #myDetailRow (toggle)="onDetailToggle($event)">
     <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
       <mat-divider style="margin:10px;"></mat-divider>
-      <div style="margin:40px; overflow-y:scroll; height: 500px;">
+      <perfect-scrollbar [scrollIndicators]="true" style="width: fit-content;height: 500px;" [config]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:false}">
+      <div style="margin:40px;">
       <table>
         <!-- <colgroup>
           <col span="1" style="width: 15%;">
@@ -211,6 +227,7 @@ rowHeight="auto"
       </tbody>
       </table>
     </div>
+  </perfect-scrollbar>
     <mat-divider style="margin:10px;"></mat-divider>
 
 
@@ -250,9 +267,9 @@ rowHeight="auto"
     <div >{{pIndex*pSize+rowIndex+1}}</div>
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column [minWidth]="130" [width]="130" name="Order" prop="OrderId" ></ngx-datatable-column>
+<ngx-datatable-column [minWidth]="150" [width]="150" name="Order" prop="OrderId" ></ngx-datatable-column>
 <!-- <ngx-datatable-column name="Item ID" prop="OrderItemId"></ngx-datatable-column> -->
-<ngx-datatable-column [minWidth]="100" [width]="100" name="Order Date" prop="CreatedAt">
+<ngx-datatable-column [minWidth]="180" [width]="180" name="Order Date" prop="CreatedAt">
   <ng-template let-row="row" let-date="value" ngx-datatable-cell-template>
     {{adjustedDate(date) | date:'d MMM y h:mm a'}}
   </ng-template>
@@ -273,7 +290,7 @@ rowHeight="auto"
     {{getOrderStatus(orderitems)}}
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Shop ID" prop="ShopId" [width]="140" [minWidth]="140"></ngx-datatable-column>
+<ngx-datatable-column name="Shop ID" prop="ShopId" [width]="170" [minWidth]="170"></ngx-datatable-column>
 <ngx-datatable-column name="Printed?" prop="isPrinted" [width]="30" [minWidth]="30">
   <ng-template let-row="row" let-isPrinted="value" ngx-datatable-cell-template>
     <div *ngIf='isPrinted'>Yes</div>

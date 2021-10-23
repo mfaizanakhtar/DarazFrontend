@@ -26,12 +26,25 @@ export class ProfitAnalyticsComponent implements OnInit {
   TotalStoreSkuProfitStats={_id:null,items:0,costs:0,profit:0}
   SelectedSku:any
   SelectedStore:any
-  loadingIndicator=true
   OrderAnalytics:any
   //graph
   ProfitAnalyticsGraph:any={Data:[],Labels:[]}
   StoreProfitAnalyticsGraph:any={Data:[],Labels:[]}
   SkuProfitAnalyticsGraph:any={Data:[],Labels:[]}
+  //loadingindicator
+  loadingIndicator=true
+  overviewLoading=true
+  overviewGraphLoading=true
+  storesLoading=true
+  storesGraphLoading=false
+  skuLoading=false
+  skuGraphLoading=false
+
+  GraphOptions={
+    Total:{Orders:true,Items:true,Revenue:true,Profit:true},
+    Store:{Orders:true,Items:true,Revenue:true,Profit:true},
+    Sku:{Orders:true,Items:true,Revenue:true,Profit:true}
+  }
 
   constructor(public formBuilder: FormBuilder,private stats:DashboardstatsService,private spinner:NgxSpinnerService) {
   }
@@ -63,16 +76,25 @@ export class ProfitAnalyticsComponent implements OnInit {
 
     this.getProfitStats()
     this.getStoresProfitStats()
-    this.showSpinners()
    
   }
 
-  private showSpinners(){
-    this.spinner.show("spinner")
-  }
+
 
   private _fetchData() {
     this.revenueChart = revenueChart;
+  }
+
+  fetchGraph(graph){
+    if(graph=='total') this.getOverviewGraph()
+    else if(graph=='store') this.getStoreGraph()
+    else if(graph=='sku') this.getSkuGraph()
+  }
+
+  activateLoading(){
+    this.loadingIndicator=true
+    this.overviewLoading=true
+    this.overviewGraphLoading=true
   }
 
   DateInput(mode,event){
@@ -86,6 +108,7 @@ export class ProfitAnalyticsComponent implements OnInit {
         // console.log(this.enddate);
         this.getProfitStats()
         this.getStoresProfitStats()
+        this.activateLoading()
         if(this.SelectedStore!=null) this.StoreClick(this.SelectedStore)
         if(this.SelectedSku!=null) this.SkuClick(this.SelectedSku)
     }
@@ -98,8 +121,7 @@ getProfitStats(){
     else{
       this.ProfitStats = {items:0,sales:0,costs:0,payout:0,profit:0,orders:0}
     }
-
-    // this.spinner.hide("overview")
+    this.overviewLoading=false
   })
 
   this.stats.get('/OrderAnalytics/?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe(res=>{
@@ -107,36 +129,64 @@ getProfitStats(){
     this.loadingIndicator=false
   })
 
-  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
-    if(Object.keys(res).length>0) this.ProfitAnalyticsGraph=res
-  })
+  this.getOverviewGraph()
 
+}
+
+getOverviewGraph(){
+  this.overviewGraphLoading=true
+  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()
+  +"&o="+this.GraphOptions.Total.Orders+"&i="+this.GraphOptions.Total.Items+"&r="+this.GraphOptions.Total.Revenue+"&p="+this.GraphOptions.Total.Profit).subscribe((res:any)=>{
+
+    if(Object.keys(res).length>0) this.ProfitAnalyticsGraph=res
+    this.overviewGraphLoading=false
+
+  })
 }
 
 
 getStoresProfitStats(){
+  this.storesLoading=true
   this.stats.get('/getStoresProfitStats?startdate='+this.startdate.toISOString()+"&enddate="+this.enddate.toISOString()).subscribe((res:any)=>{
     this.StoreProfitStats=res
-    this.StoreClick(this.StoreProfitStats[0])
+    if(res.length>0) this.StoreClick(this.StoreProfitStats[0])
+    this.storesLoading=false
   })
 }
 
 StoreClick(store){
+  this.skuLoading=true
   this.TotalStoreSkuProfitStats=store
   this.stats.get('/getStoreSkuProfitStats?startdate='+this.startdate.toISOString()+"&enddate="+this.enddate.toISOString()+"&store="+this.TotalStoreSkuProfitStats._id).subscribe((res:any)=>{
     this.StoreSkuProfitStats=res
     this.SkuClick(this.StoreSkuProfitStats[0]._id)
+    this.skuLoading=false
   })
 
-  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.TotalStoreSkuProfitStats._id).subscribe((res:any)=>{
+  this.getStoreGraph()
+
+}
+
+getStoreGraph(){
+  this.storesGraphLoading=true
+  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.TotalStoreSkuProfitStats._id
+  +"&o="+this.GraphOptions.Store.Orders+"&i="+this.GraphOptions.Store.Items+"&r="+this.GraphOptions.Store.Revenue+"&p="+this.GraphOptions.Store.Profit).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.StoreProfitAnalyticsGraph=res
+    this.storesGraphLoading=false
   })
 }
 
 SkuClick(sku){
   this.SelectedSku=sku
-  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.TotalStoreSkuProfitStats._id+"&sku="+sku).subscribe((res:any)=>{
+  this.getSkuGraph()
+}
+
+getSkuGraph(){
+  this.skuGraphLoading=true
+  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.TotalStoreSkuProfitStats._id+"&sku="+this.SelectedSku
+  +"&o="+this.GraphOptions.Sku.Orders+"&i="+this.GraphOptions.Sku.Items+"&r="+this.GraphOptions.Sku.Revenue+"&p="+this.GraphOptions.Sku.Profit).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.SkuProfitAnalyticsGraph=res
+    this.skuGraphLoading=false
   })
 }
 

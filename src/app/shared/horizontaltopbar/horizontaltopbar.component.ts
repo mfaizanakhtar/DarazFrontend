@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
@@ -18,6 +19,7 @@ export class HorizontaltopbarComponent implements OnInit {
   // configData: any;
 
   element: any;
+  currentUser:any
   // cookieValue;
   // flagvalue;
   // countryName;
@@ -32,10 +34,12 @@ export class HorizontaltopbarComponent implements OnInit {
   // ];
 
   constructor(@Inject(DOCUMENT) private document: any, private router: Router,
-    public cookiesService: CookieService) { }
+    public cookiesService: CookieService,private auth:AuthService) { }
 
   ngOnInit(): void {
     this.element = document.documentElement;
+    this.currentUser=this.auth.getCurrentUser()
+    console.log(this.currentUser)
 
     // this.configData = {
     //   suppressScrollX: true,
@@ -114,12 +118,8 @@ export class HorizontaltopbarComponent implements OnInit {
    * Logout the user
    */
   logout() {
-    // if (environment.defaultauth === 'firebase') {
-    //   this.authService.logout();
-    // } else {
-    //   this.authFackservice.logout();
-    // }
-    // this.router.navigate(['/account/login']);
+    this.auth.logout()
+    this.router.navigate(['login'])
   }
 
 }

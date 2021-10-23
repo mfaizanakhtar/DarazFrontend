@@ -3,19 +3,21 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
+import { LoginupdateComponent } from './loginupdate/loginupdate.component';
 
 
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    LoginupdateComponent
   ],
   imports: [
     SharedModule,
     RouterModule.forChild([
       {
-        path:'login',
-        component:LoginComponent
+        path:'',
+        component:LoginupdateComponent
       },
     ])
   ]

@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PrintLabelsComponent } from '../print-labels/print-labels.component';
 import { StockChecklistComponent } from '../../product/stock-checklist/stock-checklist.component';
 import { AuthService } from '../../services/auth.service';
+import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 @Component({
   selector: 'app-orders-view',
@@ -51,6 +52,8 @@ export class OrdersViewComponent implements OnInit {
   //forPrinted/not printed
   Printed=false
   UnPrinted=false
+  //perfectscrollbar
+  public config: PerfectScrollbarConfigInterface = {};
 
   //paginator
   pageEvent: PageEvent;
@@ -379,6 +382,10 @@ export class OrdersViewComponent implements OnInit {
 
   onDetailToggle(event) {
     console.log('Detail Toggled', event);
+  }
+
+  onScrollEvent(event){
+    console.log(event)
   }
 
 
