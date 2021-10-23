@@ -43,12 +43,13 @@ import { PermissionGuard } from '../PermissionGuard';
         component:HorizontalComponent,
         children:[
           {path:'',component:ProfitAnalyticsComponent,canActivate:[LoginGuard,PermissionGuard],data:{page:"Profitibility"}}
-        ]
+        ],
+        
       }
     ])
   ],
   exports:[
   ],
-  providers:[LoginGuard],
+  providers:[LoginGuard,PermissionGuard],
 })
 export class AnalyticsModule { }
