@@ -109,8 +109,6 @@ export class ProfitAnalyticsComponent implements OnInit {
         this.getProfitStats()
         this.getStoresProfitStats()
         this.activateLoading()
-        // if(this.SelectedStore!=null) this.StoreClick(this.SelectedStore)
-        // if(this.SelectedSku!=null) this.SkuClick(this.SelectedSku)
     }
   }
 }
