@@ -113,10 +113,9 @@ export class AnalyticsContentComponent implements OnInit {
         this.getStatusCount()
         this.getOrdersAnalytics()
         this.getStoreOrdersDetails()
+        
         this.activateLoading()
-        if(this.SelectedStore!=null) this.StoreClick(this.SelectedStore)
-        if(this.SelectedStore!=null) this.getStoreOrderAnalyticsGraph()
-        if(this.SelectedSku!=null) this.getSkuOrderAnalyticsGraph()
+
     }
   }
 }
@@ -139,6 +138,8 @@ getOrdersAnalytics(){
 }
 
 getOverviewGraph(){
+
+
   this.overviewGraphLoading=true
   this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()
   +"&o="+this.GraphOptions.Total.Orders+"&i="+this.GraphOptions.Total.Items+"&r="+this.GraphOptions.Total.Revenue).subscribe((res:any)=>{
@@ -161,11 +162,9 @@ getStoreOrdersDetails(){
 }
 
 StoreClick(store){
-  console.log(store)
   this.SelectedStore=store
   this.stats.get('/getStoreSkuDetails/?'+"store="+this.SelectedStore+"&startdate="+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
     this.StoreSkuDetails=res.SkuDetail
-    console.log(this.StoreSkuDetails)
     this.SkuTotal=res.SkuTotal
 
     if(this.StoreSkuDetails.length>0){
