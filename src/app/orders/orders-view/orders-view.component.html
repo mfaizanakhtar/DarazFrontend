@@ -1,18 +1,19 @@
 <!-- <app-navbar></app-navbar> -->
 <div class="container-fluid" style="max-width: 1700px;padding-left: 50px;padding-right: 50px;">
-<mat-divider class="topdivider"></mat-divider>
+  <app-pagetitle title="Orders" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+
 <div class="row">
   
   <form #f="ngForm" (ngSubmit)="findOrder(f)">
   <div class="col-md-12">
   <div class="row">
-  <mat-form-field class="col-md-6" appearance="fill">
+  <mat-form-field class="col-md-6" appearance="outline">
     <mat-label>Order Id</mat-label>
     <input type="number" name="OrderId" ngModel matInput placeholder="Ex. 10110254789879">
   </mat-form-field>
 
   
-  <mat-form-field class="col-md-6" appearance="fill">
+  <mat-form-field class="col-md-6" appearance="outline">
     <mat-label>Tracking No</mat-label>
     <input name="Tracking" ngModel matInput placeholder="Ex. PK-DEX02132141">
   </mat-form-field>
@@ -21,7 +22,7 @@
   </div>
   </form>
 
-  <mat-form-field appearance="fill" class="col-lg-2">
+  <mat-form-field  class="col-lg-2" appearance="outline">
     <mat-label>Select Store</mat-label>
     <mat-select [(ngModel)]="Store" (selectionChange)="StoreSelected($event)">
       <mat-option value="All">All</mat-option>
@@ -29,7 +30,7 @@
     </mat-select>
   </mat-form-field>
 
-    <mat-form-field appearance="fill" class="col-lg-2">
+    <mat-form-field appearance="outline" class="col-lg-2">
       <mat-label>Select Fulfillment</mat-label>
       <mat-select [(ngModel)]="Fulfillment" (selectionChange)="FulfillmentSelected($event)">
         <mat-option value="All">All</mat-option>
@@ -38,7 +39,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="col-lg-2">
+    <mat-form-field appearance="outline" class="col-lg-2">
       <mat-label>Enter a date range</mat-label>
       <mat-date-range-input [rangePicker]="picker" >
         <input [(ngModel)]="startdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">

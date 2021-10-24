@@ -54,6 +54,7 @@ export class OrdersViewComponent implements OnInit {
   UnPrinted=false
   //perfectscrollbar
   public config: PerfectScrollbarConfigInterface = {};
+  breadCrumbItems: Array<{}>;
 
   //paginator
   pageEvent: PageEvent;
@@ -66,12 +67,16 @@ export class OrdersViewComponent implements OnInit {
   ngOnInit(): void {
     this.LoggedUser=this.auth.getCurrentUser()
     this.StatusFilter='pending'
+
     this.backDate.setDate(this.backDate.getDate()-15)
     this.todayDate.setHours(0,0,0,0);
     this.backDate.setHours(0,0,0,0);
     this.enddate=this.todayDate
     this.startdate=this.backDate 
+
     this.getOrders()
+
+    this.breadCrumbItems = [{ label: 'Home' }, { label: 'Orders', active: true }];
   }
 
   getOrders(){

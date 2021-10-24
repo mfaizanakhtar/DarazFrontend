@@ -1,39 +1,95 @@
 <!-- <app-navbar></app-navbar> -->
 
-<div class="sidemargin">
-<mat-divider class="verticalspace"></mat-divider>
-<div style="display: flex;flex-wrap: wrap;">
-<h3 >DSC Inventory Tracking</h3>
 
-<mat-button-toggle-group [(value)]="StatusFilter" style="margin-left: 20px;" name="fontStyle" aria-label="Font Style">
+<div class="container-fluid" style="max-width: 1700px;padding-left: 50px;padding-right: 50px;">
+  <app-pagetitle title="DSC Inventory" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+<div >
+<div class="row">
+
+  <div class="col-xl-3">
+    <div class="card">
+      <div class="card-body">
+        <ul ngbNav #justifiednav="ngbNav" [activeId]="1" class="nav-pills nav-justified">
+
+          <li (click)="StatusFilterClicked('All')" [ngbNavItem]="1">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+              <span class="d-none d-sm-block">All</span>
+            </a>
+          </li>
+
+          <li (click)="StatusFilterClicked('active')" [ngbNavItem]="2">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+              <span class="d-none d-sm-block">Active</span>
+            </a>
+          </li>
+
+          <li (click)="StatusFilterClicked('inactive')" [ngbNavItem]="3">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+              <span class="d-none d-sm-block">Inactive</span>
+            </a>
+          </li>
+
+        </ul>
+        <!-- <div [ngbNavOutlet]="justifiednav"></div> -->
+      </div>
+    </div>
+  </div><!-- End Justified Tabs -->
+
+  <div class="col-xl-3">
+    <div class="card">
+      <div class="card-body">
+        <ul ngbNav #justifiednav="ngbNav" [activeId]="1" class="nav-pills nav-justified">
+
+          <li (click)="StockFilterClicked('All')" [ngbNavItem]="1">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+              <span class="d-none d-sm-block">All</span>
+            </a>
+          </li>
+
+          <li (click)="StockFilterClicked('InStock')" [ngbNavItem]="2">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+              <span class="d-none d-sm-block">InStock</span>
+            </a>
+          </li>
+
+          <li (click)="StockFilterClicked('OutOfStock')" [ngbNavItem]="3">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+              <span class="d-none d-sm-block">OOS</span>
+            </a>
+          </li>
+
+        </ul>
+        <!-- <div [ngbNavOutlet]="justifiednav"></div> -->
+      </div>
+    </div>
+  </div><!-- End Justified Tabs -->
+
+<!-- <mat-button-toggle-group class="col-lg-3" [(value)]="StatusFilter" name="fontStyle" aria-label="Font Style">
     <mat-button-toggle value="All" (click)="StatusFilterClicked()">All</mat-button-toggle>
     <mat-button-toggle value="active" (click)="StatusFilterClicked()">Active</mat-button-toggle>
     <mat-button-toggle value="inactive" (click)="StatusFilterClicked()">Inactive</mat-button-toggle>
   </mat-button-toggle-group>
 
-  <mat-button-toggle-group [(value)]="Stock" style="margin-left: 20px;" name="fontStyle" aria-label="Font Style">
+  <mat-button-toggle-group class="col-lg-3" [(value)]="Stock" name="fontStyle" aria-label="Font Style">
     <mat-button-toggle value="All" (click)="StockFilterClicked()">All</mat-button-toggle>
     <mat-button-toggle value="InStock" (click)="StockFilterClicked()">IN STOCK</mat-button-toggle>
     <mat-button-toggle value="OutOfStock" (click)="StockFilterClicked()">OUT OF STOCK</mat-button-toggle>
-  </mat-button-toggle-group>
+  </mat-button-toggle-group> -->
 
-</div>
-  
-<mat-divider class="verticalspace"></mat-divider>
-
-
-<div class="verticalspace" style="display: flex;flex-wrap: wrap;">
-
-
-
-    <form #f="ngForm" (ngSubmit)="findSku(f.value)">
+    <form class="col-lg-4" #f="ngForm" (ngSubmit)="findSku(f.value)">
     
-        <mat-form-field appearance="fill">
+        <mat-form-field class="col-lg-6" appearance="outline">
           <mat-label>Seller Sku</mat-label>
           <input type="text" name="SellerSku" ngModel matInput placeholder="Ex. ABCD">
         </mat-form-field>
         
-        <mat-form-field style="margin-left: 10px;" appearance="fill">
+        <mat-form-field class="col-lg-6" appearance="outline">
           <mat-label>Shop Sku</mat-label>
           <input name="ShopSku" ngModel matInput placeholder="Ex. 1078646_PK_8789123">
         </mat-form-field>
@@ -41,7 +97,7 @@
         
         </form>
       
-        <mat-form-field appearance="fill" style="margin-left: 10px;">
+        <mat-form-field class="col-lg-2" appearance="outline" >
           <mat-label>Select Store</mat-label>
           <mat-select [(ngModel)]="Store" (selectionChange)="StoreSelected($event)">
             <mat-option value="All">All</mat-option>
@@ -57,8 +113,8 @@
             <mat-option value="Own Warehouse">FBD</mat-option>
         </mat-select>
         </mat-form-field> -->
-</div>
 
+      </div>
 
 <mat-divider></mat-divider>
 

@@ -30,6 +30,7 @@ export class DscSkuTracking implements OnInit {
     length:any
     pIndex=0
     pSize=10
+    breadCrumbItems: Array<{}>;
     
     
 
@@ -37,7 +38,10 @@ export class DscSkuTracking implements OnInit {
 
   ngOnInit(): void {
     this.LoggedUser=this.auth.getCurrentUser()
+    this.breadCrumbItems = [{ label: 'Home' }, { label: 'DSC Inventory', active: true },];
+
     this.getDarazSkus()
+    
   }
 
   changePageData(event){
@@ -90,13 +94,15 @@ export class DscSkuTracking implements OnInit {
     this.getDarazSkus()
   }
 
-  StatusFilterClicked(){
+  StatusFilterClicked(filter){
+    this.StatusFilter=filter
     this.DSCskus=[]
     this.pIndex=0
     this.getDarazSkus()
   }
 
-  StockFilterClicked(){
+  StockFilterClicked(filter){
+    this.Stock=filter
     this.DSCskus=[]
     this.pIndex=0
     this.getDarazSkus()

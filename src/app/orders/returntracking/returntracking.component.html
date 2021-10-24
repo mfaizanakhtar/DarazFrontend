@@ -1,14 +1,18 @@
 <!-- <app-navbar></app-navbar> -->
-<div style="border-radius: 10px;display:inline-flex;flex-wrap: wrap;width: 100%;">
-        <form style="width: 75%;" #f="ngForm" (ngSubmit)="insertTracking(f)" class="rightspace">
-        <mat-form-field style="width: 100%;" appearance="fill">
+<div class="container-fluid" style="max-width: 1700px;padding-left: 50px;padding-right: 50px;">
+  <app-pagetitle title="Returns" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+
+
+<div class="row" style="border-radius: 10px;width: 100%;">
+        <form #f="ngForm" (ngSubmit)="insertTracking(f)" class="col-lg-9">
+        <mat-form-field style="width: 100%;" appearance="outline">
           <mat-label>Enter Received Tracking</mat-label>
           <input ngModel name="tracking" matInput #message placeholder="Paste Tracking here">
           <mat-hint ><strong>Press Enter After Inserting Tracking</strong></mat-hint>
         </mat-form-field>
     </form>
 
-    <mat-form-field style="width: 18%;margin-left: 15px;"appearance="fill" class="rightspace">
+    <mat-form-field appearance="outline" class="col-lg-3">
         <mat-label>Enter a date range</mat-label>
         <mat-date-range-input [rangePicker]="picker" >
           <input [(ngModel)]="filterstartdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
@@ -21,11 +25,14 @@
 
 </div>
 
-<button (click)="AddReturnStock()" style="margin:20px" mat-raised-button color="primary" [disabled]="!selLength">Add Selected to Grouped Stock</button>
+<div class="row">
+<button class="col-lg-3" (click)="AddReturnStock()" style="margin:20px" mat-raised-button color="primary" [disabled]="!selLength">Add Selected to Grouped Stock</button>
+</div>
 
 <mat-divider></mat-divider>
-<div class="verticalspace">
-<ngx-datatable
+<div class="row">
+    <div class="col-lg-12">
+      <ngx-datatable
         class="material"
         [rows]="returnorderarray"
         [loadingIndicator]="loadingIndicator"
@@ -37,6 +44,7 @@
         [selectionType]="SelectionType.checkbox"
         [selectAllRowsOnPage]="true"
         (select)="onSelect($event)"
+        [perfectScrollbar]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:true}"
       >
       <ngx-datatable-column
         [width]="30"
@@ -48,19 +56,21 @@
         [checkboxable]="true"
         ></ngx-datatable-column>
 
-      <ngx-datatable-column [width]="10" name="S.No">
+      <ngx-datatable-column [width]="15" [minWidth]="15" name="S.No">
         <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
             <strong>{{returnorderarray.length-rowIndex}}</strong>
           </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Date" prop="Date" >
+      <ngx-datatable-column [width]="150" [minWidth]="150" name="Date" prop="Date" >
         <ng-template let-row="row" let-date="value" ngx-datatable-cell-template>
             {{date | date:'d MMM y h:mm a'}}
           </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Order no." prop="OrderId" ></ngx-datatable-column>
-      <ngx-datatable-column name="Tracking no." prop="_id" ></ngx-datatable-column>
-      <ngx-datatable-column name="Shop Id" prop="ShopId" ></ngx-datatable-column>
-      <ngx-datatable-column name="User" prop="ReceiveBy" ></ngx-datatable-column>
+      <ngx-datatable-column [width]="140" [minWidth]="140" name="Order no." prop="OrderId" ></ngx-datatable-column>
+      <ngx-datatable-column [width]="100" [minWidth]="100" name="Tracking no." prop="_id" ></ngx-datatable-column>
+      <ngx-datatable-column [width]="170" [minWidth]="170" name="Shop Id" prop="ShopId" ></ngx-datatable-column>
+      <ngx-datatable-column [width]="70" [minWidth]="70" name="User" prop="ReceiveBy" ></ngx-datatable-column>
       </ngx-datatable>
+    </div>
+</div>
 </div>
