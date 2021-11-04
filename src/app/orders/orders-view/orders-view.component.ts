@@ -29,6 +29,7 @@ export class OrdersViewComponent implements OnInit {
   Fulfillment='Dropshipping';
   Store="All";
   StatusFilter;
+  FormattedStatus;
   enddate:Date
   startdate:Date
   OrderId=null
@@ -67,6 +68,7 @@ export class OrdersViewComponent implements OnInit {
   ngOnInit(): void {
     this.LoggedUser=this.auth.getCurrentUser()
     this.StatusFilter='pending'
+    this.FormattedStatus='Pending'
 
     this.backDate.setDate(this.backDate.getDate()-15)
     this.todayDate.setHours(0,0,0,0);
@@ -263,9 +265,17 @@ export class OrdersViewComponent implements OnInit {
         this.dialog.open(StockChecklistComponent,{width:'100%',height:'100%'})
       })
     }
-    else if(Status="ready_to_ship"){
-      this.orderService.postDataByCap('/getStockChecklist',{orders:[]}).subscribe(res=>{
-        // console.log(res)
+    else{
+      var tempstatus,tempstore,tempfulfillment
+      if(this.StatusFilter=='All') {tempstatus=null } else tempstatus=this.StatusFilter
+      if(this.Store=='All') { tempstore=null } else tempstore=this.Store
+      if(this.Fulfillment=='All') { tempfulfillment=null } else tempfulfillment=this.Fulfillment
+
+      this.orderService.get('/getFilterStockChecklist?'+'Status='+tempstatus+'&Printed='+this.Printed+'&unPrinted='+this.UnPrinted+
+      "&OrderId="+this.OrderId+"&TrackingCode="+this.TrackingCode+"&ShopId="+tempstore+"&ShippingType="+tempfulfillment+
+      "&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()).subscribe(res=>{
+        // console.log(res);
+
         this.lableService.setStockChecklist(res)
         this.loadingIndicator=false
         this.dialog.open(StockChecklistComponent,{width:'100%',height:'100%'})
@@ -274,13 +284,14 @@ export class OrdersViewComponent implements OnInit {
 
   }
 
-  StatusFilterClicked(status){
+  StatusFilterClicked(status,formattedFilter){
     this.pSize=10
     this.pIndex=0
     this.StatusFilter=status
-    console.log(this.StatusFilter)
+    this.FormattedStatus=formattedFilter
+    // console.log(this.StatusFilter)
     this.getOrders()
-  }
+  } 
 
   setStatusToRTS(){
     this.loadingIndicator=true
