@@ -103,35 +103,33 @@ export class OrdersViewComponent implements OnInit {
     })
   }
 
-  getTransactions(transactions){
+  // getTransactions(transactions){
     
-    var Result=0
-    if(transactions.length>0){
-      for(var t of transactions){
-        if(t.FeeName=="Item Price Credit"){
-          console.log("acc "+Result+" it"+t.Amount)
-          Result=Result+t.Amount
-        }
-        else if(t.FeeName=="Commission"){
-          Result=Result+t.Amount
-        }
-        else if(t.FeeName=="Automatic Shipping Fee"){
-          Result=Result-t.VATinAmount
-        }
-      }
+  //   var Result=0
+  //   if(transactions.length>0){
+  //     for(var t of transactions){
+  //       if(t.FeeName=="Item Price Credit"){
+  //         console.log("acc "+Result+" it"+t.Amount)
+  //         Result=Result+t.Amount
+  //       }
+  //       else if(t.FeeName=="Commission"){
+  //         Result=Result+t.Amount
+  //       }
+  //       else if(t.FeeName=="Automatic Shipping Fee"){
+  //         Result=Result-t.VATinAmount
+  //       }
+  //     }
       
-      return Result.toFixed(1)
-    }
-    return "-"
-  }
+  //     return Result.toFixed(1)
+  //   }
+  //   return "-"
+  // }
 
-  getProfit(transactions,cost,packagingCost){
+  getProfit(payout,cost,packagingCost){
 
     var profit=0
-    var Result=0
-    if(transactions.length>0){
-      Result = parseInt(this.getTransactions(transactions))
-      profit = Result - cost - packagingCost
+    if(payout!=0){
+      profit = payout - cost - packagingCost
       return profit.toFixed(1)
     }
     return "-"
