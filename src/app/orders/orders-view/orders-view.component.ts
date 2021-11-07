@@ -40,6 +40,7 @@ export class OrdersViewComponent implements OnInit {
   SelectionType = SelectionType;
   selected=[];
   status:any
+  prevExapandedRow:any=null
   //for Indexing
   pSize=10
   pIndex=0
@@ -409,8 +410,12 @@ export class OrdersViewComponent implements OnInit {
   }
 
   toggleExpandRow(row) {
+    if(this.prevExapandedRow!=null && this.prevExapandedRow!=row){
+      this.table.rowDetail.collapseAllRows()
+    }
     console.log('Toggled Expand Row!', row);
     this.table.rowDetail.toggleExpandRow(row);
+    this.prevExapandedRow=row;
   }
 
   onDetailToggle(event) {

@@ -223,7 +223,7 @@ rowHeight="auto"
           <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All')">{{item.Reason}}</td>
           <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && LoggedUser.Profitibility==true">{{item.cost}}</td>
           <!-- <div data="getTransactions()"> -->
-          <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && LoggedUser.Profitibility==true">{{item.TransactionsPayout}}</td>
+          <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && LoggedUser.Profitibility==true">{{item.TransactionsPayout | number}}</td>
           <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && LoggedUser.Profitibility==true">{{getProfit(item.TransactionsPayout,item.cost,item.packagingCost)}}</td>
           <!-- </div> -->
         </tr>
