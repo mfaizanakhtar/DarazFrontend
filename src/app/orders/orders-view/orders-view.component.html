@@ -196,6 +196,7 @@ rowHeight="auto"
           <th *ngIf="LoggedUser.Profitibility">Product Cost</th>
           <th *ngIf="LoggedUser.Profitibility">Payout</th>
           <th *ngIf="LoggedUser.Profitibility">Profit</th>
+          <th *ngIf="StatusFilter=='returned'"></th>
         </tr>
         <tr *ngFor="let item of row.OrderItems; index as i">
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{i+1}}</td>
@@ -223,6 +224,7 @@ rowHeight="auto"
           <!-- <div data="getTransactions()"> -->
           <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && LoggedUser.Profitibility==true">{{getTransactions(item.Transactions)}}</td>
           <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && LoggedUser.Profitibility==true">{{getProfit(item.Transactions,item.cost,item.packagingCost)}}</td>
+          <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && StatusFilter=='returned'">{{item.Reason}}</td>
           <!-- </div> -->
         </tr>
       </tbody>
