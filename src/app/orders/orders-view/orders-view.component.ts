@@ -378,6 +378,25 @@ export class OrdersViewComponent implements OnInit {
 
     this.getOrders()
   }
+
+  EditClaim(id){
+    console.log(id)
+    document.getElementById("input"+id).hidden=false
+    document.getElementById("text"+id).hidden=true
+    document.getElementById("edit"+id).hidden=true
+    document.getElementById("save"+id).hidden=false
+  }
+  
+  SaveClaim(id,row){
+    console.log(row._id)
+    this.orderService.updateData("updateClaim",row._id,{ClaimNumber:row.ClaimNumber}).subscribe(res=>{
+      document.getElementById("input"+id).hidden=true
+      document.getElementById("text"+id).hidden=false
+      document.getElementById("edit"+id).hidden=false
+      document.getElementById("save"+id).hidden=true
+    })
+
+  }
 //NGX-DATATABLE
   onSelect({ selected }) {
 

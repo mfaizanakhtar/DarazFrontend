@@ -292,10 +292,28 @@ rowHeight="auto"
   </ng-template>
 </ngx-datatable-column>
 <ngx-datatable-column name="Shop ID" prop="ShopId" [width]="170" [minWidth]="170"></ngx-datatable-column>
-<ngx-datatable-column name="Printed?" prop="isPrinted" [width]="30" [minWidth]="30">
+<ngx-datatable-column *ngIf="StatusFilter!='ClaimFiled'" name="Printed?" prop="isPrinted" [width]="30" [minWidth]="30">
   <ng-template let-row="row" let-isPrinted="value" ngx-datatable-cell-template>
     <div *ngIf='isPrinted'>Yes</div>
     <div *ngIf='!isPrinted'>No</div>
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column *ngIf="StatusFilter=='ClaimFiled'" name="Claim Number" prop="ClaimNumber" [width]="75" [minWidth]="75">
+  <ng-template let-row="row" let-rowIndex="rowIndex" let-ClaimNumber="value" ngx-datatable-cell-template>
+
+    <mat-form-field id="input{{rowIndex}}" hidden="true" class="col-md-12" style="padding:0" appearance="outline">
+      <mat-label>#</mat-label>
+      <input matInput [(ngModel)]="row.ClaimNumber" placeholder="">
+    </mat-form-field>
+
+    <div class="col-md-12" style="padding:0" id="text{{rowIndex}}">{{row.ClaimNumber}}</div>
+
+    <a href="javascript:void(0);" id="edit{{rowIndex}}" (click)="EditClaim(rowIndex)" class="mr-3 text-primary" placement="top" ngbTooltip="Edit"><i
+      class="mdi mdi-pencil font-size-18"></i></a>
+
+      <a href="javascript:void(0);" id="save{{rowIndex}}" hidden="true"  (click)="SaveClaim(rowIndex,row)" class="mr-3 text-primary" placement="top" ngbTooltip="Save"><i
+        class="mdi mdi-content-save font-size-18"></i></a>
+
   </ng-template>
 </ngx-datatable-column>
 
