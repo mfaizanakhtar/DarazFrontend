@@ -89,6 +89,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatExpansionModule,
     NgbProgressbarModule,
     NgbPopoverModule,
+    
 
     AppRoutingModule,
 
