@@ -5,6 +5,9 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DscSkuEditComponent } from '../dsc-sku-edit/dsc-sku-edit.component';
 import { AuthService } from '../../services/auth.service';
 
+import Swal from 'sweetalert2';
+import { Sort } from '@angular/material/sort';
+
 @Component({
   selector: 'app-inventory-tracking',
   templateUrl: './dsc-sku-tracking.component.html',
@@ -18,14 +21,21 @@ export class DscSkuTracking implements OnInit {
     //datatable variables
     ColumnMode = ColumnMode;
     loadingIndicator = true;
+    loadingIndicatorValue=0
+    costSavingIndiactor=false;
     SelectionType = SelectionType;
+    sortedData=[];
     selected=[];
+
+    searchTerm:any;
+    pageSize:any=10;
+    tempCost={cost:0,FBMpackagingCost:0,FBDpackagingCost:0}
     //Filter
     Store='All'
     SellerSku=null
     ShopSku=null
     Stock='InStock'
-    StatusFilter='active'
+    StatusFilter='All'
     //pagination
     length:any
     pIndex=0
@@ -44,11 +54,14 @@ export class DscSkuTracking implements OnInit {
     
   }
 
-  changePageData(event){
+  changePage(page){
     this.DSCskus=[]
-    this.pSize=event.pageSize
-    this.pIndex=event.pageIndex
-    console.log(event)
+    this.pIndex=page-1
+    this.getDarazSkus()
+  }
+
+  changePageSize(){
+    this.DSCskus=[]
     this.getDarazSkus()
   }
 
@@ -57,7 +70,7 @@ export class DscSkuTracking implements OnInit {
     if(this.Store=='All') {tempStore=null} else{tempStore=this.Store}
     if(this.StatusFilter=='All') {tempStatus=null} else{tempStatus=this.StatusFilter}
     if(this.Stock=='All') {tempStock=null} else{tempStock=this.Stock}
-    this.loadingIndicator=true
+    this.fetchProgress()
 
     this.darazskus.get('/getSkus?pSize='+this.pSize+'&pIndex='+this.pIndex+'&SellerSku='+this.SellerSku+'&ShopSku='+this.ShopSku+'&ShopId='+tempStore+'&Status='+tempStatus
     +'&Stock='+tempStock).subscribe(res=>{
@@ -66,6 +79,7 @@ export class DscSkuTracking implements OnInit {
       var response:any=res
 
       this.DSCskus=response.darazskus
+      this.sortedData=response.darazskus
       this.length=response.darazskusCount
       
       if(this.StoreArray.length==0) this.StoreArray=response.darazStores
@@ -80,6 +94,15 @@ export class DscSkuTracking implements OnInit {
     this.pIndex=0
     console.log(this.Store)
     this.getDarazSkus()
+  }
+
+  fetchProgress(){
+    this.loadingIndicator=true
+    this.loadingIndicatorValue=0
+    setInterval(()=>{
+      if(this.loadingIndicatorValue!=95)
+      this.loadingIndicatorValue=this.loadingIndicatorValue+5
+    },50)
   }
 
   findSku(f){
@@ -108,45 +131,108 @@ export class DscSkuTracking implements OnInit {
     this.getDarazSkus()
   }
 
-  EditSku(row){
-    var ref = this._bottomSheet.open(DscSkuEditComponent,{data:{sku:row,FBDchange:0,FBMchange:0}})
-    ref.afterDismissed().subscribe(res=>{
-      this.getDarazSkus()
-    })
-    // console.log(row)
+  costChange(cost,costType){
+    this.tempCost[costType]=cost;
   }
 
-  AcceptChange(row){
-    var ref = this._bottomSheet.open(DscSkuEditComponent,{data:{sku:row,
-      FBDchange:row.fblWarehouseInventories.quantity-row.FBDstock.quantity,
-      FBMchange:row.multiWarehouseInventories.quantity-row.FBMstock.quantity}})
-
-    ref.afterDismissed().subscribe(res=>{
+  EditCost(pop,skuId){
+    console.log(skuId)
+    this.costSavingIndiactor=true
+    this.darazskus.updateData('',skuId,this.tempCost).subscribe(res=>{
+      this.costSavingIndiactor=false
       this.getDarazSkus()
+      pop.close();
     })
+    
   }
+  
+
+  // EditSku(row){
+  //   var ref = this._bottomSheet.open(DscSkuEditComponent,{data:{sku:row,FBDchange:0,FBMchange:0}})
+  //   ref.afterDismissed().subscribe(res=>{
+  //     this.getDarazSkus()
+  //   })
+  //   // console.log(row)
+  // }
+
+  // AcceptChange(row){
+  //   var ref = this._bottomSheet.open(DscSkuEditComponent,{data:{sku:row,
+  //     FBDchange:row.fblWarehouseInventories.quantity-row.FBDstock.quantity,
+  //     FBMchange:row.multiWarehouseInventories.quantity-row.FBMstock.quantity}})
+
+  //   ref.afterDismissed().subscribe(res=>{
+  //     this.getDarazSkus()
+  //   })
+  // }
 
   DeleteSku(row){
+    console.log(row)
+    // this.darazskus.deleteData('/'+row._id).subscribe(res=>{
+    //   console.log(row)
+    //   this.getDarazSkus()
+    // })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#34c38f',
+      cancelButtonColor: '#ff3d60',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(result => {
+      if (result.value) {
+        this.darazskus.deleteData('/'+row._id).subscribe(res=>{
+          Swal.fire('Deleted!', 'Your sku has been deleted.', 'success').then(result=>{
+            this.getDarazSkus()
+          });
+        })
+        
+      }
+    });
 
-    this.darazskus.deleteData('/'+row._id).subscribe(res=>{
-      console.log(row)
-      this.getDarazSkus()
-    })
+  }
 
+  sortData(sort: Sort) {
+    var data = this.DSCskus.slice()
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'quantity':
+          return this.compare(a.quantity, b.quantity, isAsc);
+        case 'multiWarehouseInventories.quantity':
+          return this.compare(a.multiWarehouseInventories.quantity, b.multiWarehouseInventories.quantity, isAsc);
+        case 'fblWarehouseInventories.quantity':
+          return this.compare(a.fblWarehouseInventories.quantity, b.fblWarehouseInventories.quantity, isAsc);
+        case 'cost':
+          return this.compare(a.cost, b.cost, isAsc);
+        case 'SellerSku':
+          return this.compare(a.SellerSku, b.SellerSku, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
   //ngx-datatable
-  onSelect({ selected }) {
+  // onSelect({ selected }) {
 
-    this.selected.splice(0, this.selected.length);
-    for(const sel of selected){
-      this.selected.push(sel);
-    }
-    console.log(this.selected)
-  }
+  //   this.selected.splice(0, this.selected.length);
+  //   for(const sel of selected){
+  //     this.selected.push(sel);
+  //   }
+  //   console.log(this.selected)
+  // }
 
-  onActivate(event) {
-    // console.log('Activate Event', event);
-  }
+  // onActivate(event) {
+  //   // console.log('Activate Event', event);
+  // }
 
 
 

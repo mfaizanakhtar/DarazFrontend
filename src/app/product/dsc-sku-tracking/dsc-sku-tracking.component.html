@@ -4,7 +4,7 @@
 <div class="container-fluid" style="max-width: 1700px;padding-left: 50px;padding-right: 50px;">
   <app-pagetitle title="DSC Inventory" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
 <div >
-<div class="row">
+<!-- <div class="row">
 
   <div class="col-xl-3">
     <div class="card">
@@ -33,10 +33,9 @@
           </li>
 
         </ul>
-        <!-- <div [ngbNavOutlet]="justifiednav"></div> -->
       </div>
     </div>
-  </div><!-- End Justified Tabs -->
+  </div>
 
   <div class="col-xl-3">
     <div class="card">
@@ -65,12 +64,11 @@
           </li>
 
         </ul>
-        <!-- <div [ngbNavOutlet]="justifiednav"></div> -->
       </div>
     </div>
-  </div><!-- End Justified Tabs -->
+  </div>
 
-<!-- <mat-button-toggle-group class="col-lg-3" [(value)]="StatusFilter" name="fontStyle" aria-label="Font Style">
+<mat-button-toggle-group class="col-lg-3" [(value)]="StatusFilter" name="fontStyle" aria-label="Font Style">
     <mat-button-toggle value="All" (click)="StatusFilterClicked()">All</mat-button-toggle>
     <mat-button-toggle value="active" (click)="StatusFilterClicked()">Active</mat-button-toggle>
     <mat-button-toggle value="inactive" (click)="StatusFilterClicked()">Inactive</mat-button-toggle>
@@ -80,7 +78,7 @@
     <mat-button-toggle value="All" (click)="StockFilterClicked()">All</mat-button-toggle>
     <mat-button-toggle value="InStock" (click)="StockFilterClicked()">IN STOCK</mat-button-toggle>
     <mat-button-toggle value="OutOfStock" (click)="StockFilterClicked()">OUT OF STOCK</mat-button-toggle>
-  </mat-button-toggle-group> -->
+  </mat-button-toggle-group>
 
     <form class="col-lg-4" #f="ngForm" (ngSubmit)="findSku(f.value)">
     
@@ -105,20 +103,294 @@
           </mat-select>
         </mat-form-field>
       
-        <!-- <mat-form-field appearance="fill" style="margin-left: 10px;">
+        <mat-form-field appearance="fill" style="margin-left: 10px;">
         <mat-label>Select Fulfillment</mat-label>
         <mat-select [(ngModel)]="Fulfillment" (selectionChange)="FulfillmentSelected($event)">
             <mat-option value="All">All</mat-option>
             <mat-option value="Dropshipping">FBM</mat-option>
             <mat-option value="Own Warehouse">FBD</mat-option>
         </mat-select>
-        </mat-form-field> -->
+        </mat-form-field>
 
-      </div>
+      </div> -->
 
 <mat-divider></mat-divider>
 
-<div>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+
+        <div class="row mb-md-2">
+          <!-- <div class="col-sm-12 col-md-3">
+            <div class="dataTables_length" id="tickets-table_length"><label
+                class="d-inline-flex align-items-center">Show
+                <select name="tickets-table_length" aria-controls="tickets-table" name="pageSize"
+                  [(ngModel)]="pageSize"
+                  class="custom-select custom-select-sm form-control form-control-sm mx-2">
+                  <option [ngValue]="10">10</option>
+                  <option [ngValue]="25">25</option>
+                  <option [ngValue]="50">50</option>
+                  <option [ngValue]="100">100</option>
+                </select> entries</label></div>
+          </div> -->
+          <!-- Search -->
+          <!-- <div class="col-sm-12 col-md-3">
+            <div id="tickets-table_filter" class="dataTables_filter text-md-right"><label
+                class="d-inline-flex align-items-center">Search:
+                <input type="text" name="searchTerm" class="form-control form-control-sm ml-2"
+                  aria-controls="tickets-table" [(ngModel)]="searchTerm"></label></div>
+          </div> -->
+          <!-- End search -->
+        <div class="col-xl-3">
+          <div class="card">
+            <div class="card-body">
+              <ul ngbNav #justifiednav="ngbNav" [activeId]="1" class="nav-pills nav-justified">
+      
+                <li (click)="StatusFilterClicked('All')" [ngbNavItem]="1">
+                  <a ngbNavLink>
+                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                    <span class="d-none d-sm-block">All</span>
+                  </a>
+                </li>
+      
+                <li (click)="StatusFilterClicked('active')" [ngbNavItem]="2">
+                  <a ngbNavLink>
+                    <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                    <span class="d-none d-sm-block">Active</span>
+                  </a>
+                </li>
+      
+                <li (click)="StatusFilterClicked('inactive')" [ngbNavItem]="3">
+                  <a ngbNavLink>
+                    <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                    <span class="d-none d-sm-block">Inactive</span>
+                  </a>
+                </li>
+      
+              </ul>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-xl-3">
+          <div class="card">
+            <div class="card-body">
+              <ul ngbNav #justifiednav="ngbNav" [activeId]="1" class="nav-pills nav-justified">
+      
+                <li (click)="StockFilterClicked('All')" [ngbNavItem]="1">
+                  <a ngbNavLink>
+                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                    <span class="d-none d-sm-block">All</span>
+                  </a>
+                </li>
+      
+                <li (click)="StockFilterClicked('InStock')" [ngbNavItem]="2">
+                  <a ngbNavLink>
+                    <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                    <span class="d-none d-sm-block">InStock</span>
+                  </a>
+                </li>
+      
+                <li (click)="StockFilterClicked('OutOfStock')" [ngbNavItem]="3">
+                  <a ngbNavLink>
+                    <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                    <span class="d-none d-sm-block">OOS</span>
+                  </a>
+                </li>
+      
+              </ul>
+
+            </div>
+          </div>
+        </div>
+      
+      
+          <form class="col-lg-4" #f="ngForm" (ngSubmit)="findSku(f.value)">
+          
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Seller Sku</mat-label>
+                <input type="text" name="SellerSku" ngModel matInput placeholder="Ex. ABCD">
+              </mat-form-field>
+              
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Shop Sku</mat-label>
+                <input name="ShopSku" ngModel matInput placeholder="Ex. 1078646_PK_8789123">
+              </mat-form-field>
+              <button type="submit" style="display: none;"></button>
+              
+              </form>
+            
+              <mat-form-field class="col-lg-2" appearance="outline" >
+                <mat-label>Select Store</mat-label>
+                <mat-select [(ngModel)]="Store" (selectionChange)="StoreSelected($event)">
+                  <mat-option value="All">All</mat-option>
+                  <mat-option *ngFor="let store of StoreArray" [value]="store._id">{{store._id}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="row">
+          <div *ngIf="loadingIndicator" class="col-md-12">
+            <ngb-progressbar height="6px" [value]="loadingIndicatorValue" type="info"></ngb-progressbar>
+          </div>
+        </div>
+        <!-- Table -->
+        <div class="table-responsive">
+          <table id="basic-datatable"
+            class="table table-centered dt-responsive nowrap  no-footer dtr-inline" matSort (matSortChange)="sortData($event)">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Product</th>
+                <th mat-sort-header="SellerSku">Seller SKU</th>
+                <th>Shop SKU</th>
+                <th mat-sort-header="quantity">Total Stock</th>
+                <th mat-sort-header="multiWarehouseInventories.quantity">FBM Stock</th>
+                <th mat-sort-header="fblWarehouseInventories.quantity">FBD Stock</th>
+                <th mat-sort-header="cost">Cost</th>
+                <th>Shop</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr *ngFor="let sku of sortedData;let rowIndex=index">
+                <td>
+                  <a class="text-dark font-weight-bold">
+                    <ngb-highlight [result]="pIndex*pSize+rowIndex+1" [term]="searchTerm"></ngb-highlight>
+                  </a>
+                </td>
+                <td>
+                  <img src="{{sku.Images[0]}}" height="70px" width="70px">  
+                </td>
+                <td>
+                  <ngb-highlight [result]="sku.SellerSku" [term]="searchTerm"></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight [result]="sku.ShopSku" [term]="searchTerm"></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight [result]="sku.quantity" [term]="searchTerm"></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight [result]="sku.multiWarehouseInventories.quantity" [term]="searchTerm"></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight [result]="sku.fblWarehouseInventories.quantity" [term]="searchTerm"></ngb-highlight>
+                </td>
+                <td>
+
+                  <ngb-highlight [result]="sku.cost" [term]="searchTerm"></ngb-highlight>
+
+                  <ng-template #popContent>
+
+                    <div class="row">
+
+                    <mat-form-field class="col-md-12" appearance="outline">
+                      <mat-label>Cost</mat-label>
+                      <input type="number" name="Cost" [value]="sku.cost" (change)="costChange($event.target.value,'cost')" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-12" appearance="outline">
+                      <mat-label>FBM Packging Cost</mat-label>
+                      <input type="number" name="FBM Packging Cost" [value]="sku.FBMpackagingCost" (change)="costChange($event.target.value,'FBMpackagingCost')" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-12" appearance="outline">
+                      <mat-label>FBD Packaging Cost</mat-label>
+                      <input type="number" name="FBD Packaging Cost" [value]="sku.FBDpackagingCost" (change)="costChange($event.target.value,'FBMpackagingCost')" matInput>
+                    </mat-form-field>
+
+                    
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 text-center d-flex justify-content-center">
+                        <button *ngIf="!costSavingIndiactor" (click)="EditCost(p,sku._id)" mat-raised-button color="primary">Save</button>
+                        <mat-spinner *ngIf="costSavingIndiactor"  [diameter]="30"></mat-spinner>
+                      </div>
+                    </div>
+
+                  </ng-template>
+
+                  <a class="mr-3 text-primary" #p="ngbPopover" [ngbPopover]="popContent" [animation]="'true'" [autoClose]="'outside'"><i class="mdi mdi-pencil font-size-18"></i></a>
+
+                </td>
+                <td>
+                  <ngb-highlight [result]="sku.ShopId" [term]="searchTerm"></ngb-highlight>
+                </td>
+                <td>
+                  <div class="badge font-size-12" [ngClass]="{'badge-soft-danger': sku.Status === 'inactive',
+                  'badge-soft-success':sku.Status === 'active'}">
+                    <ngb-highlight [result]="sku.Status" [term]="searchTerm"></ngb-highlight>
+                  </div>
+                </td>
+                <td>
+                  <!-- <a href="javascript:void(0);" class="mr-3 text-primary" placement="top" ngbTooltip="Edit"><i
+                      class="mdi mdi-pencil font-size-18"></i></a> -->
+                  <a (click)="DeleteSku(sku)" class="text-danger" placement="top" ngbTooltip="Delete"><i
+                      class="mdi mdi-trash-can font-size-18"></i></a>
+                </td>
+                <!-- <td>
+                  <ngb-highlight [result]="table.billingname" [term]="searchTerm"></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight [result]="table.total" [term]="searchTerm"></ngb-highlight>
+                </td>
+                <td>
+                  <div class="badge font-size-12" [ngClass]="{'badge-soft-danger': table.paymentstatus === 'Chargeback',
+                  'badge-soft-success':table.paymentstatus === 'Paid',
+                  'badge-soft-warning': table.paymentstatus === 'Unpaid'}">
+                    <ngb-highlight [result]="table.paymentstatus" [term]="searchTerm"></ngb-highlight>
+                  </div>
+                </td>
+                <td>
+                  <button class="btn btn-light btn-rounded">Invoice <i class="mdi mdi-download ml-2"></i></button>
+                </td>
+                <td>
+                  <a href="javascript:void(0);" class="mr-3 text-primary" placement="top" ngbTooltip="Edit"><i
+                      class="mdi mdi-pencil font-size-18"></i></a>
+                  <a href="javascript:void(0);" class="text-danger" placement="top" ngbTooltip="Delete"><i
+                      class="mdi mdi-trash-can font-size-18"></i></a>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- End table -->
+        <div class="row justify-content-md-between align-items-md-center mt-2">
+          <div class="col-sm-12 col-md-5">
+            <!-- <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">Showing
+              {{service.startIndex}} to
+              {{service.endIndex}} of {{service.totalRecords}}
+              entries
+            </div> -->
+            <div class="dataTables_length" id="tickets-table_length"><label
+              class="d-inline-flex align-items-center">Show
+              <select (change)="changePageSize()" name="tickets-table_length" aria-controls="tickets-table" name="pageSize"
+                [(ngModel)]="pSize"
+                class="custom-select custom-select-sm form-control form-control-sm mx-2">
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="25">25</option>
+                <option [ngValue]="50">50</option>
+                <option [ngValue]="100">100</option>
+              </select> entries</label></div>
+          </div>
+          <!-- Pagination -->
+          <div class="col-sm-12 col-md-5">
+            <div class="text-md-right float-md-right pagination-rounded">
+              <ngb-pagination (pageChange)="changePage($event)" [collectionSize]="length" [page]="pIndex+1" [pageSize]="pSize">
+              </ngb-pagination>
+            </div>
+          </div>
+          <!-- End Pagination -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div>
     <ngx-datatable
     #table
     style="width:auto"
@@ -135,20 +407,9 @@
     (activate)="onActivate($event)"
     (select)="onSelect($event)">
 
-    <!-- <ngx-datatable-column
-[width]="10"
-[sortable]="false"
-[canAutoResize]="false"
-[draggable]="false"
-[resizeable]="false"
-
->
-
-</ngx-datatable-column> -->
 
     <ngx-datatable-column name="S.No" [canAutoResize]="false" [width]="5">
         <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
-          <!-- <div >{{pIndex*pSize+rowIndex+1}}</div> -->
           <div >{{pIndex*pSize+rowIndex+1}}</div>          
         </ng-template>
       </ngx-datatable-column>
@@ -156,7 +417,6 @@
       <ngx-datatable-column name="Product" [canAutoResize]="true" [width]="100">
 
         <ng-template let-row="row" ngx-datatable-cell-template>
-            <!-- <div >{{row.Images[0]}}</div> -->
             <img src="{{row.Images[0]}}" height="70px" width="70px">          
         </ng-template>
 
@@ -219,5 +479,5 @@
       </mat-paginator>
     </div>
 
-</div>
+</div> -->
 </div>

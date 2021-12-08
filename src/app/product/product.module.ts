@@ -14,6 +14,8 @@ import { AddShopComponent } from '../users/add-shop/add-shop.component';
 import { ProfileComponent } from '../users/profile/profile.component';
 import { ShopIdComponent } from '../users/shop-ids/shop-id.component';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
+import { OrdersComponent } from './orders/orders.component';
+import { NgbAccordionModule, NgbCollapseModule, NgbModalModule, NgbNavModule, NgbPaginationModule, NgbTooltipModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -28,9 +30,14 @@ import { HorizontalComponent } from '../analytics/horizontal/horizontal.componen
     ShopIdComponent,
     AddShopComponent,
     ProfileComponent,
+    OrdersComponent
   ],
   imports: [
     SharedModule,
+    NgbAccordionModule,
+    NgbTypeaheadModule,
+    NgbPaginationModule,
+    
     RouterModule.forChild([
       {
         path:'skuoverview',
@@ -43,6 +50,13 @@ import { HorizontalComponent } from '../analytics/horizontal/horizontal.componen
         path:'inventorytracking',
         component:HorizontalComponent,
         children:[{path:'',component:DscSkuTracking}],
+        canActivate:[LoginGuard,PermissionGuard],
+        data:{page:"DSCInventory"}
+      },
+      {
+        path:'newinventory',
+        component:HorizontalComponent,
+        children:[{path:'',component:OrdersComponent}],
         canActivate:[LoginGuard,PermissionGuard],
         data:{page:"DSCInventory"}
       },
