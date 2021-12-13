@@ -1,12 +1,13 @@
 import { AuthService } from 'src/app/services/auth.service';
 import { DashboardstatsService } from './../../services/dashboardstats.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { latLng, tileLayer } from 'leaflet';
 
 import { ChartType, Stat, Chat, Transaction } from './dashboard.model';
 
 import { statData, revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, chatData, transactions } from './data';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-analytics-content',
@@ -26,7 +27,9 @@ export class AnalyticsContentComponent implements OnInit {
   StatusCount:any=[{count:{OrderCount:0,ItemCount:0}},{count:{OrderCount:0,ItemCount:0}},{count:{OrderCount:0,ItemCount:0}},{count:{OrderCount:0,ItemCount:0}}]
   OrderAnalytics:any=[]
   StoreDetails:any=[]
+  SortedStoreDetails:any=[]
   StoreSkuDetails:any=[]
+  SortedStoreSkuDetails:any=[]
   SkuTotal={OwnWarehouse:0,Dropshipping:0}
   TotalOrders
   SelectedStore=null
@@ -50,6 +53,8 @@ export class AnalyticsContentComponent implements OnInit {
     Store:{Orders:true,Items:true,Revenue:true},
     Sku:{Orders:true,Items:true,Revenue:true}
   }
+  //analyticsTable
+  isSticky:boolean=false;
 
   constructor(public formBuilder: FormBuilder,private stats:DashboardstatsService,private auth:AuthService) {
   }
@@ -74,6 +79,7 @@ export class AnalyticsContentComponent implements OnInit {
     this.getStatusCount()
     this.getOrdersAnalytics();
     this.getStoreOrdersDetails()
+    
   }
 
   adjustUserSettings() {
@@ -150,7 +156,7 @@ getOverviewGraph(){
 
 getStoreOrdersDetails(){
   this.stats.get('/getStoreOrdersDetail/?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
-    this.StoreDetails=res.StoreDetail
+    this.SortedStoreDetails=this.StoreDetails=res.StoreDetail
 
     if(this.StoreDetails.length>0){
       this.SelectedStore=this.StoreDetails[0].store
@@ -164,7 +170,7 @@ getStoreOrdersDetails(){
 StoreClick(store){
   this.SelectedStore=store
   this.stats.get('/getStoreSkuDetails/?'+"store="+this.SelectedStore+"&startdate="+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
-    this.StoreSkuDetails=res.SkuDetail
+    this.SortedStoreSkuDetails=this.StoreSkuDetails=res.SkuDetail
     this.SkuTotal=res.SkuTotal
 
     if(this.StoreSkuDetails.length>0){
@@ -205,10 +211,69 @@ objEmpty(object){
   return true
 }
 
-  private _fetchData() {
-    this.revenueChart = revenueChart;
-    this.transactions = transactions;
+private _fetchData() {
+  this.revenueChart = revenueChart;
+  this.transactions = transactions;
+}
+
+checkScroll($event){
+  console.log($event);
+  // var el = document.getElementById("#first-table")
+  // el.addEventListener("ps-y-reach-end",(event)=>{
+  //   console.log("At the end")
+  // })
+}
+
+sortStores(sort: Sort) {
+  var data = this.StoreDetails.slice()
+  if (!sort.active || sort.direction === '') {
+    this.SortedStoreDetails = data;
+    return;
   }
+  this.SortedStoreDetails = data.sort((a, b) => {
+    const isAsc = sort.direction === 'asc';
+    switch (sort.active) {
+      case 'stores':
+        return this.compare(a.stores, b.stores, isAsc);
+      case 'orders':
+        return this.compare(a.orders, b.orders, isAsc);
+      case 'sales':
+        return this.compare(a.revenue, b.revenue, isAsc);
+      default:
+        return 0;
+    }
+  });
+}
+
+sortSkus(sort: Sort) {
+  var data = this.StoreSkuDetails.slice()
+  if (!sort.active || sort.direction === '') {
+    this.SortedStoreSkuDetails = data;
+    return;
+  }
+  this.SortedStoreSkuDetails = data.sort((a, b) => {
+    const isAsc = sort.direction === 'asc';
+    switch (sort.active) {
+      case 'sku':
+        return this.compare(a.sku, b.sku, isAsc);
+      case 'orders':
+        return this.compare(a.orders, b.orders, isAsc);
+      case 'OwnWarehouse':
+        return this.compare(a.OwnWarehouse, b.OwnWarehouse, isAsc);
+      case 'revenue':
+        return this.compare(a.revenue, b.revenue, isAsc);
+      default:
+        return 0;
+    }
+  });
+}
+
+compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
+
 
 
 }
+

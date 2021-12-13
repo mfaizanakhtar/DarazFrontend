@@ -13,10 +13,13 @@ export class StatComponent implements OnInit {
   @Input() icon: string;
   @Input() bottomContent: string;
   @Input() bottomContentExtra:string;
+  @Input() popLabels:any;
+  @Input() popData:any;
 
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
 }

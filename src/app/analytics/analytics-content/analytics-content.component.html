@@ -150,21 +150,21 @@
 
             <div class="table-responsive mt-4">
               
-              <table class="table table-hover mb-0 table-centered table-nowrap">
+              <table class="table table-hover mb-0 table-centered table-nowrap" matSort (matSortChange)="sortStores($event)">
                 <tbody>
                   <tr>
-                    <td>
+                    <th mat-sort-header="stores">
                       <h5 class="font-size-14 mb-0">Stores</h5>
-                    </td>
-                    <td>
+                    </th>
+                    <th mat-sort-header="orders">
                       <h5 class="font-size-14 mb-0">Orders/Items</h5>
-                    </td>
-                    <td *ngIf="currentUser.Profitibility">
+                    </th>
+                    <th *ngIf="currentUser.Profitibility" mat-sort-header="sales">
                       <h5 class="font-size-14 mb-0">Sales</h5>
-                    </td>
+                    </th>
                   </tr>
 
-                  <tr *ngFor="let detail of StoreDetails" (click)="StoreClick(detail.store)" [ngClass]="{'selected':detail.store===SelectedStore}" style="cursor: grabbing;">
+                  <tr *ngFor="let detail of SortedStoreDetails" (click)="StoreClick(detail.store)" [ngClass]="{'selected':detail.store===SelectedStore}" style="cursor: grabbing;">
                     <td>
                       <h5 class="font-size-14 mb-0">{{detail.store}}</h5>
                     </td>
@@ -237,8 +237,8 @@
 
           <h4 class="card-title mb-4">SKU Overview</h4>
 
-          <perfect-scrollbar style="height: 330px;" [scrollIndicators]="true" [config]="{useBothWheelAxes:true}">
-            <div>
+          <perfect-scrollbar style="height: 330px;" [scrollIndicators]="true" [config]="{useBothWheelAxes:true}"  (psScrollDown)="checkScroll($event)">
+            <div id="first-table">
               <div style="margin-left: auto;margin-right: auto;">
                 <div class="row">
                  <div class="col-lg-6"> 
@@ -257,24 +257,24 @@
   
               <div class="table-responsive mt-4">
                 
-                <table class="table table-hover mb-0 table-centered table-nowrap">
+                <table class="table table-hover mb-0 table-centered table-nowrap" matSort (matSortChange)="sortSkus($event)">
                   <tbody>
                     <tr>
-                      <td>
+                      <th mat-sort-header="sku">
                         <h5 class="font-size-14 mb-0">SKU</h5>
-                      </td>
-                      <td>
+                      </th>
+                      <th mat-sort-header="orders">
                         <h5 class="font-size-14 mb-0">Orders/Items</h5>
-                      </td>
-                      <td>
+                      </th>
+                      <th mat-sort-header="OwnWarehouse">
                         <h5 class="font-size-14 mb-0">Fbd/Fbm</h5>
-                      </td>
-                      <td *ngIf="currentUser.Profitibility">
+                      </th>
+                      <th *ngIf="currentUser.Profitibility" mat-sort-header="revenue">
                         <h5 class="font-size-14 mb-0">Sales</h5>
-                      </td>
+                      </th>
                     </tr>
 
-                    <tr *ngFor="let sku of StoreSkuDetails " (click)="SkuClick(sku.sku)" [ngClass]="{'selected':sku.sku===SelectedSku}" style="cursor: grabbing;">
+                    <tr *ngFor="let sku of SortedStoreSkuDetails " (click)="SkuClick(sku.sku)" [ngClass]="{'selected':sku.sku===SelectedSku}" style="cursor: grabbing;">
                       <td>
                         <h5 class="font-size-14 mb-0">{{sku.sku}}</h5>
                       </td>
@@ -324,3 +324,22 @@
   </div>
   <!-- end row -->
 </div>
+
+<!-- <script>
+  window.onscroll = function() {myFunction()};
+
+// Get the header
+var header = document.getElementById("header");
+
+// Get the offset position of the navbar
+var sticky = header.offsetTop;
+
+// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+</script> -->

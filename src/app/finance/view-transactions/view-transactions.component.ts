@@ -32,6 +32,7 @@ export class ViewTransactionsComponent implements OnInit {
   //loader
   LoadingIndicator=false
   pageLoadingIndicator=true
+  breadCrumbItems: Array<{}>;
   
 
   constructor(private transaction:TransactionsService) { }
@@ -45,6 +46,8 @@ export class ViewTransactionsComponent implements OnInit {
     this.startdate=this.backDate 
 
     this.getTransactions()
+
+    this.breadCrumbItems = [{ label: 'Home' }, { label: 'Transactions', active: true },];
   }
 
   changePageData(event?:PageEvent){

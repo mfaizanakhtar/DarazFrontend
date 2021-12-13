@@ -25,9 +25,9 @@
       </div>
 
       <div class="row" *ngIf="!overviewLoading">
-          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Orders'" [value]="ProfitStats.orders | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Orders: '+OrderAnalytics.orders"></app-stat>
-          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Items'" [value]="ProfitStats.items | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Items: '+OrderAnalytics.items"></app-stat>
-          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Sales'" [value]="ProfitStats.sales | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Sales: '+OrderAnalytics.revenue"></app-stat>
+          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Orders'" [value]="ProfitStats.orders | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Orders: '+OrderAnalytics.orders" [popLabels]="StatusCount.status" [popData]="StatusCount.orders"></app-stat>
+          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Items'" [value]="ProfitStats.items | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Items: '+OrderAnalytics.items" [popLabels]="StatusCount.status" [popData]="StatusCount.items"></app-stat>
+          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Sales'" [value]="ProfitStats.sales | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Sales: '+OrderAnalytics.revenue" [popLabels]="StatusCount.status" [popData]="StatusCount.sales"></app-stat>
           <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Estimated Costs'" [value]="ProfitStats.costs | number" [icon]="'ri-stack-line'"></app-stat>
           <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Estimated Payout'" [value]="ProfitStats.payout | number" [icon]="'ri-stack-line'" [bottomContentExtra]="(ProfitStats.payout/ProfitStats.sales)*100 | number:'1.0-2'" [bottomContent]="'Payout of Sales %:'"></app-stat>
           <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Estimated Profit'" [value]="ProfitStats.profit | number" [icon]="'ri-stack-line'" [bottomContentExtra]="(ProfitStats.profit/ProfitStats.sales)*100 | number:'1.0-2'" [bottomContent]="'Profit %:'"></app-stat>
@@ -132,29 +132,29 @@
 
             <div class="table-responsive mt-4">
               
-              <table class="table table-hover mb-0 table-centered table-nowrap">
+              <table class="table table-hover mb-0 table-centered table-nowrap" matSort (matSortChange)="sortStores($event)">
                 <tbody>
                   <tr>
-                    <td>
+                    <th mat-sort-header="store">
                       <h5 class="font-size-14 mb-0">Store</h5>
-                    </td>
-                    <td>
+                    </th>
+                    <th mat-sort-header="orders">
                       <h5 class="font-size-14 mb-0">Orders/Items</h5>
-                    </td>
-                    <td>
+                    </th>
+                    <th mat-sort-header="sales">
                       <h5 class="font-size-14 mb-0">Sales</h5>
-                    </td>
-                    <td>
+                    </th>
+                    <th mat-sort-header="payout">
                       <h5 class="font-size-14 mb-0">Payout</h5>
-                    </td>
-                    <td>
+                    </th>
+                    <th mat-sort-header="costs">
                       <h5 class="font-size-14 mb-0">Costs</h5>
-                    </td>
-                    <td>
+                    </th>
+                    <th mat-sort-header="profit">
                       <h5 class="font-size-14 mb-0">Profit</h5>
-                    </td>
+                    </th>
                   </tr>
-                  <tr *ngFor="let storeProfit of StoreProfitStats" (click)="StoreClick(storeProfit)" [ngClass]="{'selected':storeProfit._id===TotalStoreSkuProfitStats._id}" style="cursor: grabbing;">
+                  <tr *ngFor="let storeProfit of SortedStoreProfitStats" (click)="StoreClick(storeProfit)" [ngClass]="{'selected':storeProfit._id===TotalStoreSkuProfitStats._id}" style="cursor: grabbing;">
                     <td>
                       <h5 class="font-size-12 mb-0">{{storeProfit._id}}</h5>
                     </td>
@@ -264,32 +264,32 @@
   
               <div class="table-responsive mt-4">
                 
-                <table class="table table-hover mb-0 table-centered table-nowrap">
+                <table class="table table-hover mb-0 table-centered table-nowrap" matSort (matSortChange)="sortSkus($event)">
                   <tbody>
                     <tr>
-                      <td>
+                      <th mat-sort-header="sku">
                         <h5 class="font-size-14 mb-0">SKU</h5>
-                      </td>
-                      <td>
+                      </th>
+                      <th mat-sort-header="items">
                         <h5 class="font-size-14 mb-0">Units</h5>
-                      </td>
-                      <td>
+                      </th>
+                      <th mat-sort-header="sales">
                         <h5 class="font-size-14 mb-0">Sales</h5>
-                      </td>
-                      <td>
+                      </th>
+                      <th mat-sort-header="payout">
                         <h5 class="font-size-14 mb-0">Payout</h5>
-                      </td>
-                      <td>
+                      </th>
+                      <th mat-sort-header="costs">
                         <h5 class="font-size-14 mb-0">Cost</h5>
-                      </td>
-                      <td>
+                      </th>
+                      <th mat-sort-header="profit">
                         <h5 class="font-size-14 mb-0">Profit</h5>
-                      </td>
-                      <td>
+                      </th>
+                      <th mat-sort-header="roi">
                         <h5 class="font-size-14 mb-0">ROI</h5>
-                      </td>
+                      </th>
                     </tr>
-                    <tr *ngFor="let sku of StoreSkuProfitStats" (click)="SkuClick(sku._id)" [ngClass]="{'selected':sku._id===SelectedSku}" style="cursor: grabbing;">
+                    <tr *ngFor="let sku of SortedStoreSkuProfitStats" (click)="SkuClick(sku._id)" [ngClass]="{'selected':sku._id===SelectedSku}" style="cursor: grabbing;">
                       <td>
                         <h5 class="font-size-12 mb-0">{{sku._id}}</h5>
                       </td>

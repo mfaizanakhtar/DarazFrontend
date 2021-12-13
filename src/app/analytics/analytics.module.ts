@@ -1,5 +1,4 @@
 import { HorizontalnavbarComponent } from './../shared/horizontalnavbar/horizontalnavbar.component';
-import { HorizontalnewnavbarComponent } from './../shared/horizontalnewnav/horizontalnavbar.component';
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';

@@ -5,6 +5,7 @@ import { DatatableComponent,ColumnMode,SelectionType } from'@swimlane/ngx-datata
 import { MatDialog } from '@angular/material/dialog';
 import { AddSubaccountComponent } from '../add-subaccount/add-subaccount.component';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -16,10 +17,12 @@ export class ProfileComponent implements OnInit {
   subaccounts:any=[]
   ColumnMode=ColumnMode
   loadingIndicator=true
+  breadCrumbItems: Array<{}>;
   constructor(private toastr:ToastrService,private user:UseremailService,private dialog:MatDialog,private auth:AuthService) { }
 
   ngOnInit(): void {
     this.LoggedUser=this.auth.getCurrentUser()
+    this.breadCrumbItems = [{ label: 'Home' }, { label: 'Profile', active: true },];
   }
 
   submit(f){
@@ -28,7 +31,13 @@ export class ProfileComponent implements OnInit {
         var response:any = res
         if(response.message=="Password Updated"){
           f.reset()
-          this.toastr.success("Password updated")
+          // this.toastr.success("Password updated")
+          Swal.fire({
+            title: 'Password',
+            text: 'You password is changed successfully!',
+            icon: 'success',
+            confirmButtonColor: '#5438dc'
+          });
         }
         else if(response.message=="Incorrect Old Password"){
           f.reset()
@@ -55,8 +64,15 @@ export class ProfileComponent implements OnInit {
     var dialogRef = this.dialog.open(AddSubaccountComponent,{height:"70%",width:"50%",data:account})
     dialogRef.afterClosed().subscribe(res=>{
       if(res!=undefined){
-        if(res.dialogResult.success) 
-        this.toastr.success(res.dialogResult.message)
+        if(res.dialogResult.success) {
+          Swal.fire({
+            title: 'SubAccount',
+            text: res.dialogResult.message,
+            icon: 'success',
+            confirmButtonColor: '#5438dc'
+          });
+        }
+        
 
         else{
           this.toastr.error(res.dialogResult.message)
@@ -65,6 +81,34 @@ export class ProfileComponent implements OnInit {
       this.getSubAccounts()
     })
   }
+
+  deleteSubAccount(row){
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#34c38f',
+      cancelButtonColor: '#ff3d60',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(result => {
+      if (result.value) {
+
+      this.user.postDataByCap('/deleteSubAccount',{useremail:row.useremail,loginemail:row.loginemail}).subscribe((res:any)=>{
+        if(res.n>0){
+          Swal.fire('Deleted!', 'Account has been deleted.', 'success');
+          this.getSubAccounts()
+          // this.dialog.close({dialogResult:{success:true,message:"User deleted"}})
+        }
+        else{
+          this.toastr.error("Error deleting user account")
+        }
+      })
+ 
+    }
+  })
+}
 
   CreateSubAccount(){
     var dialogRef = this.dialog.open(AddSubaccountComponent,{height:"60%",width:"50%"})

@@ -57,16 +57,6 @@ export class AddSubaccountComponent implements OnInit {
       })
   }
   }
-  deleteAccount(){
-    this.user.postDataByCap('/deleteSubAccount',this.User).subscribe((res:any)=>{
-      if(res.n>0){
-        this.dialog.close({dialogResult:{success:true,message:"User deleted"}})
-      }
-      else{
-        this.dialog.close({dialogResult:{success:false,message:"Error Deleting user"}})
-      }
-    })
-  }
 
   resetPassword(){
     this.user.updateData('/resetSubPassword',this.User.loginemail,{}).subscribe((res:any)=>{

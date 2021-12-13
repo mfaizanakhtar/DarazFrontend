@@ -24,10 +24,12 @@ export class ViewStatementsComponent implements OnInit {
     "OtherDebits":{Amount:0,Vat:0},
     "AdjustmentsOthers":{Amount:0,Vat:0},
   }
+  breadCrumbItems: Array<{}>;
   constructor(private transaction:TransactionsService) { }
 
   ngOnInit(): void {
     this.getFilters()
+    this.breadCrumbItems = [{ label: 'Home' }, { label: 'Statements', active: true },];
   }
 
   getFilters(){

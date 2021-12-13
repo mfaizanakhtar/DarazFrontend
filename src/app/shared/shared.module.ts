@@ -1,4 +1,3 @@
-import { HorizontalnewnavbarComponent } from './horizontalnewnav/horizontalnavbar.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -65,7 +64,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RightsidebarComponent,
     PagetitleComponent,
     HorizontalComponent,
-    HorizontalnewnavbarComponent
   ],
   imports: [
     CommonModule,
@@ -166,7 +164,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RightsidebarComponent,
     PagetitleComponent,
     HorizontalComponent,
-    HorizontalnewnavbarComponent
   ],
   providers:[
     {
