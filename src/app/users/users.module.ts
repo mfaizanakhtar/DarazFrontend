@@ -23,7 +23,7 @@ import { UsersComponent } from './users/users.component';
     SharedModule,
     RouterModule.forChild([
       {
-        path:'users',
+        path:'',
         component:UsersComponent,
         canActivate:[LoginGuard,AdminGuard]
       },

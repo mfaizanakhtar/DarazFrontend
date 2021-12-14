@@ -1,6 +1,6 @@
 import { AuthService } from 'src/app/services/auth.service';
 import { DashboardstatsService } from './../../services/dashboardstats.service';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { latLng, tileLayer } from 'leaflet';
 
@@ -8,6 +8,7 @@ import { ChartType, Stat, Chat, Transaction } from './dashboard.model';
 
 import { statData, revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, chatData, transactions } from './data';
 import { Sort } from '@angular/material/sort';
+import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 
 @Component({
   selector: 'app-analytics-content',
@@ -54,9 +55,10 @@ export class AnalyticsContentComponent implements OnInit {
     Sku:{Orders:true,Items:true,Revenue:true}
   }
   //analyticsTable
-  isSticky:boolean=false;
-
-  constructor(public formBuilder: FormBuilder,private stats:DashboardstatsService,private auth:AuthService) {
+  skuHeaderCheck:boolean=false;
+  @ViewChild('storeScroll') storeScroll?: PerfectScrollbarComponent;
+  @ViewChild('skuScroll') skuScroll?: PerfectScrollbarComponent;
+  constructor(public formBuilder: FormBuilder,private stats:DashboardstatsService,private auth:AuthService,private cdRef:ChangeDetectorRef) {
   }
 
   // bread crumb items
@@ -80,6 +82,9 @@ export class AnalyticsContentComponent implements OnInit {
     this.getOrdersAnalytics();
     this.getStoreOrdersDetails()
     
+  }
+
+  ngAfterViewInit():void{
   }
 
   adjustUserSettings() {
@@ -217,7 +222,18 @@ private _fetchData() {
 }
 
 checkScroll($event){
-  console.log($event);
+  // this.storeScroll.directiveRef.scrollToBottom();
+  // console.log(this.skuHeaderCheck)
+  // if(this.skuScroll.directiveRef.position(true).y>=126){
+  //   this.skuHeaderCheck=true
+  //   this.cdRef.detectChanges();
+  // } 
+  // else{
+  //   this.skuHeaderCheck=false
+  //   this.cdRef.detectChanges();
+  // } 
+  // this.storeScroll.directiveRef.scrollToBottom();
+  // console.log($event);
   // var el = document.getElementById("#first-table")
   // el.addEventListener("ps-y-reach-end",(event)=>{
   //   console.log("At the end")

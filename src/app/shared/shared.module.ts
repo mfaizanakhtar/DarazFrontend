@@ -49,6 +49,7 @@ import { PagetitleComponent } from './pagetitle/pagetitle.component';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -87,6 +88,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatExpansionModule,
     NgbProgressbarModule,
     NgbPopoverModule,
+    ScrollingModule,
     
 
     AppRoutingModule,
@@ -132,6 +134,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatProgressSpinnerModule,
     MatBottomSheetModule,
     MatExpansionModule,
+    ScrollingModule,
 
     AppRoutingModule,
 

@@ -138,7 +138,7 @@
         <div *ngIf="!storesLoading" class="card-body">
 
           <h4 class="card-title mb-3">Stores</h4>
-          <perfect-scrollbar style="height: 330px;"  [config]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:false}">
+          <perfect-scrollbar style="height: 330px;"  [config]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:false}" #storeScroll >
           <div>
             <div class="text-center">
               <p class="mb-2">Total Orders</p>
@@ -236,8 +236,14 @@
         <div *ngIf="!skuLoading" class="card-body">
 
           <h4 class="card-title mb-4">SKU Overview</h4>
+          <!-- <table class="table table-hover mb-0 table-centered table-nowrap" matSort (matSortChange)="sortSkus($event)">
+            <tbody>
+              <ng-template *ngIf="skuHeaderCheck" [ngTemplateOutlet]="skuHeader"></ng-template>
+            </tbody>
+          </table> -->
+          <!-- <ng-template [ngTemplateOutlet]="skuHeader"></ng-template> -->
 
-          <perfect-scrollbar style="height: 330px;" [scrollIndicators]="true" [config]="{useBothWheelAxes:true}"  (psScrollDown)="checkScroll($event)">
+          <perfect-scrollbar style="height: 330px;" [scrollIndicators]="true" [config]="{useBothWheelAxes:true}"  (psScrollY)="checkScroll($event)" #skuScroll>
             <div id="first-table">
               <div style="margin-left: auto;margin-right: auto;">
                 <div class="row">
@@ -259,7 +265,8 @@
                 
                 <table class="table table-hover mb-0 table-centered table-nowrap" matSort (matSortChange)="sortSkus($event)">
                   <tbody>
-                    <tr>
+                  <ng-template #skuHeader>
+                    <tr >
                       <th mat-sort-header="sku">
                         <h5 class="font-size-14 mb-0">SKU</h5>
                       </th>
@@ -273,7 +280,8 @@
                         <h5 class="font-size-14 mb-0">Sales</h5>
                       </th>
                     </tr>
-
+                  </ng-template>
+                  <ng-template [ngTemplateOutlet]="skuHeader"></ng-template>
                     <tr *ngFor="let sku of SortedStoreSkuDetails " (click)="SkuClick(sku.sku)" [ngClass]="{'selected':sku.sku===SelectedSku}" style="cursor: grabbing;">
                       <td>
                         <h5 class="font-size-14 mb-0">{{sku.sku}}</h5>
