@@ -27,11 +27,11 @@ import { UsersComponent } from './users/users.component';
         component:UsersComponent,
         canActivate:[LoginGuard,AdminGuard]
       },
-      {
-        path:'adduser',
-        component:AddUsersComponent,
-        canActivate:[LoginGuard]
-      },
+      // {
+      //   path:'adduser',
+      //   component:AddUsersComponent,
+      //   canActivate:[LoginGuard]
+      // },
       {
         path:'profile',
         component:HorizontalComponent,
