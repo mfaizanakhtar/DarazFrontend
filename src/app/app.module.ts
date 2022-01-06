@@ -39,7 +39,7 @@ import { HttpClientModule } from '@angular/common/http';
       {path:'products',loadChildren:()=>import('./product/product.module').then(m=>m.ProductModule)},
       {path:'users',loadChildren:()=>import('./users/users.module').then(m=>m.UsersModule)},
       {path:'pricing',loadChildren:()=>import('./pricing/pricing.module').then(m=>m.PricingModule)},
-      {path:'billing',loadChildren:()=>import('./billing/billing.module').then(m=>m.BillingModule)}
+      {path:'billing/:subType',loadChildren:()=>import('./billing/billing.module').then(m=>m.BillingModule)}
     ])
 
   ],

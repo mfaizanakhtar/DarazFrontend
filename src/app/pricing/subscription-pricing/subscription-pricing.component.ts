@@ -1,3 +1,4 @@
+import { PlansService } from './../../services/plans.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UseremailService } from 'src/app/services/useremail.service';
@@ -18,13 +19,16 @@ export class SubscriptionPricingComponent implements OnInit {
 
   selectedSubscription:any
 
-  constructor(private user:UseremailService,private router:Router) { }
+  allSubscriptions:any
+
+  constructor(private user:UseremailService,private router:Router,private plans:PlansService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Dashboard', active: true }];
 
     this._fetchData();
-    this.fetchUserSubscription()
+    this.fetchUserSubscription();
+    this.getAllSubsciprtion();
   }
 
   private _fetchData() {
@@ -32,33 +36,19 @@ export class SubscriptionPricingComponent implements OnInit {
   }
 
   selectSubscription(subscription){
-    this.router.navigate(['/billing']);
-    // Swal.fire({
-    //   title: 'Are you sure?',
-    //   text: 'You won\'t be able to revert this!',
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonColor: '#34c38f',
-    //   cancelButtonColor: '#ff3d60',
-    //   confirmButtonText: 'Yes, change it!'
-    // }).then(result => {
-    //   if (result.value) {
-
-    //     this.user.updateData("/selectSubscription","",{subscriptionType:subscription}).subscribe(res=>{
-    //       Swal.fire('Subscription Changed!', 'Your subscription has been changed successfully.', 'success');
-    //       this.fetchUserSubscription()
-    //     })
-
-    //   }
-    // });
-
-
-
+    this.router.navigate(['/billing',subscription]);
   }
 
   fetchUserSubscription(){
     this.user.get("/currentSubscription").subscribe((res:any)=>{
        this.selectedSubscription = res.subscriptionType
+    })
+  }
+
+  getAllSubsciprtion(){
+    this.plans.get('/getAllPlans').subscribe(res=>{
+      this.allSubscriptions = res;
+      console.log(this.allSubscriptions)
     })
   }
 
