@@ -36,7 +36,9 @@ export class SubscriptionPricingComponent implements OnInit {
   }
 
   selectSubscription(subscription){
-    this.router.navigate(['/billing',subscription]);
+    this.plans.selectedPlan=subscription;
+    console.log(subscription)
+    this.router.navigate(['/billing']);
   }
 
   fetchUserSubscription(){

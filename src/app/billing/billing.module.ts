@@ -4,18 +4,28 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
 import { LoginGuard } from '../LoginGuard';
-import { ArchwizardModule } from 'angular-archwizard'
+import { ArchwizardModule } from 'angular-archwizard';
+import { BillingHistoryComponent } from './billing-history/billing-history.component'
+import { NgbAccordionModule, NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
-  declarations: [BillPaymentComponent],
+  declarations: [BillPaymentComponent, BillingHistoryComponent],
   imports: [
     SharedModule,
+    NgbAccordionModule,
+    NgbTypeaheadModule,
+    NgbPaginationModule,
     RouterModule.forChild([
       {
         path:'',
         component:HorizontalComponent,
         children:[{path:'',component:BillPaymentComponent,canActivate:[LoginGuard]}]
+      },
+      {
+        path:'',
+        component:HorizontalComponent,
+        children:[{path:'details',component:BillingHistoryComponent,canActivate:[LoginGuard]}]
       }
     ]),
     ArchwizardModule 

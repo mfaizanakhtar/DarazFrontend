@@ -38,7 +38,7 @@
               </div>
   
               <div class="mt-5 mb-3">
-                <button *ngIf="sub.Name!=selectedSubscription" (click)="selectSubscription(sub.Name)" class="btn btn-primary w-md">Get started</button>
+                <button *ngIf="sub.Name!=selectedSubscription" (click)="selectSubscription(sub)" class="btn btn-primary w-md">Get started</button>
                 <button *ngIf="sub.Name==selectedSubscription" disabled class="btn btn-primary w-md">Selected</button>
               </div>
             </div>
