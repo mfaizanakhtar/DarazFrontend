@@ -7,8 +7,8 @@ import { AuthService } from "./services/auth.service";
 export class PermissionGuard implements CanActivate{
     constructor(private auth:AuthService,private router:Router){}
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        const User = this.auth.getCurrentUser()
-        if(!User[route.data.page]){
+        const permissions = this.auth.getPermissions()
+        if(!permissions[route.data.page].value){
             this.router.navigate(['login'])
         }
         return true

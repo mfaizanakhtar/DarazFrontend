@@ -22,12 +22,7 @@
 
 <div class="row">
     <h6 class="col-lg-12">Permissions:</h6>
-    <mat-checkbox class="col-lg-12" [(ngModel)]="User.Orders" color="primary">Orders</mat-checkbox>
-    <mat-checkbox class="col-lg-12" [(ngModel)]="User.ReturnsDispatch" color="primary">Returns/Dispatch</mat-checkbox>
-    <mat-checkbox class="col-lg-12" [(ngModel)]="User.Finance" color="primary">Finance</mat-checkbox>
-    <mat-checkbox class="col-lg-12" [(ngModel)]="User.DSCInventory" color="primary">DSC Inventory</mat-checkbox>
-    <mat-checkbox class="col-lg-12" [(ngModel)]="User.GroupedInventory" color="primary">Grouped Inventory</mat-checkbox>
-    <mat-checkbox class="col-lg-12" [(ngModel)]="User.Profitibility" color="primary">Profitibility</mat-checkbox>
+    <mat-checkbox *ngFor="let permission of permissions | keyvalue" class="col-lg-12" [(ngModel)]="permissions[permission.key].value" color="primary">{{permission.value.label}}</mat-checkbox>
 </div>
 <mat-divider class="my-2"></mat-divider>
 

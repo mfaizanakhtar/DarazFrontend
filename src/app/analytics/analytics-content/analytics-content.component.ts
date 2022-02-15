@@ -17,7 +17,7 @@ import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 })
 export class AnalyticsContentComponent implements OnInit {
 
-  currentUser:any
+  permissions:any
   term: any;
   transactions: Transaction[];
   statData: Stat[];
@@ -88,8 +88,8 @@ export class AnalyticsContentComponent implements OnInit {
   }
 
   adjustUserSettings() {
-    this.currentUser=this.auth.getCurrentUser()
-    if(!this.currentUser.Profitibility){
+    this.permissions=this.auth.getPermissions()
+    if(!this.permissions.Profitibility.value){
       this.GraphOptions.Total.Revenue=false
       this.GraphOptions.Store.Revenue=false
       this.GraphOptions.Sku.Revenue=false

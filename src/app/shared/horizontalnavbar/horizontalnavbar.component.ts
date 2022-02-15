@@ -14,7 +14,7 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
 
   configData;
   menuItems = [];
-  currentUser:any
+  permissions
 
   // tslint:disable-next-line: max-line-length
   constructor(private router: Router,private auth:AuthService) {
@@ -28,7 +28,7 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
     this.initialize();
-    this.currentUser=this.auth.getCurrentUser()
+    this.permissions=this.auth.getPermissions();
 
     this.configData = {
       suppressScrollX: true,
@@ -52,9 +52,8 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
   }
 
   checkPermission(item){
-    // console.log(item)
     var retBool=true;
-    if(item.permLabel!=undefined) return this.currentUser[item.permLabel]
+    if(item.permLabel!=undefined) return this.permissions[item.permLabel].value
 
     else if(item.permLabel==undefined){
 
@@ -63,7 +62,7 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
         for(var subitem of item.subItems){
 
           if(subitem.permLabel!=undefined){
-            if(this.currentUser[subitem.permLabel]) return true
+            if(this.permissions[subitem.permLabel].value) return true
             retBool=false
           }
         }

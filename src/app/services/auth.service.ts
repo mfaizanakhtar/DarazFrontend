@@ -51,4 +51,8 @@ export class AuthService {
     }
     return user;
   }
+
+  getPermissions(){
+    return this.getCurrentUser().permissions
+  }
 }

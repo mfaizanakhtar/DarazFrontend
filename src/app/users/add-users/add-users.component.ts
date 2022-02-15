@@ -1,3 +1,4 @@
+import { LookupService } from './../../services/lookup.service';
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
@@ -9,16 +10,25 @@ import { UseremailService } from '../../services/useremail.service';
   styleUrls: ['./add-users.component.scss']
 })
 export class AddUsersComponent implements OnInit {
-  userEmail:any
-  userType:any="user"
+  User={
+    useremail:"",
+    usertype:"user",
+    username:"administrator",
+    password:"password.123",
+    permissions:{}
+  }
+  // userEmail:any
+  // userType:any="user"
   isEdit:boolean=false
   subscriptionMonths=0
   subscriptionEndDate:Date
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data:any,private user:UseremailService,private toastr:ToastrService,private dialogRef:MatDialogRef<AddUsersComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data:any,private user:UseremailService,private toastr:ToastrService,private dialogRef:MatDialogRef<AddUsersComponent>,
+  private lookup:LookupService) { }
 
   ngOnInit(): void {
+    this.getPermissions()
 
     if(this.data){
       console.log(this.data)
@@ -27,15 +37,17 @@ export class AddUsersComponent implements OnInit {
       document.getElementById("headingLabel").innerHTML="Edit User Details"
       document.getElementById("buttonSubmit").innerHTML="Edit"
 
-      this.userEmail=this.data.useremail;
-      this.userType=this.data.usertype;
-      this.subscriptionEndDate=new Date(this.data.subscriptionEndDate)
+      // this.userEmail=this.data.useremail;
+      // this.userType=this.data.usertype;
+      // this.subscriptionEndDate=new Date(this.data.subscriptionEndDate)
+      this.User = this.data
+      
     }
   }
 
-  createUser(){
+  submitDetails(){
     if(this.isEdit!=true){
-      this.user.postData({useremail:this.userEmail,password:"password.123",usertype:this.userType}).subscribe(res=>{
+      this.user.postData(this.User).subscribe(res=>{
         if(res){
           this.toastr.success("User Created");
           this.dialogRef.close()
@@ -49,8 +61,9 @@ export class AddUsersComponent implements OnInit {
       })
     }
     if(this.isEdit=true){
-      this.user.updateData("/updateUser",this.userEmail,{useremail:this.userEmail,usertype:this.userType}).subscribe(res=>{
+      this.user.updateData("/updateUser",this.User.useremail,this.User).subscribe(res=>{
         console.log(res)
+        this.toastr.success("User Updated");
         this.dialogRef.close()
       })
     }
@@ -83,7 +96,7 @@ export class AddUsersComponent implements OnInit {
   }
 
   deleteUser(){
-    this.user.postDataByCap("/deleteUser",{useremail:this.userEmail}).subscribe(res=>{
+    this.user.postDataByCap("/deleteUser",{useremail:this.User.useremail}).subscribe(res=>{
       if(res){
         this.toastr.success("User Deleted");
         this.dialogRef.close()
@@ -93,6 +106,17 @@ export class AddUsersComponent implements OnInit {
     error=>{
       console.log(error)
     })
+  }
+
+  getPermissions(){
+    this.lookup.getLookupDetail("permissions").subscribe((res:any)=>{
+      for(var key in res){
+        if(!this.User.permissions.hasOwnProperty(key)){
+          this.User.permissions[key]=res[key]
+        }
+      }
+    }
+    )
   }
 
 }

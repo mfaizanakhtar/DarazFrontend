@@ -18,7 +18,7 @@ import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from 'ngx-per
   styleUrls: ['./orders-view.component.scss']
 })
 export class OrdersViewComponent implements OnInit {
-  LoggedUser
+  permissions
   //data
   // all=null
   orders:any;
@@ -67,7 +67,7 @@ export class OrdersViewComponent implements OnInit {
     private auth:AuthService) { }
 
   ngOnInit(): void {
-    this.LoggedUser=this.auth.getCurrentUser()
+    this.permissions=this.auth.getPermissions()
     this.StatusFilter='pending'
     this.FormattedStatus='Pending'
 

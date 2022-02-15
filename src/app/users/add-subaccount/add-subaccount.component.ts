@@ -1,3 +1,5 @@
+import { AuthService } from 'src/app/services/auth.service';
+import { LookupService } from './../../services/lookup.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UseremailService } from '../../services/useremail.service';
@@ -9,19 +11,14 @@ import { UseremailService } from '../../services/useremail.service';
 })
 export class AddSubaccountComponent implements OnInit {
   isEdit=false
+  permissions:any={}
   User={
     loginemail:"",
     username:"",
-    Orders:true,
-    ReturnsDispatch:true,
-    Finance:true,
-    DSCInventory:true,
-    GroupedInventory:true,
-    Profitibility:true
-
+    permissions:Object
   }
   constructor(private user:UseremailService,private dialog:MatDialogRef<AddSubaccountComponent>,
-    @Inject(MAT_DIALOG_DATA) private data:any) { }
+    @Inject(MAT_DIALOG_DATA) private data:any,private auth:AuthService) { }
 
   ngOnInit(): void {
     if(this.data!=null){
@@ -30,9 +27,12 @@ export class AddSubaccountComponent implements OnInit {
       this.isEdit=true
       document.getElementById('buttonSubmit').innerHTML="Update Permissions"
     }
+    this.getPermissions();
   }
 
   submitDetails(){
+    console.log(this.permissions)
+    this.User.permissions = this.permissions
     if(!this.isEdit){
 
       this.user.postDataByCap('/addSubAccount',this.User).subscribe((res:any)=>{
@@ -67,6 +67,16 @@ export class AddSubaccountComponent implements OnInit {
         this.dialog.close({dialogResult:{success:false,message:"Error Resetting Password"}})
       }
     })
+  }
+
+  getPermissions(){
+    var userPermissions:any = this.auth.getPermissions()
+    console.log(userPermissions)
+    for(var key in userPermissions){
+      if(userPermissions[key].value){
+        this.permissions[key]=userPermissions[key] 
+      }
+    }
   }
 
 }

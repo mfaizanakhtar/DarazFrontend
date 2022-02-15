@@ -1,4 +1,4 @@
-<div class="center">
+<!-- <div class="center">
   <mat-label id="headingLabel" class="matlabel">Create New User</mat-label>
 
   <div style="display: flex;flex-wrap: wrap;">
@@ -49,4 +49,36 @@
     </div>
 
     <button *ngIf="isEdit" (click)="AddSubscription()" mat-raised-button color="primary">Add Subscription</button>
+</div> -->
+<div class="row">
+  <h4 id="headingLabel" class="col-lg-12 d-flex justify-content-center">Add User</h4>
+</div>
+
+<mat-divider class="my-3"></mat-divider>
+
+<div class="row">
+
+  <mat-form-field class="col-xl-6" appearance="outline" >
+      <mat-label>Email Address</mat-label>
+      <input [readonly]="isEdit" [(ngModel)]="User.useremail" matInput placeholder="example@gmail.com">
+  </mat-form-field>
+
+  <mat-form-field class="col-xl-6" appearance="outline">
+      <mat-label>Username</mat-label>
+      <input [(ngModel)]="User.username" matInput placeholder="John">
+  </mat-form-field>
+
+</div>
+
+<mat-divider class="my-3"></mat-divider>
+
+<div class="row">
+  <h6 class="col-lg-12">Permissions:</h6>
+  <mat-checkbox *ngFor="let permission of User.permissions | keyvalue" class="col-lg-12" [(ngModel)]="User.permissions[permission.key].value" color="primary">{{permission.value.label}}</mat-checkbox>
+</div>
+<mat-divider class="my-2"></mat-divider>
+
+<div style="flex-direction: column;align-items: center;display: flex;margin-top:15px" >
+<button id="buttonSubmit" mat-raised-button color="primary" style="width: 160px;" (click)="submitDetails()">Create User</button>
+<button [hidden]="!isEdit" mat-raised-button color="primary" style="width: 160px;margin-top: 15px;" (click)="resetPassword()">Reset Password</button>
 </div>

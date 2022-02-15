@@ -194,9 +194,9 @@ rowHeight="auto"
           <th>Image</th>
           <th>RTS</th>
           <th>Reason</th>
-          <th *ngIf="LoggedUser.Profitibility">Product Cost</th>
-          <th *ngIf="LoggedUser.Profitibility">Payout</th>
-          <th *ngIf="LoggedUser.Profitibility">Profit</th>
+          <th *ngIf="permissions.Profitibility.value">Product Cost</th>
+          <th *ngIf="permissions.Profitibility.value">Payout</th>
+          <th *ngIf="permissions.Profitibility.value">Profit</th>
         </tr>
         <tr *ngFor="let item of row.OrderItems; index as i">
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{i+1}}</td>
@@ -221,10 +221,10 @@ rowHeight="auto"
             <button *ngIf="item.ShippingType=='Dropshipping' && item.Status=='pending'" mat-raised-button color="primary" (click)="setItemStatusToRTS(item)">RTS</button>
           </td>
           <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All')">{{item.Reason}}</td>
-          <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && LoggedUser.Profitibility==true">{{item.cost}}</td>
+          <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && permissions.Profitibility.value==true">{{item.cost}}</td>
           <!-- <div data="getTransactions()"> -->
-          <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && LoggedUser.Profitibility==true">{{item.TransactionsPayout | number}}</td>
-          <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && LoggedUser.Profitibility==true">{{getProfit(item.TransactionsPayout,item.cost,item.packagingCost)}}</td>
+          <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && permissions.Profitibility.value==true">{{item.TransactionsPayout | number}}</td>
+          <td *ngIf="(Fulfillment==item.ShippingType || Fulfillment=='All') && permissions.Profitibility.value==true">{{getProfit(item.TransactionsPayout,item.cost,item.packagingCost)}}</td>
           <!-- </div> -->
         </tr>
       </tbody>
