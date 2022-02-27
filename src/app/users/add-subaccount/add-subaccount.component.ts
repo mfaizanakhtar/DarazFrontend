@@ -2,7 +2,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { LookupService } from './../../services/lookup.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UseremailService } from '../../services/useremail.service';
+import { UserdataService } from '../../services/userdata.service';
 
 @Component({
   selector: 'app-add-subaccount',
@@ -17,7 +17,7 @@ export class AddSubaccountComponent implements OnInit {
     username:"",
     permissions:Object
   }
-  constructor(private user:UseremailService,private dialog:MatDialogRef<AddSubaccountComponent>,
+  constructor(private user:UserdataService,private dialog:MatDialogRef<AddSubaccountComponent>,
     @Inject(MAT_DIALOG_DATA) private data:any,private auth:AuthService) { }
 
   ngOnInit(): void {

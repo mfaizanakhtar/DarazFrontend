@@ -1,7 +1,6 @@
-import { AuthService } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DashboardComponent } from '../../analytics/dashboard/dashboard.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +8,8 @@ import { DashboardComponent } from '../../analytics/dashboard/dashboard.componen
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  result:any
+  error: boolean=false;
+
   constructor(private auth:AuthService,private router:Router) { }
 
   ngOnInit(): void {
@@ -18,11 +18,14 @@ export class LoginComponent implements OnInit {
   signin(credentials){
     this.auth.login(credentials).subscribe(res=>{
       if(res){
-        this.router.navigate([''])
+        this.auth.setSubscriptionDetails().subscribe(res=>{
+          this.router.navigate([''])
+        })
+      }
+      else{
+        this.error=true
       }
     })
-    
-    
   }
 
 }

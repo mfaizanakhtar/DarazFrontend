@@ -52,24 +52,24 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
   }
 
   checkPermission(item){
-    var retBool=true;
-    if(item.permLabel!=undefined) return this.permissions[item.permLabel].value
+    if(this.permissions){
+      if(item.permLabel!=undefined) return (this.permissions.hasOwnProperty(item.permLabel) ? this.permissions[item.permLabel].value : false)
 
-    else if(item.permLabel==undefined){
+      else if(item.permLabel==undefined){
 
-      if(item.subItems!=undefined && item.subItems.length>0){
+        if(item.subItems!=undefined && item.subItems.length>0){
 
-        for(var subitem of item.subItems){
+          for(var subitem of item.subItems){
 
-          if(subitem.permLabel!=undefined){
-            if(this.permissions[subitem.permLabel].value) return true
-            retBool=false
+            if(subitem.permLabel!=undefined){
+              if(this.permissions.hasOwnProperty(subitem.permLabel) && this.permissions[subitem.permLabel].value) return true
+            }
           }
+          
         }
-        
       }
-      return retBool
     }
+    return false
 
   }
 

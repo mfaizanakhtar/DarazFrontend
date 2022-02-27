@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { UseremailService } from '../../services/useremail.service';
+import { UserdataService } from '../../services/userdata.service';
 import { DatatableComponent,ColumnMode,SelectionType } from'@swimlane/ngx-datatable'
 import { MatDialog } from '@angular/material/dialog';
 import { AddSubaccountComponent } from '../add-subaccount/add-subaccount.component';
@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
   ColumnMode=ColumnMode
   loadingIndicator=true
   breadCrumbItems: Array<{}>;
-  constructor(private toastr:ToastrService,private user:UseremailService,private dialog:MatDialog,private auth:AuthService) { }
+  constructor(private toastr:ToastrService,private user:UserdataService,private dialog:MatDialog,private auth:AuthService) { }
 
   ngOnInit(): void {
     this.LoggedUser=this.auth.getCurrentUser()

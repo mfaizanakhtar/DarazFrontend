@@ -5,9 +5,9 @@ import { DataService } from './data.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UseremailService extends DataService {
-
+export class UserdataService extends DataService {
   constructor(http:HttpClient) {
     super("users",http)
    }
+
 }

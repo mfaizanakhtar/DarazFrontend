@@ -2,6 +2,7 @@ import { AuthService } from './../../services/auth.service';
 import { BillingService } from './../../services/billing.service';
 import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-billing-history',
@@ -31,6 +32,39 @@ export class BillingHistoryComponent implements OnInit {
     this.breadCrumbItems = [{ label: 'Billing' }, { label: 'Details', active: true },];
     this.billing.get('/getAllTransactions').subscribe((res:any)=>{this.sortedData = this.billingData = res;console.log(this.sortedData)})
     this.user = this.auth.getCurrentUser()
+  }
+
+  updateTransaction(status,transactionObj){
+    var confirmText;
+    status=='approved' ? confirmText="approve" : confirmText="reject"
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#34c38f',
+      cancelButtonColor: '#ff3d60',
+      confirmButtonText: 'Yes, '+confirmText+' it!'
+    }).then(result => {
+      if (result.value) {
+        this.billing.updateData('/confirmTransaction',"",{status:status,transactionId:transactionObj._id}).subscribe((res:any)=>{
+          if(res.status=='updated'){
+            Swal.fire(status.toUpperCase()+'!', 'Transaction has been '+status, 'success').then(result=>{
+              this.billing.get('/getAllTransactions').subscribe((res:any)=>{this.sortedData = this.billingData = res;console.log(this.sortedData)})
+            });
+          }else{
+            Swal.fire({
+            title:'Internal Error',
+            icon:'error',
+            confirmButtonColor: '#34c38f',
+            cancelButtonColor: '#ff3d60',
+            confirmButtonText: 'Ok'})
+          }
+
+        })
+        
+      }
+    });
   }
 
   sortData(sort: Sort) {

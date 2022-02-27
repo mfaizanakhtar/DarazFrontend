@@ -1,7 +1,7 @@
 import { PlansService } from './../../services/plans.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UseremailService } from 'src/app/services/useremail.service';
+import { UserdataService } from 'src/app/services/userdata.service';
 import Swal from 'sweetalert2';
 
 import { pricingData } from './data';
@@ -21,7 +21,7 @@ export class SubscriptionPricingComponent implements OnInit {
 
   allSubscriptions:any
 
-  constructor(private user:UseremailService,private router:Router,private plans:PlansService) { }
+  constructor(private user:UserdataService,private router:Router,private plans:PlansService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Dashboard', active: true }];

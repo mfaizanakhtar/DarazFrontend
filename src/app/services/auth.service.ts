@@ -1,3 +1,4 @@
+import { BillingService } from './billing.service';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -8,7 +9,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
   result:any
-  constructor(private http:HttpClient) { }
+  subscriptionDetail:any
+  constructor(private http:HttpClient,private billing:BillingService) { }
   private baseURL="http://localhost:3000/api/"
   // private baseURL="http://dmanage.accesology.com/api/"
   // private baseURL="api/"
@@ -47,12 +49,25 @@ export class AuthService {
     let token = localStorage.getItem('auth-token');
     let user = new JwtHelperService().decodeToken(token);
     if(!user){
-      return null
+      return {}
     }
     return user;
   }
 
   getPermissions(){
-    return this.getCurrentUser().permissions
+    if(this.getCurrentUser().permissions){
+      return this.getCurrentUser().permissions
+    }
+    return {}
+  }
+
+  public setSubscriptionDetails(){
+      return this.billing.get('/getSubscriptionDetail').pipe(map(res=>{
+      localStorage.setItem('subscriptionDetail',JSON.stringify(res))
+    }))
+  }
+
+  public getSubscriptionDetail(){
+    return JSON.parse(localStorage.getItem('subscriptionDetail'))
   }
 }

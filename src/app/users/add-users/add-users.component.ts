@@ -2,7 +2,7 @@ import { LookupService } from './../../services/lookup.service';
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { UseremailService } from '../../services/useremail.service';
+import { UserdataService } from '../../services/userdata.service';
 
 @Component({
   selector: 'app-add-users',
@@ -24,7 +24,7 @@ export class AddUsersComponent implements OnInit {
   subscriptionEndDate:Date
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data:any,private user:UseremailService,private toastr:ToastrService,private dialogRef:MatDialogRef<AddUsersComponent>,
+  constructor(@Inject(MAT_DIALOG_DATA) private data:any,private user:UserdataService,private toastr:ToastrService,private dialogRef:MatDialogRef<AddUsersComponent>,
   private lookup:LookupService) { }
 
   ngOnInit(): void {

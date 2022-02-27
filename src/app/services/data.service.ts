@@ -56,7 +56,18 @@ export class DataService {
       map(response=>response)
     )
   }
-  
+
+  postDataWithoutHeaders(cap,data){
+    return this.http.post(this.baseUrl+this.url+cap,data,this.options).pipe(
+      map(response=>response)
+    )
+  }
+
+  updateDataWithoutHeaders(caption,id,data){
+    return this.http.put(this.baseUrl+this.url+'/'+caption+'/'+id,data,this.options).pipe(
+      map(response=>response)
+    )
+  }
 
   updateData(caption,id,data){
     this.setHeaders()

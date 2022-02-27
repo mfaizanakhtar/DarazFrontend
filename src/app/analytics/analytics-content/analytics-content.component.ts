@@ -89,7 +89,7 @@ export class AnalyticsContentComponent implements OnInit {
 
   adjustUserSettings() {
     this.permissions=this.auth.getPermissions()
-    if(!this.permissions.Profitibility.value){
+    if(this.permissions.hasOwnProperty("Profitibility") && this.permissions.Profitibility.value){
       this.GraphOptions.Total.Revenue=false
       this.GraphOptions.Store.Revenue=false
       this.GraphOptions.Sku.Revenue=false

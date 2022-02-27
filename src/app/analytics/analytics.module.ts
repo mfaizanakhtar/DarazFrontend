@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { LoginGuard } from '../LoginGuard';
+import { signupSubscriptionGuard } from '../signupSubscriptionGuard';
 import { AnalyticsContentComponent } from './analytics-content/analytics-content.component';
 import { StatComponent } from './stat/stat.component';
 import { HorizontalComponent } from './horizontal/horizontal.component';
@@ -32,7 +33,7 @@ import { PermissionGuard } from '../PermissionGuard';
         path:'',
         component:HorizontalComponent,
         children:[
-          {path:'',component:AnalyticsContentComponent,canActivate:[LoginGuard]}
+          {path:'',component:AnalyticsContentComponent,canActivate:[LoginGuard,signupSubscriptionGuard]}
         ]
       },
       {
@@ -47,6 +48,6 @@ import { PermissionGuard } from '../PermissionGuard';
   ],
   exports:[
   ],
-  providers:[LoginGuard,PermissionGuard],
+  providers:[LoginGuard,PermissionGuard,signupSubscriptionGuard],
 })
 export class AnalyticsModule { }

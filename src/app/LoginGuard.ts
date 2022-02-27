@@ -7,11 +7,13 @@ import { AuthService } from "./services/auth.service";
 @Injectable()
 export class LoginGuard implements CanActivate{
     constructor(private auth:AuthService,private router:Router){}
+    permissions = this.auth.getPermissions()
+    
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        if(!this.auth.isLoggedin()){
-            this.router.navigate(['login'])
+        if(this.auth.isLoggedin()){
+            return true 
         }
-        return true
+        this.router.navigate(['login'])
     }
 }

@@ -30,13 +30,13 @@ export class BillPaymentComponent implements OnInit {
   }
 
   getData(){
-    this.route.params.subscribe(params=>{
-      this.subscriptionType=params['subType'];
-    })
-
+    debugger
     this.userEmail = this.auth.getCurrentUser().useremail;
 
     this.subscriptionType = this.plan.selectedPlan
+    if(!this.subscriptionType){
+      this.router.navigate([''])
+    }
   }
 
   submitBilling(){
