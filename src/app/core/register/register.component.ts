@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserdataService } from '../../services/userdata.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -11,9 +11,10 @@ import { Component, OnInit } from '@angular/core';
 export class RegisterComponent implements OnInit {
   registerForm = new FormGroup({
     userEmail:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$")]),
-    userName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z0-9]+")]),
+    userName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z0-9]+$")]),
     userPassword:new FormControl('',[Validators.required])
   })
+  //verification code working
   isVerificationCode:boolean=false;
   verificationCode:String="";
   verificationBtn:boolean=true
@@ -28,7 +29,7 @@ export class RegisterComponent implements OnInit {
   loadingIndicator:boolean=false
   // set the currenr year
   year: number = new Date().getFullYear();
-  constructor(private users:UserdataService,private router:Router) { }
+  constructor(private users:UserdataService,private router:Router,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     document.body.removeAttribute('data-layout'); 
@@ -77,5 +78,7 @@ export class RegisterComponent implements OnInit {
       }
     },1000)
   }
+
+
 
 }

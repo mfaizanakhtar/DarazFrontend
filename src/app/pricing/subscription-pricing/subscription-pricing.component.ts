@@ -1,6 +1,7 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { PlansService } from './../../services/plans.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserdataService } from 'src/app/services/userdata.service';
 import Swal from 'sweetalert2';
 
@@ -20,8 +21,10 @@ export class SubscriptionPricingComponent implements OnInit {
   selectedSubscription:any
 
   allSubscriptions:any
+  btnText='Get Started'
+  isUpgrade:boolean;
 
-  constructor(private user:UserdataService,private router:Router,private plans:PlansService) { }
+  constructor(private user:UserdataService,private router:Router,private plans:PlansService,private auth:AuthService,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Dashboard', active: true }];
@@ -29,6 +32,8 @@ export class SubscriptionPricingComponent implements OnInit {
     this._fetchData();
     this.fetchUserSubscription();
     this.getAllSubsciprtion();
+    this.getQueryParams();
+    if(this.isUpgrade) this.btnText='Select'
   }
 
   private _fetchData() {
@@ -38,13 +43,14 @@ export class SubscriptionPricingComponent implements OnInit {
   selectSubscription(subscription){
     this.plans.selectedPlan=subscription;
     console.log(subscription)
-    this.router.navigate(['/billing']);
+    this.plans.isRenewal=false
+    if(this.isUpgrade) this.router.navigate(['/billing'],{queryParams:{isUpgrade:true}});
+    else this.router.navigate(['/billing']);
   }
 
   fetchUserSubscription(){
-    this.user.get("/currentSubscription").subscribe((res:any)=>{
-       this.selectedSubscription = res.subscriptionType
-    })
+    this.selectedSubscription=this.auth.getSubscriptionDetail()
+    console.log(this.selectedSubscription)
   }
 
   getAllSubsciprtion(){
@@ -52,6 +58,9 @@ export class SubscriptionPricingComponent implements OnInit {
       this.allSubscriptions = res;
       console.log(this.allSubscriptions)
     })
+  }
+  getQueryParams(){
+    this.isUpgrade = this.route.snapshot.queryParamMap.get('isUpgrade')=='true' ? true : false;
   }
 
 }

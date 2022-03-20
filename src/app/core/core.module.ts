@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
+import { SetSubAccPasswordComponent } from './set-sub-acc-password/set-sub-acc-password.component';
 
 
 
@@ -13,6 +14,7 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
     LoginComponent,
     RegisterComponent,
     RecoverPasswordComponent,
+    SetSubAccPasswordComponent,
   ],
   imports: [
     SharedModule,
@@ -28,6 +30,10 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
       {
         path:'recoverPassword',
         component:RecoverPasswordComponent
+      },
+      {
+        path:'verifyAndActiveAccount',
+        component:SetSubAccPasswordComponent
       }
     ])
   ]

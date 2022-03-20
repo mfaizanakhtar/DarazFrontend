@@ -1,0 +1,152 @@
+<div class="container-fluid" style="max-width: 1700px;padding-left: 50px;padding-right: 50px;">
+    <app-pagetitle title="Billing Details" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+    <div>
+
+    <app-page-nav [selectedPageNav]="selectedPageNav" (navClick)="navClick($event)" [pageNav]="pageNav"></app-page-nav>
+
+        <div class="row my-3">
+          <div class="col-lg-12">
+            <h5 *ngIf="!subscriptionDetails.futureRequest.val" class="font-size-15 text-truncate"><span class="text-dark">Looking to <a [routerLink]="['/pricing']" [queryParams]="{ isUpgrade:true }">Upgrade/Downgrade</a> Your Plan ?</span></h5>
+            <h5 *ngIf="subscriptionDetails.futureRequest.val" class="font-size-15 text-truncate"><span class="text-dark">You have a Future Request Upgrade/Downgrade of Plan of Following details. Change of mind ? <span class="text-info" style="cursor:pointer;" (click)="cancelFutureRequest()">Cancel</span> here</span></h5>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body row">
+                            <div class="col-lg-1 mt-4">
+                                <mat-checkbox *ngIf="!subscriptionDetails.futureRequest.val" [(ngModel)]="checkBox" color="primary"></mat-checkbox>
+                            </div>
+
+                            <div class="col-lg-5 mt-3">
+                                <h5 class="font-size-14 text-truncate"><span class="text-dark">SUBSCRIPTION</span></h5>
+                                <p class="mb-0 font-weight-medium"><span *ngIf="subscriptionDetails.futureRequest.val">Current Subscription: </span>{{subscriptionDetails.subscriptionType}} <span class="font-weight-medium text-danger">Expires on {{subscriptionDetails.endDate | date}}</span></p>
+                            </div>
+                            <div class="col-lg-3">
+                                <!-- <div style="width: 120px;">
+                                <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
+                                    <input type="number">
+                                </div>
+                                </div> -->
+                                <div class="row" *ngIf="subscriptionDetails.futureRequest.val">
+                                  <p class="mb-0 font-weight-medium col-lg-12"><span>Future Subscription: {{subscriptionDetails.futureRequest.subscription}}</span></p>
+                                  <span class="font-weight-medium text-info  col-lg-12">Begins from {{subscriptionDetails.futureRequest.startDate | date}}</span>
+                                  <span class="font-weight-medium text-danger col-lg-12">Expires on {{subscriptionDetails.futureRequest.endDate | date}}</span>
+                                </div>
+                                <!-- <p class="mb-0 font-weight-medium"><span *ngIf="subscriptionDetails.futureRequest.val">Future Subscription: </span>{{subscriptionDetails.futureRequest.subscription}} <span class="font-weight-medium text-danger">Expires on {{subscriptionDetails.futureRequest.endDate | date}}</span></p> -->
+                                <mat-form-field *ngIf="!subscriptionDetails.futureRequest.val" class="col-md-9" appearance="outline">
+                                    <mat-label>Duration</mat-label>
+                                    <mat-select [disabled]="!checkBox" [(ngModel)]="monthsDuration" (selectionChange)="durationChange()">
+                                      <mat-option [value]="1">
+                                        1 Month
+                                      </mat-option>
+                                      <mat-option  [value]="3">
+                                        3 Months
+                                      </mat-option>
+                                      <mat-option  [value]="6">
+                                        6 Months
+                                      </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                            </div>
+                            <div class="col-lg-3 mt-3">
+                                <span *ngIf="planData && monthsDuration" class="font-weight-bold">{{planData.Pricing*monthsDuration}} RS</span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="monthsDuration>0">
+        <div class="row pl-4">
+            <h5 class="font-size-17"><span class="text-dark">PAYMENT SUMMARY</span></h5>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body row">
+                        <div class="table-responsive mt-4 pl-4">
+                
+                            <table class="table mb-0 table-centered table-nowrap">
+                              <tbody>
+                              <!-- <ng-template #skuHeader>
+                                <tr >
+                                  <th mat-sort-header="sku">
+                                    <h5 class="font-size-14 mb-0">SKU</h5>
+                                  </th>
+                                  <th mat-sort-header="orders">
+                                    <h5 class="font-size-14 mb-0">Orders/Items</h5>
+                                  </th>
+                                  <th mat-sort-header="OwnWarehouse">
+                                    <h5 class="font-size-14 mb-0">Fbd/Fbm</h5>
+                                  </th>
+                                  <th *ngIf="permissions.hasOwnProperty('Profitibility') && permissions.Profitibility.value" mat-sort-header="revenue">
+                                    <h5 class="font-size-14 mb-0">Sales</h5>
+                                  </th>
+                                </tr>
+                              </ng-template>
+                              <ng-template [ngTemplateOutlet]="skuHeader"></ng-template> -->
+                                <tr style="border-bottom: 1px solid #dee2e6;">
+                                    <td>
+                                    <h5 class="font-size-15 mb-0">Pay With</h5>
+                                    </td>
+                                    <td>
+                                        <mat-form-field class="col-md-9"  appearance="outline">
+                                            <mat-label>Pay With</mat-label>
+                                            <mat-select [(ngModel)]="payWith">
+                                              <mat-option [value]="1">
+                                                Bank Transfer
+                                              </mat-option>
+                                              <!-- <mat-option  [value]="2">
+                                                Credit/Debit Card
+                                              </mat-option> -->
+                                            </mat-select>
+                                          </mat-form-field>
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <h5 class="font-size-15 mb-0">SUBTOTAL</h5>
+                                  </td>
+                                  <td>
+                                    <h5 class="font-size-15 mb-0">{{planData.Pricing*monthsDuration}} RS</h5>
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                      <h5 class="font-size-15 mb-0">TAX</h5>
+                                    </td>
+                                    <td>
+                                      <h5 class="font-size-15 mb-0">0 RS</h5>
+                                    </td>
+                                  </tr>
+                                <tr style="border-top: 1px solid #dee2e6;">
+                                    <td>
+                                      <h5 class="font-size-15 mb-0">TOTAL DUE</h5>
+                                    </td>
+                                    <td>
+                                      <h5 class="font-size-15 mb-0">{{planData.Pricing*monthsDuration}} RS</h5>
+                                    </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          
+                          </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-center">
+                    <button mat-raised-button color="primary" (click)="payNow()">Pay Now</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+</div>
+
+

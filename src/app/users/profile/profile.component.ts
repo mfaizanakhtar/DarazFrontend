@@ -1,3 +1,4 @@
+import { profileNav } from './profileNavData';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { UserdataService } from '../../services/userdata.service';
@@ -18,6 +19,9 @@ export class ProfileComponent implements OnInit {
   ColumnMode=ColumnMode
   loadingIndicator=true
   breadCrumbItems: Array<{}>;
+  tabType='password';
+  profileNavData=profileNav
+  selectedNav=1;
   constructor(private toastr:ToastrService,private user:UserdataService,private dialog:MatDialog,private auth:AuthService) { }
 
   ngOnInit(): void {
@@ -56,6 +60,7 @@ export class ProfileComponent implements OnInit {
     console.log("SubAccClicked")
     this.user.get('/getSubAccounts').subscribe(res=>{
       this.subaccounts=res
+      console.log(this.subaccounts)
       this.loadingIndicator=false
     })
   }
@@ -118,8 +123,16 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  matTabChanged(event){
-    if(event.index==1) this.getSubAccounts()
+  navClicked(event){
+    console.log(event)
+    this.selectedNav=event.index
+    if(event.index==1){
+      this.tabType='password'
+    }
+    else if(event.index==2){
+      this.tabType='subAccount'
+      this.getSubAccounts()
+    } 
   }
 
 }

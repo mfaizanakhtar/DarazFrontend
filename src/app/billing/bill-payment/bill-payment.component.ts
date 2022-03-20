@@ -20,6 +20,10 @@ export class BillPaymentComponent implements OnInit {
   subscriptionMonths:number=1
   bankDetail:bankDetailType;
   transactionId:any
+  defaultStep
+  isUpgrade:boolean
+  isFutureRequest:boolean=false
+  currentSubscription:any
 
   constructor(private route:ActivatedRoute,private auth:AuthService,private plan:PlansService,private lookup:LookupService,private billing:BillingService,private router:Router) { }
 
@@ -27,16 +31,23 @@ export class BillPaymentComponent implements OnInit {
     this.breadCrumbItems = [{ label: 'Billing' }, { label: 'Bill Payment', active: true }];
     this.getData();
     this.lookup.getLookupDetail("bankDetails").subscribe(res=>this.bankDetail = res)
+    if(this.plan.isRenewal){
+      this.subscriptionMonths=this.plan.renewalData.monthsDuration
+      this.defaultStep=1
+    }else this.defaultStep=0
+    this.getIsUpgrade()
+    debugger
+    if(this.isUpgrade) this.currentSubscription = this.auth.getSubscriptionDetail()
   }
 
   getData(){
-    debugger
     this.userEmail = this.auth.getCurrentUser().useremail;
 
     this.subscriptionType = this.plan.selectedPlan
     if(!this.subscriptionType){
       this.router.navigate([''])
     }
+    
   }
 
   submitBilling(){
@@ -45,6 +56,7 @@ export class BillPaymentComponent implements OnInit {
       duration:this.subscriptionMonths,
       durationType:'Months',
       pricing:this.subscriptionType.Pricing,
+      isFutureRequest:this.isFutureRequest,
       invoiceAmount:this.subscriptionMonths*this.subscriptionType.Pricing,
       bankDetail:this.bankDetail,
       transactionId:this.transactionId
@@ -59,6 +71,10 @@ export class BillPaymentComponent implements OnInit {
         this.router.navigate(['/billing/details'])
       })
     })
+  }
+
+  getIsUpgrade(){
+    this.isUpgrade = this.route.snapshot.queryParamMap.get('isUpgrade')=='true' ? true: false
   }
 
 

@@ -1,0 +1,13 @@
+diff --git a/src/app/core/recover-password/recover-password.component.ts b/src/app/core/recover-password/recover-password.component.ts
+index ce7e905..660d897 100644
+--- a/src/app/core/recover-password/recover-password.component.ts
++++ b/src/app/core/recover-password/recover-password.component.ts
+@@ -73,7 +73,7 @@ export class RecoverPasswordComponent implements OnInit {
+         }else if(res.status=='success'){
+           this.isSuccess=true
+           setTimeout(()=>{
+-            this.router.navigate(['login'])
++            this.router.navigate(['login']) 
+           },4000)
+         }
+       })

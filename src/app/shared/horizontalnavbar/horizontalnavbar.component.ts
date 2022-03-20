@@ -16,13 +16,8 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
   menuItems = [];
   permissions
 
-  // tslint:disable-next-line: max-line-length
   constructor(private router: Router,private auth:AuthService) {
-    // router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     this.activateMenu();
-    //   }
-    // });
+
   }
 
   ngOnInit(): void {

@@ -1,9 +1,12 @@
+
+
 <div class="container-fluid" style="max-width: 1700px;padding-left: 50px;padding-right: 50px;">
     <app-pagetitle title="Billing Details" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
   <div >
-  
-  
-  <mat-divider></mat-divider>
+
+    <app-page-nav [selectedPageNav]="selectedPageNav" (navClick)="navClick($event)" [pageNav]="pageNav"></app-page-nav>
+
+
   
   <div class="row">
     <div class="col-12">

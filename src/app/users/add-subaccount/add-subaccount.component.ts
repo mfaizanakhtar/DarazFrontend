@@ -12,6 +12,7 @@ import { UserdataService } from '../../services/userdata.service';
 export class AddSubaccountComponent implements OnInit {
   isEdit=false
   permissions:any={}
+  invalid={loginemail:false,username:false}
   User={
     loginemail:"",
     username:"",
@@ -31,7 +32,9 @@ export class AddSubaccountComponent implements OnInit {
   }
 
   submitDetails(){
-    console.log(this.permissions)
+    this.validateField(this.User.loginemail,"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$") ? this.invalid.loginemail=false : this.invalid.loginemail=true
+    this.validateField(this.User.username,"^[a-zA-Z0-9]+$") ? this.invalid.username=false : this.invalid.username=true;
+    if(this.invalid.loginemail || this.invalid.username) return
     this.User.permissions = this.permissions
     if(!this.isEdit){
 
@@ -71,12 +74,17 @@ export class AddSubaccountComponent implements OnInit {
 
   getPermissions(){
     var userPermissions:any = this.auth.getPermissions()
-    console.log(userPermissions)
     for(var key in userPermissions){
       if(userPermissions[key].value){
         this.permissions[key]=userPermissions[key] 
       }
     }
+  }
+
+  validateField(field,regex){
+    debugger
+    const reg = new RegExp(regex)
+    return reg.test(field);
   }
 
 }

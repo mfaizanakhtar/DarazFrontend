@@ -1,3 +1,5 @@
+import { pageNav } from './../pageNav';
+import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { BillingService } from './../../services/billing.service';
 import { Component, OnInit } from '@angular/core';
@@ -25,8 +27,11 @@ export class BillingHistoryComponent implements OnInit {
   loadingIndicator = true;
   loadingIndicatorValue=0
   user:any
+  //pageNavBar
+  pageNav=pageNav;
+  selectedPageNav=1
 
-  constructor(private billing:BillingService,private auth:AuthService) { }
+  constructor(private billing:BillingService,private auth:AuthService,private router:Router) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Billing' }, { label: 'Details', active: true },];
@@ -66,6 +71,7 @@ export class BillingHistoryComponent implements OnInit {
       }
     });
   }
+
 
   sortData(sort: Sort) {
     var data = this.billingData.slice()
@@ -110,6 +116,10 @@ export class BillingHistoryComponent implements OnInit {
 
   changePage(event){
 
+  }
+
+  navClick(tab){
+    this.router.navigate([tab.link])
   }
 
 

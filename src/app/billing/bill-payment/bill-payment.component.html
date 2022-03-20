@@ -7,10 +7,10 @@
               <div class="card-body">
                 <h4 class="card-title mb-4">Payment Wizard</h4>
       
-                <aw-wizard [navBarLayout]="'large-empty-symbols'">
-                  <aw-wizard-step stepTitle="Subscription Overview">
+                <aw-wizard [navBarLayout]="'large-empty-symbols'" >
+                  <aw-wizard-step *ngIf="defaultStep==0" stepTitle="Subscription Overview">
                     <ng-template awWizardStepSymbol>
-                      1
+                      {{1-defaultStep}}
                     </ng-template>
                     <div class="row">
                       <div class="col-12">
@@ -49,6 +49,13 @@
                             <input [ngModel]="subscriptionType.Pricing" class="form-control" disabled name="password" type="text">
                           </div>
                         </div>
+                        <div *ngIf="isUpgrade" class="row my-5">
+                          <div class="col-md-12">
+                            <mat-checkbox [(ngModel)]="isFutureRequest" color="primary"> Change My Plan When Current Plan Expires on 
+                              <span class="text-danger">{{this.currentSubscription.endDate | date}}</span>
+                            </mat-checkbox>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <ul class="list-inline wizard mb-0">
@@ -57,9 +64,9 @@
                     </ul>
                   </aw-wizard-step>
       
-                  <aw-wizard-step stepTitle="Seller Details">
+                  <aw-wizard-step stepTitle="Invoice">
                     <ng-template awWizardStepSymbol>
-                      2
+                      {{2-defaultStep}}
                     </ng-template>
                     <div class="row">
                       <div class="col-12">
@@ -93,16 +100,16 @@
                       </div>
                     </div>
                     <ul class="list-inline wizard mb-0">
-                      <li class="previous list-inline-item"><button class="btn btn-primary" awPreviousStep>Previous</button>
+                      <li *ngIf="defaultStep==0" class="previous list-inline-item"><button class="btn btn-primary" awPreviousStep>Previous</button>
                       </li>
                       <li class="next list-inline-item float-right"><button class="btn btn-primary" awNextStep>Next</button>
                       </li>
                     </ul>
                   </aw-wizard-step>
       
-                  <aw-wizard-step stepTitle="Seller Details">
+                  <aw-wizard-step stepTitle="Transaction Details">
                     <ng-template awWizardStepSymbol>
-                      3
+                      {{3-defaultStep}}
                     </ng-template>
                     <div class="col-12">
                       <div class="form-group row mb-3">

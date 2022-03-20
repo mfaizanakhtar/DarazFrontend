@@ -7,10 +7,12 @@ import { LoginGuard } from '../LoginGuard';
 import { ArchwizardModule } from 'angular-archwizard';
 import { BillingHistoryComponent } from './billing-history/billing-history.component'
 import { NgbAccordionModule, NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { BillingRenewalComponent } from './billing-renewal/billing-renewal.component';
+import { PageNavComponent } from '../shared/page-nav/page-nav.component';
 
 
 @NgModule({
-  declarations: [BillPaymentComponent, BillingHistoryComponent],
+  declarations: [BillPaymentComponent, BillingHistoryComponent, BillingRenewalComponent],
   imports: [
     SharedModule,
     NgbAccordionModule,
@@ -26,6 +28,11 @@ import { NgbAccordionModule, NgbPaginationModule, NgbTypeaheadModule } from '@ng
         path:'',
         component:HorizontalComponent,
         children:[{path:'details',component:BillingHistoryComponent,canActivate:[LoginGuard]}]
+      },
+      {
+        path:'',
+        component:HorizontalComponent,
+        children:[{path:'renewal',component:BillingRenewalComponent,canActivate:[LoginGuard]}]
       }
     ]),
     ArchwizardModule 

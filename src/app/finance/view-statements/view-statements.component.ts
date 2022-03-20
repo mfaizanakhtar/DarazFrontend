@@ -37,7 +37,7 @@ export class ViewStatementsComponent implements OnInit {
       console.log(res)
       this.StatementArray=res.Statements
       this.StoreArray=res.Stores
-      this.Statement=this.StatementArray[0]._id
+      this.Statement= this.StatementArray.length>0 ? this.StatementArray[0]._id : []
       this.getStatements()
     })
   }

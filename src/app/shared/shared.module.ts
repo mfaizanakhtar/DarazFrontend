@@ -50,6 +50,7 @@ import { HorizontalComponent } from '../analytics/horizontal/horizontal.componen
 import { NgxSpinnerModule } from "ngx-spinner";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { PageNavComponent } from './page-nav/page-nav.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -65,6 +66,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RightsidebarComponent,
     PagetitleComponent,
     HorizontalComponent,
+    PageNavComponent
   ],
   imports: [
     CommonModule,
@@ -167,6 +169,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RightsidebarComponent,
     PagetitleComponent,
     HorizontalComponent,
+    PageNavComponent
   ],
   providers:[
     {

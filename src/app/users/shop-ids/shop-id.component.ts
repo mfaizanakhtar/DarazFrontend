@@ -91,14 +91,6 @@ export class ShopIdComponent implements OnInit {
     })
 
     dialogRef.afterClosed().subscribe(res=>{
-
-        Swal.fire({
-          title: 'Sucess',
-          text: 'Shop is added sucessfully',
-          icon: 'success',
-          confirmButtonColor: '#5438dc'
-        });
-
       this.getIds()
     })
   }

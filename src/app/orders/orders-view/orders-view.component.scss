@@ -58,3 +58,18 @@ td, th {
   .rightspace{
     margin-right: 10px;
   }
+
+.mat-button-toggle-group{
+    border-radius: 10px !important;
+}
+
+.mat-button-toggle{
+  background-color: white;
+  color: black;
+  border-radius: 10px !important;
+}
+
+.mat-button-toggle-checked {
+  background-color: #5664d2;
+  color:white
+}

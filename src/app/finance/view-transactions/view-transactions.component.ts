@@ -76,7 +76,7 @@ export class ViewTransactionsComponent implements OnInit {
       this.pageLength=response.Length
       this.sortAndSetStores(response.Store)
       this.StatementArray=response.Statements
-      this.Balance=response.TotalBalance[0].Sum
+      this.Balance=response.TotalBalance.length>0 ? response.TotalBalance[0].Sum : []
 
       this.LoadingIndicator=false
       this.pageLoadingIndicator=false

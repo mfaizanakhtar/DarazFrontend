@@ -13,7 +13,7 @@
     <!-- end row -->
     <div class="row">
       <div class="col-xl-3 col-sm-6" *ngFor="let sub of allSubscriptions">
-        <div [class.mat-elevation-z8]="sub.Name==selectedSubscription" class="card pricing-box mat-elevation-z8">
+        <div [class.mat-elevation-z8]="sub.Name==selectedSubscription.subscriptionType" class="card pricing-box mat-elevation-z8">
           <div class="card-body p-4">
             <div class="text-center">
               <div class="mt-3">
@@ -38,8 +38,8 @@
               </div>
   
               <div class="mt-5 mb-3">
-                <button *ngIf="sub.Name!=selectedSubscription" (click)="selectSubscription(sub)" class="btn btn-primary w-md">Get started</button>
-                <button *ngIf="sub.Name==selectedSubscription" disabled class="btn btn-primary w-md">Selected</button>
+                <button *ngIf="sub.Name!=selectedSubscription.subscriptionType" (click)="selectSubscription(sub)" class="btn btn-primary w-md">{{btnText}}</button>
+                <button *ngIf="sub.Name==selectedSubscription.subscriptionType" disabled class="btn btn-primary w-md">Selected</button>
               </div>
             </div>
           </div>
