@@ -112,6 +112,7 @@ export class AddUsersComponent implements OnInit {
     this.lookup.getLookupDetail("permissions").subscribe((res:any)=>{
       for(var key in res){
         if(!this.User.permissions.hasOwnProperty(key)){
+          debugger
           this.User.permissions[key]=res[key]
         }
       }

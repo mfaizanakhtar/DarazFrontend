@@ -16,8 +16,10 @@ export class AddSubaccountComponent implements OnInit {
   User={
     loginemail:"",
     username:"",
-    permissions:Object
+    permissions:Object,
+    bypassSubAccVerification:false
   }
+  userPermissions:any
   constructor(private user:UserdataService,private dialog:MatDialogRef<AddSubaccountComponent>,
     @Inject(MAT_DIALOG_DATA) private data:any,private auth:AuthService) { }
 
@@ -37,7 +39,8 @@ export class AddSubaccountComponent implements OnInit {
     if(this.invalid.loginemail || this.invalid.username) return
     this.User.permissions = this.permissions
     if(!this.isEdit){
-
+      this.User.bypassSubAccVerification = this.isByPassSubAccVerification() ? true : false
+      
       this.user.postDataByCap('/addSubAccount',this.User).subscribe((res:any)=>{
         if(res.message=="User Registered"){
           this.dialog.close({dialogResult:{success:true,message:res.message}})
@@ -73,12 +76,31 @@ export class AddSubaccountComponent implements OnInit {
   }
 
   getPermissions(){
-    var userPermissions:any = this.auth.getPermissions()
-    for(var key in userPermissions){
-      if(userPermissions[key].value){
-        this.permissions[key]=userPermissions[key] 
+    this.userPermissions = this.auth.getPermissions()
+    if(!this.isEdit){  
+      for(var key in this.userPermissions){
+        if(this.userPermissions[key].value){
+          if(this.userPermissions[key].hasOwnProperty("isSubAccount") && !this.userPermissions[key].isSubAccount) return 
+          this.permissions[key]=this.userPermissions[key] 
+        }
+      }
+    }else if(this.isEdit){
+      this.permissions = this.User.permissions
+      for(var key in this.userPermissions){
+        if(!this.permissions.hasOwnProperty(key)){
+          if(this.userPermissions[key].hasOwnProperty("isSubAccount") && !this.userPermissions[key].isSubAccount) return 
+          this.permissions[key] = this.userPermissions[key];
+          this.permissions[key].value=false;
+        }
       }
     }
+
+  }
+
+  isByPassSubAccVerification(){
+    if(this.userPermissions.hasOwnProperty("bypassSubAccVerification") && 
+      this.userPermissions.bypassSubAccVerification.value==true) return true;
+    else return false
   }
 
   validateField(field,regex){

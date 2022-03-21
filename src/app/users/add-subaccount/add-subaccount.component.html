@@ -6,13 +6,13 @@
 
 <div class="row">
 
-    <mat-form-field class="col-xl-6" appearance="outline" >
+    <mat-form-field [ngClass]="isByPassSubAccVerification() ? 'col-xl-6' : 'col-xl-12'" appearance="outline" >
         <mat-label>Sub Account Email</mat-label>
         <input [class.is-invalid]="invalid.loginemail" [readonly]="isEdit" [(ngModel)]="User.loginemail" matInput placeholder="example@gmail.com">
         <small class="text-danger" *ngIf="invalid.loginemail">Please provide a valid email address</small>
     </mat-form-field>
 
-    <mat-form-field class="col-xl-6" appearance="outline">
+    <mat-form-field *ngIf="isByPassSubAccVerification()" class="col-xl-6" appearance="outline">
         <mat-label>Username</mat-label>
         <input [class.is-invalid]="invalid.username" [readonly]="isEdit" [(ngModel)]="User.username" matInput placeholder="John">
         <small class="text-danger" *ngIf="invalid.username">Please enter alphanumeric username</small>
@@ -31,5 +31,5 @@
 
 <div style="flex-direction: column;align-items: center;display: flex;margin-top:15px" >
 <button id="buttonSubmit" mat-raised-button color="primary" style="width: 160px;" (click)="submitDetails()">Create Sub Account</button>
-<button [hidden]="!isEdit" mat-raised-button color="primary" style="width: 160px;margin-top: 15px;" (click)="resetPassword()">Reset Password</button>
+<button [hidden]="!isEdit || !isByPassSubAccVerification()" mat-raised-button color="primary" style="width: 160px;margin-top: 15px;" (click)="resetPassword()">Reset Password</button>
 </div>
