@@ -26,6 +26,8 @@ export class DscSkuTracking implements OnInit {
     SelectionType = SelectionType;
     sortedData=[];
     selected=[];
+    //permissions
+    userPermissions:any;
 
     searchTerm:any;
     pageSize:any=10;
@@ -51,6 +53,7 @@ export class DscSkuTracking implements OnInit {
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'DSC Inventory', active: true },];
 
     this.getDarazSkus()
+    this.userPermissions = this.auth.getPermissions();
     
   }
 

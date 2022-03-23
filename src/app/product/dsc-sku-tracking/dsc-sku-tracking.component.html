@@ -132,7 +132,7 @@
                 <th mat-sort-header="quantity">Total Stock</th>
                 <th mat-sort-header="multiWarehouseInventories.quantity">FBM Stock</th>
                 <th mat-sort-header="fblWarehouseInventories.quantity">FBD Stock</th>
-                <th mat-sort-header="cost">Cost</th>
+                <th *ngIf="userPermissions?.DSCInventoryCost?.value"  mat-sort-header="cost">Cost</th>
                 <th>Shop</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -150,7 +150,7 @@
                   <img src="{{sku.Images[0]}}" height="70px" width="70px">  
                 </td>
                 <td>
-                  <ngb-highlight [result]="sku.SellerSku" [term]="searchTerm"></ngb-highlight>
+                  <a href="{{sku.Url}}" target="_blank"><ngb-highlight [result]="sku.SellerSku" [term]="searchTerm"></ngb-highlight></a>
                 </td>
                 <td>
                   <ngb-highlight [result]="sku.ShopSku" [term]="searchTerm"></ngb-highlight>
@@ -164,7 +164,7 @@
                 <td>
                   <ngb-highlight [result]="sku.fblWarehouseInventories.quantity" [term]="searchTerm"></ngb-highlight>
                 </td>
-                <td>
+                <td *ngIf="userPermissions?.DSCInventoryCost?.value">
 
                   <ngb-highlight [result]="sku.cost" [term]="searchTerm"></ngb-highlight>
 
