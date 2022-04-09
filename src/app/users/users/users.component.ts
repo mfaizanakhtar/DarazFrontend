@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Toast, ToastrService } from 'ngx-toastr';
 import { DatatableComponent,ColumnMode,SelectionType } from'@swimlane/ngx-datatable'
-import { UseremailService } from '../../services/useremail.service';
+import { UserdataService } from '../../services/userdata.service';
 import {MatDialog} from '@angular/material/dialog';
 import { AddUsersComponent } from '../add-users/add-users.component';
 
@@ -22,7 +22,7 @@ export class UsersComponent implements AfterViewInit {
 
 
 
-  constructor(private user:UseremailService,private toastr:ToastrService,private dialog:MatDialog) {
+  constructor(private user:UserdataService,private toastr:ToastrService,private dialog:MatDialog) {
    }
 
   ngAfterViewInit(): void {

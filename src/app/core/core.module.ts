@@ -1,24 +1,40 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
-import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
-import { LoginupdateComponent } from './loginupdate/loginupdate.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { RecoverPasswordComponent } from './recover-password/recover-password.component';
+import { SetSubAccPasswordComponent } from './set-sub-acc-password/set-sub-acc-password.component';
 
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    LoginupdateComponent
+    RegisterComponent,
+    RecoverPasswordComponent,
+    SetSubAccPasswordComponent,
   ],
   imports: [
     SharedModule,
     RouterModule.forChild([
       {
         path:'',
-        component:LoginupdateComponent
+        component:LoginComponent
       },
+      {
+        path:'register',
+        component:RegisterComponent
+      },
+      {
+        path:'recoverPassword',
+        component:RecoverPasswordComponent
+      },
+      {
+        path:'verifyAndActiveAccount',
+        component:SetSubAccPasswordComponent
+      }
     ])
   ]
 })

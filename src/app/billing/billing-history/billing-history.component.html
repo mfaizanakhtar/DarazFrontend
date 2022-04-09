@@ -1,0 +1,116 @@
+
+
+<div class="container-fluid" style="max-width: 1700px;padding-left: 50px;padding-right: 50px;">
+    <app-pagetitle title="Billing Details" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+  <div >
+
+    <app-page-nav [selectedPageNav]="selectedPageNav" (navClick)="navClick($event)" [pageNav]="pageNav"></app-page-nav>
+
+
+  
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+                    <!--Loading Indicator-->
+        <div class="row">
+            <div *ngIf="loadingIndicator" class="col-md-12">
+              <ngb-progressbar height="6px" [value]="loadingIndicatorValue" type="info"></ngb-progressbar>
+            </div>
+          </div>
+          <!--Loading Indicator End-->
+  
+          <!-- Table -->
+          <div class="table-responsive">
+            <table id="basic-datatable"
+              class="table table-centered dt-responsive nowrap  no-footer dtr-inline" matSort (matSortChange)="sortData($event)">
+              <thead>
+                <tr>
+                  <th mat-sort-header="billingId">Billing Id</th>
+                  <th mat-sort-header="createdAt">Transaction Date</th>
+                  <th *ngIf="user.usertype=='admin'" mat-sort-header="userEmail">User Email</th>
+                  <th mat-sort-header="subscriptionType">Subscription Type</th>
+                  <th mat-sort-header="duration">Duration</th>
+                  <th mat-sort-header="pricing">Pricing</th>
+                  <th mat-sort-header="invoiceAmount">Invoice Amount</th>
+                  <th mat-sort-header="transactionId">Transaction ID</th>
+                  <th mat-sort-header="status">Status</th>
+                  <th *ngIf="user.usertype=='admin'">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+  
+                <tr *ngFor="let billing of sortedData;let rowIndex=index">
+                  <td>
+                    <a class="text-dark font-weight-bold">
+                      <ngb-highlight [result]="billing.billingId" [term]="searchTerm"></ngb-highlight>
+                    </a>
+                  </td>
+                  <td>
+                      <ngb-highlight [result]="billing.createdAt | date:'MM/dd/yyyy h:mma'" [term]="searchTerm"></ngb-highlight>
+                  </td>
+                  <td *ngIf="user.usertype=='admin'">
+                    <ngb-highlight [result]="billing.userEmail" [term]="searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="billing.subscriptionType" [term]="searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="billing.duration + ' ' +billing.durationType" [term]="searchTerm"></ngb-highlight>
+                  </td>
+
+                  <td>
+                    <ngb-highlight [result]="billing.pricing" [term]="searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="billing.invoiceAmount" [term]="searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="billing.transactionId" [term]="searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <div class="badge font-size-12" [ngClass]="{'badge-soft-danger': billing.status === 'rejected',
+                    'badge-soft-success':billing.status === 'approved','badge-soft-warning': billing.status === 'pending'}">
+                      <ngb-highlight [result]="billing.status" [term]="searchTerm"></ngb-highlight>
+                    </div>
+                  </td>
+                  <td *ngIf="user.usertype=='admin'">
+                    <a *ngIf="billing.status!='approved'" (click)="updateTransaction('approved',billing)" class="text-success" placement="top" ngbTooltip="Approve"><i
+                      class="mdi mdi-check-underline-circle font-size-18"></i></a>
+                    <a *ngIf="billing.status!='rejected'" (click)="updateTransaction('rejected',billing)" class="text-danger" placement="top" ngbTooltip="Reject"><i
+                        class="mdi mdi-close-circle font-size-18"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- End table -->
+          <div class="row justify-content-md-between align-items-md-center mt-2">
+            <div class="col-sm-12 col-md-5">
+  
+              <div class="dataTables_length" id="tickets-table_length"><label
+                class="d-inline-flex align-items-center">Show
+                <select (change)="changePageSize()" name="tickets-table_length" aria-controls="tickets-table" name="pageSize"
+                  [(ngModel)]="pSize"
+                  class="custom-select custom-select-sm form-control form-control-sm mx-2">
+                  <option [ngValue]="10">10</option>
+                  <option [ngValue]="25">25</option>
+                  <option [ngValue]="50">50</option>
+                  <option [ngValue]="100">100</option>
+                </select> entries</label></div>
+            </div>
+            <!-- Pagination -->
+            <div class="col-sm-12 col-md-5">
+              <div class="text-md-right float-md-right pagination-rounded">
+                <ngb-pagination (pageChange)="changePage($event)" [collectionSize]="length" [page]="pIndex+1" [pageSize]="pSize">
+                </ngb-pagination>
+              </div>
+            </div>
+            <!-- End Pagination -->
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>

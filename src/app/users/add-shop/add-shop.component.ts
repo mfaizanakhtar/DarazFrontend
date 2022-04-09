@@ -12,7 +12,6 @@ export class AddShopComponent implements OnInit {
   value:any
   shopId:any
   secretKey:any
-  isDelete=false
   shopName:any
   shopAddress:any
   shopState:any
@@ -84,8 +83,6 @@ export class AddShopComponent implements OnInit {
       this.shopPhone=this.idData.shopPhone
 
       document.getElementById('btnShop').innerHTML="Update Shop"
-
-      this.isDelete=true
       
     }
     else{

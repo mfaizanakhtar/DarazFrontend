@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddShopComponent } from '../add-shop/add-shop.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-shop-id',
@@ -15,9 +16,11 @@ export class ShopIdComponent implements OnInit {
   darazIds:any
   ColumnMode=ColumnMode
   loadingIndicator=false;
+  breadCrumbItems: Array<{}>;
 
   ngOnInit(): void {
     this.getIds()
+    this.breadCrumbItems = [{ label: 'Home' }, { label: 'Shops', active: true },];
   }
 
   addids(value){
@@ -40,12 +43,38 @@ export class ShopIdComponent implements OnInit {
   }
 
   onActivate(event){
-    if(event.type=="click"){
-      this.clickId(event.row)
-    }
+    // if(event.type=="click"){
+    //   this.clickId(event.row)
+    // }
   }
 
-  clickId(id){
+  deleteShop(row){
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#34c38f',
+      cancelButtonColor: '#ff3d60',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(result => {
+      if (result.value) {
+      this.addid.deleteData(row.shopid).subscribe(res=>{
+        var deleteRes:any=res
+        if(deleteRes.deletedCount==1){
+        Swal.fire('Deleted!', 'Your Shop has been deleted.', 'success');
+        this.getIds()
+        }
+      })
+    }
+
+    });
+    
+
+  }
+
+  editShop(id){
     var dialogRef = this.dialog.open(AddShopComponent,{
       width:'1300px',height:'700px',data:id
     })

@@ -1,35 +1,34 @@
 <!-- <app-navbar></app-navbar> -->
-<div *ngIf="loadingIndicator" class="wrapper">
-    <div class="inner"><mat-spinner></mat-spinner></div>
+<div *ngIf="loadingIndicator" class="row d-flex justify-content-center">
+    <mat-spinner></mat-spinner>
   </div>
 
-<div *ngIf="!loadingIndicator" class="sidemargin">
-<mat-divider style="margin-bottom: 30px;"></mat-divider>
-<div style="display: flex;flex-wrap: wrap;">
-<h1>Statement</h1>
+<div *ngIf="!loadingIndicator" class="container-fluid" style="max-width: 1700px;padding-left: 50px;padding-right: 50px;">
+    <div class="row">
+        <app-pagetitle class="col-lg-12" title="Statements" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+    </div>
+    <div class="row">
 
-<mat-form-field appearance="fill" style="margin-left: 10px;">
-    <mat-label>Filter Statement</mat-label>
-    <mat-select [(ngModel)]="Statement" (selectionChange)="statementSelected($event)">
-      <mat-option value="All">All</mat-option>
-      <mat-option *ngFor="let statement of StatementArray" [value]="statement._id">{{statement._id}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="col-lg-2">
+        <mat-label>Filter Statement</mat-label>
+        <mat-select [(ngModel)]="Statement" (selectionChange)="statementSelected($event)">
+        <mat-option value="All">All</mat-option>
+        <mat-option *ngFor="let statement of StatementArray" [value]="statement._id">{{statement._id}}</mat-option>
+        </mat-select>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" style="margin-left: 10px;">
-    <mat-label>Filter Shop</mat-label>
-    <mat-select [(ngModel)]="Shop" (selectionChange)="shopSelected($event)">
-      <mat-option value="All">All</mat-option>
-      <mat-option *ngFor="let shop of StoreArray" [value]="shop._id">{{shop._id}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="col-lg-2">
+        <mat-label>Filter Shop</mat-label>
+        <mat-select [(ngModel)]="Shop" (selectionChange)="shopSelected($event)">
+        <mat-option value="All">All</mat-option>
+        <mat-option *ngFor="let shop of StoreArray" [value]="shop._id">{{shop._id}}</mat-option>
+        </mat-select>
+    </mat-form-field>
 
-</div>
+    </div>
 
-<mat-divider style="margin-top:30px;margin-bottom:30px;"></mat-divider>
-<div style="box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);margin-left: 10%;margin-right: 10%;margin-top: 50px;">
-<div style="margin-left: 100px;margin-right: 100px;">
-<table>
+<div class="row mat-elevation-z5" style="border-radius: 20px;padding:50px;">
+<table class="col-lg-12">
     <th>Orders</th>
     <tr>
         <td>Item Charges</td>
@@ -171,7 +170,6 @@
     </tr>
     <tr><mat-divider style="margin-top:10px;margin-bottom:10px"></mat-divider></tr>
 </table>
-</div>
 </div>
 </div>
 

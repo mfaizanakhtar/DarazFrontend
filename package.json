@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "pscp -P 22 -i D:/USB/Deployment-MEANSTACK/Aws-Key.ppk -r C:/Users/92321/Documents/GitHub/DarazFrontend/dist/* ubuntu@ec2-18-216-100-108.us-east-2.compute.amazonaws.com:/daraz/frontend-angular"
+    "deploy": "pscp -P 22 -i C:/Users/Faizan/Desktop/Deployment-MEANSTACK/AWSMumbai.ppk -r E:/GitHub/DarazFrontend/dist/* ubuntu@ec2-13-233-92-55.ap-south-1.compute.amazonaws.com:/daraz/frontend-angular"
   },
   "private": true,
   "dependencies": {
@@ -35,7 +35,7 @@
     "@fullcalendar/interaction": "^4.4.2",
     "@fullcalendar/list": "^4.4.2",
     "@fullcalendar/timegrid": "^4.4.2",
-    "@ng-bootstrap/ng-bootstrap": "^7.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^8.0.4",
     "@ng-select/ng-select": "^4.0.1",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",

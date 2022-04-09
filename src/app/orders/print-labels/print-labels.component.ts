@@ -43,6 +43,7 @@ export class PrintLabelsComponent implements OnInit {
   }
   getLabelTrackingBarcode(tracking,orderitems){
     for(var item of orderitems){
+      if(item.Status=='canceled') continue;
       if(item.labelTracking==tracking){
         return item.trackingBarcode
       }
@@ -50,8 +51,10 @@ export class PrintLabelsComponent implements OnInit {
     
   }
   getLabelProperty(tracking,orderitems,property){
-    for(var item of orderitems){
+    for(var [index,item] of orderitems.entries()){
+      if(item.Status=='canceled') continue;
       if(item.labelTracking==tracking){
+        if(property==undefined) return index;
         return item[property]
       }
     }
@@ -61,6 +64,7 @@ export class PrintLabelsComponent implements OnInit {
   getLabelItemCount(tracking,orderitems){
     var skus=[]
     for(var item of orderitems){
+        if(item.Status=='canceled') continue;
         if(item.labelTracking==tracking){
           skus.push(item.Sku)
         }
@@ -76,6 +80,7 @@ export class PrintLabelsComponent implements OnInit {
 
     var skus=[]
     for(var item of orderitems){
+        if(item.Status=='canceled') continue;
         if(item.labelTracking==tracking){
           skus.push(item.Sku)
         }

@@ -7,6 +7,7 @@ import { latLng, tileLayer } from 'leaflet';
 import { ChartType } from './dashboard.model';
 
 import { revenueChart } from './data';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-profit-analytics-content',
@@ -22,11 +23,14 @@ export class ProfitAnalyticsComponent implements OnInit {
   //data
   ProfitStats={items:0,sales:0,costs:0,payout:0,profit:0,orders:0}
   StoreProfitStats=[]
+  SortedStoreProfitStats=[]
   StoreSkuProfitStats=[]
+  SortedStoreSkuProfitStats=[]
   TotalStoreSkuProfitStats={_id:null,items:0,costs:0,profit:0}
   SelectedSku:any
   SelectedStore:any
   OrderAnalytics:any
+  StatusCount:any={rawData:{},status:[],orders:[],items:[],sales:[]}
   //graph
   ProfitAnalyticsGraph:any={Data:[],Labels:[]}
   StoreProfitAnalyticsGraph:any={Data:[],Labels:[]}
@@ -127,6 +131,20 @@ getProfitStats(){
     this.loadingIndicator=false
   })
 
+  this.stats.get('/OrderStatuses/?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
+    if(res.length>0){
+      this.StatusCount={rawData:{},status:[],orders:[],items:[],sales:[]}
+      this.StatusCount.rawData=res;
+      for(var data of this.StatusCount.rawData){
+        if(data.status=='ready_to_ship') this.StatusCount.status.push('RTS'); else this.StatusCount.status.push(data.status.toUpperCase())
+        this.StatusCount.orders.push(data.count.OrderCount)
+        this.StatusCount.items.push(data.count.ItemCount)
+        this.StatusCount.sales.push(data.count.sales)
+      }
+    }
+    console.log(this.StatusCount)
+  })
+
   this.getOverviewGraph()
 
 }
@@ -146,7 +164,7 @@ getOverviewGraph(){
 getStoresProfitStats(){
   this.storesLoading=true
   this.stats.get('/getStoresProfitStats?startdate='+this.startdate.toISOString()+"&enddate="+this.enddate.toISOString()).subscribe((res:any)=>{
-    this.StoreProfitStats=res
+    this.SortedStoreProfitStats=this.StoreProfitStats=res
     if(res.length>0) this.StoreClick(this.StoreProfitStats[0])
     this.storesLoading=false
   })
@@ -156,7 +174,7 @@ StoreClick(store){
   this.skuLoading=true
   this.TotalStoreSkuProfitStats=store
   this.stats.get('/getStoreSkuProfitStats?startdate='+this.startdate.toISOString()+"&enddate="+this.enddate.toISOString()+"&store="+this.TotalStoreSkuProfitStats._id).subscribe((res:any)=>{
-    this.StoreSkuProfitStats=res
+    this.SortedStoreSkuProfitStats=this.StoreSkuProfitStats=res
     this.SkuClick(this.StoreSkuProfitStats[0]._id)
     this.skuLoading=false
   })
@@ -193,6 +211,66 @@ getSkuGraph(){
     console.log("profit",profit)
     console.log("cost",cost)
     return (profit/cost)*100
+  }
+
+  sortStores(sort: Sort) {
+    var data = this.StoreProfitStats.slice()
+    if (!sort.active || sort.direction === '') {
+      this.SortedStoreProfitStats = data;
+      return;
+    }
+    this.SortedStoreProfitStats = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'store':
+          return this.compare(a._id, b._id, isAsc);
+        case 'orders':
+          return this.compare(a.orders, b.orders, isAsc);
+        case 'sales':
+          return this.compare(a.sales, b.sales, isAsc);
+        case 'payout':
+          return this.compare(a.payout, b.payout, isAsc);  
+        case 'costs':
+          return this.compare(a.costs, b.costs, isAsc);
+        case 'profit':
+          return this.compare(a.profit, b.profit, isAsc);              
+        default:
+          return 0;
+      }
+    });
+  }
+  
+  sortSkus(sort: Sort) {
+    var data = this.StoreSkuProfitStats.slice()
+    if (!sort.active || sort.direction === '') {
+      this.SortedStoreSkuProfitStats = data;
+      return;
+    }
+    this.SortedStoreSkuProfitStats = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'sku':
+          return this.compare(a._id, b._id, isAsc);
+        case 'items':
+          return this.compare(a.items, b.items, isAsc);
+        case 'sales':
+          return this.compare(a.sales, b.sales, isAsc);
+        case 'payout':
+          return this.compare(a.payout, b.payout, isAsc);
+        case 'costs':
+          return this.compare(a.costs, b.costs, isAsc);
+        case 'profit':
+          return this.compare(a.profit, b.profit, isAsc);
+        case 'roi':
+          return this.compare(this.getRoi(a.profit,a.costs), this.getRoi(b.profit,b.costs), isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+  
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
 

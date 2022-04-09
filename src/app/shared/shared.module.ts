@@ -1,4 +1,3 @@
-import { HorizontalnewnavbarComponent } from './horizontalnewnav/horizontalnavbar.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -33,7 +32,7 @@ import {NgxPrintModule} from 'ngx-print'
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { NavbarComponent } from 'src/app/shared/navbar/navbar.component';
-import { NgbNavModule, NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbDropdownModule, NgbTooltipModule, NgbProgressbarModule, NgbPopover, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -50,6 +49,8 @@ import { PagetitleComponent } from './pagetitle/pagetitle.component';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import { PageNavComponent } from './page-nav/page-nav.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -65,7 +66,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RightsidebarComponent,
     PagetitleComponent,
     HorizontalComponent,
-    HorizontalnewnavbarComponent
+    PageNavComponent
   ],
   imports: [
     CommonModule,
@@ -87,6 +88,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatProgressSpinnerModule,
     MatBottomSheetModule,
     MatExpansionModule,
+    NgbProgressbarModule,
+    NgbPopoverModule,
+    ScrollingModule,
+    
 
     AppRoutingModule,
 
@@ -131,6 +136,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatProgressSpinnerModule,
     MatBottomSheetModule,
     MatExpansionModule,
+    ScrollingModule,
 
     AppRoutingModule,
 
@@ -153,6 +159,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FullCalendarModule,
     LeafletModule,
     NgxSpinnerModule,
+    NgbProgressbarModule,
+    NgbPopoverModule,
 
     HorizontaltopbarComponent,
     NavbarComponent,
@@ -161,7 +169,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RightsidebarComponent,
     PagetitleComponent,
     HorizontalComponent,
-    HorizontalnewnavbarComponent
+    PageNavComponent
   ],
   providers:[
     {

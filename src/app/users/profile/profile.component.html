@@ -1,43 +1,55 @@
 <!-- <app-navbar></app-navbar> -->
 
-<div class="sidemargin">
-<mat-tab-group (selectedTabChange)="matTabChanged($event)" animationDuration="0ms">
-    <mat-tab label="Password">
-        <div>
-            <h4 style="margin-top:20px">Change Password</h4>
-            <mat-divider style="margin-top:20px"></mat-divider>
+<div class="container-fluid" style="max-width: 1700px;padding-left: 50px;padding-right: 50px;">
+  <app-pagetitle class="col-lg-12" title="Profile" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+<!-- <mat-tab-group (selectedTabChange)="matTabChanged($event)" animationDuration="10ms"> -->
+  <div class="row">
+    <div class="col-lg-12">
+      <app-page-nav [pageNav]="profileNavData" (navClick)="navClicked($event)" [selectedPageNav]="selectedNav"></app-page-nav>      
+    </div>
+  </div>
 
-            <form #f="ngForm" (ngSubmit)="submit(f)">
-            <mat-form-field class="example-full-width" style="margin-top:20px" appearance="fill">
-                <mat-label>Current Password</mat-label>
-                <input ngModel name="oldPassword" type="password" matInput placeholder="Current Password">
+    <div *ngIf="tabType=='password'">
+        <div>
+            <div class="row">
+              <h4 class="col-lg-12">Change Password</h4>
+            </div>
+
+            <form #f="ngForm" (ngSubmit)="submit(f)" class="row">
+              <div class="col-lg-12">
+              <mat-form-field class="col-lg-3" style="margin-top:20px" appearance="outline">
+                  <mat-label>Current Password</mat-label>
+                  <input ngModel name="oldPassword" type="password" matInput placeholder="Current Password">
               </mat-form-field>
-            <br>
-            <mat-form-field class="example-full-width" style="margin-top:20px" appearance="fill">
+              </div>
+            <div class="col-lg-12">
+            <mat-form-field class="col-lg-3" style="margin-top:20px" appearance="outline">
                 <mat-label>New Password</mat-label>
                 <input ngModel name="newPassword" type="password" matInput placeholder="New Password">
               </mat-form-field>
-            <br>
-            <mat-form-field class="example-full-width" style="margin-top:20px" appearance="fill">
+            </div>
+            <div class="col-lg-12">
+            <mat-form-field class="col-lg-3" style="margin-top:20px" appearance="outline">
                 <mat-label>Retype New Password</mat-label>
                 <input ngModel name="reNewPassword" type="password" matInput placeholder="Retype New Password">
               </mat-form-field>
-            <br>
-            <button mat-raised-button color="primary">Change Password</button>
+            </div>
+            <div class="col-lg-12">
+            <button mat-raised-button color="primary" class="col-lg-3">Change Password</button>
+            </div>
             </form>
 
         </div>
-    </mat-tab>
-    <mat-tab *ngIf="LoggedUser.accountType=='root'" label="Sub Accounts">
+      </div>
+    <div *ngIf="LoggedUser.accountType=='root' && tabType=='subAccount'">
       
-      <div style="margin: 2%;">
-        <div style="display: flex;flex-direction: row;">
-        <button (click)="CreateSubAccount()" style="margin-bottom:15px" mat-raised-button color="primary">Create Sub Account</button>
-        <h6 style="margin-left: 20px;">Note: Default Password for subaccount is "password.123"</h6>
+      <div>
+        <div class="row">
+        <button (click)="CreateSubAccount()" class="col-lg-2 my-3" mat-raised-button color="primary">Create Sub Account</button>
         </div>
-
+        <div class="row">
         <ngx-datatable
-        class="material"
+        class="material col-lg-12"
         [rows]="subaccounts"
         [columnMode]="ColumnMode.force"
         [headerHeight]="50"
@@ -50,16 +62,30 @@
         <ngx-datatable-column name="Username" prop="username"></ngx-datatable-column>
         <ngx-datatable-column name="Manage Permissions" >
           <ng-template let-row="row" ngx-datatable-cell-template>
-            <button mat-raised-button color="primary" (click)="editSubAccount(row)">Manage</button>
+            <!-- <button mat-raised-button color="primary" (click)="editSubAccount(row)">Manage</button> -->
+              <a (click)="editSubAccount(row)" style="cursor: pointer;" class="mx-1 text-primary" placement="top" ngbTooltip="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
+    
+              <a (click)="deleteSubAccount(row)" style="cursor: pointer;" class="mx-1 text-danger" placement="top" ngbTooltip="Delete"><i
+                class="mdi mdi-trash-can font-size-18"></i></a>
+
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Status" >
+          <ng-template ngx-datatable-cell-template let-row="row">
+            <div class="badge font-size-12" [ngClass]="{'badge-soft-danger': row.isVerified == false,
+            'badge-soft-success':row.isVerified == true}">
+              <ngb-highlight [result]="row.isVerified ? 'Active' : 'Invitation Pending'"></ngb-highlight>
+            </div>
           </ng-template>
         </ngx-datatable-column>
         
         
         </ngx-datatable>
       </div>
+      </div>
 
-    </mat-tab>
+    </div>
     <!-- <mat-tab label="Second">Content 2</mat-tab>
     <mat-tab label="Third">Content 3</mat-tab> -->
-  </mat-tab-group>
+  <!-- </mat-tab-group> -->
 </div>

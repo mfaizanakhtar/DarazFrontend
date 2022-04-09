@@ -1,12 +1,11 @@
 import { HorizontalnavbarComponent } from './../shared/horizontalnavbar/horizontalnavbar.component';
-import { HorizontalnewnavbarComponent } from './../shared/horizontalnewnav/horizontalnavbar.component';
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { LoginGuard } from '../LoginGuard';
-import { AnalyticsDashboardComponent } from './analytics-dashboard/analytics-dashboard.component';
+import { signupSubscriptionGuard } from '../signupSubscriptionGuard';
 import { AnalyticsContentComponent } from './analytics-content/analytics-content.component';
 import { StatComponent } from './stat/stat.component';
 import { HorizontalComponent } from './horizontal/horizontal.component';
@@ -18,7 +17,6 @@ import { PermissionGuard } from '../PermissionGuard';
 @NgModule({
   declarations: [
     DashboardComponent,
-    AnalyticsDashboardComponent,
     AnalyticsContentComponent,
     StatComponent,
     ProfitAnalyticsComponent
@@ -35,7 +33,7 @@ import { PermissionGuard } from '../PermissionGuard';
         path:'',
         component:HorizontalComponent,
         children:[
-          {path:'',component:AnalyticsContentComponent,canActivate:[LoginGuard]}
+          {path:'',component:AnalyticsContentComponent,canActivate:[LoginGuard,signupSubscriptionGuard]}
         ]
       },
       {
@@ -50,6 +48,6 @@ import { PermissionGuard } from '../PermissionGuard';
   ],
   exports:[
   ],
-  providers:[LoginGuard,PermissionGuard],
+  providers:[LoginGuard,PermissionGuard,signupSubscriptionGuard],
 })
 export class AnalyticsModule { }

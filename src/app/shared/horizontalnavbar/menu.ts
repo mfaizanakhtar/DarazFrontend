@@ -63,13 +63,13 @@ export const MENU: MenuItem[] = [
                 link: '/products/inventorytracking',
                 parentId: 37
             },
-            {
-                id: 25,
-                label: 'Grouped Stock Tracking',
-                permLabel:'GroupedInventory',
-                link: '/products/skuoverview',
-                parentId: 37
-            }
+            // {
+            //     id: 25,
+            //     label: 'Grouped Stock Tracking',
+            //     permLabel:'GroupedInventory',
+            //     link: '/products/skuoverview',
+            //     parentId: 37
+            // }
         ]
     },
     {

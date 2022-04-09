@@ -1,6 +1,8 @@
+import { AuthService } from 'src/app/services/auth.service';
+import { LookupService } from './../../services/lookup.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UseremailService } from '../../services/useremail.service';
+import { UserdataService } from '../../services/userdata.service';
 
 @Component({
   selector: 'app-add-subaccount',
@@ -9,19 +11,17 @@ import { UseremailService } from '../../services/useremail.service';
 })
 export class AddSubaccountComponent implements OnInit {
   isEdit=false
+  permissions:any={}
+  invalid={loginemail:false,username:false}
   User={
     loginemail:"",
     username:"",
-    Orders:true,
-    ReturnsDispatch:true,
-    Finance:true,
-    DSCInventory:true,
-    GroupedInventory:true,
-    Profitibility:true
-
+    permissions:Object,
+    bypassSubAccVerification:false
   }
-  constructor(private user:UseremailService,private dialog:MatDialogRef<AddSubaccountComponent>,
-    @Inject(MAT_DIALOG_DATA) private data:any) { }
+  userPermissions:any
+  constructor(private user:UserdataService,private dialog:MatDialogRef<AddSubaccountComponent>,
+    @Inject(MAT_DIALOG_DATA) private data:any,private auth:AuthService) { }
 
   ngOnInit(): void {
     if(this.data!=null){
@@ -30,11 +30,17 @@ export class AddSubaccountComponent implements OnInit {
       this.isEdit=true
       document.getElementById('buttonSubmit').innerHTML="Update Permissions"
     }
+    this.getPermissions();
   }
 
   submitDetails(){
+    this.validateField(this.User.loginemail,"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$") ? this.invalid.loginemail=false : this.invalid.loginemail=true
+    this.validateField(this.User.username,"^[a-zA-Z0-9]+$") ? this.invalid.username=false : this.invalid.username=true;
+    if(this.invalid.loginemail || this.invalid.username) return
+    this.User.permissions = this.permissions
     if(!this.isEdit){
-
+      this.User.bypassSubAccVerification = this.isByPassSubAccVerification() ? true : false
+      
       this.user.postDataByCap('/addSubAccount',this.User).subscribe((res:any)=>{
         if(res.message=="User Registered"){
           this.dialog.close({dialogResult:{success:true,message:res.message}})
@@ -57,16 +63,6 @@ export class AddSubaccountComponent implements OnInit {
       })
   }
   }
-  deleteAccount(){
-    this.user.postDataByCap('/deleteSubAccount',this.User).subscribe((res:any)=>{
-      if(res.n>0){
-        this.dialog.close({dialogResult:{success:true,message:"User deleted"}})
-      }
-      else{
-        this.dialog.close({dialogResult:{success:false,message:"Error Deleting user"}})
-      }
-    })
-  }
 
   resetPassword(){
     this.user.updateData('/resetSubPassword',this.User.loginemail,{}).subscribe((res:any)=>{
@@ -77,6 +73,40 @@ export class AddSubaccountComponent implements OnInit {
         this.dialog.close({dialogResult:{success:false,message:"Error Resetting Password"}})
       }
     })
+  }
+
+  getPermissions(){
+    this.userPermissions = this.auth.getPermissions()
+    if(!this.isEdit){  
+      for(var key in this.userPermissions){
+        if(this.userPermissions[key].value){
+          if(this.userPermissions[key].hasOwnProperty("isSubAccount") && !this.userPermissions[key].isSubAccount) return 
+          this.permissions[key]=this.userPermissions[key] 
+        }
+      }
+    }else if(this.isEdit){
+      this.permissions = this.User.permissions
+      for(var key in this.userPermissions){
+        if(!this.permissions.hasOwnProperty(key)){
+          if(this.userPermissions[key].hasOwnProperty("isSubAccount") && !this.userPermissions[key].isSubAccount) return 
+          this.permissions[key] = this.userPermissions[key];
+          this.permissions[key].value=false;
+        }
+      }
+    }
+
+  }
+
+  isByPassSubAccVerification(){
+    if(this.userPermissions.hasOwnProperty("bypassSubAccVerification") && 
+      this.userPermissions.bypassSubAccVerification.value==true) return true;
+    else return false
+  }
+
+  validateField(field,regex){
+    debugger
+    const reg = new RegExp(regex)
+    return reg.test(field);
   }
 
 }

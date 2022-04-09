@@ -14,21 +14,16 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
 
   configData;
   menuItems = [];
-  currentUser:any
+  permissions
 
-  // tslint:disable-next-line: max-line-length
   constructor(private router: Router,private auth:AuthService) {
-    // router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     this.activateMenu();
-    //   }
-    // });
+
   }
 
   ngOnInit(): void {
 
     this.initialize();
-    this.currentUser=this.auth.getCurrentUser()
+    this.permissions=this.auth.getPermissions();
 
     this.configData = {
       suppressScrollX: true,
@@ -52,25 +47,24 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
   }
 
   checkPermission(item){
-    // console.log(item)
-    var retBool=true;
-    if(item.permLabel!=undefined) return this.currentUser[item.permLabel]
+    if(this.permissions){
+      if(item.permLabel!=undefined) return (this.permissions.hasOwnProperty(item.permLabel) ? this.permissions[item.permLabel].value : false)
 
-    else if(item.permLabel==undefined){
+      else if(item.permLabel==undefined){
 
-      if(item.subItems!=undefined && item.subItems.length>0){
+        if(item.subItems!=undefined && item.subItems.length>0){
 
-        for(var subitem of item.subItems){
+          for(var subitem of item.subItems){
 
-          if(subitem.permLabel!=undefined){
-            if(this.currentUser[subitem.permLabel]) return true
-            retBool=false
+            if(subitem.permLabel!=undefined){
+              if(this.permissions.hasOwnProperty(subitem.permLabel) && this.permissions[subitem.permLabel].value) return true
+            }
           }
+          
         }
-        
       }
-      return retBool
     }
+    return false
 
   }
 

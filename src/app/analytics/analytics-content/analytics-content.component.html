@@ -37,7 +37,7 @@
             <div class="btn-group mb-2">
               <button type="button" [ngClass]="{'active': GraphOptions.Total.Orders === true}" (click)="GraphOptions.Total.Orders=!GraphOptions.Total.Orders; fetchGraph('total')" class="btn btn-sm btn-light">Orders</button>
               <button type="button" [ngClass]="{'active': GraphOptions.Total.Items === true}" (click)="GraphOptions.Total.Items=!GraphOptions.Total.Items; fetchGraph('total')" class="btn btn-sm btn-light">Items</button>
-              <button *ngIf="currentUser.Profitibility" type="button" [ngClass]="{'active': GraphOptions.Total.Revenue === true}" (click)="GraphOptions.Total.Revenue=!GraphOptions.Total.Revenue; fetchGraph('total')" class="btn btn-sm btn-light">Revenue</button>
+              <button *ngIf="permissions.hasOwnProperty('Profitibility') && permissions.Profitibility.value" type="button" [ngClass]="{'active': GraphOptions.Total.Revenue === true}" (click)="GraphOptions.Total.Revenue=!GraphOptions.Total.Revenue; fetchGraph('total')" class="btn btn-sm btn-light">Revenue</button>
             </div>
           </div>
           <h4 class="card-title mb-4">Total Revenue Analytics</h4>
@@ -105,7 +105,7 @@
           <h4 class="card-title mb-4">Sales Analytics</h4>
           <app-stat title="Orders" [value]="OrderAnalytics.orders | number"></app-stat>
           <app-stat title="Items" [value]="OrderAnalytics.items | number"></app-stat>
-          <app-stat *ngIf="currentUser.Profitibility" title="Revenue" [value]="OrderAnalytics.revenue | number"></app-stat>
+          <app-stat *ngIf="permissions.hasOwnProperty('Profitibility') && permissions.Profitibility.value" title="Revenue" [value]="OrderAnalytics.revenue | number"></app-stat>
         </div>
       </div>
 
@@ -138,7 +138,7 @@
         <div *ngIf="!storesLoading" class="card-body">
 
           <h4 class="card-title mb-3">Stores</h4>
-          <perfect-scrollbar style="height: 330px;"  [config]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:false}">
+          <perfect-scrollbar style="height: 330px;"  [config]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:false}" #storeScroll >
           <div>
             <div class="text-center">
               <p class="mb-2">Total Orders</p>
@@ -150,21 +150,21 @@
 
             <div class="table-responsive mt-4">
               
-              <table class="table table-hover mb-0 table-centered table-nowrap">
+              <table class="table table-hover mb-0 table-centered table-nowrap" matSort (matSortChange)="sortStores($event)">
                 <tbody>
                   <tr>
-                    <td>
+                    <th mat-sort-header="stores">
                       <h5 class="font-size-14 mb-0">Stores</h5>
-                    </td>
-                    <td>
+                    </th>
+                    <th mat-sort-header="orders">
                       <h5 class="font-size-14 mb-0">Orders/Items</h5>
-                    </td>
-                    <td *ngIf="currentUser.Profitibility">
+                    </th>
+                    <th *ngIf="permissions.hasOwnProperty('Profitibility') && permissions.Profitibility.value" mat-sort-header="sales">
                       <h5 class="font-size-14 mb-0">Sales</h5>
-                    </td>
+                    </th>
                   </tr>
 
-                  <tr *ngFor="let detail of StoreDetails" (click)="StoreClick(detail.store)" [ngClass]="{'selected':detail.store===SelectedStore}" style="cursor: grabbing;">
+                  <tr *ngFor="let detail of SortedStoreDetails" (click)="StoreClick(detail.store)" [ngClass]="{'selected':detail.store===SelectedStore}" style="cursor: grabbing;">
                     <td>
                       <h5 class="font-size-14 mb-0">{{detail.store}}</h5>
                     </td>
@@ -172,7 +172,7 @@
                     <td>
                       <h5 class="font-size-14 mb-0">{{detail.orders}}/{{detail.items}}</h5>
                     </td>
-                    <td *ngIf="currentUser.Profitibility">
+                    <td *ngIf="permissions.hasOwnProperty('Profitibility') && permissions.Profitibility.value">
                       <h5 class="font-size-14 mb-0">{{detail.revenue | number}} Rs</h5>
                     </td>
                   </tr>
@@ -194,7 +194,7 @@
             <div class="btn-group mb-2">
               <button type="button" [ngClass]="{'active': GraphOptions.Store.Orders === true}" (click)="GraphOptions.Store.Orders=!GraphOptions.Store.Orders; fetchGraph('store')" class="btn btn-sm btn-light">Orders</button>
               <button type="button" [ngClass]="{'active': GraphOptions.Store.Items === true}" (click)="GraphOptions.Store.Items=!GraphOptions.Store.Items; fetchGraph('store')" class="btn btn-sm btn-light">Items</button>
-              <button *ngIf="currentUser.Profitibility" type="button" [ngClass]="{'active': GraphOptions.Store.Revenue === true}" (click)="GraphOptions.Store.Revenue=!GraphOptions.Store.Revenue; fetchGraph('store')" class="btn btn-sm btn-light">Revenue</button>
+              <button *ngIf="permissions.hasOwnProperty('Profitibility') && permissions.Profitibility.value" type="button" [ngClass]="{'active': GraphOptions.Store.Revenue === true}" (click)="GraphOptions.Store.Revenue=!GraphOptions.Store.Revenue; fetchGraph('store')" class="btn btn-sm btn-light">Revenue</button>
             </div>
           </div>
           <h4 class="card-title mb-4">Store Revenue Analytics</h4>
@@ -236,9 +236,15 @@
         <div *ngIf="!skuLoading" class="card-body">
 
           <h4 class="card-title mb-4">SKU Overview</h4>
+          <!-- <table class="table table-hover mb-0 table-centered table-nowrap" matSort (matSortChange)="sortSkus($event)">
+            <tbody>
+              <ng-template *ngIf="skuHeaderCheck" [ngTemplateOutlet]="skuHeader"></ng-template>
+            </tbody>
+          </table> -->
+          <!-- <ng-template [ngTemplateOutlet]="skuHeader"></ng-template> -->
 
-          <perfect-scrollbar style="height: 330px;" [scrollIndicators]="true" [config]="{useBothWheelAxes:true}">
-            <div>
+          <perfect-scrollbar style="height: 330px;" [scrollIndicators]="true" [config]="{useBothWheelAxes:true}"  (psScrollY)="checkScroll($event)" #skuScroll>
+            <div id="first-table">
               <div style="margin-left: auto;margin-right: auto;">
                 <div class="row">
                  <div class="col-lg-6"> 
@@ -257,24 +263,26 @@
   
               <div class="table-responsive mt-4">
                 
-                <table class="table table-hover mb-0 table-centered table-nowrap">
+                <table class="table table-hover mb-0 table-centered table-nowrap" matSort (matSortChange)="sortSkus($event)">
                   <tbody>
-                    <tr>
-                      <td>
+                  <ng-template #skuHeader>
+                    <tr >
+                      <th mat-sort-header="sku">
                         <h5 class="font-size-14 mb-0">SKU</h5>
-                      </td>
-                      <td>
+                      </th>
+                      <th mat-sort-header="orders">
                         <h5 class="font-size-14 mb-0">Orders/Items</h5>
-                      </td>
-                      <td>
+                      </th>
+                      <th mat-sort-header="OwnWarehouse">
                         <h5 class="font-size-14 mb-0">Fbd/Fbm</h5>
-                      </td>
-                      <td *ngIf="currentUser.Profitibility">
+                      </th>
+                      <th *ngIf="permissions.hasOwnProperty('Profitibility') && permissions.Profitibility.value" mat-sort-header="revenue">
                         <h5 class="font-size-14 mb-0">Sales</h5>
-                      </td>
+                      </th>
                     </tr>
-
-                    <tr *ngFor="let sku of StoreSkuDetails " (click)="SkuClick(sku.sku)" [ngClass]="{'selected':sku.sku===SelectedSku}" style="cursor: grabbing;">
+                  </ng-template>
+                  <ng-template [ngTemplateOutlet]="skuHeader"></ng-template>
+                    <tr *ngFor="let sku of SortedStoreSkuDetails " (click)="SkuClick(sku.sku)" [ngClass]="{'selected':sku.sku===SelectedSku}" style="cursor: grabbing;">
                       <td>
                         <h5 class="font-size-14 mb-0">{{sku.sku}}</h5>
                       </td>
@@ -286,7 +294,7 @@
                           {{sku.OwnWarehouse}}<span class="font-size-14 mb-0" *ngIf="sku.OwnWarehouse==undefined">0</span>
                           /{{sku.Dropshipping}}<span class="font-size-14 mb-0" *ngIf="sku.Dropshipping==undefined">0</span></h5>
                       </td>
-                      <td *ngIf="currentUser.Profitibility">
+                      <td *ngIf="permissions.hasOwnProperty('Profitibility') && permissions.Profitibility.value">
                         <h5 class="font-size-14 mb-0">{{sku.revenue | number}} Rs</h5>
                       </td>
                     </tr>
@@ -307,7 +315,7 @@
             <div class="btn-group mb-2">
               <button type="button" [ngClass]="{'active': GraphOptions.Sku.Orders === true}" (click)="GraphOptions.Sku.Orders=!GraphOptions.Sku.Orders; fetchGraph('sku')" class="btn btn-sm btn-light">Orders</button>
               <button type="button" [ngClass]="{'active': GraphOptions.Sku.Items === true}" (click)="GraphOptions.Sku.Items=!GraphOptions.Sku.Items; fetchGraph('sku')" class="btn btn-sm btn-light">Items</button>
-              <button *ngIf="currentUser.Profitibility" type="button" [ngClass]="{'active': GraphOptions.Sku.Revenue === true}" (click)="GraphOptions.Sku.Revenue=!GraphOptions.Sku.Revenue; fetchGraph('sku')" class="btn btn-sm btn-light">Revenue</button>
+              <button *ngIf="permissions.hasOwnProperty('Profitibility') && permissions.Profitibility.value" type="button" [ngClass]="{'active': GraphOptions.Sku.Revenue === true}" (click)="GraphOptions.Sku.Revenue=!GraphOptions.Sku.Revenue; fetchGraph('sku')" class="btn btn-sm btn-light">Revenue</button>
             </div>
           </div>
           <h4 class="card-title mb-4">SKU Revenue Analytics</h4>
@@ -324,3 +332,22 @@
   </div>
   <!-- end row -->
 </div>
+
+<!-- <script>
+  window.onscroll = function() {myFunction()};
+
+// Get the header
+var header = document.getElementById("header");
+
+// Get the offset position of the navbar
+var sticky = header.offsetTop;
+
+// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+</script> -->

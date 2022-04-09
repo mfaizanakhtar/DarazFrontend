@@ -1,0 +1,111 @@
+<div class="home-btn d-none d-sm-block">
+    <a routerLink=""><i class="mdi mdi-home-variant h2 text-white"></i></a>
+  </div>
+  <div>
+    <div class="container-fluid p-0">
+      <div class="row no-gutters">
+        <div class="col-lg-4">
+          <div class="authentication-page-content p-4 d-flex align-items-center min-vh-100">
+            <div class="w-100">
+              <div class="row justify-content-center">
+                <div class="col-lg-9">
+                  <div>
+                    <div class="text-center">
+                      <div>
+                        <!-- <a routerLink="" class="logo"><img src="assets/images/logo-dark.png" height="20" alt="logo"></a> -->
+                      </div>
+  
+                      <h4 *ngIf="!isVerificationCode" class="font-size-18 mt-4">Register account</h4>
+                      <h4 *ngIf="isVerificationCode" class="font-size-18 mt-4">Email Verification</h4>
+                      <p *ngIf="!isVerificationCode" class="text-muted">Get your account now.</p>
+                    </div>
+  
+                    <div class="p-2 mt-5">
+                      <form [formGroup]="registerForm" class="form-horizontal" #f="ngForm" (submit)="register()" *ngIf="!isVerificationCode">
+  
+                        <div class="form-group auth-form-group-custom mb-4">
+                          <i class="ri-mail-line auti-custom-input-icon"></i>
+                          <label for="useremail">Email</label>
+                          <input [class.is-invalid]="registerForm.get('userEmail').invalid && registerForm.get('userEmail').touched" 
+                          type="email" formControlName="userEmail" name="userEmail" class="form-control" id="useremail" placeholder="Enter email" [email]="true">
+                          <small class="text-danger" *ngIf="registerForm.get('userEmail').errors?.required && registerForm.get('userEmail').touched">Email is required</small>
+    	                    <small class="text-danger" *ngIf="registerForm.get('userEmail').errors?.pattern && registerForm.get('userEmail').touched">Please provide a valid email address</small>
+                        </div>
+  
+                        <div class="form-group auth-form-group-custom mb-4">
+                          <i class="ri-user-2-line auti-custom-input-icon"></i>
+                          <label for="username">Username</label>
+                          <input [class.is-invalid]="registerForm.get('userName').invalid && registerForm.get('userName').touched" 
+                          type="text" formControlName="userName" name="userName" class="form-control" id="username" placeholder="Enter username">
+                          <small class="text-danger" *ngIf="registerForm.get('userName').errors?.required && registerForm.get('userName').touched">Username is required</small>
+    	                    <small class="text-danger" *ngIf="registerForm.get('userName').errors?.pattern && registerForm.get('userName').touched">Please enter alphanumeric username</small>
+                        </div>
+  
+                        <div class="form-group auth-form-group-custom mb-4">
+                          <i class="ri-lock-2-line auti-custom-input-icon"></i>
+                          <label for="userpassword">Password</label>
+                          <input [class.is-invalid]="registerForm.get('userPassword').invalid && registerForm.get('userPassword').touched"
+                          type="password" formControlName="userPassword" name="userPassword" class="form-control" id="userpassword" placeholder="Enter password">
+                        </div>
+
+                        
+                        <div *ngIf="isAlreadyRegistered" class="alert alert-danger mb-4 mt-4" role="alert">
+                          Email Already Registered. Please proceed to Login
+                        </div>
+  
+                        <div class="text-center d-flex justify-content-center">
+                          <mat-spinner *ngIf="loadingIndicator" diameter="30"></mat-spinner>
+                          <button *ngIf="!loadingIndicator" class="btn btn-primary w-md waves-effect waves-light" type="submit">Register</button>
+                        </div>
+  
+                        <div class="mt-4 text-center">
+                          <p class="mb-0">By registering you agree to the <a href="#" class="text-primary">Terms of
+                              Use</a></p>
+                        </div>
+                      </form>
+
+                      <div *ngIf="isVerificationCode">
+                        <div class="form-group col-lg-12 auth-form-group-custom mb-4">
+                          <i class=" auti-custom-input-icon"></i>
+                          <label for="username">Enter 6 digit Verification Code on your Email</label>
+                          <input onKeyPress="this.value.length==maxLength ? false : true"
+                           type="number" maxlength="6" name="verificationCode" class="form-control" id="verificationCode" placeholder="" [(ngModel)]="verificationCode">
+                        </div>
+
+                        <div *ngIf="verificationResp.isReceived" [ngClass]="{'alert-success':verificationResp.status=='success','alert-danger':verificationResp.status=='error'}"
+                         class="alert mb-4 mt-5 col-lg-12 text-center" role="alert">
+                          {{verificationResp.message}}
+                        </div>
+
+                        <div class="col-lg-12 text-center">
+                          <button  (click)="verifyUser()" class="btn btn-primary w-md waves-effect waves-light">Verify</button>
+                        </div>
+
+
+
+                      </div>
+                    </div>
+  
+                    <div class="mt-5 text-center" *ngIf="!isVerificationCode">
+                      <p>Already have an account ? <a routerLink="/login" class="font-weight-medium text-primary">
+                          Login</a> </p>
+                    </div>
+                    <div class="mt-5 text-center" *ngIf="isVerificationCode">
+                      <p>Haven't Received code ? <span (click)="resendCode()" *ngIf="remainingTime==0" class="font-weight-medium text-primary" style="cursor:pointer">
+                          resend code </span><span  class="font-weight-medium text-primary" *ngIf="remainingTime>0">{{remainingTime}} s</span> </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="authentication-bg">
+            <div class="bg-overlay"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

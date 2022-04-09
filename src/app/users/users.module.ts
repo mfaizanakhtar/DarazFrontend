@@ -23,15 +23,15 @@ import { UsersComponent } from './users/users.component';
     SharedModule,
     RouterModule.forChild([
       {
-        path:'users',
+        path:'',
         component:UsersComponent,
         canActivate:[LoginGuard,AdminGuard]
       },
-      {
-        path:'adduser',
-        component:AddUsersComponent,
-        canActivate:[LoginGuard]
-      },
+      // {
+      //   path:'adduser',
+      //   component:AddUsersComponent,
+      //   canActivate:[LoginGuard]
+      // },
       {
         path:'profile',
         component:HorizontalComponent,

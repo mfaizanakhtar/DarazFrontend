@@ -1,0 +1,21 @@
+.options{
+    padding-bottom: 24;
+    
+    h4 {
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: 350;
+    }
+    h4:hover{
+        font-weight: 400;
+        color:#5664d2;
+        cursor:pointer;
+    }
+}
+
+.selectedOption{
+    h4{
+        font-weight: 600;
+        color:#5664d2;
+    }
+}

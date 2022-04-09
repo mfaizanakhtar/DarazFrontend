@@ -15,7 +15,7 @@
               </a>
               <div class="dropdown-menu row" aria-labelledby="topnav-dashboard" *ngIf="hasItems(item)" id="navmenu">
                 <ng-template ngFor let-i="index" let-subitem [ngForOf]="item.subItems">
-                  <a class="col dropdown-item side-nav-link-ref" *ngIf="!hasItems(subitem) && currentUser[subitem.permLabel]==true" [routerLink]="subitem.link"
+                  <a class="col dropdown-item side-nav-link-ref" *ngIf="!hasItems(subitem) && permissions[subitem.permLabel].value==true" [routerLink]="subitem.link"
                    >{{ subitem.label }}</a>
 
                   <div class="dropdown" *ngIf="hasItems(subitem)">

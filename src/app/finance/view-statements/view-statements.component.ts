@@ -24,10 +24,12 @@ export class ViewStatementsComponent implements OnInit {
     "OtherDebits":{Amount:0,Vat:0},
     "AdjustmentsOthers":{Amount:0,Vat:0},
   }
+  breadCrumbItems: Array<{}>;
   constructor(private transaction:TransactionsService) { }
 
   ngOnInit(): void {
     this.getFilters()
+    this.breadCrumbItems = [{ label: 'Home' }, { label: 'Statements', active: true },];
   }
 
   getFilters(){
@@ -35,7 +37,7 @@ export class ViewStatementsComponent implements OnInit {
       console.log(res)
       this.StatementArray=res.Statements
       this.StoreArray=res.Stores
-      this.Statement=this.StatementArray[0]._id
+      this.Statement= this.StatementArray.length>0 ? this.StatementArray[0]._id : []
       this.getStatements()
     })
   }

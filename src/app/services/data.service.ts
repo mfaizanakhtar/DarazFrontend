@@ -12,8 +12,8 @@ export class DataService {
   
   constructor(private url : string, private http: HttpClient) { }
   // private baseUrl="http://localhost:3000/api/"
-  // private baseUrl="http://dmanage.accesology.com/api/"
-  private baseUrl="api/"
+  private baseUrl="http://dmanage.accesology.com/api/"
+  // private baseUrl="api/"
   async setHeaders(){
     let token = localStorage.getItem('auth-token');
     let header = new HttpHeaders();
@@ -30,6 +30,12 @@ export class DataService {
 
   get(caption){
     this.setHeaders()
+    return this.http.get(this.baseUrl+this.url+caption,this.options).pipe(
+      map(response=>response)
+    )
+  }
+
+  getWithoutHeaders(caption){
     return this.http.get(this.baseUrl+this.url+caption,this.options).pipe(
       map(response=>response)
     )
@@ -56,7 +62,18 @@ export class DataService {
       map(response=>response)
     )
   }
-  
+
+  postDataWithoutHeaders(cap,data){
+    return this.http.post(this.baseUrl+this.url+cap,data,this.options).pipe(
+      map(response=>response)
+    )
+  }
+
+  updateDataWithoutHeaders(caption,id,data){
+    return this.http.put(this.baseUrl+this.url+'/'+caption+'/'+id,data,this.options).pipe(
+      map(response=>response)
+    )
+  }
 
   updateData(caption,id,data){
     this.setHeaders()
