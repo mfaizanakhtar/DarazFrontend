@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
@@ -18,12 +19,14 @@ export class AddShopComponent implements OnInit {
   shopArea:any
   shopLocation:any
   shopPhone:any
+  permissions:any
 
-  constructor(@Inject(MAT_DIALOG_DATA) private idData:any,private addid:AddidService,private toastr:ToastrService,private dialogRef:MatDialogRef<AddShopComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private idData:any,private addid:AddidService,private toastr:ToastrService,private dialogRef:MatDialogRef<AddShopComponent>,private auth:AuthService) { }
   isUpdate:boolean
   ngOnInit(): void {
     this.updateCheck()
     console.log(this.idData)
+    this.permissions = this.auth.getPermissions();
   }
 
   shopAdd(){

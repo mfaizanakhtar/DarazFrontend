@@ -256,8 +256,10 @@ export class OrdersViewComponent implements OnInit {
     for(var order of this.selected){
       ordersData.push(order.OrderId)
     }
+    var skuType;
+    (this.permissions.hasOwnProperty("baseSkuStockChecklist") && this.permissions.baseSkuStockChecklist.value==true) ? skuType="BaseSku" : skuType="Sku"
     if(Status=="selected"){
-      this.orderService.postDataByCap('/getStockChecklist',{orders:ordersData}).subscribe(res=>{
+      this.orderService.postDataByCap('/getStockChecklist/'+skuType,{orders:ordersData}).subscribe(res=>{
         // console.log(res)
         this.lableService.setStockChecklist(res)
         this.loadingIndicator=false

@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { LabelService } from '../../services/label.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {jsPDF} from 'jspdf'
@@ -14,7 +15,8 @@ export class PrintLabelsComponent implements OnInit {
   orders:any
   labelsCount:any
   pageIndex=0
-  constructor(private labels:LabelService,private sanitizer:DomSanitizer) { }
+  permissions:any
+  constructor(private labels:LabelService,private auth:AuthService) { }
   
   ngOnInit(): void {
     console.log(this.labels.getOrders().length)
@@ -22,6 +24,7 @@ export class PrintLabelsComponent implements OnInit {
     this.labelsCount=this.labels.getLabelCount().length
     console.log(this.labels.getLabelCount())
     console.log(this.labelsCount)
+    this.permissions=this.auth.getPermissions();
     // this.labels.postDataByCap('/getLabelsData',{Orders:this.ordersIdArray}).subscribe(res=>{
     //   this.orders = res
     // })
