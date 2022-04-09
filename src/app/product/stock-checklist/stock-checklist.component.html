@@ -4,7 +4,8 @@
     <table>
       <tr>
         <th>S.No</th>
-        <th>Base SKU</th>
+        <th *ngIf="permissions?.baseSkuStockChecklist?.value">Base SKU</th>
+        <th *ngIf="!permissions?.baseSkuStockChecklist?.value">SKU</th>
         <th>Count</th>
         <th>Image</th>
       </tr>

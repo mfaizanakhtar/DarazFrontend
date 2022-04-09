@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { LabelService } from '../../services/label.service';
 
@@ -8,10 +9,12 @@ import { LabelService } from '../../services/label.service';
 })
 export class StockChecklistComponent implements OnInit {
   StockChecklist
-  constructor(private label:LabelService) { }
+  permissions;
+  constructor(private label:LabelService,private auth:AuthService) { }
 
   ngOnInit(): void {
     this.StockChecklist =this.label.getStockChecklist()
+    this.permissions = this.auth.getPermissions();
     console.log(this.StockChecklist)
   }
 
