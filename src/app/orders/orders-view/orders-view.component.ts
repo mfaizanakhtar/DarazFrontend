@@ -286,11 +286,23 @@ export class OrdersViewComponent implements OnInit {
   }
 
   StatusFilterClicked(status,formattedFilter){
+    debugger
     this.pSize=10
     this.pIndex=0
     this.StatusFilter=status
     this.FormattedStatus=formattedFilter
-    // console.log(this.StatusFilter)
+    var claimReg = new RegExp('[\w]*Claim[\w]*')
+    if(claimReg.test(status)){
+      this.backDate = new Date(this.enddate)
+      this.backDate.setDate(this.backDate.getDate()-90)
+      this.backDate.setHours(0,0,0,0);
+      this.startdate=this.backDate 
+    }else{
+      this.backDate = new Date(this.enddate)
+      this.backDate.setDate(this.backDate.getDate()-15)
+      this.backDate.setHours(0,0,0,0);
+      this.startdate=this.backDate 
+    }
     this.getOrders()
   } 
 
@@ -332,6 +344,7 @@ export class OrdersViewComponent implements OnInit {
   }
 
   DateInput(mode,event){
+    debugger
     if(mode == 'start'){
       this.startdate = event.value
     }
