@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   error: boolean=false;
+  loadingIndicator=false
 
   constructor(private auth:AuthService,private router:Router) { }
 
@@ -16,6 +17,8 @@ export class LoginComponent implements OnInit {
   }
 
   signin(credentials){
+    this.error=false
+    this.loadingIndicator=true
     this.auth.login(credentials).subscribe(res=>{
       if(res){
         this.auth.setSubscriptionDetails().subscribe(res=>{
@@ -25,6 +28,7 @@ export class LoginComponent implements OnInit {
       else{
         this.error=true
       }
+      this.loadingIndicator=false
     })
   }
 
