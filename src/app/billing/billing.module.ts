@@ -9,6 +9,7 @@ import { BillingHistoryComponent } from './billing-history/billing-history.compo
 import { NgbAccordionModule, NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { BillingRenewalComponent } from './billing-renewal/billing-renewal.component';
 import { PageNavComponent } from '../shared/page-nav/page-nav.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';  
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { PageNavComponent } from '../shared/page-nav/page-nav.component';
     NgbAccordionModule,
     NgbTypeaheadModule,
     NgbPaginationModule,
+    NgxDropzoneModule,
     RouterModule.forChild([
       {
         path:'',

@@ -24,6 +24,8 @@ export class BillPaymentComponent implements OnInit {
   isUpgrade:boolean
   isFutureRequest:boolean=false
   currentSubscription:any
+  files: File[] = [];  
+  screenShots:Array<any>=[]
 
   constructor(private route:ActivatedRoute,private auth:AuthService,private plan:PlansService,private lookup:LookupService,private billing:BillingService,private router:Router) { }
 
@@ -36,7 +38,6 @@ export class BillPaymentComponent implements OnInit {
       this.defaultStep=1
     }else this.defaultStep=0
     this.getIsUpgrade()
-    debugger
     if(this.isUpgrade) this.currentSubscription = this.auth.getSubscriptionDetail()
   }
 
@@ -76,6 +77,36 @@ export class BillPaymentComponent implements OnInit {
   getIsUpgrade(){
     this.isUpgrade = this.route.snapshot.queryParamMap.get('isUpgrade')=='true' ? true: false
   }
+
+  onSelect(event) {  
+    console.log(event);  
+    this.files.push(...event.addedFiles);  
+  
+      var latestFileIndex=this.files.length-1
+      console.log(this.files[latestFileIndex])
+      this.fileToBase64(this.files[latestFileIndex])
+            .then(result=>{
+              const base64String = result.replace('data:', '').replace(/^.+,/, '');// To remove data url part
+              this.screenShots.push(base64String);
+            });          
+ 
+}  
+
+  fileToBase64 = (file:File):Promise<string> => {
+  return new Promise<string> ((resolve,reject)=> {
+       const reader = new FileReader();
+       reader.readAsDataURL(file);
+       reader.onload = () => resolve(reader.result.toString());
+       reader.onerror = error => reject(error);
+   })
+  }
+
+  onRemove(event) {  
+      console.log(event);  
+      this.files.splice(this.files.indexOf(event), 1); 
+      this.screenShots.splice(this.files.indexOf(event), 1);  
+      console.log(this.screenShots) 
+  }  
 
 
 
