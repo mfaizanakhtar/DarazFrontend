@@ -116,6 +116,7 @@
                         <label class="col-md-3 col-form-label">Transaction Id</label>
                         <div class="col-md-9">
                           <input [(ngModel)]="transactionId" class="form-control" type="text" placeholder="Transaction Id">
+                          <div *ngIf="transactionId?.length==0 && btnSubmitClick"><small class="text-danger">*Transaction Id is required</small></div>  
                         </div>
                       </div>
                     </div>
@@ -129,7 +130,8 @@
                             <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">  
                               <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>  
                             </ngx-dropzone-preview>  
-                          </ngx-dropzone>  
+                          </ngx-dropzone>
+                          <div *ngIf="files?.length==0 && btnSubmitClick"><small class="text-danger">*Screenshot is required</small></div>  
                         </div>
                       </div>
                     </div>

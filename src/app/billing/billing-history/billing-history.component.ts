@@ -1,3 +1,5 @@
+import { ViewScreenshotComponent } from './../view-screenshot/view-screenshot.component';
+import { MatDialog } from '@angular/material/dialog';
 import { pageNav } from './../pageNav';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
@@ -31,7 +33,7 @@ export class BillingHistoryComponent implements OnInit {
   pageNav=pageNav;
   selectedPageNav=1
 
-  constructor(private billing:BillingService,private auth:AuthService,private router:Router) { }
+  constructor(private billing:BillingService,private auth:AuthService,private router:Router,private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Billing' }, { label: 'Details', active: true },];
@@ -120,6 +122,10 @@ export class BillingHistoryComponent implements OnInit {
 
   navClick(tab){
     this.router.navigate([tab.link])
+  }
+
+  viewScreenshot(screenShot){
+    this.dialog.open(ViewScreenshotComponent,{data:{screenShot:screenShot}})
   }
 
 
