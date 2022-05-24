@@ -9,15 +9,19 @@ import { BillingHistoryComponent } from './billing-history/billing-history.compo
 import { NgbAccordionModule, NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { BillingRenewalComponent } from './billing-renewal/billing-renewal.component';
 import { PageNavComponent } from '../shared/page-nav/page-nav.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { ViewScreenshotComponent } from './view-screenshot/view-screenshot.component';
+import { SubscriptionExpiredComponent } from './subscription-expired/subscription-expired.component';  
 
 
 @NgModule({
-  declarations: [BillPaymentComponent, BillingHistoryComponent, BillingRenewalComponent],
+  declarations: [BillPaymentComponent, BillingHistoryComponent, BillingRenewalComponent, ViewScreenshotComponent, SubscriptionExpiredComponent],
   imports: [
     SharedModule,
     NgbAccordionModule,
     NgbTypeaheadModule,
     NgbPaginationModule,
+    NgxDropzoneModule,
     RouterModule.forChild([
       {
         path:'',
