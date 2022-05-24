@@ -16,6 +16,7 @@ import { ShopIdComponent } from '../users/shop-ids/shop-id.component';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
 import { OrdersComponent } from './orders/orders.component';
 import { NgbAccordionModule, NgbCollapseModule, NgbModalModule, NgbNavModule, NgbPaginationModule, NgbTooltipModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { SubscriptionGuard } from '../SubscriptionGuard';
 
 
 
@@ -43,25 +44,25 @@ import { NgbAccordionModule, NgbCollapseModule, NgbModalModule, NgbNavModule, Ng
         path:'skuoverview',
         component:HorizontalComponent,
         children:[{path:'',component:SkuOverviewComponent}],
-        canActivate:[LoginGuard,PermissionGuard],
+        canActivate:[LoginGuard,PermissionGuard,SubscriptionGuard],
         data:{page:"GroupedInventory"}
       },
       {
         path:'inventorytracking',
         component:HorizontalComponent,
         children:[{path:'',component:DscSkuTracking}],
-        canActivate:[LoginGuard,PermissionGuard],
+        canActivate:[LoginGuard,PermissionGuard,SubscriptionGuard],
         data:{page:"DSCInventory"}
       },
       {
         path:'newinventory',
         component:HorizontalComponent,
         children:[{path:'',component:OrdersComponent}],
-        canActivate:[LoginGuard,PermissionGuard],
+        canActivate:[LoginGuard,PermissionGuard,SubscriptionGuard],
         data:{page:"DSCInventory"}
       },
     ])
   ],
-  providers:[LoginGuard,PermissionGuard]
+  providers:[LoginGuard,PermissionGuard,SubscriptionGuard]
 })
 export class ProductModule { }
