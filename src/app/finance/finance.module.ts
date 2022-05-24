@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { LoginGuard } from '../LoginGuard';
 import { PermissionGuard } from '../PermissionGuard';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
+import { SubscriptionGuard } from '../SubscriptionGuard';
 
 
 
@@ -23,19 +24,19 @@ import { HorizontalComponent } from '../analytics/horizontal/horizontal.componen
         path:'transactions',
         component:HorizontalComponent,
         children:[{path:'',component:ViewTransactionsComponent}],
-        canActivate:[LoginGuard,PermissionGuard],
+        canActivate:[LoginGuard,PermissionGuard,SubscriptionGuard],
         data:{page:"Finance"}
       },
       {
         path:'statement',
         component:HorizontalComponent,
         children:[{path:'',component:ViewStatementsComponent}],
-        canActivate:[LoginGuard,PermissionGuard],
+        canActivate:[LoginGuard,PermissionGuard,SubscriptionGuard],
         data:{page:"Finance"}
       },
     ])
   ],
-  providers:[LoginGuard,PermissionGuard]
+  providers:[LoginGuard,PermissionGuard,SubscriptionGuard]
 })
 export class FinanceModule {
   constructor(){console.log("Finance module")}

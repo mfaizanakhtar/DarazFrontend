@@ -12,6 +12,7 @@ import { PageNavComponent } from '../shared/page-nav/page-nav.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ViewScreenshotComponent } from './view-screenshot/view-screenshot.component';
 import { SubscriptionExpiredComponent } from './subscription-expired/subscription-expired.component';  
+import { SubscriptionGuard } from '../SubscriptionGuard';
 
 
 @NgModule({
@@ -41,6 +42,6 @@ import { SubscriptionExpiredComponent } from './subscription-expired/subscriptio
     ]),
     ArchwizardModule 
   ],
-  providers:[LoginGuard]
+  providers:[LoginGuard,SubscriptionGuard]
 })
 export class BillingModule { }

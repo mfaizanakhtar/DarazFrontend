@@ -5,6 +5,7 @@ import { AdminGuard } from '../AdminGuard';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
 import { LoginGuard } from '../LoginGuard';
 import { SharedModule } from '../shared/shared.module';
+import { SubscriptionGuard } from '../SubscriptionGuard';
 import { AddSubaccountComponent } from './add-subaccount/add-subaccount.component';
 import { AddUsersComponent } from './add-users/add-users.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -36,15 +37,16 @@ import { UsersComponent } from './users/users.component';
         path:'profile',
         component:HorizontalComponent,
         children:[{path:'',component:ProfileComponent}],
-        canActivate:[LoginGuard]
+        canActivate:[LoginGuard,SubscriptionGuard]
       },
       {
         path:'shops',
         component:HorizontalComponent,
-        children:[{path:'',component:ShopIdComponent}]
+        children:[{path:'',component:ShopIdComponent}],
+        canActivate:[LoginGuard,SubscriptionGuard]
       }
     ])
   ],
-  providers:[LoginGuard,AdminGuard]
+  providers:[LoginGuard,AdminGuard,SubscriptionGuard]
 })
 export class UsersModule { }
