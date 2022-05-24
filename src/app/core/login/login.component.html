@@ -41,8 +41,9 @@
                           <label class="custom-control-label" for="customControlInline">Remember me</label>
                         </div> -->
   
-                        <div class="mt-4 text-center">
-                          <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Log In</button>
+                        <div class="mt-4 text-center d-flex justify-content-center">
+                          <button *ngIf="!loadingIndicator" class="btn btn-primary w-md waves-effect waves-light" type="submit">Log In</button>
+                          <mat-spinner  [diameter]="30" *ngIf="loadingIndicator"></mat-spinner>
                         </div>
   
                         <div class="mt-4 text-center">
