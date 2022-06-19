@@ -174,24 +174,24 @@
 
                     <mat-form-field class="col-md-12" appearance="outline">
                       <mat-label>Cost</mat-label>
-                      <input type="number" name="Cost" [value]="sku.cost" (change)="costChange($event.target.value,'cost')" matInput>
+                      <input type="number" name="Cost" [(ngModel)]="sku.cost" matInput>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-12" appearance="outline">
                       <mat-label>FBM Packging Cost</mat-label>
-                      <input type="number" name="FBM Packging Cost" [value]="sku.FBMpackagingCost" (change)="costChange($event.target.value,'FBMpackagingCost')" matInput>
+                      <input type="number" name="FBM Packging Cost" [(ngModel)]="sku.FBMpackagingCost" matInput>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-12" appearance="outline">
                       <mat-label>FBD Packaging Cost</mat-label>
-                      <input type="number" name="FBD Packaging Cost" [value]="sku.FBDpackagingCost" (change)="costChange($event.target.value,'FBMpackagingCost')" matInput>
+                      <input type="number" name="FBD Packaging Cost" [(ngModel)]="sku.FBDpackagingCost" matInput>
                     </mat-form-field>
 
                     
                     </div>
                     <div class="row">
                       <div class="col-md-12 text-center d-flex justify-content-center">
-                        <button *ngIf="!costSavingIndiactor" (click)="EditCost(p,sku._id)" mat-raised-button color="primary">Save</button>
+                        <button *ngIf="!costSavingIndiactor" (click)="EditCost(p,sku)" mat-raised-button color="primary">Save</button>
                         <mat-spinner *ngIf="costSavingIndiactor"  [diameter]="30"></mat-spinner>
                       </div>
                     </div>
