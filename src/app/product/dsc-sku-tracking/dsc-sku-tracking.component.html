@@ -237,7 +237,7 @@
           <!-- Pagination -->
           <div class="col-sm-12 col-md-5">
             <div class="text-md-right float-md-right pagination-rounded">
-              <ngb-pagination (pageChange)="changePage($event)" [collectionSize]="length" [page]="pIndex+1" [pageSize]="pSize">
+              <ngb-pagination [boundaryLinks]="true" [maxSize]="3" (pageChange)="changePage($event)" [collectionSize]="length" [page]="pIndex+1" [pageSize]="pSize">
               </ngb-pagination>
             </div>
           </div>
