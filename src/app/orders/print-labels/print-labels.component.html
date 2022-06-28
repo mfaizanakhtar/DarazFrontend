@@ -5,10 +5,10 @@
 <div class="invoice" *ngFor="let tracking of getTrackings(order);let trackingindex=index">
 <div class="awb-page" *ngIf="order.OrderItems.length>0">
     <div class="awb lex">
-    <div class="box left" style="width:35%; height:0.8cm; border-right: 0; border-bottom: 0;"></div>
+    <!-- <div class="box left" style="width:35%; height:0.8cm; border-right: 0; border-bottom: 0;"></div> -->
     
-    <div class="box left" style="padding: 0;font-size: 11px;width: 35%;line-height: 0.3cm;height: 0.8cm;font-weight: bold;border-right: 0;border-bottom: 0;">
-    <div style="line-height: 15px;line-height: .35cm;"><span style="text-align: left;font-size: 5px;font-weight: 800;line-height: .1cm;">Order Number</span> <span style="display:block;font-weight: normal;">{{order.OrderId}}</span></div>
+    <div class="box left" style="padding: 0;font-size: 11px;width: 70%;line-height: 0.3cm;height: 0.8cm;font-weight: bold;border-right: 0;border-bottom: 0;">
+    <div style="line-height: 15px;line-height: .35cm;"><span style="text-align: left;font-size: 5px;font-weight: 800;line-height: .1cm;">Order Number</span> <span style="display:block;font-weight: bold;font-size: 15px;">{{order.OrderId}}</span></div>
     </div>
     
     <div class="box left" style="text-align: center;font-size:12px; width:30%; line-height:14px; height:0.8cm; padding-top: 7px; border-bottom: 0;">{{adjustedDate(order.CreatedAt) | date:'dd MMM yyy'}}</div>
@@ -16,7 +16,7 @@
     <div class="box clear" style="width:100%;border-bottom: 0; padding-bottom: 10px;">
     <div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm"><img src={{getLabelTrackingBarcode(tracking,order.OrderItems)}} /></div>
     
-    <div style="font-size:12px; line-height:11px;">Tracking Number:  {{getLabelProperty(tracking,order.OrderItems,"labelTracking")}} </div>
+    <div style="font-size:15px; line-height:11px; font-weight: bold;">Tracking Number:  {{getLabelProperty(tracking,order.OrderItems,"labelTracking")}} </div>
     </div>
     
     <div class="box left" style="width:75%; border-bottom: 0; padding-bottom: 10px; height: 3.9cm; border-right: 0;">
@@ -59,7 +59,7 @@
     <!-- <div class="barcode" style="height: 0.2cm; margin-bottom: 0.1cm"><img src={{order.OrderItems[0].orderIdBarcode}} /></div> -->
     <div class="barcode" style="height: 0.2cm; margin-bottom: 0.1cm"></div>
     
-    <div style="font-size:12px; line-height:11px;">Order Number:  {{order.OrderId}} </div>
+    <div style="font-size:16px; line-height:11px; font-weight: bold;">Order Number:  {{order.OrderId}} </div>
     </div>
 
     
