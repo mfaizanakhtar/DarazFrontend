@@ -34,6 +34,7 @@
                   <th mat-sort-header="pricing">Pricing</th>
                   <th mat-sort-header="invoiceAmount">Invoice Amount</th>
                   <th mat-sort-header="transactionId">Transaction ID</th>
+                  <th>Screenshot</th>
                   <th mat-sort-header="status">Status</th>
                   <th *ngIf="user.usertype=='admin'">Actions</th>
                 </tr>
@@ -67,6 +68,9 @@
                   </td>
                   <td>
                     <ngb-highlight [result]="billing.transactionId" [term]="searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <div *ngIf="billing?.screenShot!=null" (click)="viewScreenshot(billing.screenShot)" style="cursor: pointer;color:steelblue;">View Screenshot</div>
                   </td>
                   <td>
                     <div class="badge font-size-12" [ngClass]="{'badge-soft-danger': billing.status === 'rejected',

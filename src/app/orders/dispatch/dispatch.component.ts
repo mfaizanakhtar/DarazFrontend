@@ -24,8 +24,6 @@ export class DispatchComponent implements OnInit {
   correctAudio:any
   wrongAudio:any
   correctAudioNew:any
-  //dispatchdate
-  date=new Date();
   //filterdate
   filterenddate=new Date()
   filterstartdate=new Date()
@@ -47,7 +45,7 @@ export class DispatchComponent implements OnInit {
   }
 
   dispatch(f){
-    this.order.updateData("dispatch",f.value.tracking,{date:this.date.toISOString()}).subscribe(res=>{
+    this.order.updateData("dispatch",f.value.tracking,{date:new Date().toISOString()}).subscribe(res=>{
       console.log(res);
       var result:any = res;
       if(result.Status=="Dispatched"){

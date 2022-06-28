@@ -211,8 +211,8 @@ rowHeight="auto"
             <div *ngIf="item.ShippingType=='Own Warehouse'">FBD</div>
           </td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.WarehouseStatus}}</td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.DispatchDate | date:'d MMM y h:mm a'}}</td>
-          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ReturnDate | date:'d MMM y h:mm a'}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.DispatchDate | date:'d MMM y h:mm:ss a'}}</td>
+          <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.ReturnDate | date:'d MMM y h:mm:ss a'}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">{{item.Status}}</td>
           <td *ngIf="Fulfillment==item.ShippingType || Fulfillment=='All'">
             <img width="70px" height="70px" src={{item.productMainImage}}>

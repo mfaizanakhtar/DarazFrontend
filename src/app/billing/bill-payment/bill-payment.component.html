@@ -23,7 +23,7 @@
                         <div class="form-group row mb-3">
                           <label class="col-md-3 col-form-label">Subscription Type</label>
                           <div class="col-md-9">
-                            <input [ngModel]="subscriptionType.Name" class="form-control" disabled name="username" type="text">
+                            <input [ngModel]="subscriptionType?.Name" class="form-control" disabled name="username" type="text">
                           </div>
                         </div>
                         <div class="form-group row mb-3">
@@ -46,7 +46,7 @@
                         <div class="form-group row mb-3">
                           <label class="col-md-3 col-form-label">Pricing</label>
                           <div class="col-md-9">
-                            <input [ngModel]="subscriptionType.Pricing" class="form-control" disabled name="password" type="text">
+                            <input [ngModel]="subscriptionType?.Pricing" class="form-control" disabled name="password" type="text">
                           </div>
                         </div>
                         <div *ngIf="isUpgrade" class="row my-5">
@@ -73,7 +73,7 @@
                         <div class="form-group row mb-3">
                           <label class="col-md-3 col-form-label">Invoice Amount</label>
                           <div class="col-md-9">
-                            <input disabled [ngModel]="subscriptionType.Pricing*subscriptionMonths" class="form-control" type="text" placeholder="Invoice Amount">
+                            <input disabled [ngModel]="subscriptionType?.Pricing*subscriptionMonths" class="form-control" type="text" placeholder="Invoice Amount">
                           </div>
                         </div>
                         <div class="row mb-3 text-center justify-content-center">
@@ -82,19 +82,19 @@
                         <div class="form-group row mb-3">
                           <label class="col-md-3 col-form-label">Bank Name</label>
                           <div class="col-md-9">
-                            <input disabled [ngModel]="bankDetail.bankName" class="form-control" type="text" placeholder="Bank Name">
+                            <input disabled [ngModel]="bankDetail?.bankName" class="form-control" type="text" placeholder="Bank Name">
                           </div>
                         </div>
                         <div class="form-group row mb-3">
                           <label class="col-md-3 col-form-label">Account Title</label>
                           <div class="col-md-9">
-                            <input disabled [ngModel]="bankDetail.bankTitle" class="form-control" type="text" placeholder="Account Title">
+                            <input disabled [ngModel]="bankDetail?.bankTitle" class="form-control" type="text" placeholder="Account Title">
                           </div>
                         </div>
                         <div class="form-group row mb-3">
                           <label class="col-md-3 col-form-label">Account Number</label>
                           <div class="col-md-9">
-                            <input disabled [ngModel]="bankDetail.bankAccount" class="form-control" type="text" placeholder="Account Number">
+                            <input disabled [ngModel]="bankDetail?.bankAccount" class="form-control" type="text" placeholder="Account Number">
                           </div>
                         </div>
                       </div>
@@ -116,8 +116,27 @@
                         <label class="col-md-3 col-form-label">Transaction Id</label>
                         <div class="col-md-9">
                           <input [(ngModel)]="transactionId" class="form-control" type="text" placeholder="Transaction Id">
+                          <div *ngIf="transactionId?.length==0 && btnSubmitClick"><small class="text-danger">*Transaction Id is required</small></div>  
                         </div>
                       </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group row mb-3">
+                        <label class="col-md-3 col-form-label">Screenshot</label>
+                        <div class="col-md-9">
+                          <!-- <input [(ngModel)]="transactionId" class="form-control" type="text" placeholder="Transaction Id"> -->
+                          <ngx-dropzone accept="image/jpeg,image/jpg,image/png,image/gif" [multiple]="false" (change)="onSelect($event)">  
+                            <ngx-dropzone-label>Drag and Drop to Upload Screenshot</ngx-dropzone-label>  
+                            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">  
+                              <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>  
+                            </ngx-dropzone-preview>  
+                          </ngx-dropzone>
+                          <div *ngIf="files?.length==0 && btnSubmitClick"><small class="text-danger">*Screenshot is required</small></div>  
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+
                     </div>
                     <ul class="list-inline wizard mb-0">
                       <li class="previous list-inline-item"><button class="btn btn-primary" awPreviousStep>Previous</button>

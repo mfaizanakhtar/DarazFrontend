@@ -31,7 +31,6 @@ export class DscSkuTracking implements OnInit {
 
     searchTerm:any;
     pageSize:any=10;
-    tempCost={cost:0,FBMpackagingCost:0,FBDpackagingCost:0}
     //Filter
     Store='All'
     SellerSku=null
@@ -134,14 +133,16 @@ export class DscSkuTracking implements OnInit {
     this.getDarazSkus()
   }
 
-  costChange(cost,costType){
-    this.tempCost[costType]=cost;
-  }
+  EditCost(pop,sku){
+    debugger
+    console.log(sku._id)
+    var skuCost={cost:0,FBMpackagingCost:0,FBDpackagingCost:0};
+    if(sku.cost!=null) skuCost.cost=sku.cost;
+    if(sku.FBMpackagingCost!=null) skuCost.FBMpackagingCost=sku.FBMpackagingCost;
+    if(sku.FBDpackagingCost!=null) skuCost.FBDpackagingCost=sku.FBDpackagingCost;
 
-  EditCost(pop,skuId){
-    console.log(skuId)
     this.costSavingIndiactor=true
-    this.darazskus.updateData('',skuId,this.tempCost).subscribe(res=>{
+    this.darazskus.updateData('',sku._id,skuCost).subscribe(res=>{
       this.costSavingIndiactor=false
       this.getDarazSkus()
       pop.close();

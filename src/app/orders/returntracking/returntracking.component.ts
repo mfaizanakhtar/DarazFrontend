@@ -29,8 +29,6 @@ export class ReturntrackingComponent implements OnInit {
   //Audio
   wrongAudio:any
   correctAudio:any
-  //returndate
-  date=new Date();
   //filterdate
   filterenddate=new Date()
   filterstartdate=new Date()
@@ -55,7 +53,7 @@ export class ReturntrackingComponent implements OnInit {
 
 
   insertTracking(f){
-    this.order.updateData("return",f.value.tracking,{date:this.date.toISOString()}).subscribe(response=>{
+    this.order.updateData("return",f.value.tracking,{date:new Date().toISOString()}).subscribe(response=>{
       console.log(response);
       var result:any = response;
 
