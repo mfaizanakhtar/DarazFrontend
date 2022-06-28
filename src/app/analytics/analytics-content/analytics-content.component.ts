@@ -204,7 +204,7 @@ getStoreOrderAnalyticsGraph(){
 
 getSkuOrderAnalyticsGraph(){
   this.skuGraphLoading=true
-  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.SelectedStore+"&sku="+this.SelectedSku
+  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.SelectedStore+"&sku="+encodeURIComponent(this.SelectedSku)
   +"&o="+this.GraphOptions.Sku.Orders+"&i="+this.GraphOptions.Sku.Items+"&r="+this.GraphOptions.Sku.Revenue).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.SkuAnalyticsGraph=res
     this.skuGraphLoading=false
