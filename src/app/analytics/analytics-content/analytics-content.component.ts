@@ -9,6 +9,7 @@ import { ChartType, Stat, Chat, Transaction } from './dashboard.model';
 import { statData, revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, chatData, transactions } from './data';
 import { Sort } from '@angular/material/sort';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-analytics-content',
@@ -22,8 +23,8 @@ export class AnalyticsContentComponent implements OnInit {
   transactions: Transaction[];
   statData: Stat[];
   //date
-  startdate=new Date()
-  enddate=new Date()
+  startdate:Date
+  enddate:Date
   //Data
   StatusCount:any=[{count:{OrderCount:0,ItemCount:0}},{count:{OrderCount:0,ItemCount:0}},{count:{OrderCount:0,ItemCount:0}},{count:{OrderCount:0,ItemCount:0}}]
   OrderAnalytics:any=[]
@@ -72,8 +73,8 @@ export class AnalyticsContentComponent implements OnInit {
   ngOnInit(): void {
 
     this.adjustUserSettings()
-    this.startdate.setHours(0,0,0,0);
-    this.enddate.setHours(0,0,0,0);
+    this.enddate = moment().startOf('day').tz("Asia/Karachi").toDate();
+    this.startdate = moment().startOf('day').tz("Asia/Karachi").toDate();
     
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Dashboard', active: true }];
 
