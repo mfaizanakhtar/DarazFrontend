@@ -74,7 +74,7 @@ export class ProfitAnalyticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.enddate = moment().startOf('day').tz("Asia/Karachi").toDate();
-    this.startdate = moment().startOf('day').tz("Asia/Karachi").toDate();
+    this.startdate = moment().endOf('day').tz("Asia/Karachi").toDate();
 
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Profitiblity', active: true }];
     this._fetchData();
@@ -104,11 +104,11 @@ export class ProfitAnalyticsComponent implements OnInit {
 
   DateInput(mode,event){
     if(mode == 'start'){
-      this.startdate = event.value
+      this.startdate = moment(event.value).startOf('day').tz("Asia/Karachi").toDate()
     }
     if(mode == 'end'){
       if(event.value != null){
-        this.enddate = event.value
+        this.enddate = moment(event.value).endOf('day').tz("Asia/Karachi").toDate()
         // console.log(this.startdate);
         // console.log(this.enddate);
         this.getProfitStats()
