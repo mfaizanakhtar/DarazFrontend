@@ -73,7 +73,7 @@ export class AnalyticsContentComponent implements OnInit {
   ngOnInit(): void {
 
     this.adjustUserSettings()
-    this.enddate = moment().startOf('day').tz("Asia/Karachi").toDate();
+    this.enddate = moment().endOf('day').tz("Asia/Karachi").toDate();
     this.startdate = moment().endOf('day').tz("Asia/Karachi").toDate();
     
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Dashboard', active: true }];
@@ -115,7 +115,7 @@ export class AnalyticsContentComponent implements OnInit {
 
   DateInput(mode,event){
     if(mode == 'start'){
-      this.startdate = moment(event.value).startOf('day').tz("Asia/Karachi").toDate()
+      this.startdate = moment(event.value).endOf('day').tz("Asia/Karachi").toDate()
       
     }
     if(mode == 'end'){
