@@ -11,7 +11,7 @@ import { PrintLabelsComponent } from '../print-labels/print-labels.component';
 import { StockChecklistComponent } from '../../product/stock-checklist/stock-checklist.component';
 import { AuthService } from '../../services/auth.service';
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-orders-view',
