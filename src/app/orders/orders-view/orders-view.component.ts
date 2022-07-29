@@ -127,12 +127,6 @@ export class OrdersViewComponent implements OnInit {
     this.getOrders()
   }
 
-  adjustedDate(date){
-    var result = new Date(date)
-    result.setHours(result.getHours()-5)
-    return result
-  }
-
   orderSort(event){
     this.skuSort=event.checked
     if(this.skuSort==true) this.shopSort=false
