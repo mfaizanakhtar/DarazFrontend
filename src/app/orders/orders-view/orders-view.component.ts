@@ -258,9 +258,9 @@ export class OrdersViewComponent implements OnInit {
     var claimReg = new RegExp('[\w]*Claim[\w]*')
 
     if(claimReg.test(status)){
-      this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").endOf('day').toDate();
-    }else{
       this.startdate = moment().tz("Asia/Karachi").subtract(90, "days").endOf('day').toDate();
+    }else{
+      this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").endOf('day').toDate();
     }
     this.getOrders()
   } 
