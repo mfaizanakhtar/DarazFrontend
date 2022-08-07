@@ -9,6 +9,7 @@ import { ChartType, Stat, Chat, Transaction } from './dashboard.model';
 import { statData, revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, chatData, transactions } from './data';
 import { Sort } from '@angular/material/sort';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-analytics-content',
@@ -22,8 +23,8 @@ export class AnalyticsContentComponent implements OnInit {
   transactions: Transaction[];
   statData: Stat[];
   //date
-  startdate=new Date()
-  enddate=new Date()
+  startdate:Date
+  enddate:Date
   //Data
   StatusCount:any=[{count:{OrderCount:0,ItemCount:0}},{count:{OrderCount:0,ItemCount:0}},{count:{OrderCount:0,ItemCount:0}},{count:{OrderCount:0,ItemCount:0}}]
   OrderAnalytics:any=[]
@@ -72,8 +73,8 @@ export class AnalyticsContentComponent implements OnInit {
   ngOnInit(): void {
 
     this.adjustUserSettings()
-    this.startdate.setHours(0,0,0,0);
-    this.enddate.setHours(0,0,0,0);
+    this.enddate = moment().tz("Asia/Karachi").endOf('day').toDate();
+    this.startdate = moment().tz("Asia/Karachi").endOf('day').toDate();
     
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Dashboard', active: true }];
 
@@ -114,11 +115,12 @@ export class AnalyticsContentComponent implements OnInit {
 
   DateInput(mode,event){
     if(mode == 'start'){
-      this.startdate = event.value
+      this.startdate = moment(event.value).tz("Asia/Karachi").endOf('day').toDate()
+      
     }
     if(mode == 'end'){
       if(event.value != null){
-        this.enddate = event.value
+        this.enddate = moment(event.value).tz("Asia/Karachi").endOf('day').toDate()
         // console.log(this.startdate);
         // console.log(this.enddate);
         this.getStatusCount()
@@ -204,7 +206,7 @@ getStoreOrderAnalyticsGraph(){
 
 getSkuOrderAnalyticsGraph(){
   this.skuGraphLoading=true
-  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.SelectedStore+"&sku="+this.SelectedSku
+  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.SelectedStore+"&sku="+encodeURIComponent(this.SelectedSku)
   +"&o="+this.GraphOptions.Sku.Orders+"&i="+this.GraphOptions.Sku.Items+"&r="+this.GraphOptions.Sku.Revenue).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.SkuAnalyticsGraph=res
     this.skuGraphLoading=false

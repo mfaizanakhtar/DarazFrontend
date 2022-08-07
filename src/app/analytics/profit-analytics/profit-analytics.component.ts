@@ -8,6 +8,7 @@ import { ChartType } from './dashboard.model';
 
 import { revenueChart } from './data';
 import { Sort } from '@angular/material/sort';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-profit-analytics-content',
@@ -18,8 +19,8 @@ export class ProfitAnalyticsComponent implements OnInit {
 
 
   //date
-  startdate=new Date()
-  enddate=new Date()
+  startdate:Date
+  enddate:Date
   //data
   ProfitStats={items:0,sales:0,costs:0,payout:0,profit:0,orders:0}
   StoreProfitStats=[]
@@ -72,8 +73,8 @@ export class ProfitAnalyticsComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.startdate.setHours(0,0,0,0);
-    this.enddate.setHours(0,0,0,0);
+    this.enddate = moment().tz("Asia/Karachi").endOf('day').toDate();
+    this.startdate = moment().tz("Asia/Karachi").endOf('day').toDate();
 
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Profitiblity', active: true }];
     this._fetchData();
@@ -103,11 +104,11 @@ export class ProfitAnalyticsComponent implements OnInit {
 
   DateInput(mode,event){
     if(mode == 'start'){
-      this.startdate = event.value
+      this.startdate = moment(event.value).tz("Asia/Karachi").endOf('day').toDate()
     }
     if(mode == 'end'){
       if(event.value != null){
-        this.enddate = event.value
+        this.enddate = moment(event.value).tz("Asia/Karachi").endOf('day').toDate()
         // console.log(this.startdate);
         // console.log(this.enddate);
         this.getProfitStats()
