@@ -11,6 +11,7 @@ import { PrintLabelsComponent } from '../print-labels/print-labels.component';
 import { StockChecklistComponent } from '../../product/stock-checklist/stock-checklist.component';
 import { AuthService } from '../../services/auth.service';
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-orders-view',
@@ -70,12 +71,8 @@ export class OrdersViewComponent implements OnInit {
     this.permissions=this.auth.getPermissions()
     this.StatusFilter='pending'
     this.FormattedStatus='Pending'
-
-    this.backDate.setDate(this.backDate.getDate()-15)
-    this.todayDate.setHours(0,0,0,0);
-    this.backDate.setHours(0,0,0,0);
-    this.enddate=this.todayDate
-    this.startdate=this.backDate 
+    this.enddate = moment().tz("Asia/Karachi").endOf('day').toDate();
+    this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").endOf('day').toDate();
 
     this.getOrders()
 
@@ -104,27 +101,6 @@ export class OrdersViewComponent implements OnInit {
     })
   }
 
-  // getTransactions(transactions){
-    
-  //   var Result=0
-  //   if(transactions.length>0){
-  //     for(var t of transactions){
-  //       if(t.FeeName=="Item Price Credit"){
-  //         console.log("acc "+Result+" it"+t.Amount)
-  //         Result=Result+t.Amount
-  //       }
-  //       else if(t.FeeName=="Commission"){
-  //         Result=Result+t.Amount
-  //       }
-  //       else if(t.FeeName=="Automatic Shipping Fee"){
-  //         Result=Result-t.VATinAmount
-  //       }
-  //     }
-      
-  //     return Result.toFixed(1)
-  //   }
-  //   return "-"
-  // }
 
   getProfit(payout,cost,packagingCost){
 
@@ -142,12 +118,6 @@ export class OrdersViewComponent implements OnInit {
       return orderitems[0].Status
     }
     else{
-      // if(this.StatusFilter=='pending' || this.StatusFilter=='ready_to_ship'){
-      //   return this.StatusFilter
-      // }
-      // else if(this.StatusFilter=='RTSDispatched'){
-      //   return 'ready_to_ship'
-      // } 
       return "Multiple Statuses"
     } 
   }
@@ -155,12 +125,6 @@ export class OrdersViewComponent implements OnInit {
   printCheckbox(){
     // console.log(this.Printed+" "+this.UnPrinted)
     this.getOrders()
-  }
-
-  adjustedDate(date){
-    var result = new Date(date)
-    result.setHours(result.getHours()-5)
-    return result
   }
 
   orderSort(event){
@@ -292,16 +256,11 @@ export class OrdersViewComponent implements OnInit {
     this.StatusFilter=status
     this.FormattedStatus=formattedFilter
     var claimReg = new RegExp('[\w]*Claim[\w]*')
+
     if(claimReg.test(status)){
-      this.backDate = new Date(this.enddate)
-      this.backDate.setDate(this.backDate.getDate()-90)
-      this.backDate.setHours(0,0,0,0);
-      this.startdate=this.backDate 
+      this.startdate = moment().tz("Asia/Karachi").subtract(90, "days").endOf('day').toDate();
     }else{
-      this.backDate = new Date(this.enddate)
-      this.backDate.setDate(this.backDate.getDate()-15)
-      this.backDate.setHours(0,0,0,0);
-      this.startdate=this.backDate 
+      this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").endOf('day').toDate();
     }
     this.getOrders()
   } 
@@ -346,11 +305,11 @@ export class OrdersViewComponent implements OnInit {
   DateInput(mode,event){
     debugger
     if(mode == 'start'){
-      this.startdate = event.value
+      this.startdate = moment(event.value).tz("Asia/Karachi").endOf('day').toDate()
     }
     if(mode == 'end'){
       if(event.value != null){
-        this.enddate = event.value
+        this.enddate = moment(event.value).tz("Asia/Karachi").endOf('day').toDate()
         this.pSize=10
         this.pIndex=0
         this.getOrders()

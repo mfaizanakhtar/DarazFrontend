@@ -8,6 +8,7 @@ import { ChartType } from './dashboard.model';
 
 import { revenueChart } from './data';
 import { Sort } from '@angular/material/sort';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-profit-analytics-content',
@@ -18,8 +19,8 @@ export class ProfitAnalyticsComponent implements OnInit {
 
 
   //date
-  startdate=new Date()
-  enddate=new Date()
+  startdate:Date
+  enddate:Date
   //data
   ProfitStats={items:0,sales:0,costs:0,payout:0,profit:0,orders:0}
   StoreProfitStats=[]

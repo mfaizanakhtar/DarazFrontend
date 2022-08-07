@@ -274,7 +274,7 @@ rowHeight="auto"
 <!-- <ngx-datatable-column name="Item ID" prop="OrderItemId"></ngx-datatable-column> -->
 <ngx-datatable-column [minWidth]="180" [width]="180" name="Order Date" prop="CreatedAt">
   <ng-template let-row="row" let-date="value" ngx-datatable-cell-template>
-    {{adjustedDate(date) | date:'d MMM y h:mm a'}}
+    {{date | date:'d MMM y h:mm a':'UTC'+5}}
   </ng-template>
 </ngx-datatable-column>
 <ngx-datatable-column [minWidth]="140" [width]="140" name="Payment Method" prop="PaymentMethod"></ngx-datatable-column>

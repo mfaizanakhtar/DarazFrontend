@@ -9,6 +9,7 @@ import { ChartType, Stat, Chat, Transaction } from './dashboard.model';
 import { statData, revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, chatData, transactions } from './data';
 import { Sort } from '@angular/material/sort';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-analytics-content',
@@ -22,8 +23,8 @@ export class AnalyticsContentComponent implements OnInit {
   transactions: Transaction[];
   statData: Stat[];
   //date
-  startdate=new Date()
-  enddate=new Date()
+  startdate:Date
+  enddate:Date
   //Data
   StatusCount:any=[{count:{OrderCount:0,ItemCount:0}},{count:{OrderCount:0,ItemCount:0}},{count:{OrderCount:0,ItemCount:0}},{count:{OrderCount:0,ItemCount:0}}]
   OrderAnalytics:any=[]
