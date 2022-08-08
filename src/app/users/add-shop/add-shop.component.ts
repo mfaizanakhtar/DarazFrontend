@@ -2,7 +2,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { AddidService } from '../../services/addid.service';
+import { ShopService } from '../../services/shop.service';
 
 @Component({
   selector: 'app-add-shop',
@@ -21,7 +21,7 @@ export class AddShopComponent implements OnInit {
   shopPhone:any
   permissions:any
 
-  constructor(@Inject(MAT_DIALOG_DATA) private idData:any,private addid:AddidService,private toastr:ToastrService,private dialogRef:MatDialogRef<AddShopComponent>,private auth:AuthService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private idData:any,private addid:ShopService,private toastr:ToastrService,private dialogRef:MatDialogRef<AddShopComponent>,private auth:AuthService) { }
   isUpdate:boolean
   ngOnInit(): void {
     this.updateCheck()

@@ -1,4 +1,6 @@
-import { AddidService } from '../../services/addid.service';
+import { Routes, ActivatedRoute } from '@angular/router';
+import { LookupService } from './../../services/lookup.service';
+import { ShopService } from '../../services/shop.service';
 import { Component, OnInit } from '@angular/core';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -12,19 +14,26 @@ import Swal from 'sweetalert2';
 })
 export class ShopIdComponent implements OnInit {
 
-  constructor(private addid:AddidService,private dialog:MatDialog) { }
+  constructor(private shopService:ShopService,private dialog:MatDialog,private lookup:LookupService,private route:ActivatedRoute) { }
   darazIds:any
   ColumnMode=ColumnMode
   loadingIndicator=false;
+  spinnerLoadingIndicator=false;
+  openAppDetails:any;
   breadCrumbItems: Array<{}>;
 
   ngOnInit(): void {
     this.getIds()
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Shops', active: true },];
+    this.route.queryParams.subscribe(res=>{
+      if(res.code){
+        this.handleCallBackCode(res.code)
+      }
+    })
   }
 
   addids(value){
-    this.addid.postData({
+    this.shopService.postData({
       shopid:value.email,
       secretkey:value.secretkey
     })
@@ -35,7 +44,7 @@ export class ShopIdComponent implements OnInit {
 
   getIds(){
     this.loadingIndicator=true;
-    this.addid.getAll().subscribe(res=>{
+    this.shopService.getAll().subscribe(res=>{
       this.darazIds=res
       this.loadingIndicator=false;
       console.log(this.darazIds)
@@ -60,7 +69,7 @@ export class ShopIdComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
       if (result.value) {
-      this.addid.deleteData(row.shopid).subscribe(res=>{
+      this.shopService.deleteData(row.shopid).subscribe(res=>{
         var deleteRes:any=res
         if(deleteRes.deletedCount==1){
         Swal.fire('Deleted!', 'Your Shop has been deleted.', 'success');
@@ -92,6 +101,22 @@ export class ShopIdComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res=>{
       this.getIds()
+    })
+  }
+
+  integrateNewShop(){
+    var url;
+    this.lookup.getLookupDetail("darazOpenAppDetails").subscribe(res=>{
+      this.openAppDetails=res;
+      url=this.openAppDetails.pkUrl+"?response_type=code"+"&force_auth=true"+"&redirect_uri="+this.openAppDetails.callBackUrl+"&client_id="+this.openAppDetails.appKey
+      window.location.href=url;
+    })
+  }
+
+  handleCallBackCode(code){
+    this.spinnerLoadingIndicator=true
+    this.shopService.get('/authorise?code='+code).subscribe(res=>{
+      console.log(res);
     })
   }
 
