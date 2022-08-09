@@ -1,4 +1,4 @@
-import { Routes, ActivatedRoute } from '@angular/router';
+import { Routes, ActivatedRoute, Router } from '@angular/router';
 import { LookupService } from './../../services/lookup.service';
 import { ShopService } from '../../services/shop.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class ShopIdComponent implements OnInit {
 
-  constructor(private shopService:ShopService,private dialog:MatDialog,private lookup:LookupService,private route:ActivatedRoute) { }
+  constructor(private shopService:ShopService,private dialog:MatDialog,private lookup:LookupService,private route:ActivatedRoute,private router:Router) { }
   darazIds:any
   ColumnMode=ColumnMode
   loadingIndicator=false;
@@ -93,19 +93,36 @@ export class ShopIdComponent implements OnInit {
 
   handleCallBackCode(code){
     this.spinnerLoadingIndicator=true
-    this.shopService.get('/authorise?code='+code).subscribe(res=>{
+    debugger
+    this.shopService.get('/authorise?code='+code).subscribe((res:any)=>{
       this.spinnerLoadingIndicator=false;
+      var successTitle="Shop integrated successfully";
+      var successText="your shop " + res.shopName + " has been linked!";
+      if(res.isUpdated){
+        successTitle="Shop updated successfully";
+        successText="your shop " + res.shopName + " was already linked and is now updated!";
+      }
 
       Swal.fire({
-        title: 'Shop integrated successfully',
-        text: 'your shop has been linked!',
+        title: successTitle,
+        text: successText,
         icon: 'success',
         confirmButtonColor: '#5438dc',
       }).then(okClicked=>{
-        window.location.href=this.openAppDetails.callBackUrl;
+        debugger
+        window.location.href=this.router.url.split('?')[0] ;
       });
-    },err=>{
-
+    },({error:err})=>{
+      this.spinnerLoadingIndicator=false;
+      Swal.fire({
+        title: "Error occured",
+        text: err.message,
+        icon: 'error',
+        confirmButtonColor: '#5438dc',
+      }).then(okClicked=>{
+        debugger
+        window.location.href=this.router.url.split('?')[0] ;
+      });
     })
   }
 
