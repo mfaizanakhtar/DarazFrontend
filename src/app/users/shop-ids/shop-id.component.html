@@ -33,11 +33,9 @@
               <strong>{{rowIndex+1}}</strong>
             </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Shop Id" prop="shopid" ></ngx-datatable-column>
+        <ngx-datatable-column name="Shop Name" prop="name" ></ngx-datatable-column>
         <ngx-datatable-column name="Actions">
           <ng-template ngx-datatable-cell-template let-row="row">
-
-            <a (click)="editShop(row)" style="cursor: pointer;" class="mx-1 text-primary" placement="top" ngbTooltip="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
 
             <a (click)="deleteShop(row)" style="cursor: pointer;" class="mx-1 text-danger" placement="top" ngbTooltip="Delete"><i
               class="mdi mdi-trash-can font-size-18"></i></a>

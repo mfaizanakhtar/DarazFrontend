@@ -9,7 +9,7 @@ export class AdminGuard implements CanActivate{
     constructor(private auth:AuthService,private router:Router){}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        if(this.auth.getCurrentUser().usertype!='admin'){
+        if(this.auth.getCurrentUser().userType!='admin'){
             this.router.navigate(['/'])
         }
         return true

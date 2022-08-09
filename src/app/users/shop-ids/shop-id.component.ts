@@ -4,7 +4,6 @@ import { ShopService } from '../../services/shop.service';
 import { Component, OnInit } from '@angular/core';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AddShopComponent } from '../add-shop/add-shop.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -44,7 +43,7 @@ export class ShopIdComponent implements OnInit {
 
   getIds(){
     this.loadingIndicator=true;
-    this.shopService.getAll().subscribe(res=>{
+    this.shopService.get("/getAll").subscribe(res=>{
       this.darazIds=res
       this.loadingIndicator=false;
       console.log(this.darazIds)
@@ -83,27 +82,6 @@ export class ShopIdComponent implements OnInit {
 
   }
 
-  editShop(id){
-    var dialogRef = this.dialog.open(AddShopComponent,{
-      width:'1300px',height:'700px',data:id
-    })
-    
-    dialogRef.afterClosed().subscribe(res=>{
-      this.getIds()
-    })
-    
-  }
-
-  addNewIdDialog(){
-    var dialogRef=this.dialog.open(AddShopComponent,{
-      width:'1300px',height:'700px'
-    })
-
-    dialogRef.afterClosed().subscribe(res=>{
-      this.getIds()
-    })
-  }
-
   integrateNewShop(){
     var url;
     this.lookup.getLookupDetail("darazOpenAppDetails").subscribe(res=>{
@@ -116,7 +94,18 @@ export class ShopIdComponent implements OnInit {
   handleCallBackCode(code){
     this.spinnerLoadingIndicator=true
     this.shopService.get('/authorise?code='+code).subscribe(res=>{
-      console.log(res);
+      this.spinnerLoadingIndicator=false;
+
+      Swal.fire({
+        title: 'Shop integrated successfully',
+        text: 'your shop has been linked!',
+        icon: 'success',
+        confirmButtonColor: '#5438dc',
+      }).then(okClicked=>{
+        window.location.href=this.openAppDetails.callBackUrl;
+      });
+    },err=>{
+
     })
   }
 

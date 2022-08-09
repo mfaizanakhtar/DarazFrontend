@@ -10,7 +10,6 @@ import { StockChecklistComponent } from './stock-checklist/stock-checklist.compo
 import { RouterModule } from '@angular/router';
 import { LoginGuard } from '../LoginGuard';
 import { PermissionGuard } from '../PermissionGuard';
-import { AddShopComponent } from '../users/add-shop/add-shop.component';
 import { ProfileComponent } from '../users/profile/profile.component';
 import { ShopIdComponent } from '../users/shop-ids/shop-id.component';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
@@ -29,7 +28,6 @@ import { SubscriptionGuard } from '../SubscriptionGuard';
     DscSkuEditComponent,
     AddReturnedStockComponent,
     ShopIdComponent,
-    AddShopComponent,
     ProfileComponent,
     OrdersComponent
   ],
