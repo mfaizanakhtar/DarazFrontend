@@ -26,7 +26,7 @@
     <mat-label>Select Store</mat-label>
     <mat-select [(ngModel)]="Store" (selectionChange)="StoreSelected($event)">
       <mat-option value="All">All</mat-option>
-      <mat-option *ngFor="let store of StoreArray" [value]="store._id">{{store._id}}</mat-option>
+      <mat-option *ngFor="let store of StoreArray" [value]="store.shortCode">{{store.name}}</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -274,7 +274,7 @@ rowHeight="auto"
 <!-- <ngx-datatable-column name="Item ID" prop="OrderItemId"></ngx-datatable-column> -->
 <ngx-datatable-column [minWidth]="180" [width]="180" name="Order Date" prop="CreatedAt">
   <ng-template let-row="row" let-date="value" ngx-datatable-cell-template>
-    {{date | date:'d MMM y h:mm a':'UTC'+5}}
+    {{date | date:'d MMM y h:mm a':'UTC+5'}}
   </ng-template>
 </ngx-datatable-column>
 <ngx-datatable-column [minWidth]="140" [width]="140" name="Payment Method" prop="PaymentMethod"></ngx-datatable-column>
@@ -293,7 +293,7 @@ rowHeight="auto"
     {{getOrderStatus(orderitems)}}
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Shop ID" prop="ShopId" [width]="170" [minWidth]="170"></ngx-datatable-column>
+<ngx-datatable-column name="Shop Name" prop="ShopName" [width]="90" [minWidth]="90"></ngx-datatable-column>
 <ngx-datatable-column *ngIf="StatusFilter!='ClaimFiled'" name="Printed?" prop="isPrinted" [width]="30" [minWidth]="30">
   <ng-template let-row="row" let-isPrinted="value" ngx-datatable-cell-template>
     <div *ngIf='isPrinted'>Yes</div>

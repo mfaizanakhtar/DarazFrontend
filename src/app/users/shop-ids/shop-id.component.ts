@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class ShopIdComponent implements OnInit {
 
-  constructor(private shopService:ShopService,private dialog:MatDialog,private lookup:LookupService,private route:ActivatedRoute,private router:Router) { }
+  constructor(private shopService:ShopService,private lookup:LookupService,private route:ActivatedRoute,private router:Router) { }
   darazIds:any
   ColumnMode=ColumnMode
   loadingIndicator=false;
@@ -28,16 +28,6 @@ export class ShopIdComponent implements OnInit {
       if(res.code){
         this.handleCallBackCode(res.code)
       }
-    })
-  }
-
-  addids(value){
-    this.shopService.postData({
-      shopid:value.email,
-      secretkey:value.secretkey
-    })
-    .subscribe(response=>{
-      console.log(response);
     })
   }
 
@@ -68,9 +58,8 @@ export class ShopIdComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
       if (result.value) {
-      this.shopService.deleteData(row.shopid).subscribe(res=>{
-        var deleteRes:any=res
-        if(deleteRes.deletedCount==1){
+      this.shopService.deleteDataByCap("delete",row.shortCode).subscribe((deleteRes:any)=>{
+        if(deleteRes.nModified==1){
         Swal.fire('Deleted!', 'Your Shop has been deleted.', 'success');
         this.getIds()
         }

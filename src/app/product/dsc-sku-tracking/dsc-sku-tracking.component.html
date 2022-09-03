@@ -104,7 +104,7 @@
                 <mat-label>Select Store</mat-label>
                 <mat-select [(ngModel)]="Store" (selectionChange)="StoreSelected($event)">
                   <mat-option value="All">All</mat-option>
-                  <mat-option *ngFor="let store of StoreArray" [value]="store._id">{{store._id}}</mat-option>
+                  <mat-option *ngFor="let store of StoreArray" [value]="store.shortCode">{{store.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
               <!--Search Input and Store Selecter END-->
@@ -159,10 +159,10 @@
                   <ngb-highlight [result]="sku.quantity" [term]="searchTerm"></ngb-highlight>
                 </td>
                 <td>
-                  <ngb-highlight [result]="sku.multiWarehouseInventories.quantity" [term]="searchTerm"></ngb-highlight>
+                  <ngb-highlight [result]="sku.FBMstock.quantity" [term]="searchTerm"></ngb-highlight>
                 </td>
                 <td>
-                  <ngb-highlight [result]="sku.fblWarehouseInventories.quantity" [term]="searchTerm"></ngb-highlight>
+                  <ngb-highlight [result]="sku.FBDstock.quantity" [term]="searchTerm"></ngb-highlight>
                 </td>
                 <td *ngIf="userPermissions?.DSCInventoryCost?.value">
 
@@ -202,7 +202,7 @@
 
                 </td>
                 <td>
-                  <ngb-highlight [result]="sku.ShopId" [term]="searchTerm"></ngb-highlight>
+                  <ngb-highlight [result]="sku.ShopName" [term]="searchTerm"></ngb-highlight>
                 </td>
                 <td>
                   <div class="badge font-size-12" [ngClass]="{'badge-soft-danger': sku.Status === 'inactive',

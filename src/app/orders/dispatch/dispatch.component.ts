@@ -116,7 +116,7 @@ export class DispatchComponent implements OnInit {
   }
 
   UpdateDispatchedArray(dispatchTracking) {
-    this.dispatchorderarray = [{_id:dispatchTracking.TrackingCode,Date:dispatchTracking.DispatchDate,OrderId:dispatchTracking.OrderId,ShopId:dispatchTracking.ShopId,DispatchBy:dispatchTracking.DispatchBy},...this.dispatchorderarray]
+    this.dispatchorderarray = [{_id:dispatchTracking.TrackingCode,Date:dispatchTracking.DispatchDate,OrderId:dispatchTracking.OrderId,ShopName:dispatchTracking.ShopName,DispatchBy:dispatchTracking.DispatchBy},...this.dispatchorderarray]
   }
 
 }

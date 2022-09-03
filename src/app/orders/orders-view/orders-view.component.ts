@@ -89,12 +89,12 @@ export class OrdersViewComponent implements OnInit {
 
     this.loadingIndicator = true;
     this.orderService.get('/orders?'+'OrderItems.Status='+tempstatus+'&skuSort='+this.skuSort+'&shopSort='+this.shopSort+'&Printed='+this.Printed+'&unPrinted='+this.UnPrinted+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
-    +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopId="+tempstore+"&OrderItems.ShippingType="+tempfulfillment+"&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()).subscribe(res=>{
+    +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopShortCode="+tempstore+"&OrderItems.ShippingType="+tempfulfillment+"&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()).subscribe((res:any)=>{
       console.log(res)
 
-      this.orders=res[0]
-      this.length=res[1]
-      this.StoreArray=res[2]
+      this.orders=res.orders
+      this.length=res.count
+      this.StoreArray=res.stores
       this.loadingIndicator = false;
 
 

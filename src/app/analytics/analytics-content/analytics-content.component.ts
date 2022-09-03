@@ -166,7 +166,7 @@ getStoreOrdersDetails(){
     this.SortedStoreDetails=this.StoreDetails=res.StoreDetail
 
     if(this.StoreDetails.length>0){
-      this.SelectedStore=this.StoreDetails[0].store
+      this.SelectedStore=this.StoreDetails[0].shopShortCode
       this.StoreClick(this.SelectedStore)
     } 
     this.storesLoading=false
@@ -174,9 +174,9 @@ getStoreOrdersDetails(){
 
 }
 
-StoreClick(store){
-  this.SelectedStore=store
-  this.stats.get('/getStoreSkuDetails/?'+"store="+this.SelectedStore+"&startdate="+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
+StoreClick(storeShortCode){
+  this.SelectedStore=storeShortCode
+  this.stats.get('/getStoreSkuDetails/?'+"shortCode="+this.SelectedStore+"&startdate="+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
     this.SortedStoreSkuDetails=this.StoreSkuDetails=res.SkuDetail
     this.SkuTotal=res.SkuTotal
 
@@ -197,7 +197,7 @@ SkuClick(sku){
 
 getStoreOrderAnalyticsGraph(){
   this.storesGraphLoading=true
-  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.SelectedStore
+  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&shopShortCode="+this.SelectedStore
   +"&o="+this.GraphOptions.Store.Orders+"&i="+this.GraphOptions.Store.Items+"&r="+this.GraphOptions.Store.Revenue).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.StoreAnalyticsGraph=res
     this.storesGraphLoading=false
@@ -206,7 +206,7 @@ getStoreOrderAnalyticsGraph(){
 
 getSkuOrderAnalyticsGraph(){
   this.skuGraphLoading=true
-  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.SelectedStore+"&sku="+encodeURIComponent(this.SelectedSku)
+  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&shopShortCode="+this.SelectedStore+"&sku="+encodeURIComponent(this.SelectedSku)
   +"&o="+this.GraphOptions.Sku.Orders+"&i="+this.GraphOptions.Sku.Items+"&r="+this.GraphOptions.Sku.Revenue).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.SkuAnalyticsGraph=res
     this.skuGraphLoading=false

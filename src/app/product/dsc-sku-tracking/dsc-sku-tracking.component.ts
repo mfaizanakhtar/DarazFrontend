@@ -74,7 +74,7 @@ export class DscSkuTracking implements OnInit {
     if(this.Stock=='All') {tempStock=null} else{tempStock=this.Stock}
     this.fetchProgress()
 
-    this.darazskus.get('/getSkus?pSize='+this.pSize+'&pIndex='+this.pIndex+'&SellerSku='+this.SellerSku+'&ShopSku='+this.ShopSku+'&ShopId='+tempStore+'&Status='+tempStatus
+    this.darazskus.get('/getSkus?pSize='+this.pSize+'&pIndex='+this.pIndex+'&SellerSku='+this.SellerSku+'&ShopSku='+this.ShopSku+'&ShopShortCode='+tempStore+'&Status='+tempStatus
     +'&Stock='+tempStock).subscribe(res=>{
       console.log(res)
 

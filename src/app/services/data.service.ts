@@ -88,4 +88,11 @@ export class DataService {
       map(response=>response)
     )
   }
+
+  deleteDataByCap(caption,id){
+    this.setHeaders()
+    return this.http.delete(this.baseUrl+this.url+'/'+caption+'/'+id,this.options).pipe(
+      map(response=>response)
+    )
+  }
 }
