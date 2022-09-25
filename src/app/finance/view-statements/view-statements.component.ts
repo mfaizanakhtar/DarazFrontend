@@ -23,6 +23,7 @@ export class ViewStatementsComponent implements OnInit {
     "ReversalComission":{Amount:0,Vat:0},
     "OtherDebits":{Amount:0,Vat:0},
     "AdjustmentsOthers":{Amount:0,Vat:0},
+    "ShippingFeeDiscount":{Amount:0,Vat:0}
   }
   breadCrumbItems: Array<{}>;
   constructor(private transaction:TransactionsService) { }
@@ -53,6 +54,7 @@ export class ViewStatementsComponent implements OnInit {
       "ReversalComission":{Amount:0,Vat:0},
       "OtherDebits":{Amount:0,Vat:0},
       "AdjustmentsOthers":{Amount:0,Vat:0},
+      "ShippingFeeDiscount":{Amount:0,Vat:0}
     }
 
     var tempStatement
@@ -79,19 +81,19 @@ export class ViewStatementsComponent implements OnInit {
 
   sortAndSetStatementObj(statement){
     for(var s of statement){
-    if(s._id=="Item Price Credit") {
+    if(s._id=="Product Price Paid by Buyer") {
       this.StatementObj.ItemPriceCredit.Amount=s.Amount
       this.StatementObj.ItemPriceCredit.Vat=s.Vat
     }
-    if(s._id=="Commission") {
+    if(s._id=="Commission Fee") {
       this.StatementObj.Comission.Amount=s.Amount
       this.StatementObj.Comission.Vat=s.Vat
     }
-    if(s._id=="Shipping Fee (Paid By Customer)") {
+    if(s._id=="Shipping Fee Paid by Buyer") {
       this.StatementObj.ShippingFeeCustomer.Amount=s.Amount
       this.StatementObj.ShippingFeeCustomer.Vat=s.Vat
     }
-    if(s._id=="Automatic Shipping Fee") {
+    if(s._id=="Shipping Fee") {
       this.StatementObj.AutomaticShippingFee.Amount=s.Amount
       this.StatementObj.AutomaticShippingFee.Vat=s.Vat
     }
@@ -114,6 +116,10 @@ export class ViewStatementsComponent implements OnInit {
     if(s._id=="Adjustments Others"){
       this.StatementObj.AdjustmentsOthers.Amount=s.Amount
       this.StatementObj.AdjustmentsOthers.Vat=s.Vat
+    }
+    if(s._id=="Shipping Fee Discount"){
+      this.StatementObj.ShippingFeeDiscount.Amount=s.Amount
+      this.StatementObj.ShippingFeeDiscount.Vat=s.Vat
     }
   }
   }

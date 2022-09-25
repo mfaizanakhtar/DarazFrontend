@@ -28,7 +28,7 @@
                 <tr>
                   <th mat-sort-header="billingId">Billing Id</th>
                   <th mat-sort-header="createdAt">Transaction Date</th>
-                  <th *ngIf="user.usertype=='admin'" mat-sort-header="userEmail">User Email</th>
+                  <th *ngIf="user.userType=='admin'" mat-sort-header="userEmail">User Email</th>
                   <th mat-sort-header="subscriptionType">Subscription Type</th>
                   <th mat-sort-header="duration">Duration</th>
                   <th mat-sort-header="pricing">Pricing</th>
@@ -36,7 +36,7 @@
                   <th mat-sort-header="transactionId">Transaction ID</th>
                   <th>Screenshot</th>
                   <th mat-sort-header="status">Status</th>
-                  <th *ngIf="user.usertype=='admin'">Actions</th>
+                  <th *ngIf="user.userType=='admin'">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -50,7 +50,7 @@
                   <td>
                       <ngb-highlight [result]="billing.createdAt | date:'MM/dd/yyyy h:mma'" [term]="searchTerm"></ngb-highlight>
                   </td>
-                  <td *ngIf="user.usertype=='admin'">
+                  <td *ngIf="user.userType=='admin'">
                     <ngb-highlight [result]="billing.userEmail" [term]="searchTerm"></ngb-highlight>
                   </td>
                   <td>
@@ -78,7 +78,7 @@
                       <ngb-highlight [result]="billing.status" [term]="searchTerm"></ngb-highlight>
                     </div>
                   </td>
-                  <td *ngIf="user.usertype=='admin'">
+                  <td *ngIf="user.userType=='admin'">
                     <a *ngIf="billing.status!='approved'" (click)="updateTransaction('approved',billing)" class="text-success" placement="top" ngbTooltip="Approve"><i
                       class="mdi mdi-check-underline-circle font-size-18"></i></a>
                     <a *ngIf="billing.status!='rejected'" (click)="updateTransaction('rejected',billing)" class="text-danger" placement="top" ngbTooltip="Reject"><i
