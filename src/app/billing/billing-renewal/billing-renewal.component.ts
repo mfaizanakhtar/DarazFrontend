@@ -4,7 +4,7 @@ import { LookupService } from './../../services/lookup.service';
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { pageNav } from '../pageNav';
+import { pageNavHistory, pageNavRenewals } from '../pageNav';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 export class BillingRenewalComponent implements OnInit {
   breadCrumbItems
     //pageNavBar
-  pageNav=pageNav;
+  pageNav;
   selectedPageNav=2
   checkBox:boolean=false
   subscriptionDetails
@@ -28,6 +28,7 @@ export class BillingRenewalComponent implements OnInit {
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Billing' }, { label: 'Details', active: true },];
     this.subscriptionDetails = this.auth.getSubscriptionDetail()
+    this.pageNav=this.subscriptionDetails.subscriptionType=='trial_permissions' ? [pageNavHistory] : [pageNavHistory,pageNavRenewals]
     this.plan.get('/getPlan/'+this.subscriptionDetails.subscriptionType).subscribe(res=>this.planData=res)
     console.log(this.subscriptionDetails)
   }

@@ -1,12 +1,13 @@
+import { pageNavRenewals } from './../pageNav';
 import { ViewScreenshotComponent } from './../view-screenshot/view-screenshot.component';
 import { MatDialog } from '@angular/material/dialog';
-import { pageNav } from './../pageNav';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { BillingService } from './../../services/billing.service';
 import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import Swal from 'sweetalert2';
+import { pageNavHistory } from '../pageNav';
 
 @Component({
   selector: 'app-billing-history',
@@ -30,8 +31,9 @@ export class BillingHistoryComponent implements OnInit {
   loadingIndicatorValue=0
   user:any
   //pageNavBar
-  pageNav=pageNav;
+  pageNav;
   selectedPageNav=1
+  subscriptionDetails;
 
   constructor(private billing:BillingService,private auth:AuthService,private router:Router,private dialog:MatDialog) { }
 
@@ -39,6 +41,8 @@ export class BillingHistoryComponent implements OnInit {
     this.breadCrumbItems = [{ label: 'Billing' }, { label: 'Details', active: true },];
     this.billing.get('/getAllTransactions').subscribe((res:any)=>{this.sortedData = this.billingData = res;console.log(this.sortedData)})
     this.user = this.auth.getCurrentUser()
+    this.subscriptionDetails = this.auth.getSubscriptionDetail();
+    this.pageNav=this.subscriptionDetails.subscriptionType=='trial_permissions' ? [pageNavHistory] : [pageNavHistory,pageNavRenewals]
   }
 
   updateTransaction(status,transactionObj){

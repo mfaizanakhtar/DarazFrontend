@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
     userPassword:new FormControl('',[Validators.required])
   })
   //verification code working
-  isVerificationCode:boolean=false;
+  verificationScreen:boolean=false;
   verificationCode:String="";
   verificationBtn:boolean=true
   verificationResp={
@@ -27,12 +27,15 @@ export class RegisterComponent implements OnInit {
   initialTime=120;
   remainingTime=0;
   loadingIndicator:boolean=false
+  token:String;
   // set the currenr year
   year: number = new Date().getFullYear();
   constructor(private users:UserdataService,private router:Router,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     document.body.removeAttribute('data-layout'); 
+    this.token = this.route.snapshot.queryParamMap.get("token")
+    if(this.token) this.verifyUser();
   }
 
   register(){
@@ -43,7 +46,7 @@ export class RegisterComponent implements OnInit {
     if(this.registerForm.status=='VALID'){
       this.users.postDataWithoutHeaders('/signup',user).subscribe((res:any)=>{
         if(!res.hasOwnProperty("error")){
-          this.isVerificationCode=true
+          this.verificationScreen=true
         }else{
           this.isAlreadyRegistered=true
         }
@@ -52,9 +55,10 @@ export class RegisterComponent implements OnInit {
   }
 
   verifyUser(){
+    this.verificationScreen=true;
     console.log(this.registerForm.value)
     console.log(this.verificationCode)
-    this.users.updateDataWithoutHeaders("/verifyEmail","",{userEmail:this.registerForm.value.userEmail,verificationCode:this.verificationCode}).subscribe((res:any)=>{
+    this.users.updateDataWithoutHeaders("/verifyEmail","",{token:this.token}).subscribe((res:any)=>{
       console.log(res)
       this.verificationResp.isReceived=true;
       this.verificationResp.message=res.message;

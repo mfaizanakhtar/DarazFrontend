@@ -11,12 +11,11 @@ import { BillingRenewalComponent } from './billing-renewal/billing-renewal.compo
 import { PageNavComponent } from '../shared/page-nav/page-nav.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ViewScreenshotComponent } from './view-screenshot/view-screenshot.component';
-import { SubscriptionExpiredComponent } from './subscription-expired/subscription-expired.component';  
 import { SubscriptionGuard } from '../SubscriptionGuard';
 
 
 @NgModule({
-  declarations: [BillPaymentComponent, BillingHistoryComponent, BillingRenewalComponent, ViewScreenshotComponent, SubscriptionExpiredComponent],
+  declarations: [BillPaymentComponent, BillingHistoryComponent, BillingRenewalComponent, ViewScreenshotComponent],
   imports: [
     SharedModule,
     NgbAccordionModule,

@@ -44,7 +44,7 @@ export class BillPaymentComponent implements OnInit {
   }
 
   getData(){
-    this.userEmail = this.auth.getCurrentUser().useremail;
+    this.userEmail = this.auth.getCurrentUser().userEmail;
 
     this.subscriptionType = this.plan.selectedPlan
     if(!this.subscriptionType){

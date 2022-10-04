@@ -15,13 +15,13 @@
                         <!-- <a routerLink="" class="logo"><img src="assets/images/logo-dark.png" height="20" alt="logo"></a> -->
                       </div>
   
-                      <h4 *ngIf="!isVerificationCode" class="font-size-18 mt-4">Register account</h4>
-                      <h4 *ngIf="isVerificationCode" class="font-size-18 mt-4">Email Verification</h4>
-                      <p *ngIf="!isVerificationCode" class="text-muted">Get your account now.</p>
+                      <h4 *ngIf="!verificationScreen" class="font-size-18 mt-4">Register account</h4>
+                      <h4 *ngIf="verificationScreen" class="font-size-18 mt-4">Email Verification</h4>
+                      <p *ngIf="!verificationScreen" class="text-muted">Get your account now.</p>
                     </div>
   
                     <div class="p-2 mt-5">
-                      <form [formGroup]="registerForm" class="form-horizontal" #f="ngForm" (submit)="register()" *ngIf="!isVerificationCode">
+                      <form [formGroup]="registerForm" class="form-horizontal" #f="ngForm" (submit)="register()" *ngIf="!verificationScreen">
   
                         <div class="form-group auth-form-group-custom mb-4">
                           <i class="ri-mail-line auti-custom-input-icon"></i>
@@ -64,35 +64,21 @@
                         </div>
                       </form>
 
-                      <div *ngIf="isVerificationCode">
-                        <div class="form-group col-lg-12 auth-form-group-custom mb-4">
-                          <i class=" auti-custom-input-icon"></i>
-                          <label for="username">Enter 6 digit Verification Code on your Email</label>
-                          <input onKeyPress="this.value.length==maxLength ? false : true"
-                           type="number" maxlength="6" name="verificationCode" class="form-control" id="verificationCode" placeholder="" [(ngModel)]="verificationCode">
+                      <div *ngIf="verificationScreen">
+                        <div class="form-group col-lg-12 auth-form-group-custom mb-4 d-flex justify-content-center">
+                          <mat-spinner diameter="50" *ngIf="!verificationResp?.isReceived"></mat-spinner>
                         </div>
 
                         <div *ngIf="verificationResp.isReceived" [ngClass]="{'alert-success':verificationResp.status=='success','alert-danger':verificationResp.status=='error'}"
                          class="alert mb-4 mt-5 col-lg-12 text-center" role="alert">
                           {{verificationResp.message}}
                         </div>
-
-                        <div class="col-lg-12 text-center">
-                          <button  (click)="verifyUser()" class="btn btn-primary w-md waves-effect waves-light">Verify</button>
-                        </div>
-
-
-
-                      </div>
+                     </div>
                     </div>
   
-                    <div class="mt-5 text-center" *ngIf="!isVerificationCode">
+                    <div class="mt-5 text-center" *ngIf="!verificationScreen">
                       <p>Already have an account ? <a routerLink="/login" class="font-weight-medium text-primary">
                           Login</a> </p>
-                    </div>
-                    <div class="mt-5 text-center" *ngIf="isVerificationCode">
-                      <p>Haven't Received code ? <span (click)="resendCode()" *ngIf="remainingTime==0" class="font-weight-medium text-primary" style="cursor:pointer">
-                          resend code </span><span  class="font-weight-medium text-primary" *ngIf="remainingTime>0">{{remainingTime}} s</span> </p>
                     </div>
                   </div>
                 </div>

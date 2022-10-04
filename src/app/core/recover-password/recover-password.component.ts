@@ -57,6 +57,9 @@ export class RecoverPasswordComponent implements OnInit {
         this.resMessage=res.message
         if(res.status=='success'){
           this.isSuccess=true
+          setTimeout(()=>{
+            this.router.navigateByUrl('/login')
+          },4000)
         }else if(res.status=='error'){
           this.isSuccess=false
         }
