@@ -49,8 +49,8 @@
                         </div>
 
                         
-                        <div *ngIf="isAlreadyRegistered" class="alert alert-danger mb-4 mt-4" role="alert">
-                          Email Already Registered. Please proceed to Login
+                        <div *ngIf="notificationFlag" class="alert alert-danger mb-4 mt-4" role="alert">
+                          {{notification}}
                         </div>
   
                         <div class="text-center d-flex justify-content-center">

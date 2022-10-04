@@ -1,4 +1,4 @@
-import { profileNav } from './profileNavData';
+import { profileNavRoot, profileNavSub } from './profileNavData';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { UserdataService } from '../../services/userdata.service';
@@ -20,12 +20,14 @@ export class ProfileComponent implements OnInit {
   loadingIndicator=true
   breadCrumbItems: Array<{}>;
   tabType='password';
-  profileNavData=profileNav
+  profileNavData;
   selectedNav=1;
   constructor(private toastr:ToastrService,private user:UserdataService,private dialog:MatDialog,private auth:AuthService) { }
 
   ngOnInit(): void {
     this.LoggedUser=this.auth.getCurrentUser()
+    debugger;
+    this.LoggedUser.accountType=='root' ? this.profileNavData=profileNavRoot : this.profileNavData=profileNavSub;
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Profile', active: true },];
   }
 
@@ -100,7 +102,7 @@ export class ProfileComponent implements OnInit {
     }).then(result => {
       if (result.value) {
 
-      this.user.postDataByCap('/deleteSubAccount',{useremail:row.useremail,loginemail:row.loginemail}).subscribe((res:any)=>{
+      this.user.postDataByCap('/deleteSubAccount',{loginEmail:row.loginEmail}).subscribe((res:any)=>{
         if(res.n>0){
           Swal.fire('Deleted!', 'Account has been deleted.', 'success');
           this.getSubAccounts()
@@ -118,7 +120,8 @@ export class ProfileComponent implements OnInit {
   CreateSubAccount(){
     var dialogRef = this.dialog.open(AddSubaccountComponent,{height:"60%",width:"50%"})
     dialogRef.afterClosed().subscribe(res=>{
-      if(res.dialogResult=="User Registered") this.toastr.success(res.dialogResult)
+      if(res.dialogResult.success==true) this.toastr.success(res.dialogResult.message)
+      else if(res.dialogResult.success==false) this.toastr.error(res.dialogResult.message)
       this.getSubAccounts()
     })
   }

@@ -23,7 +23,8 @@ export class RegisterComponent implements OnInit {
     status:'',
     message:''
   }
-  isAlreadyRegistered:boolean=false
+  notificationFlag:boolean=false
+  notification:String;
   initialTime=120;
   remainingTime=0;
   loadingIndicator:boolean=false
@@ -42,13 +43,14 @@ export class RegisterComponent implements OnInit {
     debugger
     var user = this.registerForm.value
     console.log(user)
-    this.isAlreadyRegistered=false
+    this.notificationFlag=false
     if(this.registerForm.status=='VALID'){
       this.users.postDataWithoutHeaders('/signup',user).subscribe((res:any)=>{
+        this.notificationFlag=true
         if(!res.hasOwnProperty("error")){
-          this.verificationScreen=true
+          this.notification="Please check your email for verification link"
         }else{
-          this.isAlreadyRegistered=true
+          this.notification="Email Already Registered. Please proceed to Login"
         }
       })
     }

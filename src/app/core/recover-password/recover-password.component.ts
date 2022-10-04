@@ -52,6 +52,7 @@ export class RecoverPasswordComponent implements OnInit {
 
 
   sendResetPasswordLink(){
+    debugger
     if(this.resetFormGroup.status=='VALID'){
       this.users.postDataWithoutHeaders('/recoverPassword',this.resetFormGroup.value).subscribe((res:any)=>{
         this.resMessage=res.message
@@ -69,7 +70,7 @@ export class RecoverPasswordComponent implements OnInit {
 
   resetPassword(){
     if(this.changePasswordGroup.status=='VALID'){
-      this.users.updateDataWithoutHeaders('/resetPasswordWithToken',this.tokenString,{userPassword:this.changePasswordGroup.value.newPassword}).subscribe((res:any)=>{
+      this.users.updateDataWithoutHeaders('resetPasswordWithToken',this.tokenString,{userPassword:this.changePasswordGroup.value.newPassword}).subscribe((res:any)=>{
         this.resMessage=res.message
         if(res.status=='error'){
           this.isSuccess=false
