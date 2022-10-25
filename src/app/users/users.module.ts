@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AdminGuard } from '../AdminGuard';
+import { AdminGuard } from '../guards/AdminGuard';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
-import { LoginGuard } from '../LoginGuard';
+import { LoginGuard } from '../guards/LoginGuard';
 import { SharedModule } from '../shared/shared.module';
-import { SubscriptionGuard } from '../SubscriptionGuard';
+import { SubscriptionGuard } from '../guards/SubscriptionGuard';
 import { AddSubaccountComponent } from './add-subaccount/add-subaccount.component';
 import { AddUsersComponent } from './add-users/add-users.component';
 import { ProfileComponent } from './profile/profile.component';

@@ -1,17 +1,17 @@
-import { Injectable } from "@angular/core"
+import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { Observable } from "rxjs";
-import { AuthService } from "./services/auth.service";
-
+import { AuthService } from "../services/auth.service";
 
 @Injectable()
-export class AdminGuard implements CanActivate{
+export class PermissionGuard implements CanActivate{
     constructor(private auth:AuthService,private router:Router){}
-
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        if(this.auth.getCurrentUser().userType!='admin'){
-            this.router.navigate(['/'])
+        const permissions = this.auth.getPermissions()
+        if(permissions.hasOwnProperty(route.data.page) && permissions[route.data.page].value){  
+            return true
         }
-        return true
+        this.router.navigate(['login'])
+        
     }
 }

@@ -17,28 +17,25 @@
 
         <!--Status-->
         <div class="col-xl-3">
-          <div class="card">
+          <div style="font-size:12px" class="card">
             <div class="card-body">
               <ul ngbNav #justifiednav="ngbNav" [activeId]="1" class="nav-pills nav-justified">
       
                 <li (click)="StatusFilterClicked('All')" [ngbNavItem]="1">
                   <a ngbNavLink>
-                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                    <span class="d-none d-sm-block">All</span>
+                    <span class="d-sm-none d-sm-block">All</span>
                   </a>
                 </li>
       
                 <li (click)="StatusFilterClicked('active')" [ngbNavItem]="2">
                   <a ngbNavLink>
-                    <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                    <span class="d-none d-sm-block">Active</span>
+                    <span class="d-sm-none d-sm-block">Active</span>
                   </a>
                 </li>
       
                 <li (click)="StatusFilterClicked('inactive')" [ngbNavItem]="3">
                   <a ngbNavLink>
-                    <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                    <span class="d-none d-sm-block">Inactive</span>
+                    <span class="d-sm-none d-sm-block">Inactive</span>
                   </a>
                 </li>
       
@@ -52,28 +49,25 @@
         
       <!--Stock Filter-->
         <div class="col-xl-3">
-          <div class="card">
+          <div style="font-size:12px" class="card">
             <div class="card-body">
               <ul ngbNav #justifiednav="ngbNav" [activeId]="1" class="nav-pills nav-justified">
       
                 <li (click)="StockFilterClicked('All')" [ngbNavItem]="1">
                   <a ngbNavLink>
-                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                    <span class="d-none d-sm-block">All</span>
+                    <span class="d-sm-none d-sm-block">All</span>
                   </a>
                 </li>
       
                 <li (click)="StockFilterClicked('InStock')" [ngbNavItem]="2">
                   <a ngbNavLink>
-                    <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                    <span class="d-none d-sm-block">InStock</span>
+                    <span class="d-sm-none d-sm-block">InStock</span>
                   </a>
                 </li>
       
                 <li (click)="StockFilterClicked('OutOfStock')" [ngbNavItem]="3">
                   <a ngbNavLink>
-                    <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                    <span class="d-none d-sm-block">OOS</span>
+                    <span class="d-sm-none d-sm-block">OOS</span>
                   </a>
                 </li>
       
@@ -85,28 +79,33 @@
         <!--Stock Filter End-->
       
       <!--Search Input and Store Selecter-->
-          <form class="col-lg-4" #f="ngForm" (ngSubmit)="findSku(f.value)">
+          <form class="col-lg-3 mt-3" #f="ngForm" (ngSubmit)="findSku(f.value)">
           
-              <mat-form-field class="col-lg-6" appearance="outline">
+              <mat-form-field style="font-size:12px" class="col-lg-6" appearance="outline">
                 <mat-label>Seller Sku</mat-label>
                 <input type="text" name="SellerSku" ngModel matInput placeholder="Ex. ABCD">
               </mat-form-field>
               
-              <mat-form-field class="col-lg-6" appearance="outline">
+              <mat-form-field style="font-size:12px" class="col-lg-6" appearance="outline">
                 <mat-label>Shop Sku</mat-label>
                 <input name="ShopSku" ngModel matInput placeholder="Ex. 1078646_PK_8789123">
               </mat-form-field>
-              <button type="submit" style="display: none;"></button>
+              <!-- <button style="display: none;"></button> -->
+              <!-- <button type="submit" mat-raised-button color="primary">Search</button> -->
               
               </form>
             
-              <mat-form-field class="col-lg-2" appearance="outline" >
+              <mat-form-field style="font-size:12px" class="col-lg-2 mt-3" appearance="outline" >
                 <mat-label>Select Store</mat-label>
                 <mat-select [(ngModel)]="Store" (selectionChange)="StoreSelected($event)">
                   <mat-option value="All">All</mat-option>
                   <mat-option *ngFor="let store of StoreArray" [value]="store.shortCode">{{store.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
+
+              <div class="col-lg-1 mt-4">
+                <button class="col-lg-12" (click)="findSku(f.value)" mat-raised-button color="primary">Search</button>
+              </div>
               <!--Search Input and Store Selecter END-->
         </div>
         <!--End of TopBar-->
@@ -138,7 +137,7 @@
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="sortedData.length>0">
 
               <tr *ngFor="let sku of sortedData;let rowIndex=index">
                 <td>
@@ -220,6 +219,9 @@
           </table>
         </div>
         <!-- End table -->
+        <div *ngIf="sortedData.length===0" class="row justify-content-md-between align-items-md-center mt-2">
+          <div class="col-sm-12 col-md-5">No Records to show</div>
+        </div>
         <div class="row justify-content-md-between align-items-md-center mt-2">
           <div class="col-sm-12 col-md-5">
 

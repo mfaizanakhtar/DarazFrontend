@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { LoginGuard } from '../LoginGuard';
-import { PermissionGuard } from '../PermissionGuard';
+import { LoginGuard } from '../guards/LoginGuard';
+import { PermissionGuard } from '../guards/PermissionGuard';
 import { PrintLabelsComponent } from './print-labels/print-labels.component';
 import { SharedModule } from '../shared/shared.module';
 import { DispatchComponent } from './dispatch/dispatch.component';
 import { OrdersViewComponent } from './orders-view/orders-view.component';
 import { ReturntrackingComponent } from './returntracking/returntracking.component';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
-import { SubscriptionGuard } from '../SubscriptionGuard';
+import { SubscriptionGuard } from '../guards/SubscriptionGuard';
 
 
 

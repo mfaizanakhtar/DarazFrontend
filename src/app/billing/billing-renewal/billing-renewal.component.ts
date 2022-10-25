@@ -21,15 +21,18 @@ export class BillingRenewalComponent implements OnInit {
   subscriptionDetails
   monthsDuration;
   planData;
-  payWith=1
-
   constructor(private router:Router,private auth:AuthService,private plan:PlansService,private billing:BillingService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Billing' }, { label: 'Details', active: true },];
+    debugger;
     this.subscriptionDetails = this.auth.getSubscriptionDetail()
-    this.pageNav=this.subscriptionDetails.subscriptionType=='trial_permissions' ? [pageNavHistory] : [pageNavHistory,pageNavRenewals]
-    this.plan.get('/getPlan/'+this.subscriptionDetails.subscriptionType).subscribe(res=>this.planData=res)
+    if(this.subscriptionDetails.subscriptionType=='trial_permissions'){
+      this.router.navigate([''])      
+    }else{
+      this.pageNav=[pageNavHistory,pageNavRenewals]
+    }
+    this.plan.get('/getPlan/'+this.subscriptionDetails.subscriptionType).subscribe(res=>{debugger;this.planData=res})
     console.log(this.subscriptionDetails)
   }
 
@@ -43,9 +46,8 @@ export class BillingRenewalComponent implements OnInit {
 
   payNow(){
     this.plan.selectedPlan=this.planData
-    this.plan.isRenewal=true
     this.plan.renewalData={monthsDuration:this.monthsDuration}
-    this.router.navigate(['/billing'])
+    this.router.navigate(['/billing/checkout'])
   }
   cancelFutureRequest(){
     Swal.fire({

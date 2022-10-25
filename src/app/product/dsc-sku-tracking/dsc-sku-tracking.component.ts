@@ -1,4 +1,4 @@
-import { DarazskuService } from '../../darazsku.service';
+import { DarazskuService } from '../../services/darazsku.service';
 import { Component, OnInit } from '@angular/core';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -108,6 +108,7 @@ export class DscSkuTracking implements OnInit {
   }
 
   findSku(f){
+    debugger
     this.pIndex=0
     console.log(f)
     if(f.SellerSku=='') this.SellerSku=null

@@ -8,14 +8,14 @@ import { SkuEditSheetComponent } from './sku-edit-sheet/sku-edit-sheet.component
 import { SkuOverviewComponent } from './sku-overview/sku-overview.component';
 import { StockChecklistComponent } from './stock-checklist/stock-checklist.component';
 import { RouterModule } from '@angular/router';
-import { LoginGuard } from '../LoginGuard';
-import { PermissionGuard } from '../PermissionGuard';
+import { LoginGuard } from '../guards/LoginGuard';
+import { PermissionGuard } from '../guards/PermissionGuard';
 import { ProfileComponent } from '../users/profile/profile.component';
 import { ShopIdComponent } from '../users/shop-ids/shop-id.component';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
 import { OrdersComponent } from './orders/orders.component';
 import { NgbAccordionModule, NgbCollapseModule, NgbModalModule, NgbNavModule, NgbPaginationModule, NgbTooltipModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
-import { SubscriptionGuard } from '../SubscriptionGuard';
+import { SubscriptionGuard } from '../guards/SubscriptionGuard';
 
 
 

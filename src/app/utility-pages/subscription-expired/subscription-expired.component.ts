@@ -1,5 +1,6 @@
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { constants } from 'src/app/utils/constants';
 
 @Component({
   selector: 'app-subscription-expired',
@@ -13,7 +14,7 @@ export class SubscriptionExpiredComponent implements OnInit {
 
   ngOnInit(): void {
     var subscription = this.auth.getSubscriptionDetail();
-    this.isTrial=subscription.subscriptionType=='trial_permissions' ? true : false
+    this.isTrial=subscription.subscriptionType==constants.SUB_TYPE_TRIAL ? true : false
   }
 
 }

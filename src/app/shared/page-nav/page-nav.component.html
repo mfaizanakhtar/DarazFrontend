@@ -1,5 +1,5 @@
 <div class="row mb-4">
-    <div class="col-lg-{{pageNav.length}}">
+    <div class="col-lg-{{pageNav?.length}}">
       <div class="options d-flex align-items-center justify-content-between">
         <a *ngFor="let item of pageNav" [ngClass]="{selectedOption:item.index===selectedPageNav}" (click)="pageNavClicked(item)"><h4 class="mb-0">{{item.title}}</h4></a>
       </div>

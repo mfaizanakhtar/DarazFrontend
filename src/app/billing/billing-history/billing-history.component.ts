@@ -1,3 +1,4 @@
+import { PlansService } from 'src/app/services/plans.service';
 import { pageNavRenewals } from './../pageNav';
 import { ViewScreenshotComponent } from './../view-screenshot/view-screenshot.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -35,7 +36,7 @@ export class BillingHistoryComponent implements OnInit {
   selectedPageNav=1
   subscriptionDetails;
 
-  constructor(private billing:BillingService,private auth:AuthService,private router:Router,private dialog:MatDialog) { }
+  constructor(private billing:BillingService,private auth:AuthService,private router:Router,private dialog:MatDialog,private plan:PlansService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Billing' }, { label: 'Details', active: true },];
@@ -46,8 +47,7 @@ export class BillingHistoryComponent implements OnInit {
   }
 
   updateTransaction(status,transactionObj){
-    var confirmText;
-    status=='approved' ? confirmText="approve" : confirmText="reject"
+    let btnStatusText=status==='canceled' ? 'cancel' : status==='completed' ? 'complete' : status==='rejected' ? 'reject' : '';
     Swal.fire({
       title: 'Are you sure?',
       text: 'You won\'t be able to revert this!',
@@ -55,7 +55,7 @@ export class BillingHistoryComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#34c38f',
       cancelButtonColor: '#ff3d60',
-      confirmButtonText: 'Yes, '+confirmText+' it!'
+      confirmButtonText: 'Yes, '+btnStatusText+' it!'
     }).then(result => {
       if (result.value) {
         this.billing.updateData('/confirmTransaction',"",{status:status,transactionId:transactionObj._id}).subscribe((res:any)=>{
@@ -78,6 +78,14 @@ export class BillingHistoryComponent implements OnInit {
     });
   }
 
+  retryPayment(billingDetails){
+    console.log(billingDetails);
+      this.plan.billingAmount=billingDetails.invoiceAmount;
+      this.plan.billingId=billingDetails.billingId;
+      this.plan.selectedPlan=billingDetails.subscriptionType;
+      this.router.navigate([billingDetails.paymentUrl])
+  }
+
 
   sortData(sort: Sort) {
     var data = this.billingData.slice()
@@ -87,28 +95,27 @@ export class BillingHistoryComponent implements OnInit {
     }
     this.sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'status':
-          return this.compare(a.status, b.status, isAsc);
-        case 'billingId':
-          return this.compare(a.billingId, b.billingId, isAsc);
-        case 'createdAt':
-          return this.compare(a.createdAt, b.createdAt, isAsc);
-        case 'userEmail':
-          return this.compare(a.userEmail, b.userEmail, isAsc);
-        case 'subscriptionType':
-          return this.compare(a.subscriptionType, b.subscriptionType, isAsc);
-        case 'duration':
-          return this.compare(a.duration, b.duration, isAsc);
-        case 'pricing':
-          return this.compare(a.pricing, b.pricing, isAsc);
-        case 'transactionId':
-          return this.compare(a.transactionId, b.transactionId, isAsc);
-        case 'status':
-          return this.compare(a.status, b.status, isAsc);
-        default:
-          return 0;
-      }
+      return this.compare(a[sort.active],b[sort.active],isAsc);
+      // switch (sort.active) {
+      //   case 'status':
+      //     return this.compare(a.status, b.status, isAsc);
+      //   case 'billingId':
+      //     return this.compare(a.billingId, b.billingId, isAsc);
+      //   case 'createdAt':
+      //     return this.compare(a.createdAt, b.createdAt, isAsc);
+      //   case 'userEmail':
+      //     return this.compare(a.userEmail, b.userEmail, isAsc);
+      //   case 'subscriptionType':
+      //     return this.compare(a.subscriptionType, b.subscriptionType, isAsc);
+      //   case 'duration':
+      //     return this.compare(a.duration, b.duration, isAsc);
+      //   case 'transactionId':
+      //     return this.compare(a.transactionId, b.transactionId, isAsc);
+      //   case 'status':
+      //     return this.compare(a.status, b.status, isAsc);
+      //   default:
+      //     return 0;
+      // }
     });
   }
 

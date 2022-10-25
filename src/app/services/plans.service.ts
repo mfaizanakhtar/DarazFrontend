@@ -8,7 +8,9 @@ import { Injectable } from '@angular/core';
 export class PlansService extends DataService {
 
   selectedPlan:any;
-  isRenewal:boolean;
+  billingAmount:Number;
+  durationSelected:String;
+  billingId:Number;
   renewalData
   constructor(http:HttpClient) {
     super("plans",http);

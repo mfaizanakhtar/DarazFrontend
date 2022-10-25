@@ -4,16 +4,16 @@
 
 <div class="row">
   
-  <form #f="ngForm" (ngSubmit)="findOrder(f)">
+  <form class="col-lg-4" #f="ngForm" (ngSubmit)="findOrder(f)">
   <div class="col-md-12">
   <div class="row">
-  <mat-form-field class="col-md-6" appearance="outline">
+  <mat-form-field class="col-md-6 font-size-12" appearance="outline">
     <mat-label>Order Id</mat-label>
     <input type="number" name="OrderId" ngModel matInput placeholder="Ex. 10110254789879">
   </mat-form-field>
 
   
-  <mat-form-field class="col-md-6" appearance="outline">
+  <mat-form-field class="col-md-6 font-size-12" appearance="outline">
     <mat-label>Tracking No</mat-label>
     <input name="Tracking" ngModel matInput placeholder="Ex. PK-DEX02132141">
   </mat-form-field>
@@ -22,7 +22,7 @@
   </div>
   </form>
 
-  <mat-form-field  class="col-lg-2" appearance="outline">
+  <mat-form-field class="col-lg-2 font-size-12" appearance="outline">
     <mat-label>Select Store</mat-label>
     <mat-select [(ngModel)]="Store" (selectionChange)="StoreSelected($event)">
       <mat-option value="All">All</mat-option>
@@ -30,7 +30,7 @@
     </mat-select>
   </mat-form-field>
 
-    <mat-form-field appearance="outline" class="col-lg-2">
+    <mat-form-field appearance="outline" class="col-lg-2 font-size-12">
       <mat-label>Select Fulfillment</mat-label>
       <mat-select [(ngModel)]="Fulfillment" (selectionChange)="FulfillmentSelected($event)">
         <mat-option value="All">All</mat-option>
@@ -39,7 +39,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="col-lg-2">
+    <mat-form-field appearance="outline" class="col-lg-2 font-size-12">
       <mat-label>Enter a date range</mat-label>
       <mat-date-range-input [rangePicker]="picker" >
         <input [(value)]="startdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
@@ -48,6 +48,10 @@
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
+
+    <div class="col-lg-2">
+      <button (click)="findOrder(f)" class="col-lg-12 font-size-12 mt-2" mat-raised-button color="primary" >Search</button>
+    </div>
     
     <!-- <div style="margin-left: 10px; margin-top: 15px;">
       <mat-slide-toggle
@@ -77,9 +81,8 @@
 </div>
 <mat-divider class="topdivider"></mat-divider>
 
-  <!-- <perfect-scrollbar [scrollIndicators]="true" style="width: 1500px" [config]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:true}"> -->
-
-  <mat-button-toggle-group appearance="legacy" name="fontStyle" [value]="StatusFilter" aria-label="Font Style">
+  <perfect-scrollbar [scrollIndicators]="true" style="width:fit-content;height:max-content;font-size: 20px;" [config]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:true}">
+    <mat-button-toggle-group  style="font-size: 12px;" class="m-2" appearance="legacy" name="fontStyle" [value]="StatusFilter" aria-label="Font Style">
     <mat-button-toggle value="All" (click)="StatusFilterClicked('All','All')">All Orders</mat-button-toggle>
     <mat-button-toggle value="pending" (click)="StatusFilterClicked('pending','Pending')">Pending</mat-button-toggle>
     <mat-button-toggle value="ready_to_ship" (click)="StatusFilterClicked('ready_to_ship','RTS')">RTS</mat-button-toggle>
@@ -94,8 +97,7 @@
     <mat-button-toggle value="ClaimReceived" (click)="StatusFilterClicked('ClaimReceived','Claim Received')">Claim Received</mat-button-toggle>
     <mat-button-toggle value="canceled" (click)="StatusFilterClicked('canceled','Cancelled')">Cancelled</mat-button-toggle>
   </mat-button-toggle-group>
-
-<!-- </perfect-scrollbar> -->
+</perfect-scrollbar>
 
 <mat-divider class="topdivider"></mat-divider>
 
@@ -103,14 +105,14 @@
 <div class="row">
   <div class="col-lg-12">
   <div class="row">
-  <button class="col-lg-2" style="margin-left: 20px;margin-right: 20px;" mat-stroked-button color="primary" [matMenuTriggerFor]="printMenu">Print</button>
+  <button class="col-lg-2 font-size-12" style="margin-left: 20px;margin-right: 20px;" mat-stroked-button color="primary" [matMenuTriggerFor]="printMenu">Print</button>
   <mat-menu #printMenu="matMenu">
     <button *ngIf="selected.length>0" (click)="printLabels()"  mat-menu-item>Print Labels</button>
     <button *ngIf="selected.length>0" (click)="printStockChecklist('selected')"  mat-menu-item>Print Selected StockChecklist</button>
     <button *ngIf="!(selected.length>0)" (click)="printStockChecklist('')"  mat-menu-item>Print {{FormattedStatus}} StockChecklist</button>
   </mat-menu>
 
-  <button [disabled]="!(selected.length>0)" class="col-lg-2" style="margin-left: 20px;margin-right: 20px;" mat-raised-button color="primary" [matMenuTriggerFor]="statusMenu">Set Warehouse Status</button>
+  <button [disabled]="!(selected.length>0)" class="col-lg-2 font-size-12" style="margin-left: 20px;margin-right: 20px;" mat-raised-button color="primary" [matMenuTriggerFor]="statusMenu">Set Warehouse Status</button>
   
   <mat-menu #statusMenu="matMenu">
     <button (click)="UpdateStatus('Dispatched')" mat-menu-item>Dispatched</button>
@@ -127,17 +129,17 @@
     <button (click)="UpdateStatus('Claim Received')" mat-menu-item>Claim Received</button>
   </mat-menu>
 
-  <button [disabled]="!(selected.length>0)" class="col-lg-2" style="margin-left: 20px;margin-right: 20px;" mat-stroked-button color="primary" [matMenuTriggerFor]="darazStatusMenu">Set Daraz Status</button>
+  <button [disabled]="!(selected.length>0)" class="col-lg-2 font-size-12" style="margin-left: 20px;margin-right: 20px;" mat-stroked-button color="primary" [matMenuTriggerFor]="darazStatusMenu">Set Daraz Status</button>
   <mat-menu #darazStatusMenu="matMenu">
     <button (click)="setStatusToRTS()"  mat-menu-item>Set to RTS</button>
   </mat-menu>
 
   <section class="col-lg-1">
-    <mat-checkbox [disabled]="UnPrinted" color="primary" [(ngModel)]="Printed" (ngModelChange)="printCheckbox()" class="example-margin">Printed</mat-checkbox>
+    <mat-checkbox [disabled]="UnPrinted" color="primary" [(ngModel)]="Printed" (ngModelChange)="printCheckbox()" class="font-size-12">Printed</mat-checkbox>
   </section>
 
   <section class="col-lg-1">
-    <mat-checkbox [disabled]="Printed" color="primary" [(ngModel)]="UnPrinted" (ngModelChange)="printCheckbox()" class="example-margin">Un Printed</mat-checkbox>
+    <mat-checkbox [disabled]="Printed" color="primary" [(ngModel)]="UnPrinted" (ngModelChange)="printCheckbox()" class="font-size-12">Un Printed</mat-checkbox>
   </section>
 </div>
 </div>
@@ -294,10 +296,10 @@ rowHeight="auto"
   </ng-template>
 </ngx-datatable-column>
 <ngx-datatable-column name="Shop Name" prop="ShopName" [width]="90" [minWidth]="90"></ngx-datatable-column>
-<ngx-datatable-column *ngIf="StatusFilter!='ClaimFiled'" name="Printed?" prop="isPrinted" [width]="30" [minWidth]="30">
+<ngx-datatable-column *ngIf="StatusFilter!='ClaimFiled'" name="Printed" prop="isPrinted" [width]="30" [minWidth]="30">
   <ng-template let-row="row" let-isPrinted="value" ngx-datatable-cell-template>
-    <div *ngIf='isPrinted'>Yes</div>
-    <div *ngIf='!isPrinted'>No</div>
+    <div *ngIf='isPrinted' ><i class="mdi mdi-check font-size-18 text-success"></i></div>
+    <div *ngIf='!isPrinted'><i class="mdi mdi-alpha-x font-size-24 text-danger"></i></div>
   </ng-template>
 </ngx-datatable-column>
 <ngx-datatable-column *ngIf="StatusFilter=='ClaimFiled' || StatusFilter=='returned' || StatusFilter=='ClaimReceived'" name="Claim Number" prop="ClaimNumber" [width]="75" [minWidth]="75">

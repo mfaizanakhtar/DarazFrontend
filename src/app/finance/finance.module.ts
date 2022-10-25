@@ -4,10 +4,10 @@ import { SharedModule } from '../shared/shared.module';
 import { ViewStatementsComponent } from './view-statements/view-statements.component';
 import { ViewTransactionsComponent } from './view-transactions/view-transactions.component';
 import { RouterModule } from '@angular/router';
-import { LoginGuard } from '../LoginGuard';
-import { PermissionGuard } from '../PermissionGuard';
+import { LoginGuard } from '../guards/LoginGuard';
+import { PermissionGuard } from '../guards/PermissionGuard';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
-import { SubscriptionGuard } from '../SubscriptionGuard';
+import { SubscriptionGuard } from '../guards/SubscriptionGuard';
 
 
 
