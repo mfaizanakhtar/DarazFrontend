@@ -1,5 +1,6 @@
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { DarazskuService } from '../../services/darazsku.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DscSkuEditComponent } from '../dsc-sku-edit/dsc-sku-edit.component';
@@ -20,9 +21,13 @@ export class DscSkuTracking implements OnInit {
     StoreArray=[]
     //datatable variables
     ColumnMode = ColumnMode;
-    loadingIndicator = true;
+    //loading
+    loadingIndicator:Boolean = true;
     loadingIndicatorValue=0
-    costSavingIndiactor=false;
+    costSavingIndiactor:Boolean=false;
+    quantitySavingIndicator:Boolean=false;
+    priceSavingIndicator:Boolean=false;
+    //tableVariables
     SelectionType = SelectionType;
     sortedData=[];
     selected=[];
@@ -41,10 +46,17 @@ export class DscSkuTracking implements OnInit {
     length:any
     pIndex=0
     pSize=10
-    breadCrumbItems: Array<{}>;
-    
-    
+    //popOver
+    openedPricePop:any;
 
+    breadCrumbItems: Array<{}>;
+    priceEditFormGroup = new FormGroup({
+      priceControl:new FormControl('',[Validators.required,Validators.pattern('^[1-9]+[0-9]*$')]),
+      specialPriceControl:new FormControl('',[this.specialPriceValidation,Validators.pattern('^[1-9]+[0-9]*$')]),
+      specialPriceFromControl:new FormControl(''),
+      specialPriceToControl:new FormControl('')
+    })
+    
   constructor(private darazskus:DarazskuService,private _bottomSheet:MatBottomSheet,private auth:AuthService) { }
 
   ngOnInit(): void {
@@ -53,7 +65,18 @@ export class DscSkuTracking implements OnInit {
 
     this.getDarazSkus()
     this.userPermissions = this.auth.getPermissions();
+
+    this.priceEditFormGroup.get('priceControl').valueChanges
+    .subscribe(()=>{
+      this.priceEditFormGroup.get('specialPriceControl').updateValueAndValidity();
+    })
     
+  }
+
+  specialPriceValidation(formControl:AbstractControl){
+    if(!formControl.parent) return null;
+    return formControl.value >= formControl.parent.get('priceControl').value ?
+    {specialPriceInvalid:true} : null
   }
 
   changePage(page){
@@ -75,10 +98,8 @@ export class DscSkuTracking implements OnInit {
     this.fetchProgress()
 
     this.darazskus.get('/getSkus?pSize='+this.pSize+'&pIndex='+this.pIndex+'&SellerSku='+this.SellerSku+'&ShopSku='+this.ShopSku+'&ShopShortCode='+tempStore+'&Status='+tempStatus
-    +'&Stock='+tempStock).subscribe(res=>{
-      console.log(res)
-
-      var response:any=res
+    +'&Stock='+tempStock).subscribe((response:any)=>{
+      console.log(response)
 
       this.DSCskus=response.darazskus
       this.sortedData=response.darazskus
@@ -89,6 +110,54 @@ export class DscSkuTracking implements OnInit {
 
       this.loadingIndicator=false
     })
+  }
+
+  setSkuSpecialPrice(value,DSCSkuIndex){
+    if(!(value>0)){
+      this.DSCskus[DSCSkuIndex].special_price=null;
+    }
+  }
+
+  updatePrice(index,values,pricePopUp){
+    if(this.priceEditFormGroup.valid){
+      this.priceSavingIndicator=true;
+      this.darazskus.updateData('updatePriceQuantity',this.DSCskus[index]._id,
+      {
+        price:values.priceControl,
+        special_price:values.specialPriceControl,
+        special_from_date:values.specialPriceFromControl,
+        special_to_date:values.specialPriceToControl
+      }).subscribe((res:any)=>{
+        this.priceSavingIndicator=false;
+        this.DSCskus[index]=res.updatedSku
+        pricePopUp.close();
+        console.log(res)
+      },(error)=>{
+        this.priceSavingIndicator=false;
+        console.log(error)
+      })
+    }
+  }
+
+  updateQuantity(index,value,quantityPopUp){
+    this.quantitySavingIndicator=true;
+    this.darazskus.updateData('updatePriceQuantity',this.DSCskus[index]._id,{quantity:value}).
+    subscribe((res:any)=>{
+      this.quantitySavingIndicator=false;
+      this.DSCskus[index]=res.updatedSku;
+      quantityPopUp.close();
+      console.log(res)
+    },(error)=>{
+      this.quantitySavingIndicator=false;
+      console.log(error)
+    })
+  }
+
+  togglePricePop(pP){
+    if(this.openedPricePop){
+      this.openedPricePop.close()
+    }
+    this.openedPricePop=pP;
   }
 
   StoreSelected(event){
@@ -135,7 +204,6 @@ export class DscSkuTracking implements OnInit {
   }
 
   EditCost(pop,sku){
-    debugger
     console.log(sku._id)
     var skuCost={cost:0,FBMpackagingCost:0,FBDpackagingCost:0};
     if(sku.cost!=null) skuCost.cost=sku.cost;
@@ -150,32 +218,10 @@ export class DscSkuTracking implements OnInit {
     })
     
   }
-  
-
-  // EditSku(row){
-  //   var ref = this._bottomSheet.open(DscSkuEditComponent,{data:{sku:row,FBDchange:0,FBMchange:0}})
-  //   ref.afterDismissed().subscribe(res=>{
-  //     this.getDarazSkus()
-  //   })
-  //   // console.log(row)
-  // }
-
-  // AcceptChange(row){
-  //   var ref = this._bottomSheet.open(DscSkuEditComponent,{data:{sku:row,
-  //     FBDchange:row.fblWarehouseInventories.quantity-row.FBDstock.quantity,
-  //     FBMchange:row.multiWarehouseInventories.quantity-row.FBMstock.quantity}})
-
-  //   ref.afterDismissed().subscribe(res=>{
-  //     this.getDarazSkus()
-  //   })
-  // }
 
   DeleteSku(row){
     console.log(row)
-    // this.darazskus.deleteData('/'+row._id).subscribe(res=>{
-    //   console.log(row)
-    //   this.getDarazSkus()
-    // })
+
     Swal.fire({
       title: 'Are you sure?',
       text: 'You won\'t be able to revert this!',
@@ -205,41 +251,13 @@ export class DscSkuTracking implements OnInit {
     }
     this.sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'quantity':
-          return this.compare(a.quantity, b.quantity, isAsc);
-        case 'multiWarehouseInventories.quantity':
-          return this.compare(a.multiWarehouseInventories.quantity, b.multiWarehouseInventories.quantity, isAsc);
-        case 'fblWarehouseInventories.quantity':
-          return this.compare(a.fblWarehouseInventories.quantity, b.fblWarehouseInventories.quantity, isAsc);
-        case 'cost':
-          return this.compare(a.cost, b.cost, isAsc);
-        case 'SellerSku':
-          return this.compare(a.SellerSku, b.SellerSku, isAsc);
-        default:
-          return 0;
-      }
+      return this.compare(a[sort.active],b[sort.active],isAsc)
+
     });
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
-  //ngx-datatable
-  // onSelect({ selected }) {
-
-  //   this.selected.splice(0, this.selected.length);
-  //   for(const sel of selected){
-  //     this.selected.push(sel);
-  //   }
-  //   console.log(this.selected)
-  // }
-
-  // onActivate(event) {
-  //   // console.log('Activate Event', event);
-  // }
-
-
-
 
 }

@@ -131,6 +131,7 @@
                 <th mat-sort-header="quantity">Total Stock</th>
                 <th mat-sort-header="multiWarehouseInventories.quantity">FBM Stock</th>
                 <th mat-sort-header="fblWarehouseInventories.quantity">FBD Stock</th>
+                <th mat-sort-header="price">Price</th>
                 <th *ngIf="userPermissions?.DSCInventoryCost?.value"  mat-sort-header="cost">Cost</th>
                 <th>Shop</th>
                 <th>Status</th>
@@ -159,15 +160,84 @@
                 </td>
                 <td>
                   <ngb-highlight [result]="sku.FBMstock.quantity" [term]="searchTerm"></ngb-highlight>
+
+                  <ng-template #quantityPop>
+                  <form #f="ngForm" (submit)="updateQuantity(rowIndex,f.value.quantity,qP)">
+                    <div class="row">
+
+                    <mat-form-field class="col-md-12" appearance="outline">
+                      <mat-label>Quantity</mat-label>
+                      <input type="number" name="quantity" [ngModel]="sku.FBMstock.quantity" matInput>
+                    </mat-form-field>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 text-center d-flex justify-content-center">
+                        <button [disabled]="f.value.quantity==sku.FBMstock.quantity" *ngIf="!quantitySavingIndicator" type="submit" mat-raised-button color="primary">Save</button>
+                        <mat-spinner *ngIf="quantitySavingIndicator"  [diameter]="30"></mat-spinner>
+                      </div>
+                    </div>
+                  </form>
+
+                  </ng-template>
+
+                  <a class="mr-3 text-primary" #qP="ngbPopover" [ngbPopover]="quantityPop" [animation]="'true'" [autoClose]="'outside'"><i class="mdi mdi-pencil font-size-18"></i></a>
+
                 </td>
                 <td>
                   <ngb-highlight [result]="sku.FBDstock.quantity" [term]="searchTerm"></ngb-highlight>
+                </td>
+                <td>
+                  <span [ngClass]="{'small':sku.special_price>0}"><span *ngIf="sku.special_price<=0">{{sku.price}}</span><del *ngIf="sku.special_price>0">{{sku.price}}</del></span><span *ngIf="sku.special_price>0"> {{sku.special_price}}</span><span> PKR</span>
+
+                  <ng-template #pricePop>
+
+                    <form #priceForm="ngForm" [formGroup]="priceEditFormGroup" class="row" (submit)="updatePrice(rowIndex,priceForm.value,pP)">
+                      <div class="col-md-12">
+                        <i (click)="pP.close()" style="cursor:pointer" class="mdi mdi-alpha-x-circle font-size-18 float-md-right"></i>                    
+                      </div>
+
+                      <mat-form-field class="col-md-12 font-size-12" appearance="outline">
+                        <mat-label>Price</mat-label>
+                        <input formControlName="priceControl" type="number" [ngModel]="sku.price" matInput>
+                        <mat-error *ngIf="priceEditFormGroup.get('priceControl').invalid && priceEditFormGroup.get('priceControl').touched">Price can not be 0 or less than 0</mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field class="col-md-12 font-size-12" appearance="outline">
+                        <mat-label>Special Price</mat-label>
+                        <input formControlName="specialPriceControl" type="number" min="0" [ngModel]="sku.special_price<=0 ? null : sku.special_price" matInput>
+                        <mat-error *ngIf="priceEditFormGroup.get('specialPriceControl')?.errors?.specialPriceInvalid && priceEditFormGroup.get('specialPriceControl').touched">Special Price must be less than Price</mat-error>
+                        <mat-error *ngIf="priceEditFormGroup.get('specialPriceControl')?.errors?.hasOwnProperty('pattern') && priceEditFormGroup.get('specialPriceControl').touched">Special Price must be greater than 0</mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-md-12 font-size-12">
+                        <mat-label>Special Price Date Range</mat-label>
+                        <mat-date-range-input [rangePicker]="picker" >
+                          <input formControlName="specialPriceFromControl" matStartDate name="special_from_date" [ngModel]="sku.special_from_date">
+                          <input formControlName="specialPriceToControl" matEndDate name="special_to_date" [ngModel]="sku.special_to_date">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                      </mat-form-field>
+
+                      <div class="col-md-12 text-center d-flex justify-content-center">
+                        <button [disabled]="priceEditFormGroup.get('priceControl').value==sku.price && priceEditFormGroup.get('specialPriceControl').value==sku.special_price && 
+                        priceEditFormGroup.get('specialPriceFromControl').value==sku.special_from_date && priceEditFormGroup.get('specialPriceToControl').value==sku.special_to_date" 
+                        *ngIf="!priceSavingIndicator" type="submit" mat-raised-button color="primary">Save</button>
+                        <mat-spinner *ngIf="priceSavingIndicator"  [diameter]="30"></mat-spinner>
+                      </div>
+                  </form>
+
+                  </ng-template>
+
+                  <a (click)="togglePricePop(pP)" [openDelay]="200" class="mr-3 text-primary" #pP="ngbPopover" [ngbPopover]="pricePop" [animation]="'true'" [autoClose]="false"><i class="mdi mdi-pencil font-size-18"></i></a>
+
                 </td>
                 <td *ngIf="userPermissions?.DSCInventoryCost?.value">
 
                   <ngb-highlight [result]="sku.cost" [term]="searchTerm"></ngb-highlight>
 
-                  <ng-template #popContent>
+                  <ng-template #costPop>
 
                     <div class="row">
 
@@ -190,14 +260,14 @@
                     </div>
                     <div class="row">
                       <div class="col-md-12 text-center d-flex justify-content-center">
-                        <button *ngIf="!costSavingIndiactor" (click)="EditCost(p,sku)" mat-raised-button color="primary">Save</button>
+                        <button *ngIf="!costSavingIndiactor" (click)="EditCost(cP,sku)" mat-raised-button color="primary">Save</button>
                         <mat-spinner *ngIf="costSavingIndiactor"  [diameter]="30"></mat-spinner>
                       </div>
                     </div>
 
                   </ng-template>
 
-                  <a class="mr-3 text-primary" #p="ngbPopover" [ngbPopover]="popContent" [animation]="'true'" [autoClose]="'outside'"><i class="mdi mdi-pencil font-size-18"></i></a>
+                  <a class="mr-3 text-primary" #cP="ngbPopover" [ngbPopover]="costPop" [animation]="'true'" [autoClose]="'outside'"><i class="mdi mdi-pencil font-size-18"></i></a>
 
                 </td>
                 <td>
@@ -238,8 +308,8 @@
           </div>
           <!-- Pagination -->
           <div class="col-sm-12 col-md-5">
-            <div class="text-md-right float-md-right pagination-rounded">
-              <ngb-pagination [boundaryLinks]="true" [maxSize]="3" (pageChange)="changePage($event)" [collectionSize]="length" [page]="pIndex+1" [pageSize]="pSize">
+            <div class="text-md-right float-md-right pagination-rounded font-size-12">
+              <ngb-pagination [boundaryLinks]="true" [maxSize]="2" (pageChange)="changePage($event)" [collectionSize]="length" [page]="pIndex+1" [pageSize]="pSize">
               </ngb-pagination>
             </div>
           </div>
