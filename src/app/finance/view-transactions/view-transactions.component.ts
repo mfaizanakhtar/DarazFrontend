@@ -64,7 +64,7 @@ export class ViewTransactionsComponent implements OnInit {
     if(this.Statement=='All'){tempStatement=null}else{tempStatement=this.Statement}
 
     this.transaction.get('/'+'?pSize='+this.pSize+'&pIndex='+this.pIndex+'&startDate='+this.startdate.toISOString()+'&endDate='+this.enddate.toISOString()
-    +'&TransactionType='+tempTransType+'&FeeName='+tempFeename+'&ShopName='+tempStore+'&OrderNo='+this.OrderId
+    +'&TransactionType='+tempTransType+'&FeeName='+tempFeename+'&ShopShortCode='+tempStore+'&OrderNo='+this.OrderId
     +'&Statement='+tempStatement).subscribe(res=>{
 
       var response:any = res

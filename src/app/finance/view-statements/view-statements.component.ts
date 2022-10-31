@@ -62,7 +62,7 @@ export class ViewStatementsComponent implements OnInit {
     if(this.Statement=="All"){tempStatement=null}else{tempStatement=this.Statement}
     if(this.Shop=="All"){tempShop=null}else{tempShop=this.Shop}
 
-    this.transaction.get('/Statement?Statement='+tempStatement+"&ShopId="+tempShop).subscribe(res=>{
+    this.transaction.get('/Statement?Statement='+tempStatement+"&ShopShortCode="+tempShop).subscribe(res=>{
       var response:any = res
 
       this.sortAndSetStatementObj(response.Statement)

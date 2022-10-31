@@ -54,7 +54,7 @@
   <mat-label>Select Store</mat-label>
   <mat-select [(ngModel)]="Store" (selectionChange)="StoreSelected($event)">
     <mat-option value="All">All</mat-option>
-    <mat-option *ngFor="let store of StoreArray" [value]="store._id">{{store._id}}</mat-option>
+    <mat-option *ngFor="let store of StoreArray" [value]="store.ShopShortCode">{{store._id}}</mat-option>
   </mat-select>
 </mat-form-field>
 
