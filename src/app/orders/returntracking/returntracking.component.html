@@ -4,7 +4,7 @@
 
 
 <div class="row" style="border-radius: 10px;width: 100%;">
-        <form #f="ngForm" (ngSubmit)="insertTracking(f)" class="col-lg-9">
+        <form #f="ngForm" (ngSubmit)="insertTracking(f)" class="col-lg-9 font-size-12">
         <mat-form-field style="width: 100%;" appearance="outline">
           <mat-label>Enter Received Tracking</mat-label>
           <input ngModel name="tracking" matInput #message placeholder="Paste Tracking here">
@@ -12,7 +12,7 @@
         </mat-form-field>
     </form>
 
-    <mat-form-field appearance="outline" class="col-lg-3">
+    <mat-form-field appearance="outline" class="col-lg-3 font-size-12">
         <mat-label>Enter a date range</mat-label>
         <mat-date-range-input [rangePicker]="picker" >
           <input [(ngModel)]="filterstartdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
