@@ -250,16 +250,8 @@ sortStores(sort: Sort) {
   }
   this.SortedStoreDetails = data.sort((a, b) => {
     const isAsc = sort.direction === 'asc';
-    switch (sort.active) {
-      case 'stores':
-        return this.compare(a.stores, b.stores, isAsc);
-      case 'orders':
-        return this.compare(a.orders, b.orders, isAsc);
-      case 'sales':
-        return this.compare(a.revenue, b.revenue, isAsc);
-      default:
-        return 0;
-    }
+    return this.compare(a[sort.active],b[sort.active],isAsc)
+
   });
 }
 
@@ -271,18 +263,8 @@ sortSkus(sort: Sort) {
   }
   this.SortedStoreSkuDetails = data.sort((a, b) => {
     const isAsc = sort.direction === 'asc';
-    switch (sort.active) {
-      case 'sku':
-        return this.compare(a.sku, b.sku, isAsc);
-      case 'orders':
-        return this.compare(a.orders, b.orders, isAsc);
-      case 'OwnWarehouse':
-        return this.compare(a.OwnWarehouse, b.OwnWarehouse, isAsc);
-      case 'revenue':
-        return this.compare(a.revenue, b.revenue, isAsc);
-      default:
-        return 0;
-    }
+    return this.compare(a[sort.active],b[sort.active],isAsc)
+
   });
 }
 
