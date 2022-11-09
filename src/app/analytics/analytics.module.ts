@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
-import { LoginGuard } from '../LoginGuard';
-import { SubscriptionGuard } from '../SubscriptionGuard';
+import { LoginGuard } from '../guards/LoginGuard';
+import { SubscriptionGuard } from '../guards/SubscriptionGuard';
 import { AnalyticsContentComponent } from './analytics-content/analytics-content.component';
 import { StatComponent } from './stat/stat.component';
 import { HorizontalComponent } from './horizontal/horizontal.component';
 import { ProfitAnalyticsComponent } from './profit-analytics/profit-analytics.component';
-import { PermissionGuard } from '../PermissionGuard';
+import { PermissionGuard } from '../guards/PermissionGuard';
 
 
 

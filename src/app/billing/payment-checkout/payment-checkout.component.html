@@ -1,0 +1,163 @@
+<div class="container-fluid" style="max-width: 1700px;padding-left: 50px;padding-right: 50px;">
+    <app-pagetitle title="Checkout" ></app-pagetitle>
+    <div>
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body row">
+                        <div class="table-responsive mt-4 pl-4">
+                
+                            <table class="table mb-0 table-centered table-nowrap">
+                              <tbody>
+                              <!-- <ng-template #skuHeader>
+                                <tr >
+                                  <th mat-sort-header="sku">
+                                    <h5 class="font-size-14 mb-0">SKU</h5>
+                                  </th>
+                                  <th mat-sort-header="orders">
+                                    <h5 class="font-size-14 mb-0">Orders/Items</h5>
+                                  </th>
+                                  <th mat-sort-header="OwnWarehouse">
+                                    <h5 class="font-size-14 mb-0">Fbd/Fbm</h5>
+                                  </th>
+                                  <th *ngIf="permissions.hasOwnProperty('Profitibility') && permissions.Profitibility.value" mat-sort-header="revenue">
+                                    <h5 class="font-size-14 mb-0">Sales</h5>
+                                  </th>
+                                </tr>
+                              </ng-template>
+                              <ng-template [ngTemplateOutlet]="skuHeader"></ng-template> -->
+                                <tr style="border-bottom: 1px solid #dee2e6;">
+                                    <td>
+                                    <h5 class="font-size-15 mb-0">Pay With</h5>
+                                    </td>
+                                    <td>
+                                        <mat-form-field style="font-size: 14px;" class="col-md-9"  appearance="outline">
+                                            <mat-label>Pay With</mat-label>
+                                            <mat-select [(ngModel)]="payWith">
+                                            <mat-option [value]="1">
+                                                Bank Transfer
+                                            </mat-option>
+                                            <mat-option [value]="2">
+                                                Easy Paisa
+                                            </mat-option>
+                                            <!-- <mat-option  [value]="2">
+                                                Credit/Debit Card
+                                            </mat-option> -->
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #dee2e6;">
+                                    <td>
+                                    <h5 class="font-size-15 mb-0">Subscription</h5>
+                                    </td>
+                                    <td>
+                                        <mat-form-field style="font-size: 14px;" class="col-md-9"  appearance="outline">
+                                            <mat-label>Plan: {{subscriptionType.Name}}</mat-label>
+                                            <mat-select (selectionChange)="removeCoupon();setSubtotal()" [(ngModel)]="subscriptionMonths">
+                                            <!-- <mat-select [(ngModel)]="payWith"> -->
+                                              <mat-option [value]="1">
+                                                Monthly
+                                              </mat-option>
+                                              <mat-option [value]="3">
+                                                Quarterly
+                                              </mat-option>
+                                              <mat-option [value]="6">
+                                                Semi Annually
+                                              </mat-option>
+                                              <mat-option [value]="12">
+                                                Yearly
+                                              </mat-option>
+                                              <!-- <mat-option  [value]="2">
+                                                Credit/Debit Card
+                                              </mat-option> -->
+                                            </mat-select>
+                                          </mat-form-field>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #dee2e6;">
+                                  <td>
+                                    <h5 class="font-size-15 mb-0">SUBTOTAL</h5>
+                                  </td>
+                                  <td>
+                                    <h5 class="font-size-15 mb-0">
+                                        <s>{{subscriptionType?.Pricing*subscriptionMonths}}</s><sup class="mr-2 ml-1">-{{(1-subscriptionType?.DiscountPercent[subscriptionMonths])*100 | number: '1.0-0'}}   %</sup>
+                                        {{subTotal}} RS
+                                    </h5>
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                      <h5 class="font-size-15 mb-0">TAX</h5>
+                                    </td>
+                                    <td>
+                                      <h5 class="font-size-15 mb-0">0 RS</h5>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="couponApplied" style="border-top: 1px solid #dee2e6;">
+                                  <td>
+                                    <h5 class="font-size-15 mb-0">Coupon</h5>
+                                  </td>
+                                  <td>
+                                    <h5 class="font-size-15 mb-0">-{{couponValue}} RS</h5>
+                                  </td>
+                                </tr>
+                                <tr style="border-top: 1px solid #dee2e6;">
+                                    <td>
+                                      <h5 class="font-size-15 mb-0">TOTAL DUE</h5>
+                                    </td>
+                                    <td>
+                                      <div>
+                                      <div><h5 class="font-size-15 mb-0;">{{subTotal-couponValue}} RS</h5></div>
+                                      
+                                    </div>
+                                    </td>
+                                    <td style="width: 10%;">
+                                      <div class="float-md-right">
+                                          <h5 *ngIf="!haveCoupon && !couponApplied" (click)="toggleCoupon()" class="font-size-15 mb-0;" style="cursor:pointer;">Have a coupon?</h5>
+                                          <mat-spinner *ngIf="haveCoupon && couponLoading" diameter="15"></mat-spinner>
+                                          <div *ngIf="haveCoupon && !couponLoading && !couponApplied">
+                                          <i (click)="toggleCoupon()" class="mdi mdi-alpha-x-circle mr-2" style="cursor: pointer;"></i>
+                                          <mat-form-field style="font-size: 12px;" appearance="outline">
+                                            <mat-label>Coupon</mat-label>
+                                            <input style="text-transform: uppercase;" [formControl]="couponInput" matInput placeholder="QWSAHSA">
+                                            <mat-error *ngIf="couponInput.invalid">{{getErrorMessage()}}</mat-error>
+                                          </mat-form-field>
+                                          <p (click)="applyCoupon()" class="font-size-12 float-md-right" style="cursor:pointer">Apply</p>
+                                        </div>
+                                        <div *ngIf="couponApplied" style="display:flex;flex-direction: row;">
+                                          <i (click)="removeCoupon()" class="mdi mdi-alpha-x-circle mr-2" style="cursor: pointer;"></i>
+                                          <h5 style="text-transform: uppercase;" class="font-size-12 mt-1">Coupon: {{couponInput.value}}</h5>
+                                        </div>
+                                      </div>
+                                    </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <div *ngIf="isUpgrade" style="width: 90%;" class="row my-5">
+                              <div class="col-md-12">
+                                <mat-checkbox [(ngModel)]="isFutureRequest" color="primary"> Change My Plan When Current Plan Expires on 
+                                  <span class="text-danger">{{this.currentSubscription.endDate | date}}</span>
+                                </mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-center">
+                    <button (click)="clickPayNow()" mat-raised-button color="primary" >Pay Now</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

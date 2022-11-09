@@ -72,7 +72,7 @@ export class OrdersViewComponent implements OnInit {
     this.StatusFilter='pending'
     this.FormattedStatus='Pending'
     this.enddate = moment().tz("Asia/Karachi").endOf('day').toDate();
-    this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").endOf('day').toDate();
+    this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").startOf('day').toDate();
 
     this.getOrders()
 
@@ -89,12 +89,12 @@ export class OrdersViewComponent implements OnInit {
 
     this.loadingIndicator = true;
     this.orderService.get('/orders?'+'OrderItems.Status='+tempstatus+'&skuSort='+this.skuSort+'&shopSort='+this.shopSort+'&Printed='+this.Printed+'&unPrinted='+this.UnPrinted+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
-    +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopId="+tempstore+"&OrderItems.ShippingType="+tempfulfillment+"&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()).subscribe(res=>{
+    +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopShortCode="+tempstore+"&OrderItems.ShippingType="+tempfulfillment+"&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()).subscribe((res:any)=>{
       console.log(res)
 
-      this.orders=res[0]
-      this.length=res[1]
-      this.StoreArray=res[2]
+      this.orders=res.orders
+      this.length=res.count
+      this.StoreArray=res.stores
       this.loadingIndicator = false;
 
 
@@ -258,9 +258,9 @@ export class OrdersViewComponent implements OnInit {
     var claimReg = new RegExp('[\w]*Claim[\w]*')
 
     if(claimReg.test(status)){
-      this.startdate = moment().tz("Asia/Karachi").subtract(90, "days").endOf('day').toDate();
+      this.startdate = moment().tz("Asia/Karachi").subtract(90, "days").startOf('day').toDate();
     }else{
-      this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").endOf('day').toDate();
+      this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").startOf('day').toDate();
     }
     this.getOrders()
   } 
@@ -305,7 +305,7 @@ export class OrdersViewComponent implements OnInit {
   DateInput(mode,event){
     debugger
     if(mode == 'start'){
-      this.startdate = moment(event.value).tz("Asia/Karachi").endOf('day').toDate()
+      this.startdate = moment(event.value).tz("Asia/Karachi").startOf('day').toDate()
     }
     if(mode == 'end'){
       if(event.value != null){

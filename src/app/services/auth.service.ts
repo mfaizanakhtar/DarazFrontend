@@ -12,7 +12,7 @@ export class AuthService {
   subscriptionDetail:any
   constructor(private http:HttpClient,private billing:BillingService) { }
   // private baseURL="http://localhost:3000/api/"
-  // private baseURL="http://dmanage.accesology.com/api/"
+  // private baseURL="http://13.235.80.238/api/"
   private baseURL="api/"
 
   login(credentials)

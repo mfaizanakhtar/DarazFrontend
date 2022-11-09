@@ -18,8 +18,8 @@ rowHeight="auto"
 (activate)="onActivate($event)"
 (select)="onSelect($event)"
 >
-<ngx-datatable-column name="User Email" prop="useremail"></ngx-datatable-column>
-<ngx-datatable-column name="User Type" prop="usertype"></ngx-datatable-column>
+<ngx-datatable-column name="User Email" prop="userEmail"></ngx-datatable-column>
+<ngx-datatable-column name="User Type" prop="userType"></ngx-datatable-column>
 <ngx-datatable-column name="Subscription End Date" prop="subscriptionEndDate">
   <ng-template let-endDate="value" ngx-datatable-cell-template>
     {{ endDate | date}}

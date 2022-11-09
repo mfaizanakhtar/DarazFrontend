@@ -28,13 +28,18 @@
               </div>
   
               <div class="mt-5">
+                <div>
+                  <sup class="mr-1">
+                    <small style="font-size:small">STARTING FROM</small>
+                  </sup>
+                </div>
                 <h1 class="font-weight-bold mb-1">
                   <sup class="mr-1">
                     <small>PKR</small>
                   </sup>
-                  {{sub.Pricing}}
+                  {{sub.Pricing*sub.DiscountPercent[12]}}
+                  <small style="font-size:small;">/ month</small>
                 </h1>
-                <p class="text-muted">Per month</p>
               </div>
   
               <div class="mt-5 mb-3">

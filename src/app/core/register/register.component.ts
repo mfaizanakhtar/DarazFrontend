@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
     userPassword:new FormControl('',[Validators.required])
   })
   //verification code working
-  isVerificationCode:boolean=false;
+  verificationScreen:boolean=false;
   verificationCode:String="";
   verificationBtn:boolean=true
   verificationResp={
@@ -23,38 +23,44 @@ export class RegisterComponent implements OnInit {
     status:'',
     message:''
   }
-  isAlreadyRegistered:boolean=false
+  notificationFlag:boolean=false
+  notification:String;
   initialTime=120;
   remainingTime=0;
   loadingIndicator:boolean=false
+  token:String;
   // set the currenr year
   year: number = new Date().getFullYear();
   constructor(private users:UserdataService,private router:Router,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     document.body.removeAttribute('data-layout'); 
+    this.token = this.route.snapshot.queryParamMap.get("token")
+    if(this.token) this.verifyUser();
   }
 
   register(){
     debugger
     var user = this.registerForm.value
     console.log(user)
-    this.isAlreadyRegistered=false
+    this.notificationFlag=false
     if(this.registerForm.status=='VALID'){
       this.users.postDataWithoutHeaders('/signup',user).subscribe((res:any)=>{
+        this.notificationFlag=true
         if(!res.hasOwnProperty("error")){
-          this.isVerificationCode=true
+          this.notification="Please check your email for verification link"
         }else{
-          this.isAlreadyRegistered=true
+          this.notification="Email Already Registered. Please proceed to Login"
         }
       })
     }
   }
 
   verifyUser(){
+    this.verificationScreen=true;
     console.log(this.registerForm.value)
     console.log(this.verificationCode)
-    this.users.updateDataWithoutHeaders("/verifyEmail","",{userEmail:this.registerForm.value.userEmail,verificationCode:this.verificationCode}).subscribe((res:any)=>{
+    this.users.updateDataWithoutHeaders("/verifyEmail","",{token:this.token}).subscribe((res:any)=>{
       console.log(res)
       this.verificationResp.isReceived=true;
       this.verificationResp.message=res.message;

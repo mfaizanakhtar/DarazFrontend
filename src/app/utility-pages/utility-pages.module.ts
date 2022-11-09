@@ -3,8 +3,8 @@ import { RouterModule } from '@angular/router';
 import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SubscriptionExpiredComponent } from './subscription-expired/subscription-expired.component';
-import { AdminGuard } from '../AdminGuard';
-import { LoginGuard } from '../LoginGuard';
+import { AdminGuard } from '../guards/AdminGuard';
+import { LoginGuard } from '../guards/LoginGuard';
 
 
 

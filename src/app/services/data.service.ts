@@ -12,7 +12,7 @@ export class DataService {
   
   constructor(private url : string, private http: HttpClient) { }
   // private baseUrl="http://localhost:3000/api/"
-  // private baseUrl="http://dmanage.accesology.com/api/"
+  // private baseUrl="http://13.235.80.238/api/"
   private baseUrl="api/"
   async setHeaders(){
     let token = localStorage.getItem('auth-token');
@@ -85,6 +85,13 @@ export class DataService {
   deleteData(id){
     this.setHeaders()
     return this.http.delete(this.baseUrl+this.url+id,this.options).pipe(
+      map(response=>response)
+    )
+  }
+
+  deleteDataByCap(caption,id){
+    this.setHeaders()
+    return this.http.delete(this.baseUrl+this.url+'/'+caption+'/'+id,this.options).pipe(
       map(response=>response)
     )
   }

@@ -5,9 +5,9 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class AddidService extends DataService {
+export class ShopService extends DataService {
 
   constructor(http : HttpClient, ) {
-    super("darazid/",http)
+    super("shop/",http)
    }
 }

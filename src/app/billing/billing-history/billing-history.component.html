@@ -28,15 +28,14 @@
                 <tr>
                   <th mat-sort-header="billingId">Billing Id</th>
                   <th mat-sort-header="createdAt">Transaction Date</th>
-                  <th *ngIf="user.usertype=='admin'" mat-sort-header="userEmail">User Email</th>
+                  <th *ngIf="user.userType=='admin'" mat-sort-header="userEmail">User Email</th>
                   <th mat-sort-header="subscriptionType">Subscription Type</th>
                   <th mat-sort-header="duration">Duration</th>
-                  <th mat-sort-header="pricing">Pricing</th>
                   <th mat-sort-header="invoiceAmount">Invoice Amount</th>
                   <th mat-sort-header="transactionId">Transaction ID</th>
                   <th>Screenshot</th>
                   <th mat-sort-header="status">Status</th>
-                  <th *ngIf="user.usertype=='admin'">Actions</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -50,7 +49,7 @@
                   <td>
                       <ngb-highlight [result]="billing.createdAt | date:'MM/dd/yyyy h:mma'" [term]="searchTerm"></ngb-highlight>
                   </td>
-                  <td *ngIf="user.usertype=='admin'">
+                  <td *ngIf="user.userType=='admin'">
                     <ngb-highlight [result]="billing.userEmail" [term]="searchTerm"></ngb-highlight>
                   </td>
                   <td>
@@ -58,10 +57,6 @@
                   </td>
                   <td>
                     <ngb-highlight [result]="billing.duration + ' ' +billing.durationType" [term]="searchTerm"></ngb-highlight>
-                  </td>
-
-                  <td>
-                    <ngb-highlight [result]="billing.pricing" [term]="searchTerm"></ngb-highlight>
                   </td>
                   <td>
                     <ngb-highlight [result]="billing.invoiceAmount" [term]="searchTerm"></ngb-highlight>
@@ -73,15 +68,21 @@
                     <div *ngIf="billing?.screenShot!=null" (click)="viewScreenshot(billing.screenShot)" style="cursor: pointer;color:steelblue;">View Screenshot</div>
                   </td>
                   <td>
-                    <div class="badge font-size-12" [ngClass]="{'badge-soft-danger': billing.status === 'rejected',
-                    'badge-soft-success':billing.status === 'approved','badge-soft-warning': billing.status === 'pending'}">
+                    <div class="badge font-size-12" [ngClass]="{'badge-soft-danger': billing.status === 'rejected' || billing.status === 'canceled',
+                    'badge-soft-success':billing.status === 'approved' || billing.status === 'completed','badge-soft-warning': billing.status.includes('pending')}">
                       <ngb-highlight [result]="billing.status" [term]="searchTerm"></ngb-highlight>
                     </div>
                   </td>
-                  <td *ngIf="user.usertype=='admin'">
-                    <a *ngIf="billing.status!='approved'" (click)="updateTransaction('approved',billing)" class="text-success" placement="top" ngbTooltip="Approve"><i
+                  <td *ngIf="user.userType!='admin'">
+                    <a *ngIf="billing.status!='completed' && billing.status=='payment pending'" (click)="retryPayment(billing)" class="text-success" placement="top" ngbTooltip="Retry"><i
+                      class="mdi mdi-refresh font-size-18"></i></a>
+                    <a *ngIf="billing.status!='cancel' && billing.status=='payment pending'" (click)="updateTransaction('canceled',billing)" class="text-danger" placement="top" ngbTooltip="Cancel"><i
+                        class="mdi mdi-close-circle font-size-18"></i></a>
+                  </td>
+                  <td *ngIf="user.userType=='admin'">
+                    <a *ngIf="billing.status=='pending approval'" (click)="updateTransaction('completed',billing)" class="text-success" placement="top" ngbTooltip="Approve"><i
                       class="mdi mdi-check-underline-circle font-size-18"></i></a>
-                    <a *ngIf="billing.status!='rejected'" (click)="updateTransaction('rejected',billing)" class="text-danger" placement="top" ngbTooltip="Reject"><i
+                    <a *ngIf="billing.status=='pending approval'" (click)="updateTransaction('rejected',billing)" class="text-danger" placement="top" ngbTooltip="Reject"><i
                         class="mdi mdi-close-circle font-size-18"></i></a>
                   </td>
                 </tr>

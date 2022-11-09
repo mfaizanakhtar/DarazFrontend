@@ -66,8 +66,8 @@ export class SetSubAccPasswordComponent implements OnInit {
           this.subAccountUser = res.user
           console.log(this.subAccountUser)
           this.registerForm.patchValue({
-            loginEmail:this.subAccountUser.loginemail,
-            userName:this.subAccountUser.username
+            loginEmail:this.subAccountUser.loginEmail,
+            userName:this.subAccountUser.userName
           })
           
         }else this.isSubAccountInvite=false
