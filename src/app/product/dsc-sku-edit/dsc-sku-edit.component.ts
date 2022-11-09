@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { DarazskuService } from '../../darazsku.service';
+import { DarazskuService } from '../../services/darazsku.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({

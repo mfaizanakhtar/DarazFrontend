@@ -74,7 +74,7 @@ export class ProfitAnalyticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.enddate = moment().tz("Asia/Karachi").endOf('day').toDate();
-    this.startdate = moment().tz("Asia/Karachi").endOf('day').toDate();
+    this.startdate = moment().tz("Asia/Karachi").startOf('day').toDate();
 
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Profitiblity', active: true }];
     this._fetchData();
@@ -104,7 +104,7 @@ export class ProfitAnalyticsComponent implements OnInit {
 
   DateInput(mode,event){
     if(mode == 'start'){
-      this.startdate = moment(event.value).tz("Asia/Karachi").endOf('day').toDate()
+      this.startdate = moment(event.value).tz("Asia/Karachi").startOf('day').toDate()
     }
     if(mode == 'end'){
       if(event.value != null){
@@ -174,7 +174,7 @@ getStoresProfitStats(){
 StoreClick(store){
   this.skuLoading=true
   this.TotalStoreSkuProfitStats=store
-  this.stats.get('/getStoreSkuProfitStats?startdate='+this.startdate.toISOString()+"&enddate="+this.enddate.toISOString()+"&store="+this.TotalStoreSkuProfitStats._id).subscribe((res:any)=>{
+  this.stats.get('/getStoreSkuProfitStats?startdate='+this.startdate.toISOString()+"&enddate="+this.enddate.toISOString()+"&shortCode="+this.TotalStoreSkuProfitStats._id).subscribe((res:any)=>{
     this.SortedStoreSkuProfitStats=this.StoreSkuProfitStats=res
     this.SkuClick(this.StoreSkuProfitStats[0]._id)
     this.skuLoading=false
@@ -186,7 +186,7 @@ StoreClick(store){
 
 getStoreGraph(){
   this.storesGraphLoading=true
-  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.TotalStoreSkuProfitStats._id
+  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&shortCode="+this.TotalStoreSkuProfitStats._id
   +"&o="+this.GraphOptions.Store.Orders+"&i="+this.GraphOptions.Store.Items+"&r="+this.GraphOptions.Store.Revenue+"&p="+this.GraphOptions.Store.Profit).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.StoreProfitAnalyticsGraph=res
     this.storesGraphLoading=false
@@ -200,7 +200,7 @@ SkuClick(sku){
 
 getSkuGraph(){
   this.skuGraphLoading=true
-  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.TotalStoreSkuProfitStats._id+"&sku="+this.SelectedSku
+  this.stats.get('/getProfitAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&shortCode="+this.TotalStoreSkuProfitStats._id+"&sku="+this.SelectedSku
   +"&o="+this.GraphOptions.Sku.Orders+"&i="+this.GraphOptions.Sku.Items+"&r="+this.GraphOptions.Sku.Revenue+"&p="+this.GraphOptions.Sku.Profit).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.SkuProfitAnalyticsGraph=res
     this.skuGraphLoading=false
@@ -222,22 +222,8 @@ getSkuGraph(){
     }
     this.SortedStoreProfitStats = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'store':
-          return this.compare(a._id, b._id, isAsc);
-        case 'orders':
-          return this.compare(a.orders, b.orders, isAsc);
-        case 'sales':
-          return this.compare(a.sales, b.sales, isAsc);
-        case 'payout':
-          return this.compare(a.payout, b.payout, isAsc);  
-        case 'costs':
-          return this.compare(a.costs, b.costs, isAsc);
-        case 'profit':
-          return this.compare(a.profit, b.profit, isAsc);              
-        default:
-          return 0;
-      }
+      return this.compare(a[sort.active],b[sort.active],isAsc)
+
     });
   }
   
@@ -249,24 +235,8 @@ getSkuGraph(){
     }
     this.SortedStoreSkuProfitStats = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'sku':
-          return this.compare(a._id, b._id, isAsc);
-        case 'items':
-          return this.compare(a.items, b.items, isAsc);
-        case 'sales':
-          return this.compare(a.sales, b.sales, isAsc);
-        case 'payout':
-          return this.compare(a.payout, b.payout, isAsc);
-        case 'costs':
-          return this.compare(a.costs, b.costs, isAsc);
-        case 'profit':
-          return this.compare(a.profit, b.profit, isAsc);
-        case 'roi':
-          return this.compare(this.getRoi(a.profit,a.costs), this.getRoi(b.profit,b.costs), isAsc);
-        default:
-          return 0;
-      }
+      return this.compare(a[sort.active],b[sort.active],isAsc)
+
     });
   }
   

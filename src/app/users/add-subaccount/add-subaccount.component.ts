@@ -12,10 +12,10 @@ import { UserdataService } from '../../services/userdata.service';
 export class AddSubaccountComponent implements OnInit {
   isEdit=false
   permissions:any={}
-  invalid={loginemail:false,username:false}
+  invalid={loginEmail:false,userName:false}
   User={
-    loginemail:"",
-    username:"",
+    loginEmail:"",
+    userName:"",
     permissions:Object,
     bypassSubAccVerification:false
   }
@@ -34,14 +34,20 @@ export class AddSubaccountComponent implements OnInit {
   }
 
   submitDetails(){
-    this.validateField(this.User.loginemail,"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$") ? this.invalid.loginemail=false : this.invalid.loginemail=true
-    this.validateField(this.User.username,"^[a-zA-Z0-9]+$") ? this.invalid.username=false : this.invalid.username=true;
-    if(this.invalid.loginemail || this.invalid.username) return
+    debugger
+    this.validateField(this.User.loginEmail,"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$") ? this.invalid.loginEmail=false : this.invalid.loginEmail=true
+    if(!this.isByPassSubAccVerification()) {
+      this.invalid.userName=false;
+    }else{
+      this.validateField(this.User.userName,"^[a-zA-Z0-9]+$") ? this.invalid.userName=false : this.invalid.userName=true;
+    }
+    if(this.invalid.loginEmail || this.invalid.userName) return
     this.User.permissions = this.permissions
     if(!this.isEdit){
       this.User.bypassSubAccVerification = this.isByPassSubAccVerification() ? true : false
       
       this.user.postDataByCap('/addSubAccount',this.User).subscribe((res:any)=>{
+        debugger
         if(res.message=="User Registered"){
           this.dialog.close({dialogResult:{success:true,message:res.message}})
         }
@@ -65,7 +71,7 @@ export class AddSubaccountComponent implements OnInit {
   }
 
   resetPassword(){
-    this.user.updateData('/resetSubPassword',this.User.loginemail,{}).subscribe((res:any)=>{
+    this.user.updateData('/resetSubPassword',this.User.loginEmail,{}).subscribe((res:any)=>{
       if(res.n>0){
         this.dialog.close({dialogResult:{success:true,message:"Password Reset to 'password.123'"}})
       }

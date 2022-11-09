@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionsService } from '../../services/transactions.service';
 import { PageEvent } from '@angular/material/paginator';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-view-transactions',
@@ -39,11 +40,8 @@ export class ViewTransactionsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.backDate.setDate(this.backDate.getDate()-15)
-    this.todayDate.setHours(0,0,0,0);
-    this.backDate.setHours(0,0,0,0);
-    this.enddate=this.todayDate
-    this.startdate=this.backDate 
+    this.enddate = moment().tz("Asia/Karachi").endOf('day').toDate();
+    this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").startOf('day').toDate();
 
     this.getTransactions()
 
@@ -65,8 +63,8 @@ export class ViewTransactionsComponent implements OnInit {
     if(this.Store=='All'){tempStore=null}else{tempStore=this.Store}
     if(this.Statement=='All'){tempStatement=null}else{tempStatement=this.Statement}
 
-    this.transaction.get('/'+'?pSize='+this.pSize+'&pIndex='+this.pIndex+'&startDate='+this.startdate+'&endDate='+this.enddate
-    +'&TransactionType='+tempTransType+'&FeeName='+tempFeename+'&ShopId='+tempStore+'&OrderNo='+this.OrderId
+    this.transaction.get('/'+'?pSize='+this.pSize+'&pIndex='+this.pIndex+'&startDate='+this.startdate.toISOString()+'&endDate='+this.enddate.toISOString()
+    +'&TransactionType='+tempTransType+'&FeeName='+tempFeename+'&ShopShortCode='+tempStore+'&OrderNo='+this.OrderId
     +'&Statement='+tempStatement).subscribe(res=>{
 
       var response:any = res
@@ -87,11 +85,11 @@ export class ViewTransactionsComponent implements OnInit {
 
   DateInput(mode,event){
     if(mode == 'start'){
-      this.startdate = event.value
+      this.startdate = moment(event.value).tz("Asia/Karachi").startOf('day').toDate();
     }
     if(mode == 'end'){
       if(event.value != null){
-        this.enddate = event.value
+        this.enddate = moment(event.value).tz("Asia/Karachi").endOf('day').toDate()
         this.pSize=10
         this.pIndex=0
         this.getTransactions()

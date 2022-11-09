@@ -1,8 +1,9 @@
-import { AddidService } from '../../services/addid.service';
+import { Routes, ActivatedRoute, Router } from '@angular/router';
+import { LookupService } from './../../services/lookup.service';
+import { ShopService } from '../../services/shop.service';
 import { Component, OnInit } from '@angular/core';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AddShopComponent } from '../add-shop/add-shop.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,30 +13,27 @@ import Swal from 'sweetalert2';
 })
 export class ShopIdComponent implements OnInit {
 
-  constructor(private addid:AddidService,private dialog:MatDialog) { }
+  constructor(private shopService:ShopService,private lookup:LookupService,private route:ActivatedRoute,private router:Router) { }
   darazIds:any
   ColumnMode=ColumnMode
   loadingIndicator=false;
+  spinnerLoadingIndicator=false;
+  openAppDetails:any;
   breadCrumbItems: Array<{}>;
 
   ngOnInit(): void {
     this.getIds()
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Shops', active: true },];
-  }
-
-  addids(value){
-    this.addid.postData({
-      shopid:value.email,
-      secretkey:value.secretkey
-    })
-    .subscribe(response=>{
-      console.log(response);
+    this.route.queryParams.subscribe(res=>{
+      if(res.code){
+        this.handleCallBackCode(res.code)
+      }
     })
   }
 
   getIds(){
     this.loadingIndicator=true;
-    this.addid.getAll().subscribe(res=>{
+    this.shopService.get("/getAll").subscribe(res=>{
       this.darazIds=res
       this.loadingIndicator=false;
       console.log(this.darazIds)
@@ -60,9 +58,8 @@ export class ShopIdComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
       if (result.value) {
-      this.addid.deleteData(row.shopid).subscribe(res=>{
-        var deleteRes:any=res
-        if(deleteRes.deletedCount==1){
+      this.shopService.deleteDataByCap("delete",row.shortCode).subscribe((deleteRes:any)=>{
+        if(deleteRes.nModified==1){
         Swal.fire('Deleted!', 'Your Shop has been deleted.', 'success');
         this.getIds()
         }
@@ -74,24 +71,47 @@ export class ShopIdComponent implements OnInit {
 
   }
 
-  editShop(id){
-    var dialogRef = this.dialog.open(AddShopComponent,{
-      width:'1300px',height:'700px',data:id
+  integrateNewShop(){
+    var url;
+    this.lookup.getLookupDetail("darazOpenAppDetails").subscribe(res=>{
+      this.openAppDetails=res;
+      url=this.openAppDetails.pkUrl+"?response_type=code"+"&force_auth=true"+"&redirect_uri="+this.openAppDetails.callBackUrl+"&client_id="+this.openAppDetails.appKey
+      window.location.href=url;
     })
-    
-    dialogRef.afterClosed().subscribe(res=>{
-      this.getIds()
-    })
-    
   }
 
-  addNewIdDialog(){
-    var dialogRef=this.dialog.open(AddShopComponent,{
-      width:'1300px',height:'700px'
-    })
+  handleCallBackCode(code){
+    this.spinnerLoadingIndicator=true
+    debugger
+    this.shopService.get('/authorise?code='+code).subscribe((res:any)=>{
+      this.spinnerLoadingIndicator=false;
+      var successTitle="Shop integrated successfully";
+      var successText="your shop " + res.shopName + " has been linked!";
+      if(res.isUpdated){
+        successTitle="Shop updated successfully";
+        successText="your shop " + res.shopName + " was already linked and is now updated!";
+      }
 
-    dialogRef.afterClosed().subscribe(res=>{
-      this.getIds()
+      Swal.fire({
+        title: successTitle,
+        text: successText,
+        icon: 'success',
+        confirmButtonColor: '#5438dc',
+      }).then(okClicked=>{
+        debugger
+        window.location.href=this.router.url.split('?')[0] ;
+      });
+    },({error:err})=>{
+      this.spinnerLoadingIndicator=false;
+      Swal.fire({
+        title: "Error occured",
+        text: err.message,
+        icon: 'error',
+        confirmButtonColor: '#5438dc',
+      }).then(okClicked=>{
+        debugger
+        window.location.href=this.router.url.split('?')[0] ;
+      });
     })
   }
 

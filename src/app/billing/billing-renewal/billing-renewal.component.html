@@ -34,7 +34,7 @@
                                   <span class="font-weight-medium text-danger col-lg-12">Expires on {{subscriptionDetails.futureRequest.endDate | date}}</span>
                                 </div>
                                 <!-- <p class="mb-0 font-weight-medium"><span *ngIf="subscriptionDetails.futureRequest.val">Future Subscription: </span>{{subscriptionDetails.futureRequest.subscription}} <span class="font-weight-medium text-danger">Expires on {{subscriptionDetails.futureRequest.endDate | date}}</span></p> -->
-                                <mat-form-field *ngIf="!subscriptionDetails.futureRequest.val" class="col-md-9" appearance="outline">
+                                <!-- <mat-form-field *ngIf="!subscriptionDetails.futureRequest.val" class="col-md-9" appearance="outline">
                                     <mat-label>Duration</mat-label>
                                     <mat-select [disabled]="!checkBox" [(ngModel)]="monthsDuration" (selectionChange)="durationChange()">
                                       <mat-option [value]="1">
@@ -47,7 +47,7 @@
                                         6 Months
                                       </mat-option>
                                     </mat-select>
-                                  </mat-form-field>
+                                  </mat-form-field> -->
                             </div>
                             <div class="col-lg-3 mt-3">
                                 <span *ngIf="planData && monthsDuration" class="font-weight-bold">{{planData.Pricing*monthsDuration}} RS</span>
@@ -56,95 +56,13 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="monthsDuration>0">
-        <div class="row pl-4">
-            <h5 class="font-size-17"><span class="text-dark">PAYMENT SUMMARY</span></h5>
-        </div>
         <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body row">
-                        <div class="table-responsive mt-4 pl-4">
-                
-                            <table class="table mb-0 table-centered table-nowrap">
-                              <tbody>
-                              <!-- <ng-template #skuHeader>
-                                <tr >
-                                  <th mat-sort-header="sku">
-                                    <h5 class="font-size-14 mb-0">SKU</h5>
-                                  </th>
-                                  <th mat-sort-header="orders">
-                                    <h5 class="font-size-14 mb-0">Orders/Items</h5>
-                                  </th>
-                                  <th mat-sort-header="OwnWarehouse">
-                                    <h5 class="font-size-14 mb-0">Fbd/Fbm</h5>
-                                  </th>
-                                  <th *ngIf="permissions.hasOwnProperty('Profitibility') && permissions.Profitibility.value" mat-sort-header="revenue">
-                                    <h5 class="font-size-14 mb-0">Sales</h5>
-                                  </th>
-                                </tr>
-                              </ng-template>
-                              <ng-template [ngTemplateOutlet]="skuHeader"></ng-template> -->
-                                <tr style="border-bottom: 1px solid #dee2e6;">
-                                    <td>
-                                    <h5 class="font-size-15 mb-0">Pay With</h5>
-                                    </td>
-                                    <td>
-                                        <mat-form-field class="col-md-9"  appearance="outline">
-                                            <mat-label>Pay With</mat-label>
-                                            <mat-select [(ngModel)]="payWith">
-                                              <mat-option [value]="1">
-                                                Bank Transfer
-                                              </mat-option>
-                                              <!-- <mat-option  [value]="2">
-                                                Credit/Debit Card
-                                              </mat-option> -->
-                                            </mat-select>
-                                          </mat-form-field>
-                                    </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <h5 class="font-size-15 mb-0">SUBTOTAL</h5>
-                                  </td>
-                                  <td>
-                                    <h5 class="font-size-15 mb-0">{{planData.Pricing*monthsDuration}} RS</h5>
-                                  </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                      <h5 class="font-size-15 mb-0">TAX</h5>
-                                    </td>
-                                    <td>
-                                      <h5 class="font-size-15 mb-0">0 RS</h5>
-                                    </td>
-                                  </tr>
-                                <tr style="border-top: 1px solid #dee2e6;">
-                                    <td>
-                                      <h5 class="font-size-15 mb-0">TOTAL DUE</h5>
-                                    </td>
-                                    <td>
-                                      <h5 class="font-size-15 mb-0">{{planData.Pricing*monthsDuration}} RS</h5>
-                                    </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          
-                          </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="text-center">
-                    <button mat-raised-button color="primary" (click)="payNow()">Pay Now</button>
-                </div>
-            </div>
-        </div>
-        </div>
+          <div class="col-lg-12">
+              <div class="text-center">
+                  <button mat-raised-button color="primary" [disabled]="!checkBox" (click)="payNow()">Renew</button>
+              </div>
+          </div>
+      </div>
 
     </div>
 </div>

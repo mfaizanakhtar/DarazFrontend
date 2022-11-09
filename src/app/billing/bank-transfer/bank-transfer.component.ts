@@ -1,30 +1,30 @@
-import { BillingService } from './../../services/billing.service';
-import { bankDetailType } from './bill-payment.model';
-import { LookupService } from './../../services/lookup.service';
-import { PlansService } from './../../services/plans.service';
-import { AuthService } from './../../services/auth.service';
+import { BillingService } from '../../services/billing.service';
+import { bankDetailType } from './bank-transfer.model';
+import { LookupService } from '../../services/lookup.service';
+import { PlansService } from '../../services/plans.service';
+import { AuthService } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import compress from 'compress-base64';
 import Swal from 'sweetalert2';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-bill-payment',
-  templateUrl: './bill-payment.component.html',
-  styleUrls: ['./bill-payment.component.scss']
+  selector: 'app-bank-transfer',
+  templateUrl: './bank-transfer.component.html',
+  styleUrls: ['./bank-transfer.component.scss']
 })
-export class BillPaymentComponent implements OnInit {
+export class BankTransferComponent implements OnInit {
 
   breadCrumbItems: Array<{}>;
   subscriptionType:any;
   userEmail:String;
-  subscriptionMonths:number=1
   bankDetail:bankDetailType;
   transactionId:String=""
-  defaultStep
   isUpgrade:boolean
   isFutureRequest:boolean=false
   currentSubscription:any
+  billingAmount:Number=0;
   files: File[] = [];  
   screenShots:Array<any>=[]
   btnSubmitClick:boolean=false;
@@ -35,48 +35,42 @@ export class BillPaymentComponent implements OnInit {
     this.breadCrumbItems = [{ label: 'Billing' }, { label: 'Bill Payment', active: true }];
     this.getData();
     this.lookup.getLookupDetail("bankDetails").subscribe(res=>this.bankDetail = res)
-    if(this.plan.isRenewal){
-      this.subscriptionMonths=this.plan.renewalData.monthsDuration
-      this.defaultStep=1
-    }else this.defaultStep=0
     this.getIsUpgrade()
     if(this.isUpgrade) this.currentSubscription = this.auth.getSubscriptionDetail()
   }
 
   getData(){
-    this.userEmail = this.auth.getCurrentUser().useremail;
+    this.userEmail = this.auth.getCurrentUser().userEmail;
 
     this.subscriptionType = this.plan.selectedPlan
+    this.billingAmount = this.plan.billingAmount
     if(!this.subscriptionType){
       this.router.navigate([''])
     }
     
   }
 
-  submitBilling(){
+  submitBankTransferDetails(){
     this.btnSubmitClick=false
     console.log(this.transactionId.length)
     if(this.files.length>0 && this.transactionId.length>0){
-    this.billing.postDataByCap('/addTransaction',{
-      subscriptionType:this.subscriptionType.Name,
-      duration:this.subscriptionMonths,
-      durationType:'Months',
-      pricing:this.subscriptionType.Pricing,
-      isFutureRequest:this.isFutureRequest,
-      invoiceAmount:this.subscriptionMonths*this.subscriptionType.Pricing,
+    this.billing.updateData('/updateBTBillingTransaction',this.plan.billingId,{
       bankDetail:this.bankDetail,
       transactionId:this.transactionId,
+      status:"pending approval",
       screenShot:this.screenShots[0]
     }).subscribe((res:any)=>{
       Swal.fire({
-        title: 'Billing Request Success',
-        text: 'Your Billing Id is #'+res.billingId,
+        title: 'Bank Transfer Request Received',
+        text: 'Your payment will be validated and subscription updated shortly',
         icon: 'success',
         confirmButtonColor: '#34c38f',
         confirmButtonText: 'Ok'
       }).then(res=>{
         this.router.navigate(['/billing/details'])
       })
+    },(httpError:HttpErrorResponse)=>{
+      console.log(httpError.error);
     })
   }
   this.btnSubmitClick=true

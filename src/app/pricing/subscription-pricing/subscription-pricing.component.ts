@@ -43,9 +43,8 @@ export class SubscriptionPricingComponent implements OnInit {
   selectSubscription(subscription){
     this.plans.selectedPlan=subscription;
     console.log(subscription)
-    this.plans.isRenewal=false
-    if(this.isUpgrade) this.router.navigate(['/billing'],{queryParams:{isUpgrade:true}});
-    else this.router.navigate(['/billing']);
+    if(this.isUpgrade) this.router.navigate(['/billing/checkout'],{queryParams:{isUpgrade:true}});
+    else this.router.navigate(['/billing/checkout']);
   }
 
   fetchUserSubscription(){

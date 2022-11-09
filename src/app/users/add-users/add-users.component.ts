@@ -11,9 +11,9 @@ import { UserdataService } from '../../services/userdata.service';
 })
 export class AddUsersComponent implements OnInit {
   User={
-    useremail:"",
-    usertype:"user",
-    username:"administrator",
+    userEmail:"",
+    userType:"user",
+    userName:"administrator",
     password:"password.123",
     permissions:{}
   }
@@ -47,7 +47,7 @@ export class AddUsersComponent implements OnInit {
 
   submitDetails(){
     if(this.isEdit!=true){
-      this.user.postData(this.User).subscribe(res=>{
+      this.user.postDataByCap("/addUser",this.User).subscribe(res=>{
         if(res){
           this.toastr.success("User Created");
           this.dialogRef.close()
@@ -61,7 +61,7 @@ export class AddUsersComponent implements OnInit {
       })
     }
     if(this.isEdit=true){
-      this.user.updateData("/updateUser",this.User.useremail,this.User).subscribe(res=>{
+      this.user.updateData("/updateUser",this.User.userEmail,this.User).subscribe(res=>{
         console.log(res)
         this.toastr.success("User Updated");
         this.dialogRef.close()
@@ -96,7 +96,7 @@ export class AddUsersComponent implements OnInit {
   }
 
   deleteUser(){
-    this.user.postDataByCap("/deleteUser",{useremail:this.User.useremail}).subscribe(res=>{
+    this.user.postDataByCap("/deleteUser",{useremail:this.User.userEmail}).subscribe(res=>{
       if(res){
         this.toastr.success("User Deleted");
         this.dialogRef.close()

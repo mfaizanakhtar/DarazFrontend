@@ -164,7 +164,7 @@
                     </th>
                   </tr>
 
-                  <tr *ngFor="let detail of SortedStoreDetails" (click)="StoreClick(detail.store)" [ngClass]="{'selected':detail.store===SelectedStore}" style="cursor: grabbing;">
+                  <tr *ngFor="let detail of SortedStoreDetails" (click)="StoreClick(detail.shopShortCode)" [ngClass]="{'selected':detail.shopShortCode===SelectedStore}" style="cursor: grabbing;">
                     <td>
                       <h5 class="font-size-14 mb-0">{{detail.store}}</h5>
                     </td>

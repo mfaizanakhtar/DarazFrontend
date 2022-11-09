@@ -74,7 +74,7 @@ export class AnalyticsContentComponent implements OnInit {
 
     this.adjustUserSettings()
     this.enddate = moment().tz("Asia/Karachi").endOf('day').toDate();
-    this.startdate = moment().tz("Asia/Karachi").endOf('day').toDate();
+    this.startdate = moment().tz("Asia/Karachi").startOf('day').toDate();
     
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Dashboard', active: true }];
 
@@ -115,7 +115,7 @@ export class AnalyticsContentComponent implements OnInit {
 
   DateInput(mode,event){
     if(mode == 'start'){
-      this.startdate = moment(event.value).tz("Asia/Karachi").endOf('day').toDate()
+      this.startdate = moment(event.value).tz("Asia/Karachi").startOf('day').toDate()
       
     }
     if(mode == 'end'){
@@ -166,7 +166,7 @@ getStoreOrdersDetails(){
     this.SortedStoreDetails=this.StoreDetails=res.StoreDetail
 
     if(this.StoreDetails.length>0){
-      this.SelectedStore=this.StoreDetails[0].store
+      this.SelectedStore=this.StoreDetails[0].shopShortCode
       this.StoreClick(this.SelectedStore)
     } 
     this.storesLoading=false
@@ -174,9 +174,9 @@ getStoreOrdersDetails(){
 
 }
 
-StoreClick(store){
-  this.SelectedStore=store
-  this.stats.get('/getStoreSkuDetails/?'+"store="+this.SelectedStore+"&startdate="+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
+StoreClick(storeShortCode){
+  this.SelectedStore=storeShortCode
+  this.stats.get('/getStoreSkuDetails/?'+"shortCode="+this.SelectedStore+"&startdate="+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
     this.SortedStoreSkuDetails=this.StoreSkuDetails=res.SkuDetail
     this.SkuTotal=res.SkuTotal
 
@@ -197,7 +197,7 @@ SkuClick(sku){
 
 getStoreOrderAnalyticsGraph(){
   this.storesGraphLoading=true
-  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.SelectedStore
+  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&shopShortCode="+this.SelectedStore
   +"&o="+this.GraphOptions.Store.Orders+"&i="+this.GraphOptions.Store.Items+"&r="+this.GraphOptions.Store.Revenue).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.StoreAnalyticsGraph=res
     this.storesGraphLoading=false
@@ -206,7 +206,7 @@ getStoreOrderAnalyticsGraph(){
 
 getSkuOrderAnalyticsGraph(){
   this.skuGraphLoading=true
-  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&store="+this.SelectedStore+"&sku="+encodeURIComponent(this.SelectedSku)
+  this.stats.get('/OrdersAnalyticsGraph?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()+"&shopShortCode="+this.SelectedStore+"&sku="+encodeURIComponent(this.SelectedSku)
   +"&o="+this.GraphOptions.Sku.Orders+"&i="+this.GraphOptions.Sku.Items+"&r="+this.GraphOptions.Sku.Revenue).subscribe((res:any)=>{
     if(Object.keys(res).length>0) this.SkuAnalyticsGraph=res
     this.skuGraphLoading=false
@@ -250,16 +250,8 @@ sortStores(sort: Sort) {
   }
   this.SortedStoreDetails = data.sort((a, b) => {
     const isAsc = sort.direction === 'asc';
-    switch (sort.active) {
-      case 'stores':
-        return this.compare(a.stores, b.stores, isAsc);
-      case 'orders':
-        return this.compare(a.orders, b.orders, isAsc);
-      case 'sales':
-        return this.compare(a.revenue, b.revenue, isAsc);
-      default:
-        return 0;
-    }
+    return this.compare(a[sort.active],b[sort.active],isAsc)
+
   });
 }
 
@@ -271,18 +263,8 @@ sortSkus(sort: Sort) {
   }
   this.SortedStoreSkuDetails = data.sort((a, b) => {
     const isAsc = sort.direction === 'asc';
-    switch (sort.active) {
-      case 'sku':
-        return this.compare(a.sku, b.sku, isAsc);
-      case 'orders':
-        return this.compare(a.orders, b.orders, isAsc);
-      case 'OwnWarehouse':
-        return this.compare(a.OwnWarehouse, b.OwnWarehouse, isAsc);
-      case 'revenue':
-        return this.compare(a.revenue, b.revenue, isAsc);
-      default:
-        return 0;
-    }
+    return this.compare(a[sort.active],b[sort.active],isAsc)
+
   });
 }
 
