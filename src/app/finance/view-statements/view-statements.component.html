@@ -9,7 +9,7 @@
     </div>
     <div class="row">
 
-    <mat-form-field appearance="outline" class="col-lg-2">
+    <mat-form-field appearance="outline" class="col-lg-2 font-size-12">
         <mat-label>Filter Statement</mat-label>
         <mat-select [(ngModel)]="Statement" (selectionChange)="statementSelected($event)">
         <mat-option value="All">All</mat-option>
@@ -17,18 +17,18 @@
         </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="col-lg-2">
+    <mat-form-field appearance="outline" class="col-lg-2 font-size-12">
         <mat-label>Filter Shop</mat-label>
         <mat-select [(ngModel)]="Shop" (selectionChange)="shopSelected($event)">
         <mat-option value="All">All</mat-option>
-        <mat-option *ngFor="let shop of StoreArray" [value]="shop._id">{{shop._id}}</mat-option>
+        <mat-option *ngFor="let shop of StoreArray" [value]="shop.ShopShortCode">{{shop._id}}</mat-option>
         </mat-select>
     </mat-form-field>
 
     </div>
 
 <div class="row mat-elevation-z5" style="border-radius: 20px;padding:50px;">
-<table class="col-lg-12">
+<table class="col-lg-12 font-size-12">
     <th>Orders</th>
     <tr>
         <td>Item Charges</td>

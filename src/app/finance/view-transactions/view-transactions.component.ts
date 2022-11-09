@@ -41,7 +41,7 @@ export class ViewTransactionsComponent implements OnInit {
   ngOnInit(): void {
 
     this.enddate = moment().tz("Asia/Karachi").endOf('day').toDate();
-    this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").endOf('day').toDate();
+    this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").startOf('day').toDate();
 
     this.getTransactions()
 
@@ -64,7 +64,7 @@ export class ViewTransactionsComponent implements OnInit {
     if(this.Statement=='All'){tempStatement=null}else{tempStatement=this.Statement}
 
     this.transaction.get('/'+'?pSize='+this.pSize+'&pIndex='+this.pIndex+'&startDate='+this.startdate.toISOString()+'&endDate='+this.enddate.toISOString()
-    +'&TransactionType='+tempTransType+'&FeeName='+tempFeename+'&ShopName='+tempStore+'&OrderNo='+this.OrderId
+    +'&TransactionType='+tempTransType+'&FeeName='+tempFeename+'&ShopShortCode='+tempStore+'&OrderNo='+this.OrderId
     +'&Statement='+tempStatement).subscribe(res=>{
 
       var response:any = res
@@ -85,11 +85,11 @@ export class ViewTransactionsComponent implements OnInit {
 
   DateInput(mode,event){
     if(mode == 'start'){
-      this.startdate = event.value
+      this.startdate = moment(event.value).tz("Asia/Karachi").startOf('day').toDate();
     }
     if(mode == 'end'){
       if(event.value != null){
-        this.enddate = event.value
+        this.enddate = moment(event.value).tz("Asia/Karachi").endOf('day').toDate()
         this.pSize=10
         this.pIndex=0
         this.getTransactions()
