@@ -53,31 +53,6 @@
       <button (click)="findOrder(f)" class="col-lg-12 font-size-12 mt-2" mat-raised-button color="primary" >Search</button>
     </div>
     
-    <!-- <div style="margin-left: 10px; margin-top: 15px;">
-      <mat-slide-toggle
-          class="example-margin"
-          color="primary"
-          [checked]="skuSort"
-          (change)=orderSort($event)>
-        SKU Sorting
-      </mat-slide-toggle>
-    </div>
-
-    <div style="margin-left: 10px; margin-top: 15px;">
-      <mat-slide-toggle
-          class="example-margin"
-          color="primary"
-          [checked]="shopSort"
-          (change)=shopSorting($event)>
-        Shop Sorting
-      </mat-slide-toggle>
-    </div> -->
-
-	
-
-
-    
-
 </div>
 <mat-divider class="topdivider"></mat-divider>
 
@@ -86,17 +61,26 @@
     <mat-button-toggle value="All" (click)="StatusFilterClicked('All','All')">All Orders</mat-button-toggle>
     <mat-button-toggle value="pending" (click)="StatusFilterClicked('pending','Pending')">Pending</mat-button-toggle>
     <mat-button-toggle value="ready_to_ship" (click)="StatusFilterClicked('ready_to_ship','RTS')">RTS</mat-button-toggle>
-    <mat-button-toggle value="RTSDispatched" (click)="StatusFilterClicked('RTSDispatched','RTS-Dispatched')">RTS-Dispatched</mat-button-toggle>
     <mat-button-toggle value="shipped" (click)="StatusFilterClicked('shipped','Shipped')">Shipped</mat-button-toggle>
     <mat-button-toggle value="delivered" (click)="StatusFilterClicked('delivered','Delivered')">Delivered</mat-button-toggle>
     <mat-button-toggle value="failed" (click)="StatusFilterClicked('failed','Failed')">Delivery Failed</mat-button-toggle>
     <mat-button-toggle value="returned" (click)="StatusFilterClicked('returned','Returned')">Returned</mat-button-toggle>
-    <mat-button-toggle value="DeliveryFailedReceived" (click)="StatusFilterClicked('DeliveryFailedReceived','Delivery Failed-Received')">Delivery Failed-Received</mat-button-toggle>
-    <mat-button-toggle value="Claimable" (click)="StatusFilterClicked('Claimable','Claimable')">Claimable</mat-button-toggle>
-    <mat-button-toggle value="ClaimFiled" (click)="StatusFilterClicked('ClaimFiled','Claim Filed')">Claim Filed</mat-button-toggle>
-    <mat-button-toggle value="ClaimReceived" (click)="StatusFilterClicked('ClaimReceived','Claim Received')">Claim Received</mat-button-toggle>
     <mat-button-toggle value="canceled" (click)="StatusFilterClicked('canceled','Cancelled')">Cancelled</mat-button-toggle>
   </mat-button-toggle-group>
+</perfect-scrollbar>
+
+<mat-divider class="topdivider"></mat-divider>
+
+<perfect-scrollbar [scrollIndicators]="true" style="width:fit-content;height:max-content;font-size: 20px;" [config]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:true}">
+  <mat-button-toggle-group  style="font-size: 12px;" class="m-2" appearance="legacy" name="fontStyle" [value]="StatusFilter" aria-label="Font Style">
+  <mat-button-toggle value="RTSDispatched" (click)="StatusFilterClicked('RTSDispatched','RTS-Dispatched')">RTS-Dispatched</mat-button-toggle>
+  <mat-button-toggle value="DeliveryFailedReceived" (click)="StatusFilterClicked('DeliveryFailedReceived','Delivery Failed-Received')">Delivery Failed-Received</mat-button-toggle>
+  <mat-button-toggle value="Claimable" (click)="StatusFilterClicked('Claimable','Claimable')">Claimable</mat-button-toggle>
+  <mat-button-toggle value="ClaimFiled" (click)="StatusFilterClicked('ClaimFiled','Claim Filed')">Claim Filed</mat-button-toggle>
+  <mat-button-toggle value="ClaimReceived" (click)="StatusFilterClicked('ClaimReceived','Claim Received')">Claim Received</mat-button-toggle>
+  <mat-button-toggle *ngFor="let customStatus of customStatuses" value="{{customStatus._id}}" (click)="StatusFilterClicked(customStatus._id,customStatus.statusName,true)">{{customStatus.statusName}}</mat-button-toggle>
+</mat-button-toggle-group>
+<i (click)="openCustomStatusDialog()" style="cursor:pointer" class="mdi mdi-plus-circle font-size-18"></i>
 </perfect-scrollbar>
 
 <mat-divider class="topdivider"></mat-divider>

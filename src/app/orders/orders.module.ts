@@ -10,6 +10,11 @@ import { OrdersViewComponent } from './orders-view/orders-view.component';
 import { ReturntrackingComponent } from './returntracking/returntracking.component';
 import { HorizontalComponent } from '../analytics/horizontal/horizontal.component';
 import { SubscriptionGuard } from '../guards/SubscriptionGuard';
+import { CustomOrderStatusComponent } from './custom-order-statuses/custom-order-status/custom-order-status.component';
+import { AddEditCustomStatusFilterComponent } from './custom-order-statuses/add-edit-custom-status-filter/add-edit-custom-status-filter.component';
+import { ViewStatusFiltersComponent } from './custom-order-statuses/view-status-filters/view-status-filters.component';
+import { FilterTypeOrderStatusComponent } from './custom-order-statuses/filter-type-order-status/filter-type-order-status.component';
+import { FilterTypeCustomOrderStatusComponent } from './custom-order-statuses/filter-type-custom-order-status/filter-type-custom-order-status.component';
 
 
 
@@ -18,7 +23,12 @@ import { SubscriptionGuard } from '../guards/SubscriptionGuard';
     OrdersViewComponent,
     DispatchComponent,
     ReturntrackingComponent,
-    PrintLabelsComponent
+    PrintLabelsComponent,
+    CustomOrderStatusComponent,
+    AddEditCustomStatusFilterComponent,
+    ViewStatusFiltersComponent,
+    FilterTypeOrderStatusComponent,
+    FilterTypeCustomOrderStatusComponent
   ],
   imports: [
     SharedModule,

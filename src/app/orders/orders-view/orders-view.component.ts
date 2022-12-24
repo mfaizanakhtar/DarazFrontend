@@ -1,3 +1,5 @@
+import { CustomOrderStatusService } from './../../services/custom-order-status.service';
+import { CustomOrderStatusComponent } from '../custom-order-statuses/custom-order-status/custom-order-status.component';
 import { LabelService } from '../../services/label.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -31,6 +33,7 @@ export class OrdersViewComponent implements OnInit {
   Store="All";
   StatusFilter;
   FormattedStatus;
+  isCustomStatus:Boolean=false;
   enddate:Date
   startdate:Date
   OrderId=null
@@ -42,6 +45,7 @@ export class OrdersViewComponent implements OnInit {
   selected=[];
   status:any
   prevExapandedRow:any=null
+  customStatuses:any[]=[]
   //for Indexing
   pSize=10
   pIndex=0
@@ -65,7 +69,7 @@ export class OrdersViewComponent implements OnInit {
 
   constructor(private orderService:OrdersService,private orderItemsService:OrderItemsService,
     private toastr:ToastrService,private router:Router,private lableService:LabelService,private dialog:MatDialog,
-    private auth:AuthService) { }
+    private auth:AuthService,private customStatusService:CustomOrderStatusService) { }
 
   ngOnInit(): void {
     this.permissions=this.auth.getPermissions()
@@ -75,6 +79,7 @@ export class OrdersViewComponent implements OnInit {
     this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").startOf('day').toDate();
 
     this.getOrders()
+    this.getAllCustomStatuses();
 
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Orders', active: true }];
   }
@@ -89,7 +94,8 @@ export class OrdersViewComponent implements OnInit {
 
     this.loadingIndicator = true;
     this.orderService.get('/orders?'+'OrderItems.Status='+tempstatus+'&skuSort='+this.skuSort+'&shopSort='+this.shopSort+'&Printed='+this.Printed+'&unPrinted='+this.UnPrinted+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
-    +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopShortCode="+tempstore+"&OrderItems.ShippingType="+tempfulfillment+"&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()).subscribe((res:any)=>{
+    +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopShortCode="+tempstore+"&OrderItems.ShippingType="+tempfulfillment+"&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()
+    +"&isCustomStatus="+this.isCustomStatus).subscribe((res:any)=>{
       console.log(res)
 
       this.orders=res.orders
@@ -98,6 +104,14 @@ export class OrdersViewComponent implements OnInit {
       this.loadingIndicator = false;
 
 
+    })
+  }
+
+  getAllCustomStatuses(){
+    this.customStatusService.get('/getAllCustomStatuses').subscribe((resp:any)=>{
+      this.customStatuses=resp
+    },(error)=>{
+      console.log(error)
     })
   }
 
@@ -249,11 +263,12 @@ export class OrdersViewComponent implements OnInit {
 
   }
 
-  StatusFilterClicked(status,formattedFilter){
+  StatusFilterClicked(status,formattedFilter,isCustomStatus?:any){
     debugger
     this.pSize=10
     this.pIndex=0
     this.StatusFilter=status
+    this.isCustomStatus = isCustomStatus!=null ? isCustomStatus : false
     this.FormattedStatus=formattedFilter
     var claimReg = new RegExp('[\w]*Claim[\w]*')
 
@@ -398,6 +413,12 @@ export class OrdersViewComponent implements OnInit {
 
   onScrollEvent(event){
     console.log(event)
+  }
+
+  openCustomStatusDialog(){
+    this.dialog.open(CustomOrderStatusComponent,{width:'50%',height:'50%'}).afterClosed().subscribe(closeResp=>{
+      this.customStatuses.push(closeResp.createdCustomStatus)
+    })
   }
 
 
