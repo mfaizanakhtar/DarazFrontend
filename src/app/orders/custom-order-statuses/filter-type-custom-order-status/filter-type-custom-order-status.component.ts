@@ -35,7 +35,7 @@ export class FilterTypeCustomOrderStatusComponent implements OnInit {
     debugger
     if(!control.parent) return null;
     if(control.parent.get('currentOther')?.value.toLowerCase()=='other'){
-      if(!control.value) return {required:true}
+      if(control.value==null || control.value==undefined) return {required:true}
       else null
     }else{
       return null;

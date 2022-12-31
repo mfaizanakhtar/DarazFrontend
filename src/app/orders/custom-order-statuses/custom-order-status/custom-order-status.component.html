@@ -7,7 +7,7 @@
         <div class="row">
             <mat-text-box [control]="this.customOrderFormGroup.get('orderStatusName')" class="col-md-12" label="Enter Custom Order Status Name" placeHolder="ABCD" [(value)]="statusName"></mat-text-box>
         </div>
-        <div class="row ml-2 mt-4">
+        <div *ngIf="statusName?.length>0" class="row ml-2 mt-4">
             <i class="mdi mdi-plus font-size-18" (click)="toggleStatusOverViewAndRuleScreen()" style="cursor:pointer"></i>
         </div>
         <view-status-filters (filterDeleted)="filterDeleted($event)" [data]="viewStatusFilters"></view-status-filters>
