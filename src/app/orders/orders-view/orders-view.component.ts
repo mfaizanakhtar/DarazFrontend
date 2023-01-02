@@ -34,6 +34,7 @@ export class OrdersViewComponent implements OnInit {
   StatusFilter;
   FormattedStatus;
   isCustomStatus:Boolean=false;
+  isEditCustomStatus:Boolean=false
   enddate:Date
   startdate:Date
   OrderId=null
@@ -46,6 +47,8 @@ export class OrdersViewComponent implements OnInit {
   status:any
   prevExapandedRow:any=null
   customStatuses:any[]=[]
+  markableCustomStatuses:any[]=[]
+  customToggleAppearence="legacy"
   //for Indexing
   pSize=10
   pIndex=0
@@ -110,6 +113,8 @@ export class OrdersViewComponent implements OnInit {
   getAllCustomStatuses(){
     this.customStatusService.get('/getAllCustomStatuses').subscribe((resp:any)=>{
       this.customStatuses=resp
+      this.markableCustomStatuses=this.customStatuses.filter(status=>status.isMarkable).map(status=>{return status.statusName})
+      debugger
     },(error)=>{
       console.log(error)
     })
@@ -180,11 +185,11 @@ export class OrdersViewComponent implements OnInit {
     // console.log(Status)
     // console.log(this.selected)
     var selectedArray=[]
-    this.selected.map(s=>{
-      selectedArray.push(s.OrderId)
+    selectedArray = this.selected.map(s=>{
+      return s.OrderId
     })
 
-    this.orderItemsService.updateData("Update",Status,{orders:selectedArray,date:new Date()}).subscribe(res=>{
+    this.orderItemsService.updateData("updateStatus",Status,{orders:selectedArray,date:new Date()}).subscribe(res=>{
       var response:any=res
       if(response.nModified>0){
         this.selected=[]
@@ -270,13 +275,8 @@ export class OrdersViewComponent implements OnInit {
     this.StatusFilter=status
     this.isCustomStatus = isCustomStatus!=null ? isCustomStatus : false
     this.FormattedStatus=formattedFilter
-    var claimReg = new RegExp('[\w]*Claim[\w]*')
 
-    if(claimReg.test(status)){
-      this.startdate = moment().tz("Asia/Karachi").subtract(90, "days").startOf('day').toDate();
-    }else{
-      this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").startOf('day').toDate();
-    }
+    this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").startOf('day').toDate();
     this.getOrders()
   } 
 
@@ -415,9 +415,28 @@ export class OrdersViewComponent implements OnInit {
     console.log(event)
   }
 
-  openCustomStatusDialog(){
-    this.dialog.open(CustomOrderStatusComponent,{width:'50%',height:'50%'}).afterClosed().subscribe(closeResp=>{
-      this.customStatuses.push(closeResp.createdCustomStatus)
+  customStatusFilterClicked(customStatus){
+    debugger
+    if(this.isEditCustomStatus && customStatus?.statusArray?.length>0){
+      this.openCustomStatusDialog(customStatus)
+    }else{
+      this.StatusFilterClicked(customStatus._id,customStatus.statusName,true)
+    }
+  }
+
+  openCustomStatusDialog(editValues?:any){
+    let dialogConfig={}
+    dialogConfig={width:'50%',height:'50%'};
+    if(editValues) dialogConfig={...dialogConfig,data:editValues};
+    this.dialog.open(CustomOrderStatusComponent,dialogConfig).afterClosed().subscribe(closeResp=>{
+      debugger
+      if(closeResp && closeResp.isCreated){
+        this.customStatuses.push(closeResp.createdCustomStatus)
+        if(closeResp.createdCustomStatus.isMarkable) this.markableCustomStatuses.push(closeResp.createdCustomStatus.statusName)
+      }else if(closeResp && closeResp.isDeleted){
+        this.customStatuses = this.customStatuses.filter(status=>status.statusName!=editValues.statusName)
+        if(editValues.isMarkable) this.markableCustomStatuses = this.markableCustomStatuses.filter(markableStatus=>markableStatus!=editValues.statusName)
+      }
     })
   }
 

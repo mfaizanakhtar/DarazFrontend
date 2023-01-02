@@ -72,15 +72,12 @@
 <mat-divider class="topdivider"></mat-divider>
 
 <perfect-scrollbar [scrollIndicators]="true" style="width:fit-content;height:max-content;font-size: 20px;" [config]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:true}">
-  <mat-button-toggle-group  style="font-size: 12px;" class="m-2" appearance="legacy" name="fontStyle" [value]="StatusFilter" aria-label="Font Style">
-  <mat-button-toggle value="RTSDispatched" (click)="StatusFilterClicked('RTSDispatched','RTS-Dispatched')">RTS-Dispatched</mat-button-toggle>
-  <mat-button-toggle value="DeliveryFailedReceived" (click)="StatusFilterClicked('DeliveryFailedReceived','Delivery Failed-Received')">Delivery Failed-Received</mat-button-toggle>
-  <mat-button-toggle value="Claimable" (click)="StatusFilterClicked('Claimable','Claimable')">Claimable</mat-button-toggle>
-  <mat-button-toggle value="ClaimFiled" (click)="StatusFilterClicked('ClaimFiled','Claim Filed')">Claim Filed</mat-button-toggle>
-  <mat-button-toggle value="ClaimReceived" (click)="StatusFilterClicked('ClaimReceived','Claim Received')">Claim Received</mat-button-toggle>
-  <mat-button-toggle *ngFor="let customStatus of customStatuses" value="{{customStatus._id}}" (click)="StatusFilterClicked(customStatus._id,customStatus.statusName,true)">{{customStatus.statusName}}</mat-button-toggle>
-</mat-button-toggle-group>
-<i (click)="openCustomStatusDialog()" style="cursor:pointer" class="mdi mdi-plus-circle font-size-18"></i>
+  <mat-button-toggle-group  style="font-size: 12px;" class="m-2" [appearance]="customToggleAppearence" name="fontStyle" [value]="StatusFilter" aria-label="Font Style">
+    <mat-button-toggle *ngFor="let customStatus of customStatuses" value="{{customStatus._id}}" (click)="customStatusFilterClicked(customStatus)">{{customStatus.statusName}}</mat-button-toggle>
+  </mat-button-toggle-group>
+<i *ngIf="!isEditCustomStatus" (click)="isEditCustomStatus=!isEditCustomStatus;customToggleAppearence='standard'" class="mdi mdi-pencil font-size-18" style="cursor:pointer"></i>
+<i *ngIf="isEditCustomStatus" (click)="isEditCustomStatus=!isEditCustomStatus;customToggleAppearence='legacy'" class="mdi mdi-alpha-x-circle mr-2" style="cursor: pointer;"></i>
+<i (click)="openCustomStatusDialog()" style="cursor:pointer" class="mdi mdi-plus-circle"></i>
 </perfect-scrollbar>
 
 <mat-divider class="topdivider"></mat-divider>
@@ -99,18 +96,14 @@
   <button [disabled]="!(selected.length>0)" class="col-lg-2 font-size-12" style="margin-left: 20px;margin-right: 20px;" mat-raised-button color="primary" [matMenuTriggerFor]="statusMenu">Set Warehouse Status</button>
   
   <mat-menu #statusMenu="matMenu">
-    <button (click)="UpdateStatus('Dispatched')" mat-menu-item>Dispatched</button>
-    <button (click)="UpdateStatus('Received')" mat-menu-item>Received</button>
-    <button (click)="UpdateStatus('Reverse Dispatch')" mat-menu-item>Reverse Dispatch</button>
-    <button [matMenuTriggerFor]="claimMenu" mat-menu-item>Claim</button>
+    <button *ngFor="let markableStatus of markableCustomStatuses" (click)="UpdateStatus(markableStatus)" mat-menu-item>{{markableStatus}}</button>
+    <button [matMenuTriggerFor]="resetMenu" mat-menu-item>Reset</button>
   </mat-menu>
 
-  <mat-menu #claimMenu="matMenu">
-    <button (click)="UpdateStatus('Claim Filed')" mat-menu-item>Claim Filed</button>
-    <button (click)="UpdateStatus('Claim Approved')" mat-menu-item>Claim Approved</button>
-    <button (click)="UpdateStatus('Claim Rejected')" mat-menu-item>Claim Rejected</button>
-    <button (click)="UpdateStatus('Claim POD Dispute')" mat-menu-item>Claim POD Dispute</button>
-    <button (click)="UpdateStatus('Claim Received')" mat-menu-item>Claim Received</button>
+  <mat-menu #resetMenu="matMenu">
+    <button (click)="UpdateStatus('Reset Dispatched')" mat-menu-item>Reset Dispatched</button>
+    <button (click)="UpdateStatus('Reset Received')" mat-menu-item>Reset Received</button>
+    <button (click)="UpdateStatus('Claim Rejected')" mat-menu-item>Reset</button>
   </mat-menu>
 
   <button [disabled]="!(selected.length>0)" class="col-lg-2 font-size-12" style="margin-left: 20px;margin-right: 20px;" mat-stroked-button color="primary" [matMenuTriggerFor]="darazStatusMenu">Set Daraz Status</button>

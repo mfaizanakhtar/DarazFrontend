@@ -1,9 +1,9 @@
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CustomOrderStatusService } from './../../../services/custom-order-status.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LookupService } from './../../../services/lookup.service';
 import { orderFilter } from './orderFilter';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-custom-order-status',
@@ -12,12 +12,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomOrderStatusComponent implements OnInit {
 
-  constructor(private lookupService:LookupService,private customStatusSerivce:CustomOrderStatusService,private currDialogRef:MatDialogRef<CustomOrderStatusComponent>) { }
+  constructor(private lookupService:LookupService,private customStatusSerivce:CustomOrderStatusService,private currDialogRef:MatDialogRef<CustomOrderStatusComponent>,
+    @Inject(MAT_DIALOG_DATA) private dialogData:any) { }
   
   statusName:String
   addRuleScreen:Boolean=false;
   orderFilters=orderFilter;
   filterTypes:any
+  editMode:Boolean=false
   viewStatusFilters:any=[];
   customOrderFormGroup=new FormGroup({
     orderStatusName:new FormControl({value:''},[Validators.required])
@@ -26,6 +28,10 @@ export class CustomOrderStatusComponent implements OnInit {
   ngOnInit(): void {
     this.getFilterTypeLookup();
     this.getFiltersLookup();
+    if(this.dialogData) {
+      this.editMode=true
+      this.editModeEnabled()
+    }
   }
 
   toggleStatusOverViewAndRuleScreen(addedRule?:any){
@@ -70,6 +76,7 @@ export class CustomOrderStatusComponent implements OnInit {
   }
 
   submitCustomStatus(){
+    debugger
     if(this.viewStatusFilters.length==0){
       this.customOrderFormGroup.get('orderStatusName').setErrors({custom:"Custom Order Status Must have One Filter Atleast"})
       return
@@ -83,7 +90,7 @@ export class CustomOrderStatusComponent implements OnInit {
       payLoad.statusArray=this.viewStatusFilters
       this.customStatusSerivce.postDataByCap('/createStatus',payLoad).subscribe((resp:any)=>{
         console.log(resp)
-        this.currDialogRef.close({createdCustomStatus : resp.createdCustomStatus})
+        this.currDialogRef.close({createdCustomStatus : resp.createdCustomStatus,isCreated:true})
       },(errorResp)=>{
         debugger
         console.log(errorResp)
@@ -112,11 +119,31 @@ export class CustomOrderStatusComponent implements OnInit {
   }
 
   disableEnableStatusName(){
+    if(this.editMode) return;
     if(this.viewStatusFilters?.filter(rule=>rule?.filterName=='CustomOrderStatus')?.length>0){
       this.customOrderFormGroup.get('orderStatusName').disable();
     }else{
       this.customOrderFormGroup.get('orderStatusName').enable();
     }
+  }
+
+  editModeEnabled(){
+    debugger
+    this.customOrderFormGroup.get('orderStatusName').setValue(this.dialogData.statusName);
+    this.statusName=this.dialogData.statusName
+    this.customOrderFormGroup.get('orderStatusName').disable();
+    this.viewStatusFilters=this.dialogData.statusArray;
+  }
+
+  deleteCustomStatus(){
+    debugger
+    this.customStatusSerivce.deleteDataByCap('/deleteCustomStatus',this.dialogData.statusName).subscribe((res:any)=>{
+      if(res.deletedCount>0){
+        this.currDialogRef.close({isDeleted:true})
+      }
+    },error=>{
+      console.log(error)
+    })
   }
 
 
