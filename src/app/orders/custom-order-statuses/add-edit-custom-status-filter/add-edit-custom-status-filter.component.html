@@ -14,3 +14,7 @@
     <filter-type-custom-order-status (orderStatusChange)="saveOrderStatusFilter($event)"></filter-type-custom-order-status>
 </div>
 
+<div *ngIf="selectedFilter=='DateRangeFilter'">
+    <filter-type-date-range (orderStatusChange)="saveOrderStatusFilter($event)"></filter-type-date-range>
+</div>
+

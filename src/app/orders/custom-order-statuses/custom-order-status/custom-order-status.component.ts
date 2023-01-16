@@ -36,7 +36,8 @@ export class CustomOrderStatusComponent implements OnInit {
 
   toggleStatusOverViewAndRuleScreen(addedRule?:any){
     if(addedRule){
-      if(addedRule.filterName=='CustomOrderStatus'){
+      debugger
+      if(addedRule.filterName=='CustomOrderStatus' && addedRule.currentOther=='CURRENT'){
         addedRule.value=this.statusName;
       }
       this.removeFilterSizeError()
@@ -86,11 +87,11 @@ export class CustomOrderStatusComponent implements OnInit {
     this.removeNotUniquError()
     if(this.customOrderFormGroup.valid || this.customOrderFormGroup.disabled){
       var payLoad=this.customOrderFormGroup.value;
-      payLoad.isEdit=false;
+      payLoad.isEdit=this.editMode;
       payLoad.statusArray=this.viewStatusFilters
       this.customStatusSerivce.postDataByCap('/createStatus',payLoad).subscribe((resp:any)=>{
         console.log(resp)
-        this.currDialogRef.close({createdCustomStatus : resp.createdCustomStatus,isCreated:true})
+        this.currDialogRef.close({createdCustomStatus : resp.createdCustomStatus,isCreated:true,isEdit:this.editMode})
       },(errorResp)=>{
         debugger
         console.log(errorResp)

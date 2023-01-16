@@ -49,6 +49,7 @@ export class OrdersViewComponent implements OnInit {
   customStatuses:any[]=[]
   markableCustomStatuses:any[]=[]
   customToggleAppearence="legacy"
+  dateFilterDisabled=false;
   //for Indexing
   pSize=10
   pIndex=0
@@ -93,11 +94,15 @@ export class OrdersViewComponent implements OnInit {
     if(this.StatusFilter=='All') {tempstatus=null } else tempstatus=this.StatusFilter
     if(this.Store=='All') { tempstore=null } else tempstore=this.Store
     if(this.Fulfillment=='All') { tempfulfillment=null } else tempfulfillment=this.Fulfillment
+    if(this.dateFilterDisabled){
+      this.startdate=null;
+      this.enddate=null;
+    }
     this.selected=[]
 
     this.loadingIndicator = true;
     this.orderService.get('/orders?'+'OrderItems.Status='+tempstatus+'&skuSort='+this.skuSort+'&shopSort='+this.shopSort+'&Printed='+this.Printed+'&unPrinted='+this.UnPrinted+'&pageSize='+this.pSize+"&pageNumber="+this.pIndex
-    +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopShortCode="+tempstore+"&OrderItems.ShippingType="+tempfulfillment+"&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()
+    +"&OrderId="+this.OrderId+"&OrderItems.TrackingCode="+this.TrackingCode+"&ShopShortCode="+tempstore+"&OrderItems.ShippingType="+tempfulfillment+"&startDate="+this.startdate?.toISOString()+"&endDate="+this.enddate?.toISOString()
     +"&isCustomStatus="+this.isCustomStatus).subscribe((res:any)=>{
       console.log(res)
 
@@ -257,7 +262,7 @@ export class OrdersViewComponent implements OnInit {
 
       this.orderService.get('/getFilterStockChecklist?'+'Status='+tempstatus+'&Printed='+this.Printed+'&unPrinted='+this.UnPrinted+
       "&OrderId="+this.OrderId+"&TrackingCode="+this.TrackingCode+"&ShopId="+tempstore+"&ShippingType="+tempfulfillment+
-      "&startDate="+this.startdate.toISOString()+"&endDate="+this.enddate.toISOString()).subscribe(res=>{
+      "&startDate="+this.startdate?.toISOString()+"&endDate="+this.enddate?.toISOString()).subscribe(res=>{
         // console.log(res);
 
         this.lableService.setStockChecklist(res)
@@ -274,6 +279,12 @@ export class OrdersViewComponent implements OnInit {
     this.pIndex=0
     this.StatusFilter=status
     this.isCustomStatus = isCustomStatus!=null ? isCustomStatus : false
+    if(!isCustomStatus){
+      this.dateFilterDisabled=false
+    }
+    if(!this.dateFilterDisabled){
+      this.resetDateRange()
+    }
     this.FormattedStatus=formattedFilter
 
     this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").startOf('day').toDate();
@@ -417,9 +428,15 @@ export class OrdersViewComponent implements OnInit {
 
   customStatusFilterClicked(customStatus){
     debugger
+    this.dateFilterDisabled=false
     if(this.isEditCustomStatus && customStatus?.statusArray?.length>0){
       this.openCustomStatusDialog(customStatus)
     }else{
+      if(customStatus.hasDateRange){
+        this.dateFilterDisabled=true
+      }else{
+        this.dateFilterDisabled=false
+      }
       this.StatusFilterClicked(customStatus._id,customStatus.statusName,true)
     }
   }
@@ -430,14 +447,24 @@ export class OrdersViewComponent implements OnInit {
     if(editValues) dialogConfig={...dialogConfig,data:editValues};
     this.dialog.open(CustomOrderStatusComponent,dialogConfig).afterClosed().subscribe(closeResp=>{
       debugger
-      if(closeResp && closeResp.isCreated){
+      if(closeResp && closeResp.isCreated && !closeResp.isEdit){ 
         this.customStatuses.push(closeResp.createdCustomStatus)
         if(closeResp.createdCustomStatus.isMarkable) this.markableCustomStatuses.push(closeResp.createdCustomStatus.statusName)
-      }else if(closeResp && closeResp.isDeleted){
+      }
+      else if(closeResp && closeResp.isCreated && closeResp.isEdit){
+        this.markableCustomStatuses = this.markableCustomStatuses.filter(status=>status!=closeResp.createdCustomStatus.statusName)
+        if(closeResp.createdCustomStatus.isMarkable) this.markableCustomStatuses.push(closeResp.createdCustomStatus.statusName)
+      }
+      else if(closeResp && closeResp.isDeleted){
         this.customStatuses = this.customStatuses.filter(status=>status.statusName!=editValues.statusName)
         if(editValues.isMarkable) this.markableCustomStatuses = this.markableCustomStatuses.filter(markableStatus=>markableStatus!=editValues.statusName)
       }
     })
+  }
+
+  resetDateRange(){
+    this.enddate = moment().tz("Asia/Karachi").endOf('day').toDate();
+    this.startdate = moment().tz("Asia/Karachi").subtract(15, "days").startOf('day').toDate();
   }
 
 

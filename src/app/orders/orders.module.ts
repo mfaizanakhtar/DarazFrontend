@@ -15,6 +15,7 @@ import { AddEditCustomStatusFilterComponent } from './custom-order-statuses/add-
 import { ViewStatusFiltersComponent } from './custom-order-statuses/view-status-filters/view-status-filters.component';
 import { FilterTypeOrderStatusComponent } from './custom-order-statuses/filter-type-order-status/filter-type-order-status.component';
 import { FilterTypeCustomOrderStatusComponent } from './custom-order-statuses/filter-type-custom-order-status/filter-type-custom-order-status.component';
+import { FilterTypeDateRangeComponent } from './custom-order-statuses/filter-type-date-range/filter-type-date-range.component';
 
 
 
@@ -28,7 +29,8 @@ import { FilterTypeCustomOrderStatusComponent } from './custom-order-statuses/fi
     AddEditCustomStatusFilterComponent,
     ViewStatusFiltersComponent,
     FilterTypeOrderStatusComponent,
-    FilterTypeCustomOrderStatusComponent
+    FilterTypeCustomOrderStatusComponent,
+    FilterTypeDateRangeComponent
   ],
   imports: [
     SharedModule,

@@ -1,3 +1,4 @@
+import { CustomOrderStatusService } from './../../../services/custom-order-status.service';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
@@ -13,10 +14,12 @@ export class FilterTypeCustomOrderStatusComponent implements OnInit {
     isNotControl:new FormControl('',[this.otherTypeRequiredValidation]),
     orderStatusControl:new FormControl('',[this.otherTypeRequiredValidation])
   })
+  customStatuses=[]
   @Output() orderStatusChange:EventEmitter<any> = new EventEmitter<any>();
-  constructor() { }
+  constructor(private customStatusService:CustomOrderStatusService) { }
 
   ngOnInit(): void {
+    this.getAllCustomStatuses()
   }
 
   saveClick(){
@@ -47,6 +50,15 @@ export class FilterTypeCustomOrderStatusComponent implements OnInit {
       this.orderFilterFormGroup.get('isNotControl').setErrors(null)
       this.orderFilterFormGroup.get('orderStatusControl').setErrors(null)
     }
+  }
+
+  getAllCustomStatuses(){
+    this.customStatusService.get('/getAllCustomStatuses').subscribe((resp:any)=>{
+      this.customStatuses=resp
+      debugger
+    },(error)=>{
+      console.log(error)
+    })
   }
 
 }
