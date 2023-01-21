@@ -1,0 +1,18 @@
+<form [formGroup]="orderFilterFormGroup" #f="ngForm" (submit)="saveClick()">
+    <div class="row">
+            <mat-divider class="col-12 mt-2 mb-2"></mat-divider>
+
+            <mat-drop-down 
+            [hint]="orderStatusFilter.currentOther=='CURRENT'? 'Current Allows User To Manually Add Order To This Status' : null" 
+            [control]="orderFilterFormGroup.controls['currentOther']" 
+            (selectedValChange)="currentOtherChange($event)" 
+            [(selectedVal)]="orderStatusFilter.currentOther" class="col-md-12" label="CURRENT / OTHER" [data]="['CURRENT','OTHER']" >
+            </mat-drop-down>
+
+            <mat-drop-down *ngIf="orderStatusFilter.currentOther=='OTHER'" [control]="orderFilterFormGroup.controls['isNotControl']" [(selectedVal)]="orderStatusFilter.isNot" class="col-md-6" label="IS / ISNOT" [data]="[{type:'IS',value:false},{type:'IS NOT',value:true}]" displayKey="type" valueKey="value"></mat-drop-down>
+            <mat-drop-down *ngIf="orderStatusFilter.currentOther=='OTHER'" [control]="orderFilterFormGroup.controls['orderStatusControl']" [(selectedVal)]="orderStatusFilter.value" class="col-md-6" label="Order Status" displayKey="statusName" valueKey="statusName" [data]="customStatuses"></mat-drop-down>
+            <mat-divider class="col-12 mt-2 mb-2"></mat-divider>
+            <mat-btn type="submit" class="col-lg-12 d-flex justify-content-center mt-4" btnLabel="Save"></mat-btn>
+    </div>
+</form>
+

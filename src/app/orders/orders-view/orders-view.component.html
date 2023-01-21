@@ -39,7 +39,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="col-lg-2 font-size-12">
+    <mat-form-field *ngIf="!dateFilterDisabled" appearance="outline" class="col-lg-2 font-size-12">
       <mat-label>Enter a date range</mat-label>
       <mat-date-range-input [rangePicker]="picker" >
         <input [(value)]="startdate" matStartDate placeholder="Start date"(dateInput)="DateInput('start',$event)">
@@ -53,31 +53,6 @@
       <button (click)="findOrder(f)" class="col-lg-12 font-size-12 mt-2" mat-raised-button color="primary" >Search</button>
     </div>
     
-    <!-- <div style="margin-left: 10px; margin-top: 15px;">
-      <mat-slide-toggle
-          class="example-margin"
-          color="primary"
-          [checked]="skuSort"
-          (change)=orderSort($event)>
-        SKU Sorting
-      </mat-slide-toggle>
-    </div>
-
-    <div style="margin-left: 10px; margin-top: 15px;">
-      <mat-slide-toggle
-          class="example-margin"
-          color="primary"
-          [checked]="shopSort"
-          (change)=shopSorting($event)>
-        Shop Sorting
-      </mat-slide-toggle>
-    </div> -->
-
-	
-
-
-    
-
 </div>
 <mat-divider class="topdivider"></mat-divider>
 
@@ -86,17 +61,23 @@
     <mat-button-toggle value="All" (click)="StatusFilterClicked('All','All')">All Orders</mat-button-toggle>
     <mat-button-toggle value="pending" (click)="StatusFilterClicked('pending','Pending')">Pending</mat-button-toggle>
     <mat-button-toggle value="ready_to_ship" (click)="StatusFilterClicked('ready_to_ship','RTS')">RTS</mat-button-toggle>
-    <mat-button-toggle value="RTSDispatched" (click)="StatusFilterClicked('RTSDispatched','RTS-Dispatched')">RTS-Dispatched</mat-button-toggle>
     <mat-button-toggle value="shipped" (click)="StatusFilterClicked('shipped','Shipped')">Shipped</mat-button-toggle>
     <mat-button-toggle value="delivered" (click)="StatusFilterClicked('delivered','Delivered')">Delivered</mat-button-toggle>
     <mat-button-toggle value="failed" (click)="StatusFilterClicked('failed','Failed')">Delivery Failed</mat-button-toggle>
     <mat-button-toggle value="returned" (click)="StatusFilterClicked('returned','Returned')">Returned</mat-button-toggle>
-    <mat-button-toggle value="DeliveryFailedReceived" (click)="StatusFilterClicked('DeliveryFailedReceived','Delivery Failed-Received')">Delivery Failed-Received</mat-button-toggle>
-    <mat-button-toggle value="Claimable" (click)="StatusFilterClicked('Claimable','Claimable')">Claimable</mat-button-toggle>
-    <mat-button-toggle value="ClaimFiled" (click)="StatusFilterClicked('ClaimFiled','Claim Filed')">Claim Filed</mat-button-toggle>
-    <mat-button-toggle value="ClaimReceived" (click)="StatusFilterClicked('ClaimReceived','Claim Received')">Claim Received</mat-button-toggle>
     <mat-button-toggle value="canceled" (click)="StatusFilterClicked('canceled','Cancelled')">Cancelled</mat-button-toggle>
   </mat-button-toggle-group>
+</perfect-scrollbar>
+
+<mat-divider class="topdivider"></mat-divider>
+
+<perfect-scrollbar [scrollIndicators]="true" style="width:fit-content;height:max-content;font-size: 20px;" [config]="{useBothWheelAxes:true,suppressScrollX:false,suppressScrollY:true}">
+  <mat-button-toggle-group  style="font-size: 12px;" class="m-2" [appearance]="customToggleAppearence" name="fontStyle" [value]="StatusFilter" aria-label="Font Style">
+    <mat-button-toggle *ngFor="let customStatus of customStatuses" value="{{customStatus._id}}" (click)="customStatusFilterClicked(customStatus)">{{customStatus.statusName}}</mat-button-toggle>
+  </mat-button-toggle-group>
+<i *ngIf="!isEditCustomStatus" (click)="isEditCustomStatus=!isEditCustomStatus;customToggleAppearence='standard'" class="mdi mdi-pencil font-size-18" style="cursor:pointer"></i>
+<i *ngIf="isEditCustomStatus" (click)="isEditCustomStatus=!isEditCustomStatus;customToggleAppearence='legacy'" class="mdi mdi-alpha-x-circle mr-2" style="cursor: pointer;"></i>
+<i (click)="openCustomStatusDialog()" style="cursor:pointer" class="mdi mdi-plus-circle"></i>
 </perfect-scrollbar>
 
 <mat-divider class="topdivider"></mat-divider>
@@ -115,18 +96,14 @@
   <button [disabled]="!(selected.length>0)" class="col-lg-2 font-size-12" style="margin-left: 20px;margin-right: 20px;" mat-raised-button color="primary" [matMenuTriggerFor]="statusMenu">Set Warehouse Status</button>
   
   <mat-menu #statusMenu="matMenu">
-    <button (click)="UpdateStatus('Dispatched')" mat-menu-item>Dispatched</button>
-    <button (click)="UpdateStatus('Received')" mat-menu-item>Received</button>
-    <button (click)="UpdateStatus('Reverse Dispatch')" mat-menu-item>Reverse Dispatch</button>
-    <button [matMenuTriggerFor]="claimMenu" mat-menu-item>Claim</button>
+    <button *ngFor="let markableStatus of markableCustomStatuses" (click)="UpdateStatus(markableStatus)" mat-menu-item>{{markableStatus}}</button>
+    <button [matMenuTriggerFor]="resetMenu" mat-menu-item>Reset</button>
   </mat-menu>
 
-  <mat-menu #claimMenu="matMenu">
-    <button (click)="UpdateStatus('Claim Filed')" mat-menu-item>Claim Filed</button>
-    <button (click)="UpdateStatus('Claim Approved')" mat-menu-item>Claim Approved</button>
-    <button (click)="UpdateStatus('Claim Rejected')" mat-menu-item>Claim Rejected</button>
-    <button (click)="UpdateStatus('Claim POD Dispute')" mat-menu-item>Claim POD Dispute</button>
-    <button (click)="UpdateStatus('Claim Received')" mat-menu-item>Claim Received</button>
+  <mat-menu #resetMenu="matMenu">
+    <button (click)="UpdateStatus('Reset Dispatched')" mat-menu-item>Reset Dispatched</button>
+    <button (click)="UpdateStatus('Reset Received')" mat-menu-item>Reset Received</button>
+    <button (click)="UpdateStatus('Claim Rejected')" mat-menu-item>Reset</button>
   </mat-menu>
 
   <button [disabled]="!(selected.length>0)" class="col-lg-2 font-size-12" style="margin-left: 20px;margin-right: 20px;" mat-stroked-button color="primary" [matMenuTriggerFor]="darazStatusMenu">Set Daraz Status</button>
@@ -279,8 +256,8 @@ rowHeight="auto"
     {{date | date:'d MMM y h:mm a':'UTC+5'}}
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column [minWidth]="140" [width]="140" name="Payment Method" prop="PaymentMethod"></ngx-datatable-column>
-<ngx-datatable-column [minWidth]="70" [width]="70" name="Price" prop="OrderItems">
+<ngx-datatable-column [minWidth]="130" [width]="130" name="Payment Method" prop="PaymentMethod"></ngx-datatable-column>
+<ngx-datatable-column [minWidth]="60" [width]="60" name="Price" prop="OrderItems">
   <ng-template let-row="row" let-orderitems="value" ngx-datatable-cell-template>
     {{getPrice(orderitems)}}
   </ng-template>
@@ -295,28 +272,31 @@ rowHeight="auto"
     {{getOrderStatus(orderitems)}}
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Shop Name" prop="ShopName" [width]="90" [minWidth]="90"></ngx-datatable-column>
-<ngx-datatable-column *ngIf="StatusFilter!='ClaimFiled'" name="Printed" prop="isPrinted" [width]="30" [minWidth]="30">
+<ngx-datatable-column name="Shop Name" prop="ShopName" [width]="70" [minWidth]="70"></ngx-datatable-column>
+<ngx-datatable-column name="Printed" prop="isPrinted" [width]="25" [minWidth]="25">
   <ng-template let-row="row" let-isPrinted="value" ngx-datatable-cell-template>
     <div *ngIf='isPrinted' ><i class="mdi mdi-check font-size-18 text-success"></i></div>
     <div *ngIf='!isPrinted'><i class="mdi mdi-alpha-x font-size-24 text-danger"></i></div>
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column *ngIf="StatusFilter=='ClaimFiled' || StatusFilter=='returned' || StatusFilter=='ClaimReceived'" name="Claim Number" prop="ClaimNumber" [width]="75" [minWidth]="75">
-  <ng-template let-row="row" let-rowIndex="rowIndex" let-ClaimNumber="value" ngx-datatable-cell-template>
+<ngx-datatable-column name="Remarks" prop="Remarks" [width]="110" [minWidth]="110">
+  <ng-template let-row="row" let-rowIndex="rowIndex" let-Remarks="value" ngx-datatable-cell-template>
+    <div class="row">
+      <a  href="javascript:void(0);" id="edit{{rowIndex}}" (click)="EditRemarks(rowIndex)" class="col-md-1 text-primary" placement="top" ngbTooltip="Edit"><i
+        class="mdi mdi-pencil"></i></a>
+  
+      <a href="javascript:void(0);" id="save{{rowIndex}}" hidden="true"  (click)="SaveRemarks(rowIndex,row)" class="col-md-1 text-primary mt-2" placement="top" ngbTooltip="Save"><i
+        class="mdi mdi-content-save"></i></a>
 
-    <mat-form-field id="input{{rowIndex}}" hidden="true" class="col-md-12" style="padding:0" appearance="outline">
-      <mat-label>#</mat-label>
-      <input matInput [(ngModel)]="row.ClaimNumber" placeholder="">
-    </mat-form-field>
+      <mat-form-field id="input{{rowIndex}}" hidden="true" class="col-md-9 font-size-10" appearance="outline">
+        <mat-label></mat-label>
+        <input matInput [(ngModel)]="row.Remarks" placeholder="">
+      </mat-form-field>
 
-    <div class="col-md-12" style="padding:0" id="text{{rowIndex}}">{{row.ClaimNumber}}</div>
+      <span class="col-md-9 font-size-10" id="text{{rowIndex}}">{{row.Remarks}}</span>
+    </div>
 
-    <a href="javascript:void(0);" id="edit{{rowIndex}}" (click)="EditClaim(rowIndex)" class="mr-3 text-primary" placement="top" ngbTooltip="Edit"><i
-      class="mdi mdi-pencil font-size-18"></i></a>
 
-      <a href="javascript:void(0);" id="save{{rowIndex}}" hidden="true"  (click)="SaveClaim(rowIndex,row)" class="mr-3 text-primary" placement="top" ngbTooltip="Save"><i
-        class="mdi mdi-content-save font-size-18"></i></a>
 
   </ng-template>
 </ngx-datatable-column>

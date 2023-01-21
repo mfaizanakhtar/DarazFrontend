@@ -1,0 +1,8 @@
+<mat-form-field class="col-12 font-size-12" appearance="outline">
+    <mat-label>{{label}}</mat-label>
+    <mat-select [formControl]="control==null ? null : control" [(ngModel)]="selectedVal" (selectionChange)="selectedValChange.emit(selectedVal)">
+      <mat-option *ngFor="let option of _data" [value]="option[valueKey]">{{option[displayKey]}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="control?.touched && control?.errors?.required">Required</mat-error>
+    <mat-hint *ngIf="hint!=null && hint!=undefined"><strong>{{hint}}</strong></mat-hint>
+  </mat-form-field>

@@ -3,6 +3,7 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { isDevMode } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,9 @@ export class AuthService {
   result:any
   subscriptionDetail:any
   constructor(private http:HttpClient,private billing:BillingService) { }
-  // private baseURL="http://localhost:3000/api/"
+  private baseURL=isDevMode() ? "http://localhost:3000/api/" : "api/"
   // private baseURL="http://13.235.80.238/api/"
-  private baseURL="api/"
+  // private baseURL="api/"
 
   login(credentials)
   {

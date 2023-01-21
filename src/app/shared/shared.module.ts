@@ -51,6 +51,9 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { PageNavComponent } from './page-nav/page-nav.component';
+import { MatTextBoxComponent } from './mat-text-box/mat-text-box.component';
+import { MatDropDownComponent } from './mat-drop-down/mat-drop-down.component';
+import { MatBtnComponent } from './mat-btn/mat-btn.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -66,7 +69,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RightsidebarComponent,
     PagetitleComponent,
     HorizontalComponent,
-    PageNavComponent
+    PageNavComponent,
+    MatTextBoxComponent,
+    MatDropDownComponent,
+    MatBtnComponent
   ],
   imports: [
     CommonModule,
@@ -169,7 +175,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RightsidebarComponent,
     PagetitleComponent,
     HorizontalComponent,
-    PageNavComponent
+    PageNavComponent,
+
+    MatTextBoxComponent,
+    MatDropDownComponent,
+    MatBtnComponent
   ],
   providers:[
     {
