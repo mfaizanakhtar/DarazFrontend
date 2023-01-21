@@ -378,7 +378,7 @@ export class OrdersViewComponent implements OnInit {
     this.getOrders()
   }
 
-  EditClaim(id){
+  EditRemarks(id){
     console.log(id)
     document.getElementById("input"+id).hidden=false
     document.getElementById("text"+id).hidden=true
@@ -386,9 +386,9 @@ export class OrdersViewComponent implements OnInit {
     document.getElementById("save"+id).hidden=false
   }
   
-  SaveClaim(id,row){
+  SaveRemarks(id,row){
     console.log(row._id)
-    this.orderService.updateData("updateClaim",row._id,{ClaimNumber:row.ClaimNumber}).subscribe(res=>{
+    this.orderService.updateData("updateRemarks",row._id,{Remarks:row.Remarks}).subscribe(res=>{
       document.getElementById("input"+id).hidden=true
       document.getElementById("text"+id).hidden=false
       document.getElementById("edit"+id).hidden=false
