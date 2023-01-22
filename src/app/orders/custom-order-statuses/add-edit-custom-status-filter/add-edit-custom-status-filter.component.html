@@ -18,3 +18,7 @@
     <filter-type-date-range (orderStatusChange)="saveOrderStatusFilter($event)"></filter-type-date-range>
 </div>
 
+<div *ngIf="selectedFilter=='OrderPayoutFilter'">
+    <filter-type-order-payout (orderStatusChange)="saveOrderStatusFilter($event)"></filter-type-order-payout>
+</div>
+

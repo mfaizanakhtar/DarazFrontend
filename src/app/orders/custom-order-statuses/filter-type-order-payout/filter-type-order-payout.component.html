@@ -1,0 +1,12 @@
+<form [formGroup]="orderPayoutGroup" #f="ngForm" (submit)="saveClick()">
+    <div class="row">
+            <mat-divider class="col-12 mt-2 mb-2"></mat-divider>
+
+            <mat-drop-down [control]="this.orderPayoutGroup.get('equalLessGreater')" class="col-md-6" 
+            label="Greater / Lesser / Equals" [data]="_lesserGreaterEqualsDD" displayKey="type" valueKey="value"></mat-drop-down>
+            
+            <mat-text-box isNumber="true" [control]="this.orderPayoutGroup.get('value')" class="col-md-6" label="Enter Value For Filter" placeHolder="05" ></mat-text-box>
+            <mat-divider class="col-12 mt-2 mb-2"></mat-divider>
+            <mat-btn type="submit" class="col-lg-12 d-flex justify-content-center mt-4" btnLabel="Save"></mat-btn>
+    </div>
+</form>
