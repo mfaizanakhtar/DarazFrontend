@@ -16,6 +16,7 @@ import { ViewStatusFiltersComponent } from './custom-order-statuses/view-status-
 import { FilterTypeOrderStatusComponent } from './custom-order-statuses/filter-type-order-status/filter-type-order-status.component';
 import { FilterTypeCustomOrderStatusComponent } from './custom-order-statuses/filter-type-custom-order-status/filter-type-custom-order-status.component';
 import { FilterTypeDateRangeComponent } from './custom-order-statuses/filter-type-date-range/filter-type-date-range.component';
+import { FilterTypeOrderPayoutComponent } from './custom-order-statuses/filter-type-order-payout/filter-type-order-payout.component';
 
 
 
@@ -30,7 +31,8 @@ import { FilterTypeDateRangeComponent } from './custom-order-statuses/filter-typ
     ViewStatusFiltersComponent,
     FilterTypeOrderStatusComponent,
     FilterTypeCustomOrderStatusComponent,
-    FilterTypeDateRangeComponent
+    FilterTypeDateRangeComponent,
+    FilterTypeOrderPayoutComponent
   ],
   imports: [
     SharedModule,
