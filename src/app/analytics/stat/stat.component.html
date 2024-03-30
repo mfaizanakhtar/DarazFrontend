@@ -12,7 +12,7 @@
   </div>
 
   <div class="card-body border-top py-3">
-    <div class="text-truncate">
+    <div >
       <!-- <span class="badge badge-soft-success font-size-11"><i class="mdi mdi-menu-up"> </i> 2.4% </span> -->
       <div [ngbPopover]="popLabels!=null && popData!=null?popContent:null" #p="ngbPopover" [animation]="'true'" triggers="mouseenter:mouseleave" style="cursor: pointer;">
         <ng-template #popContent>
@@ -24,7 +24,7 @@
           </table>
         </ng-template>
         <span *ngIf="bottomContent!=null" class="text-muted ml-2">{{bottomContent}}</span>
-        <span *ngIf="bottomContentExtra!=null" class="text-muted ml-2">{{bottomContentExtra}}</span>
+        <div *ngIf="bottomContentExtra!=null" class="text-muted ml-2">{{bottomContentExtra}}</div>
       </div>
     </div>
   </div>

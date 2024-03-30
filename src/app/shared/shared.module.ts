@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -27,7 +26,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router, RouterModule } from '@angular/router';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { NgxBarcodeModule } from 'ngx-barcode';
 import {NgxPrintModule} from 'ngx-print'
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from 'src/app/app-routing.module';
@@ -86,7 +84,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatIconModule,
     MatDialogModule,
     NgxPrintModule,
-    NgxBarcodeModule,
     MatTabsModule,
     MatCheckboxModule,
     MatProgressBarModule,
@@ -134,7 +131,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatIconModule,
     MatDialogModule,
     NgxPrintModule,
-    NgxBarcodeModule,
     MatTabsModule,
     MatCheckboxModule,
     MatProgressBarModule,

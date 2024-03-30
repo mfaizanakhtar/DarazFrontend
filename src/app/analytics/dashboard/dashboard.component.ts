@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import jsSHA from 'jssha'
 import { OrderItemsService } from '../../services/orderItems.service';
 
 @Component({
