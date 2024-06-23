@@ -14,28 +14,14 @@
     <div class="box left" style="text-align: center;font-size:12px; width:30%; line-height:14px; height:0.8cm; padding-top: 7px; border-bottom: 0;">{{adjustedDate(order.CreatedAt) | date:'dd MMM yyy'}}</div>
     
     <div class="box clear" style="width:100%;border-bottom: 0; padding-bottom: 10px;">
-    <div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm"><img src={{getLabelTrackingBarcode(tracking,order.OrderItems)}} /></div>
+    <div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm"><img [src]="getLabelTrackingBarcode(tracking,order.OrderItems)" /></div>
     
     <div style="font-size:15px; line-height:11px; font-weight: bold;">Tracking Number:  {{getLabelProperty(tracking,order.OrderItems,"labelTracking")}} </div>
     </div>
     
     <div class="box left" style="width:75%; border-bottom: 0; padding-bottom: 10px; height: 3.9cm; border-right: 0;">
     <div class="barcode" style="height: 3.1cm; margin-bottom: 0.1cm">
-        <img *ngIf="getLabelProperty(tracking,order.OrderItems,'ShipmentProvider')=='Delivery: PK-DEX'" src="../../assets/img/PK-DEX.jpg" />
-        <img *ngIf="getLabelProperty(tracking,order.OrderItems,'ShipmentProvider')=='Delivery: PK-LCS'" src="../../assets/img/PK-LCS.jpg" />
-        <img *ngIf="getLabelProperty(tracking,order.OrderItems,'ShipmentProvider')=='PK-LMP'" src="../../assets/img/PK-LMP.jpg" />
-        <img *ngIf="getLabelProperty(tracking,order.OrderItems,'ShipmentProvider')=='Delivery: PK-M&P'" src="../../assets/img/PK-MnP.jpg" />
-        <img *ngIf="getLabelProperty(tracking,order.OrderItems,'ShipmentProvider')=='Delivery: PK-CALLCOURIER'" src="../../assets/img/PK-CALLCOURIER.jpg" />
-        <img *ngIf="getLabelProperty(tracking,order.OrderItems,'ShipmentProvider')=='Delivery: PK-TCS'" src="../../assets/img/PK-TCS.jpg" />
-        <img *ngIf="getLabelProperty(tracking,order.OrderItems,'ShipmentProvider')=='Delivery: PK-RIDER-API'" src="../../assets/img/PK-RIDER.jpg" />
-        <h6 
-        *ngIf="getLabelProperty(tracking,order.OrderItems,'ShipmentProvider')=='Delivery: PK-MOVEX' || 
-        getLabelProperty(tracking,order.OrderItems,'ShipmentProvider')=='Delivery: PK-BlueEx' || 
-        getLabelProperty(tracking,order.OrderItems,'ShipmentProvider')=='Delivery: PK-TRAX'" style="margin-top:50px" >
-
-        <strong>DARAZ</strong>
-        
-        </h6>
+        <img [src]='getLabelProperty(tracking,order.OrderItems,"PortCodeImage")' />
     </div>
     
     <div style="font-size:18px; line-height:24px; font-weight: 700;">Port Code:&nbsp;{{getLabelProperty(tracking,order.OrderItems,"PortCode")}}</div>
@@ -63,7 +49,7 @@
     </div>
 
     
-    <div class="box left qrcode" style="width:35%; padding-bottom: 10px; height: 5cm; border-right: 0;"><img src={{order.OrderItems[getLabelProperty(tracking,order.OrderItems,undefined)].qrCode}} /></div>
+    <div class="box left qrcode" style="width:35%; padding-bottom: 10px; height: 5cm; border-right: 0;"><img [src]="getLabelQRCode(order.OrderItems,tracking)" /></div>
     
     <div class="box left text-left" style="width:65%; font-size:10px; border-bottom: 0; padding: 5px; height: 2.1cm;"><strong>Recipient</strong>: {{order.AddressShipping.FirstName}} {{order.AddressShipping.LastName}} <br> {{order.AddressShipping.Address1}} {{order.AddressShipping.Address2}} {{order.AddressShipping.Address3}} {{order.AddressShipping.Address4}} {{order.AddressShipping.Address5}}, {{order.AddressShipping.Country}}<br>Phone {{order.AddressShipping.Phone}}</div>
     

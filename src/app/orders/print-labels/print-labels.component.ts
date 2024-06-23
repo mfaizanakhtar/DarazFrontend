@@ -1,6 +1,7 @@
 import { AuthService } from 'src/app/services/auth.service';
 import { LabelService } from '../../services/label.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-print-labels',
@@ -13,10 +14,11 @@ export class PrintLabelsComponent implements OnInit {
   labelsCount:any
   pageIndex=0
   permissions:any
-  constructor(private labels:LabelService,private auth:AuthService) { }
+  constructor(private labels:LabelService,private auth:AuthService,private sanitizer: DomSanitizer) { }
   
   ngOnInit(): void {
     console.log(this.labels.getOrders().length)
+    debugger
     this.orders=this.labels.getOrders()
     this.labelsCount=this.labels.getLabelCount().length
     console.log(this.labels.getLabelCount())
@@ -33,7 +35,7 @@ export class PrintLabelsComponent implements OnInit {
     return result
   }
   getTrackings(order){
-    var trackings=[]
+        var trackings=[]
       for(var item of order.OrderItems){
         if(trackings.includes(item.labelTracking)==false && item.labelTracking!=""){
           trackings.push(item.labelTracking)
@@ -45,11 +47,17 @@ export class PrintLabelsComponent implements OnInit {
     for(var item of orderitems){
       if(item.Status=='canceled') continue;
       if(item.labelTracking==tracking){
-        return item.trackingBarcode
+        return this.sanitizer.bypassSecurityTrustResourceUrl(item.trackingBarcode)
       }
     }
     
   }
+
+  getLabelQRCode(OrderItems,tracking){
+    let orderItemIndex = this.getLabelProperty(tracking,OrderItems,undefined)
+    return this.sanitizer.bypassSecurityTrustResourceUrl(OrderItems[orderItemIndex].qrCode)
+  }
+  
   getLabelProperty(tracking,orderitems,property){
     for(var [index,item] of orderitems.entries()){
       if(item.Status=='canceled') continue;
