@@ -23,12 +23,12 @@
       <div class="row">
           <div *ngIf="overviewLoading" class="col-md-12 d-flex justify-content-center"><mat-spinner [diameter]="50" ></mat-spinner></div>
       </div>
-
+<!-- [bottomContentExtra]="(OrderAnalytics.costs)+(OrderAnalytics.packagingCosts)" [bottomContent]="Total Costs:" -->
       <div class="row" *ngIf="!overviewLoading">
           <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Orders'" [value]="ProfitStats.orders | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Orders: '+OrderAnalytics.orders" [popLabels]="StatusCount.status" [popData]="StatusCount.orders"></app-stat>
           <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Items'" [value]="ProfitStats.items | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Items: '+OrderAnalytics.items" [popLabels]="StatusCount.status" [popData]="StatusCount.items"></app-stat>
           <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Sales'" [value]="ProfitStats.sales | number" [icon]="'ri-stack-line'" [bottomContent]="'Total Sales: '+OrderAnalytics.revenue" [popLabels]="StatusCount.status" [popData]="StatusCount.sales"></app-stat>
-          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Estimated Costs'" [value]="ProfitStats.costs | number" [icon]="'ri-stack-line'"></app-stat>
+          <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Estimated Costs'" [value]="(ProfitStats.costs+ProfitStats.packagingCosts) | number" [icon]="'ri-stack-line'" [bottomContentExtra]="(OrderAnalytics.costs)+' + ' +(OrderAnalytics.packagingCosts)" [bottomContent]="'TProduct + TPackaging'" [popLabels]="StatusCount.status" [popData]="StatusCount.combinedCosts"></app-stat>
           <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Estimated Payout'" [value]="ProfitStats.payout | number" [icon]="'ri-stack-line'" [bottomContentExtra]="(ProfitStats.payout/ProfitStats.sales)*100 | number:'1.0-2'" [bottomContent]="'Payout of Sales %:'"></app-stat>
           <app-stat *ngIf="OrderAnalytics!=undefined" class="col-md-2" [title]="'Estimated Profit'" [value]="ProfitStats.profit | number" [icon]="'ri-stack-line'" [bottomContentExtra]="(ProfitStats.profit/ProfitStats.sales)*100 | number:'1.0-2'" [bottomContent]="'Profit %:'"></app-stat>
       </div>
@@ -60,37 +60,6 @@
 
         <div class="card-body border-top text-center">
           <div class="row">
-            <!-- <div class="col-sm-4">
-              <div class="d-inline-flex">
-                <h5 class="mr-2">0</h5>
-                <div class="text-success">
-                  <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
-                </div>
-              </div>
-              <p class="text-muted text-truncate mb-0">This month</p>
-            </div>
-
-            <div class="col-sm-4">
-              <div class="mt-4 mt-sm-0">
-                <p class="mb-2 text-muted text-truncate"><i class="mdi mdi-circle text-primary font-size-10 mr-1"></i>
-                  This Year :</p>
-                <div class="d-inline-flex">
-                  <h5 class="mb-0 mr-2">0</h5>
-                  <div class="text-success">
-                    <i class="mdi mdi-menu-up font-size-14"> </i>2.1 %
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="mt-4 mt-sm-0">
-                <p class="mb-2 text-muted text-truncate"><i class="mdi mdi-circle text-success font-size-10 mr-1"></i>
-                  Previous Year :</p>
-                <div class="d-inline-flex">
-                  <h5 class="mb-0">0</h5>
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>

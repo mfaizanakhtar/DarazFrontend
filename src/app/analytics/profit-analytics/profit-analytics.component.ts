@@ -22,7 +22,7 @@ export class ProfitAnalyticsComponent implements OnInit {
   startdate:Date
   enddate:Date
   //data
-  ProfitStats={items:0,sales:0,costs:0,payout:0,profit:0,orders:0}
+  ProfitStats={items:0,sales:0,costs:0,packagingCosts:0,payout:0,profit:0,orders:0}
   StoreProfitStats=[]
   SortedStoreProfitStats=[]
   StoreSkuProfitStats=[]
@@ -31,7 +31,7 @@ export class ProfitAnalyticsComponent implements OnInit {
   SelectedSku:any
   SelectedStore:any
   OrderAnalytics:any
-  StatusCount:any={rawData:{},status:[],orders:[],items:[],sales:[]}
+  StatusCount:any={rawData:{},status:[],orders:[],items:[],sales:[],costs:[],packagingCosts:[]}
   //graph
   ProfitAnalyticsGraph:any={Data:[],Labels:[]}
   StoreProfitAnalyticsGraph:any={Data:[],Labels:[]}
@@ -118,11 +118,21 @@ export class ProfitAnalyticsComponent implements OnInit {
   }
 }
 
+transformCosts(productCosts,packagingCosts){
+  debugger
+  let statusCounts = Math.min(productCosts?.length || 0,packagingCosts?.length || 0)
+  let result=[]
+  for(let i=0;i<statusCounts;i++){
+    result.push(productCosts[i]?.toString()||'0' + '+' +packagingCosts[i]?.toString()||'0')
+  }
+  return result
+}
+
 getProfitStats(){
   this.stats.get('/getProfitAnalytics?startdate='+this.startdate.toISOString()+"&enddate="+this.enddate.toISOString()).subscribe((res:any)=>{
     if(Object.keys(res.ProfitStats).length!=0) this.ProfitStats=res.ProfitStats
     else{
-      this.ProfitStats = {items:0,sales:0,costs:0,payout:0,profit:0,orders:0}
+      this.ProfitStats = {items:0,sales:0,costs:0,packagingCosts:0,payout:0,profit:0,orders:0}
     }
     this.overviewLoading=false
   })
@@ -134,13 +144,16 @@ getProfitStats(){
 
   this.stats.get('/OrderStatuses/?startdate='+this.startdate.toISOString()+'&enddate='+this.enddate.toISOString()).subscribe((res:any)=>{
     if(res.length>0){
-      this.StatusCount={rawData:{},status:[],orders:[],items:[],sales:[]}
+      this.StatusCount={rawData:{},status:[],orders:[],items:[],sales:[],costs:[],packagingCosts:[],combinedCosts:[]}
       this.StatusCount.rawData=res;
       for(var data of this.StatusCount.rawData){
         if(data.status=='ready_to_ship') this.StatusCount.status.push('RTS'); else this.StatusCount.status.push(data.status.toUpperCase())
         this.StatusCount.orders.push(data.count.OrderCount)
         this.StatusCount.items.push(data.count.ItemCount)
         this.StatusCount.sales.push(data.count.sales)
+        this.StatusCount.costs.push(data.count.costs)
+        this.StatusCount.packagingCosts.push(data.count.packagingCosts)
+        this.StatusCount.combinedCosts.push((data.count.costs||0)+'+'+(data.count.packagingCosts||0))
       }
     }
     console.log(this.StatusCount)
@@ -209,8 +222,6 @@ getSkuGraph(){
 
 
   getRoi(profit,cost){
-    console.log("profit",profit)
-    console.log("cost",cost)
     return (profit/cost)*100
   }
 

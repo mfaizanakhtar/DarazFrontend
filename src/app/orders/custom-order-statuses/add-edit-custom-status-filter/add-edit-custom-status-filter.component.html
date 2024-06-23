@@ -1,0 +1,24 @@
+<div class="row">
+    <i class="mdi mdi-arrow-left font-size-18" (click)="backClicked()" style="cursor:pointer"></i>
+</div>
+<div class="row">
+    <mat-drop-down class="col-md-6" [(selectedVal)]="selectedFilterType" label="Select Filter Type" [data]="filterTypes" displayKey="type" valueKey="type"></mat-drop-down>
+    <mat-drop-down class="col-md-6" [(selectedVal)]="selectedFilter" label="Select Filter" [data]="statusFilters" displayKey="name" valueKey="value"></mat-drop-down>
+</div>
+
+<div *ngIf="selectedFilter=='OrderStatus'">
+    <filter-type-order-status (orderStatusChange)="saveOrderStatusFilter($event)"></filter-type-order-status>
+</div>
+
+<div *ngIf="selectedFilter=='CustomOrderStatus'">
+    <filter-type-custom-order-status (orderStatusChange)="saveOrderStatusFilter($event)"></filter-type-custom-order-status>
+</div>
+
+<div *ngIf="selectedFilter=='DateRangeFilter'">
+    <filter-type-date-range (orderStatusChange)="saveOrderStatusFilter($event)"></filter-type-date-range>
+</div>
+
+<div *ngIf="selectedFilter=='OrderPayoutFilter'">
+    <filter-type-order-payout (orderStatusChange)="saveOrderStatusFilter($event)"></filter-type-order-payout>
+</div>
+

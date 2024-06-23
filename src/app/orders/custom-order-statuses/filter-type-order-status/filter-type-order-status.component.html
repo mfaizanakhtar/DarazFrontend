@@ -1,0 +1,10 @@
+<form [formGroup]="orderFilterFormGroup" #f="ngForm" (submit)="saveClick()">
+    <div class="row">
+            <mat-divider class="col-12 mt-2 mb-2"></mat-divider>
+            <mat-drop-down [control]="orderFilterFormGroup.controls['isNotControl']" [(selectedVal)]="orderStatusFilter.isNot" class="col-md-6" label="IS / ISNOT" [data]="[{type:'IS',value:false},{type:'IS NOT',value:true}]" displayKey="type" valueKey="value"></mat-drop-down>
+            <mat-drop-down [control]="orderFilterFormGroup.controls['orderStatusControl']" [(selectedVal)]="orderStatusFilter.value" class="col-md-6" label="Order Status" [data]="allStatuses"></mat-drop-down>
+            <mat-divider class="col-12 mt-2 mb-2"></mat-divider>
+            <mat-btn type="submit" class="col-lg-12 d-flex justify-content-center mt-4" btnLabel="Save"></mat-btn>
+    </div>
+</form>
+

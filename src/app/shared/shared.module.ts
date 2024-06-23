@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -27,7 +26,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router, RouterModule } from '@angular/router';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { NgxBarcodeModule } from 'ngx-barcode';
 import {NgxPrintModule} from 'ngx-print'
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from 'src/app/app-routing.module';
@@ -51,6 +49,9 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { PageNavComponent } from './page-nav/page-nav.component';
+import { MatTextBoxComponent } from './mat-text-box/mat-text-box.component';
+import { MatDropDownComponent } from './mat-drop-down/mat-drop-down.component';
+import { MatBtnComponent } from './mat-btn/mat-btn.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -66,7 +67,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RightsidebarComponent,
     PagetitleComponent,
     HorizontalComponent,
-    PageNavComponent
+    PageNavComponent,
+    MatTextBoxComponent,
+    MatDropDownComponent,
+    MatBtnComponent
   ],
   imports: [
     CommonModule,
@@ -80,7 +84,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatIconModule,
     MatDialogModule,
     NgxPrintModule,
-    NgxBarcodeModule,
     MatTabsModule,
     MatCheckboxModule,
     MatProgressBarModule,
@@ -128,7 +131,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatIconModule,
     MatDialogModule,
     NgxPrintModule,
-    NgxBarcodeModule,
     MatTabsModule,
     MatCheckboxModule,
     MatProgressBarModule,
@@ -169,7 +171,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RightsidebarComponent,
     PagetitleComponent,
     HorizontalComponent,
-    PageNavComponent
+    PageNavComponent,
+
+    MatTextBoxComponent,
+    MatDropDownComponent,
+    MatBtnComponent
   ],
   providers:[
     {

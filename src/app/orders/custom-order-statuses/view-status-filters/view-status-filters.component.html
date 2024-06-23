@@ -1,0 +1,38 @@
+<div class="table-responsive">
+    <table id="basic-datatable"
+      class="table table-centered dt-responsive nowrap  no-footer dtr-inline font-size-13">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>FilterType</th>
+          <th>FilterName</th>
+          <th>Value</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let d of data;let rowIndex=index">
+          <td>
+            <a class="text-dark font-weight-bold">
+              {{rowIndex+1}}
+            </a>
+          </td>
+          <td>
+            {{d.filterType}}
+          </td>
+          <td>
+            {{d.filterName}}
+          </td>
+          <td>
+            {{d.displayedVal}}
+          </td>
+          <td>
+            <!-- <a class="mr-3 text-primary"><i class="mdi mdi-pencil font-size-18"></i></a> -->
+            <a (click)="delete(rowIndex)" style="cursor:pointer" class="text-danger" placement="top" ngbTooltip="Delete"><i
+                class="mdi mdi-trash-can font-size-18"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

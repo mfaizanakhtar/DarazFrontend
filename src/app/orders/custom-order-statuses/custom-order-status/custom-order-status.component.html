@@ -1,0 +1,21 @@
+<div *ngIf="!addRuleScreen">
+    <form [formGroup]="customOrderFormGroup" (submit)="submitCustomStatus()">
+        <div class="row">
+            <h4 class="col-lg-12">Custom Order Status Wizard</h4>
+            <mat-divider class="col-lg-12 mt-2 mb-2"></mat-divider>
+        </div>
+        <div class="row">
+            <mat-text-box [control]="this.customOrderFormGroup.get('orderStatusName')" class="col-md-12" label="Enter Custom Order Status Name" placeHolder="ABCD" [(value)]="statusName"></mat-text-box>
+        </div>
+        <div *ngIf="statusName?.length>0" class="row ml-2 mt-4">
+            <i class="mdi mdi-plus font-size-18" (click)="toggleStatusOverViewAndRuleScreen()" style="cursor:pointer"></i>
+        </div>
+        <view-status-filters (filterDeleted)="filterDeleted($event)" [data]="viewStatusFilters"></view-status-filters>
+        <mat-btn type="submit" class="col-lg-12 d-flex justify-content-center mt-4" btnLabel="Save"></mat-btn>
+    </form>
+    <mat-btn (click)="deleteCustomStatus()" *ngIf="editMode" class="col-lg-12 d-flex justify-content-center mt-4" btnLabel="Delete"></mat-btn>
+</div>
+
+<div *ngIf="addRuleScreen">
+    <add-edit-custom-status-filter [filterTypes]="filterTypes" [statusFilters]="orderFilters" (backClick)="toggleStatusOverViewAndRuleScreen($event)"></add-edit-custom-status-filter>
+</div>
