@@ -34,15 +34,21 @@
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Shop Name" prop="name" ></ngx-datatable-column>
-        <ngx-datatable-column name="Actions">
-          <ng-template ngx-datatable-cell-template let-row="row">
 
-            <a (click)="deleteShop(row)" style="cursor: pointer;" class="mx-1 text-danger" placement="top" ngbTooltip="Delete"><i
-              class="mdi mdi-trash-can font-size-18"></i></a>
-
-            
+        <ngx-datatable-column name="Token Expiry">
+          <ng-template let-row="row" let-date="value" ngx-datatable-cell-template>
+            {{row.refreshExpiresIn | date:'dd-MM-yyyy h:mma'}}
           </ng-template>
         </ngx-datatable-column>
+
+        <ngx-datatable-column name="Actions">
+          <ng-template ngx-datatable-cell-template let-row="row">
+            <a (click)="deleteShop(row)" style="cursor: pointer;" class="mx-1 text-danger" placement="top" ngbTooltip="Delete"><i
+              class="mdi mdi-trash-can font-size-18"></i></a>
+              <button (click)="integrateNewShop()" mat-raised-button color="primary" class="col-lg-6 ml-4">Refresh Token</button>
+          </ng-template>
+        </ngx-datatable-column>
+
         </ngx-datatable>
   </div>
 </div>
