@@ -60,10 +60,12 @@
     <mat-button-toggle-group  style="font-size: 12px;" class="m-2" appearance="legacy" name="fontStyle" [value]="StatusFilter" aria-label="Font Style">
     <mat-button-toggle value="All" (click)="StatusFilterClicked('All','All')">All Orders</mat-button-toggle>
     <mat-button-toggle value="pending" (click)="StatusFilterClicked('pending','Pending')">Pending</mat-button-toggle>
+    <mat-button-toggle value="packed" (click)="StatusFilterClicked('packed','Packed')">Packed</mat-button-toggle>
     <mat-button-toggle value="ready_to_ship" (click)="StatusFilterClicked('ready_to_ship','RTS')">RTS</mat-button-toggle>
     <mat-button-toggle value="shipped" (click)="StatusFilterClicked('shipped','Shipped')">Shipped</mat-button-toggle>
     <mat-button-toggle value="delivered" (click)="StatusFilterClicked('delivered','Delivered')">Delivered</mat-button-toggle>
     <mat-button-toggle value="failed" (click)="StatusFilterClicked('failed','Failed')">Delivery Failed</mat-button-toggle>
+    <mat-button-toggle value="failed" (click)="StatusFilterClicked('failed_delivery','Failed')">Failed Delivery</mat-button-toggle>
     <mat-button-toggle value="returned" (click)="StatusFilterClicked('returned','Returned')">Returned</mat-button-toggle>
     <mat-button-toggle value="canceled" (click)="StatusFilterClicked('canceled','Cancelled')">Cancelled</mat-button-toggle>
   </mat-button-toggle-group>
@@ -106,9 +108,10 @@
     <button (click)="UpdateStatus('Claim Rejected')" mat-menu-item>Reset</button>
   </mat-menu>
 
-  <button [disabled]="!(selected.length>0)" class="col-lg-2 font-size-12" style="margin-left: 20px;margin-right: 20px;" mat-stroked-button color="primary" [matMenuTriggerFor]="darazStatusMenu">Set Daraz Status</button>
+  <button *ngIf="StatusFilter!='ready_to_ship'" [disabled]="!(selected.length>0)" class="col-lg-2 font-size-12" style="margin-left: 20px;margin-right: 20px;" mat-stroked-button color="primary" [matMenuTriggerFor]="darazStatusMenu">Set Daraz Status</button>
   <mat-menu #darazStatusMenu="matMenu">
-    <button (click)="setStatusToRTS()"  mat-menu-item>Set to RTS</button>
+    <button *ngIf="StatusFilter!='ready_to_ship' && StatusFilter!='packed'" (click)="setStatusToPack()"  mat-menu-item>Set to Pack</button>
+    <button *ngIf="StatusFilter=='packed'" (click)="setStatusToRTS()"  mat-menu-item>Set to RTS</button>
   </mat-menu>
 
   <section class="col-lg-1">
