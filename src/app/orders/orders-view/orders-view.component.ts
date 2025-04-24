@@ -291,6 +291,22 @@ export class OrdersViewComponent implements OnInit {
     this.getOrders()
   } 
 
+  setStatusToPack(){
+    this.loadingIndicator=true
+    this.orderService.postDataByCap('/setStatusToPack',{Orders:this.selected}).subscribe(res=>{
+      var response:any = res
+      console.log(response)
+      if(response.count>0 && response.updateResult==true){
+          this.toastr.success("Packing Request Successful")
+          this.getOrders()
+          this.loadingIndicator=false
+      }
+      else{
+        this.toastr.error("Error Submitting Packing request")
+      }
+    })
+  }
+
   setStatusToRTS(){
     this.loadingIndicator=true
     this.orderService.postDataByCap('/setStatusToRTS',{Orders:this.selected}).subscribe(res=>{
